@@ -6,7 +6,7 @@
 	var serverRoutes = function (req, res) {
 
 		var url = req.url;
-		var router = {};
+		var router = {};	
 
 		router["/"] 	 = handler.home(req, res);
 		router["/login"] = handler.login;
