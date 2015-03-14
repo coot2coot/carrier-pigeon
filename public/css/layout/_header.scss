@@ -4,6 +4,13 @@
 ************************************************/
 
 header {
-	@include column(16, 16);
-	color: $primary;
+	background-color: $primary;
+	color: white;
+	h1 {
+		color: white;
+		margin: 0.2em 1em;
+	}
+	img {
+		width: 100%;
+	}
 }

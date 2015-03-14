@@ -4,6 +4,5 @@
 ************************************************/
 
 footer {
-	@include column(16, 12);
-	color: $primary;
+	background-color: $primary;
 }
