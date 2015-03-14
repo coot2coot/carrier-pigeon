@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/foundersandcoders/carrier-pigeon",
   "dependencies": {
+    "director": "^1.2.8",
     "fs": "0.0.2",
-    "handlebars": "^3.0.0"
+    "handlebars": "^3.0.0",
+    "handlebars-layouts": "^1.1.0"
   },
   "devDependencies": {
     "ecstatic": "^0.6.1",

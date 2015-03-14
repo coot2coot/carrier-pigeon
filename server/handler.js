@@ -3,22 +3,39 @@
 
 	var path = require("path");
 	var fs = require("fs");
-	var handlebars = require("handlebars");
-	var template = fs.readFileSync("./public/index.html", "utf8");
+
+	var Handlebars = require("handlebars");
+	var hbsLayouts = require('handlebars-layouts')(Handlebars);
+
+	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
+	var template = Handlebars.compile(fs.readFileSync('./public/templates/booking.html').toString());
 
 	var serverHandlers = {};
 
-	serverHandlers.home = function (req, res) {
-		var source = {
-			body : "Hello world!"
-		};
+	var site = {
+	  	title: "Exampal usage of Handlebars",
+	  	description: "Learn to use handlebars with node.js!"
+	}
 
-		var pageBuilder = handlebars.compile(template);
-		var pageText = pageBuilder(source);
+	serverHandlers.home = function (res) {
+
+		var page = {
+		    title: "Booking Notice",
+		    content: "More infomation needed"
+		 }
 
 		res.writeHead(200, {"Content-Type" : "text/html"});
-		res.write(pageText);
-		res.end();
+		res.end(template({ site: site, page: page }));
+	}
+
+	serverHandlers.login = function (req, res) {
+		res.writeHead(200, { 'Content-Type': 'text/html' });
+		res.end('login here');
+	}
+
+	serverHandlers.logout = function (req, res) {
+		res.writeHead(200, { 'Content-Type': 'text/html' });
+		res.end('logout here');
 	}
 
 	module.exports = serverHandlers;

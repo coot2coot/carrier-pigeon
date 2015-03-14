@@ -3,14 +3,21 @@
 
 	var handler = require("./handler.js");
 
-	var serverRoutes = function (req, res) {
+	var serverRoutes =  function (router) {
 
-		var url = req.url;
-		var router = {};	
+		router.get('/', function(){
+		  	handler.home(this.res);
+		});
 
-		router["/"] 	 = handler.home(req, res);
-		router["/login"] = handler.login;
-	}
+
+		router.get('/login', function(){
+		  	handler.login(this.res);
+		});
+
+		router.get('/logout', function(){
+		  	handler.logout(this.res);
+		});
+	};
 
 	module.exports = serverRoutes;
 })();
