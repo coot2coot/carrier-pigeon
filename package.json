@@ -1,0 +1,29 @@
+{
+  "name": "carrier-pigeon",
+  "version": "1.0.0",
+  "description": "inventory management system",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/foundersandcoders/carrier-pigeon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/foundersandcoders/carrier-pigeon/issues"
+  },
+  "homepage": "https://github.com/foundersandcoders/carrier-pigeon",
+  "devDependencies": {
+    "ecstatic": "^0.6.1",
+    "gulp": "^3.8.11",
+    "gulp-nodemon": "^1.0.5",
+    "gulp-sass": "^1.3.3",
+    "nodemon": "^1.3.7",
+    "shot": "^1.4.2",
+    "tape": "^3.5.0"
+  }
+}
