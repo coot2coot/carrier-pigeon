@@ -1,6 +1,11 @@
 var http = require("http");
 var config = require("./config.js");
 var route = require("./route.js");
+
+var ecstatic = require("ecstatic")({
+	root: __dirname + "/public"
+});
+
 var server = http.createServer(route);
 
 
