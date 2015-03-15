@@ -1,9 +1,7 @@
 (function () {
 	"use strict";
 
-	var path = require("path");
 	var fs = require("fs");
-
 	var Handlebars = require("handlebars");
 	var hbsLayouts = require('handlebars-layouts')(Handlebars);
 
@@ -12,31 +10,37 @@
 
 	var serverHandlers = {};
 
-	var site = {
-	  	title: "Exampal usage of Handlebars",
-	  	description: "Learn to use handlebars with node.js!"
-	}
+	var page = {
+	    title: "Booking Notice",
+	    content: "More infomation needed"
+	};
+
+	serverHandlers.staticFiles = function (res) {
+		res.writeHead(200, {"Content-Type" : "text/html"});
+		res.end(index.html);
+		ecstatic({
+			root: __dirname + "/public"
+		});
+	};
 
 	serverHandlers.home = function (res) {
-
-		var page = {
-		    title: "Booking Notice",
-		    content: "More infomation needed"
-		 }
-
 		res.writeHead(200, {"Content-Type" : "text/html"});
-		res.end(template({ site: site, page: page }));
-	}
+		res.end(template({ page: page }));
+	};
 
-	serverHandlers.login = function (req, res) {
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end('login here');
-	}
+	serverHandlers.login = function (res) {
+		page.title = "login";
 
-	serverHandlers.logout = function (req, res) {
 		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end('logout here');
-	}
+		res.end(template({ page: page }));
+	};
+
+	serverHandlers.logout = function (res) {
+		page.title = "logout";
+
+		res.writeHead(200, { 'Content-Type': 'text/html' });
+		res.end(template({ page: page }));
+	};
 
 	module.exports = serverHandlers;
 })();

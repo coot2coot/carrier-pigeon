@@ -5,17 +5,21 @@
 
 	var serverRoutes =  function (router) {
 
-		router.get('/', function(){
-		  	handler.home(this.res);
+		//todo: Need to be available on all other routes
+		// router.get(/([\w-_]+)/, function(){
+		//   	handler.staticFiles();
+		// });
+
+		router.addRoute('/', function (req, res, match){
+		  	handler.home(res);
 		});
 
-
-		router.get('/login', function(){
-		  	handler.login(this.res);
+		router.addRoute('/login', function (req, res, match){
+		  	handler.login(res);
 		});
 
-		router.get('/logout', function(){
-		  	handler.logout(this.res);
+		router.addRoute('/logout', function (req, res, match){
+		  	handler.logout(res);
 		});
 	};
 

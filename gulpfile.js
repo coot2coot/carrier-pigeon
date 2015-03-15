@@ -8,7 +8,7 @@
 		nodemon = require("gulp-nodemon");
 
 
-	var serverFiles = ["./server/*.js", "./server/*/*.js"],
+	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
 		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"];
 
 /*******************************
@@ -60,7 +60,7 @@
 
 	gulp.task("default",["build"],  function() {
         nodemon({
-            script: "server/server.js",
+            script: "server.js",
             ext: "js",
             ignore: ["node_modules"]
         })
