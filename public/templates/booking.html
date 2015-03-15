@@ -1,10 +1,25 @@
 {{#extend "layout"}}
 
-<div class="container">
+	{{#content "main" mode="append"}}
+		<div class="column-16">
 
-  	<h1>Page Title : {{ page.title }}</h1>
-  	<div>{{ page.content }}</div>
+		  	<h1>Booking Notice</h1>
+		  	<div class="data">
+		  		{{#each data}}
+			  			{{bookingRef}}
+			  			{{client}}
+			  			{{loadingPlace}}
+			  			{{deliveryPlace}}
+			  			{{containerType}}
+			  			{{commodityDesc}}
+			  			{{collectionTime}}
+			  			{{additionalInfo}}
+			  			{{shipper}}
+			  			{{consignee}}
+			  	{{/each}}
+		  	</div>
 
-</div>
+		</div>
+	{{/content}}
 
 {{/extend}}
