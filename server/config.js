@@ -6,7 +6,7 @@
 	serverConfig = {
 		host: "localhost",
 		port: "8000"
-	}
+	};
 
 	module.exports = serverConfig;
 })();

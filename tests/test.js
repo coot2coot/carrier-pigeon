@@ -10,4 +10,4 @@ test('home handler test', function (t) {
 		t.equal(res.statusCode,200, "response code is ok");
 		t.end();
 	});	
-})
+});

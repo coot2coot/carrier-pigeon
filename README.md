@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/foundersandcoders/carrier-pigeon/badges/gpa.svg)](https://codeclimate.com/github/foundersandcoders/carrier-pigeon)
+
 # Carrier Pigeon
 ## An Inventory Management System
 

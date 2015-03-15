@@ -3,14 +3,25 @@
 
 	var handler = require("./handler.js");
 
-	var serverRoutes = function (req, res) {
+	var serverRoutes =  function (router) {
 
-		var url = req.url;
-		var router = {};	
+		//todo: Need to be available on all other routes
+		// router.get(/([\w-_]+)/, function(){
+		//   	handler.staticFiles();
+		// });
 
-		router["/"] 	 = handler.home(req, res);
-		router["/login"] = handler.login;
-	}
+		router.addRoute('/', function (req, res, match){
+		  	handler.home(res);
+		});
+
+		router.addRoute('/login', function (req, res, match){
+		  	handler.login(res);
+		});
+
+		router.addRoute('/logout', function (req, res, match){
+		  	handler.logout(res);
+		});
+	};
 
 	module.exports = serverRoutes;
 })();

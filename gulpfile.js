@@ -8,7 +8,7 @@
 		nodemon = require("gulp-nodemon");
 
 
-	var serverFiles = ["./server/*.js", "./server/*/*.js"],
+	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
 		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"];
 
 /*******************************
@@ -35,6 +35,15 @@
             .pipe(gulp.dest("./public/css/"));
     });
 
+    //task for minifying css for production
+    gulp.task("concise", function () {
+        return gulp.src("./public/css/vendors/concise/concise.scss")
+            .pipe(sass({
+                outputStyle: "compressed"
+            }))
+            .pipe(gulp.dest("./public/css/vendors"));
+    });
+
     //Task for watching, and compiling sass for development
     gulp.task("sass-watch", function () {
         gulp.watch(sassFiles, ["sass-dev"]);
@@ -51,7 +60,7 @@
 
 	gulp.task("default",["build"],  function() {
         nodemon({
-            script: "server/server.js",
+            script: "server.js",
             ext: "js",
             ignore: ["node_modules"]
         })
