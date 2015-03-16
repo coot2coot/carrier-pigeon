@@ -1,3 +1,7 @@
  language: node_js
  node_js:
    - "0.10.32"
+ deploy:
+  provider: heroku
+  api_key: "2d5185ec-5882-455c-894d-4b6e41ceec5e"
+  app: carrier-pigeon
