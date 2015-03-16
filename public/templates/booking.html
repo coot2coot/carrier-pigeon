@@ -3,20 +3,23 @@
 	{{#content "main" mode="append"}}
 		<div class="column-16">
 
-		  	<h1>Booking Notice</h1>
 		  	<div class="data">
+		  		<table>
 		  		{{#each data}}
-			  			{{bookingRef}}
-			  			{{client}}
-			  			{{loadingPlace}}
-			  			{{deliveryPlace}}
-			  			{{containerType}}
-			  			{{commodityDesc}}
-			  			{{collectionTime}}
-			  			{{additionalInfo}}
-			  			{{shipper}}
-			  			{{consignee}}
+		  			<tr>
+			  			<td>{{bookingRef}}</td>
+			  			<td>{{client}}</td>
+			  			<td>{{loadingPlace}}</td>
+			  			<td>{{deliveryPlace}}</td>
+			  			<td>{{containerType}}</td>
+			  			<td>{{commodityDesc}}</td>
+			  			<td>{{collectionTime}}</td>
+			  			<td>{{additionalInfo}}</td>
+			  			<td>{{shipper}}</td>
+			  			<td>{{consignee}}</td>
+			  		</tr>
 			  	{{/each}}
+			  	</table>
 		  	</div>
 
 		</div>

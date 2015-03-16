@@ -19,17 +19,13 @@
 	};
 
 	serverHandlers.login = function (res) {
-		page.title = "login";
-
 		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(template({ page: page }));
+		res.end(template());
 	};
 
 	serverHandlers.logout = function (res) {
-		page.title = "logout";
-
 		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(template({ page: page }));
+		res.end(template());
 	};
 
 	module.exports = serverHandlers;

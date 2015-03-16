@@ -61,7 +61,7 @@
 	gulp.task("default",["build"],  function() {
         nodemon({
             script: "server.js",
-            ext: "js",
+            ext: "js html",
             ignore: ["node_modules"]
         })
         .on("restart", function(){
