@@ -15,6 +15,13 @@
 *       TEST TASKS
 ********************************/
 
+gulp.task("test", ["build"],  function() {
+        nodemon({
+            script: "tests/test.js",
+            ext: "js",
+            ignore: ["node_modules"]
+        });
+    });
 
 /*******************************
 *       COMPILING TASKS

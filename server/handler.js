@@ -5,8 +5,8 @@
 	var Handlebars = require("handlebars");
 	var hbsLayouts = require('handlebars-layouts')(Handlebars);
 
-	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
-	var template = Handlebars.compile(fs.readFileSync('./public/templates/booking.html').toString());
+	Handlebars.registerPartial('layout', fs.readFileSync('../public/index.html').toString());
+	var template = Handlebars.compile(fs.readFileSync('../public/templates/booking.html').toString());
 
 	var serverHandlers = {};
 
