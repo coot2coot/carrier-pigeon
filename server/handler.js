@@ -23,10 +23,5 @@
 		res.end(template());
 	};
 
-	serverHandlers.logout = function (res) {
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(template());
-	};
-
 	module.exports = serverHandlers;
 })();

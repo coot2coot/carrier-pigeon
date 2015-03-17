@@ -27,7 +27,7 @@
     });
 
     //task for minifying css for production
-    gulp.task("sass-production", function () {
+    gulp.task("sass-production", ["concise"], function () {
         return gulp.src("./public/css/main.scss")
             .pipe(sass({
                 outputStyle: "compressed"
@@ -46,7 +46,7 @@
 
     //Task for watching, and compiling sass for development
     gulp.task("sass-watch", function () {
-        gulp.watch(sassFiles, ["sass-dev"]);
+        gulp.watch(sassFiles, ["sass-dev", "concise"]);
     });
 
 

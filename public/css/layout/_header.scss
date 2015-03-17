@@ -2,3 +2,13 @@
 *   HEADER
 *	
 ************************************************/
+
+header {
+	background: $primary;
+	h1 {
+		color: white;
+	}
+	p {
+		color: $light;
+	}
+}

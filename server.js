@@ -1,6 +1,4 @@
 var http = require("http");
-var director = require('director');
-
 var static = require('node-static');
 var file = new static.Server('./public');
 
