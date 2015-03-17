@@ -3,7 +3,7 @@
 
 	var fs = require("fs");
 	var Handlebars = require("handlebars");
-	var fakeData = require("../public/fakeData.json");
+	var fakeData = require("../public/fakedata.json");
 	var hbsLayouts = require('handlebars-layouts')(Handlebars);
 
 	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
