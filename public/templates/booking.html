@@ -1,10 +1,28 @@
 {{#extend "layout"}}
 
-<div class="container">
+	{{#content "main" mode="append"}}
+		<div class="column-16">
 
-  	<h1>Page Title : {{ page.title }}</h1>
-  	<div>{{ page.content }}</div>
+		  	<div class="data">
+		  		<table>
+		  		{{#each data}}
+		  			<tr>
+			  			<td>{{bookingRef}}</td>
+			  			<td>{{client}}</td>
+			  			<td>{{loadingPlace}}</td>
+			  			<td>{{deliveryPlace}}</td>
+			  			<td>{{containerType}}</td>
+			  			<td>{{commodityDesc}}</td>
+			  			<td>{{collectionTime}}</td>
+			  			<td>{{additionalInfo}}</td>
+			  			<td>{{shipper}}</td>
+			  			<td>{{consignee}}</td>
+			  		</tr>
+			  	{{/each}}
+			  	</table>
+		  	</div>
 
-</div>
+		</div>
+	{{/content}}
 
 {{/extend}}

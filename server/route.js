@@ -5,11 +5,6 @@
 
 	var serverRoutes =  function (router) {
 
-		//todo: Need to be available on all other routes
-		// router.get(/([\w-_]+)/, function(){
-		//   	handler.staticFiles();
-		// });
-
 		router.addRoute('/', function (req, res, match){
 		  	handler.home(res);
 		});
