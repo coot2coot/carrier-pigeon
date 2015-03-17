@@ -17,7 +17,7 @@
 	    content: "More infomation needed"
 	};
 
-	serverHandlers.staticFiles = function (res) {
+	serverHandlers.staticFiles = function (req, res) {
 		res.writeHead(200, {"Content-Type" : "text/html"});
 		res.end(index.html);
 		ecstatic({
@@ -32,12 +32,12 @@
 		}));
 	};
 
-	serverHandlers.login = function (res) {
+	serverHandlers.login = function (req, res) {
 		res.writeHead(200, { 'Content-Type': 'text/html' });
 		res.end(template());
 	};
 
-	serverHandlers.logout = function (res) {
+	serverHandlers.logout = function (req, res) {
 		res.writeHead(200, { 'Content-Type': 'text/html' });
 		res.end(template());
 	};
