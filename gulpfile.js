@@ -5,7 +5,10 @@
 
 	var gulp = require("gulp"),
 		sass = require("gulp-sass"),
-		nodemon = require("gulp-nodemon");
+		nodemon = require("gulp-nodemon"),
+        test = require('tape'),
+        path = require('path'),
+        shell = require('gulp-shell');
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
@@ -15,6 +18,9 @@
 *       TEST TASKS
 ********************************/
 
+    gulp.task('test', shell.task([
+      'node tests/*.js'
+    ]));
 
 /*******************************
 *       COMPILING TASKS
