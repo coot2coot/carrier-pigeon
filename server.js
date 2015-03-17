@@ -1,13 +1,15 @@
 var http = require("http");
 var director = require('director');
-var static = require('node-static');
-var Router = require("routes");
 
-var router = new Router();
+var static = require('node-static');
 var file = new static.Server('./public');
 
-var Config = require("./server/config.js");
+var Router = require("routes");
+var router = new Router();
+
 var routes = require("./server/route.js");
+var Config = require("./server/config.js");
+
 
 routes(router);
 
