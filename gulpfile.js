@@ -5,7 +5,10 @@
 
 	var gulp = require("gulp"),
 		sass = require("gulp-sass"),
-		nodemon = require("gulp-nodemon");
+		nodemon = require("gulp-nodemon"),
+        test = require('tape'),
+        path = require('path'),
+        spec = require('tap-spec');
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
@@ -15,12 +18,17 @@
 *       TEST TASKS
 ********************************/
 
-gulp.task("test", ["build"],  function() {
-        nodemon({
-            script: "tests/test.js",
-            ext: "js"
-        });
+gulp.task('test', function () {
+    var stream = test.createStream()
+        .pipe(spec())
+        .pipe(process.stdout);
+
+    glob.sync('path/to/tests/**/*.js').forEach(function (file) {
+        require(path.resolve(file));
     });
+
+    return stream;
+});
 
 
 /*******************************
