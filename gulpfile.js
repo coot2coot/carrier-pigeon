@@ -8,7 +8,7 @@
 		nodemon = require("gulp-nodemon"),
         test = require('tape'),
         path = require('path'),
-        spec = require('tap-spec');
+        shell = require('gulp-shell');
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
@@ -18,18 +18,9 @@
 *       TEST TASKS
 ********************************/
 
-gulp.task('test', function () {
-    var stream = test.createStream()
-        .pipe(spec())
-        .pipe(process.stdout);
-
-    glob.sync('path/to/tests/**/*.js').forEach(function (file) {
-        require(path.resolve(file));
-    });
-
-    return stream;
-});
-
+    gulp.task('test', shell.task([
+      'node tests/*.js'
+    ]));
 
 /*******************************
 *       COMPILING TASKS
