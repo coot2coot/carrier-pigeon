@@ -3,5 +3,5 @@
    - "0.10.32"
  deploy:
   provider: heroku
-  api_key: "2d5185ec-5882-455c-894d-4b6e41ceec5e"
+  api_key: "a936e391-014f-4d64-8cff-01eb58e469cb"
   app: carrier-pigeon-beta
