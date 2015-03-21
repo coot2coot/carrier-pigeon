@@ -5,8 +5,16 @@
 
 	var serverRoutes =  function (router) {
 
-		router.addRoute('/', function (req, res, match){
-		  	handler.home(req, res);
+		router.addRoute('/orders', function (req, res, match){
+		  	handler.orders(req, res);
+		});
+
+		router.addRoute('/orders/new', function (req, res, match){
+		  	handler.newOrder(req, res);
+		});
+
+		router.addRoute('/orders/remove', function (req, res, match){
+		  	handler.newOrder(req, res);
 		});
 
 		router.addRoute('/login', function (req, res, match){

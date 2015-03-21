@@ -68,7 +68,7 @@
         return console.log("done building");
     });
 
-	gulp.task("default",["build","test","open"], function() {
+	gulp.task("default",["build","open"], function() {
         nodemon({
             script: "server.js",
             ext: "js html",

@@ -3,7 +3,7 @@
 
 	var fs = require("fs");
 	var Handlebars = require("handlebars");
-	var fakeData = require("../public/fakedata.json");
+	var db = require("./db-config.js");
 	var hbsLayouts = require('handlebars-layouts')(Handlebars);
 
 	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
@@ -17,19 +17,23 @@
 	    content: "More infomation needed"
 	};
 
-	serverHandlers.staticFiles = function (req, res) {
-		res.writeHead(200, {"Content-Type" : "text/html"});
-		res.end(index.html);
-		ecstatic({
-			root: __dirname + "/public"
+	serverHandlers.orders = function (req, res) {
+		db.get(function (orders) {
+			res.writeHead(200, {"Content-Type" : "text/html"});
+			res.end(template({ 
+				data: orders
+			}));
 		});
 	};
 
-	serverHandlers.home = function (req, res) {
-		res.writeHead(200, {"Content-Type" : "text/html"});
-		res.end(template({ 
-			data: fakeData
-		}));
+	serverHandlers.newOrders = function (req, res) {
+		db.get(function (orders) {
+			console.log(orders);
+			res.writeHead(200, {"Content-Type" : "text/html"});
+			res.end(template({ 
+				data: orders
+			}));
+		});
 	};
 
 	serverHandlers.login = function (req, res) {
