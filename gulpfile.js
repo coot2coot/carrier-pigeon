@@ -64,7 +64,7 @@
 *       BUILD TASKS
 ********************************/
 	
-	gulp.task("build", ["sass-dev"] , function() {
+	gulp.task("build", ["sass-production"] , function() {
         return console.log("done building");
     });
 
