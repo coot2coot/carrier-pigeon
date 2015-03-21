@@ -12,10 +12,6 @@
 		router.addRoute('/login', function (req, res, match){
 		  	handler.login(req, res);
 		});
-
-		router.addRoute('/logout', function (req, res, match){
-		  	handler.logout(req, res);
-		});
 	};
 
 	module.exports = serverRoutes;

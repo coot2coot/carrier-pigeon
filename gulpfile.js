@@ -8,8 +8,7 @@
 		nodemon = require("gulp-nodemon"),
         test = require('tape'),
         path = require('path'),
-        shell = require('gulp-shell'),
-        open = require('gulp-open');
+        shell = require('gulp-shell');
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
@@ -38,7 +37,7 @@
     });
 
     //task for minifying css for production
-    gulp.task("sass-production", function () {
+    gulp.task("sass-production", ["concise"], function () {
         return gulp.src("./public/css/main.scss")
             .pipe(sass({
                 outputStyle: "compressed"
@@ -57,7 +56,7 @@
 
     //Task for watching, and compiling sass for development
     gulp.task("sass-watch", function () {
-        gulp.watch(sassFiles, ["sass-dev"]);
+        gulp.watch(sassFiles, ["sass-dev", "concise"]);
     });
 
 

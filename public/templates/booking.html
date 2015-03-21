@@ -1,28 +1,50 @@
 {{#extend "layout"}}
 
 	{{#content "main" mode="append"}}
-		<div class="column-16">
 
-		  	<div class="data">
-		  		<table>
-		  		{{#each data}}
-		  			<tr>
-			  			<td>{{bookingRef}}</td>
-			  			<td>{{client}}</td>
-			  			<td>{{loadingPlace}}</td>
-			  			<td>{{deliveryPlace}}</td>
-			  			<td>{{containerType}}</td>
-			  			<td>{{commodityDesc}}</td>
-			  			<td>{{collectionTime}}</td>
-			  			<td>{{additionalInfo}}</td>
-			  			<td>{{shipper}}</td>
-			  			<td>{{consignee}}</td>
-			  		</tr>
-			  	{{/each}}
-			  	</table>
-		  	</div>
-
+		<div class="row search-bar">
+			<!-- TODO: search bar here -->
 		</div>
+
+		<div class="row">
+
+			<div class="title column-4 push-2">
+				<h4>Ref</h4>
+			</div>
+			<div class="title column-4 push-2">
+				<h4>Client</h4>
+			</div>
+			<div class="title column-4 push-2">
+				<h4>Date</h4>
+			</div>
+		</div>
+				
+	  	{{#each data}}
+	  		<div class="row listed-result">
+  				<div class="column-4 push-2">
+					<p>{{bookingRef}}</p>
+				</div>
+				<div class="column-4 push-2">
+					<p>{{client}}</p>
+				</div>
+				<div class="column-4 push-2">
+					<p>{{date}}</p>
+				</div>
+			</div>
+			<div class="row hidden">
+	  			<div class="column-12 push-2">
+	  				<p><span>Loading Place:</span> {{loadingPlace}}</p>
+	  				<p><span>Delivery Place:</span> {{deliveryPlace}}</p>
+	  				<p><span>Container Type:</span> {{containerType}}</p>
+	  				<p><span>Commodity Description:<span> {{commodityDesc}}</p>
+	  				<p><span>Collection Time:</span> {{collectionTime}}</p>
+	  				<p><span>Additional Info:</span> {{additionalInfo}}</p>
+	  				<p><span>Shipper:</span> {{shipper}}</p>
+	  				<p><span>Consignee:</span> {{consignee}}</p>
+	  			</div>
+		  	</div>
+		  	{{/each}}
+
 	{{/content}}
 
 {{/extend}}
