@@ -1,0 +1,12 @@
+branches: 
+    only: 
+    - master
+language: node_js
+node_js:
+- "0.10.32"
+deploy:
+    provider: heroku
+    api_key: "a936e391-014f-4d64-8cff-01eb58e469cb"
+    app: carrier-pigeon-beta
+install:
+- npm install

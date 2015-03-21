@@ -5,7 +5,10 @@
 
 	var gulp = require("gulp"),
 		sass = require("gulp-sass"),
-		nodemon = require("gulp-nodemon");
+		nodemon = require("gulp-nodemon"),
+        test = require('tape'),
+        path = require('path'),
+        shell = require('gulp-shell');
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
@@ -15,6 +18,13 @@
 *       TEST TASKS
 ********************************/
 
+    gulp.task('test', shell.task([
+      'node tests/*.js'
+    ]));
+
+    gulp.task('open', shell.task([
+      'open http://localhost:8000'
+    ]));
 
 /*******************************
 *       COMPILING TASKS
@@ -58,7 +68,7 @@
         return console.log("done building");
     });
 
-	gulp.task("default",["build"],  function() {
+	gulp.task("default",["build","test","open"], function() {
         nodemon({
             script: "server.js",
             ext: "js html",

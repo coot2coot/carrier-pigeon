@@ -6,11 +6,11 @@
 	var serverRoutes =  function (router) {
 
 		router.addRoute('/', function (req, res, match){
-		  	handler.home(res);
+		  	handler.home(req, res);
 		});
 
 		router.addRoute('/login', function (req, res, match){
-		  	handler.login(res);
+		  	handler.login(req, res);
 		});
 	};
 
