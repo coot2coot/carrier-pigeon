@@ -10,3 +10,5 @@ deploy:
     app: carrier-pigeon-beta
 install:
 - npm install
+script: 
+- gulp
