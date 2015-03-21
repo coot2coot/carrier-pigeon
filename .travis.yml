@@ -14,10 +14,9 @@ install:
 script:
 - gulp build
 before_deploy:
+- echo node_modules/ > .gitignore
 - git config credential.helper "store --file=.git/credentials"
 - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-after_script:
-- echo node_modules/ > .gitignore
 - git status
 - git add -A 
 - git commit -m "carrier-pigeon-beta"
