@@ -5,7 +5,7 @@
 
 	serverConfig = {
 		host: "localhost",
-		port: "8000"
+		port: proccess.env.PORT || "8000"
 	};
 
 	module.exports = serverConfig;
