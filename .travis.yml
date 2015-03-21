@@ -19,7 +19,7 @@ env:
     secure: SE0hRL6Aa2sU9yj5gK+7mWudaCYK8ClvP5MHrDMv46Tdn6GwBdEp8RRgV4Ojl0FvQW+jJZUMpSk3Wv1gNXymiTt/xM2fKGQ1kP9V/IuzQo2WwERmonHaQjgfMBrzPa7ur3nVq8npuAWVPaw9GAEVSH/juF7OMJelByFEN5L6mXI=
 before_script:
 - git config credential.helper "store --file=.git/credentials"
-- echo "https://${GH_TOKEN}:@github.com" > .git/credentials"
+- echo "https://${GH_TOKEN}:@github.com" > .git/credentials
 after_script: 
 - git add -A 
 - git commit -m "carrier-pigeon-beta"
