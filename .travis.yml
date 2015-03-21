@@ -8,8 +8,9 @@ deploy:
     provider: heroku
     api_key: "a936e391-014f-4d64-8cff-01eb58e469cb"
     app: carrier-pigeon-beta
-install:
+before_install:
 - npm install -g gulp
+install:
 - npm install
 script: 
-- gulp
+- gulp build
