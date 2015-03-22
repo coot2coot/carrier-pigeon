@@ -1,30 +1,35 @@
 (function () {
 	"use strict";
 
-	// TODO: need tasks for testing for unit, integration, and acceptance (also need a gulp test, for all tests)
-
 	var gulp = require("gulp"),
 		sass = require("gulp-sass"),
 		nodemon = require("gulp-nodemon"),
-        test = require('tape'),
-        path = require('path'),
         shell = require('gulp-shell');
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
 		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"];
 
-/*******************************
-*       TEST TASKS
-********************************/
-
-    gulp.task('test', shell.task([
-      'node tests/*.js'
-    ]));
 
     gulp.task('open', shell.task([
       'open http://localhost:8000'
     ]));
+
+/*******************************
+*       TEST TASKS
+********************************/
+
+    gulp.task('integration-tests', shell.task([
+      'node tests/integration/*.js'
+    ]));
+
+    gulp.task('unit-tests', shell.task([
+      'tape tests/unit/*.js'
+    ]));
+
+    gulp.task('test', ["integration-tests", "unit-tests"], function () {
+        console.log("Done testing");
+    });
 
 /*******************************
 *       COMPILING TASKS
@@ -68,7 +73,7 @@
         return console.log("done building");
     });
 
-	gulp.task("default",["build","test","open"], function() {
+	gulp.task("default",["build","open"], function() {
         nodemon({
             script: "server.js",
             ext: "js html",

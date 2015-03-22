@@ -1,0 +1,38 @@
+/***********************************************
+*   MEDIA QUERIES MIXIN
+*   Description: Responsive Breakpoints
+************************************************/
+
+$extra-small: 400px;
+$small: 620px;
+$regular: 768px;
+$large: 960px;
+$extra-large: 1140px;
+
+@mixin respond($size) {
+    @if $size == extraSmall {
+        @media (max-width: $extra-small) {
+            @content;
+        }
+    }
+    @else if $size == small {
+        @media (min-width: $small) and (max-width: $small-size) {
+            @content;
+        }
+    }
+    @else if $size == regular {
+        @media (min-width: $regular) and (max-width: $large-size) {
+            @content;
+        }
+    }
+    @else if $size == large {
+        @media (min-width: $large) {
+            @content;
+        }
+    }
+    @else if $size == extraLarge {
+        @media (min-width: $extra-large) {
+            @content;
+        }
+    }
+}

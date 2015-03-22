@@ -1,0 +1,28 @@
+.button {
+	border-radius: 0.4em;
+	border: none;
+	color: white;
+	font-weight: 600;
+	padding: 0.15em 0.3em 0.3em;
+  	margin-top: 1em;
+}
+
+.button.charcoal {
+	@include charcoal-background;
+	float: right;
+	width: 6.5em;
+  	&:hover {
+  		@include charcoal-hover;
+  	}
+}
+
+.button.blue {
+	@include blue-background;
+	padding: 0 0.4em;
+	font-weight: 900;
+	border: 0.1em $primary solid;
+	margin: 0 0.2em 0.2em;
+  	&:hover {
+  		@include blue-hover;
+  	}
+}

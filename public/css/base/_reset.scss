@@ -8,3 +8,49 @@ body, html {
 	height: 100%;
 	width: 100%;
 }
+
+h1, h2, h3, h4, h5, h6, p ,input{
+	font-family: $font;
+	margin: 0;
+}
+
+h1 {
+	@include company-name;
+}
+
+h2 {
+	@include page-title;
+}
+
+h3 {
+	@include page-title;
+	font-size: 1.2em;
+	margin-left: 1em;
+}
+
+h4 {
+	font-size: 1em;
+}
+
+h5 {
+	font-size: 1em;
+	font-size: 0.9em;
+	font-weight: 600;
+	color: $charcoal;
+}
+
+p {
+	font-size: 0.85em;
+	color: $grey;
+}
+
+input {
+	font-size: 0.9em;
+}
+
+a {
+	text-decoration: none;
+	&:hover {
+		text-decoration: none;
+	}
+}

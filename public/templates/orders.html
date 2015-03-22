@@ -1,0 +1,114 @@
+{{#extend "layout"}}
+	
+	{{#content "header" mode="append"}}
+		<a href="/login">
+			<p>Logout</p>
+		</a>
+		<p>Welcome {username}</p>
+	{{/content}}
+
+	{{#content "nav" mode="append"}}
+		<div class="row nav">
+			<div class="column-3 push-2">
+				<a href="">
+					<img src="./img/nav/shipping.png">
+					<br>
+					<p>Orders</p>
+				</a>
+			</div>
+			<div class="column-3 push-2">
+				<a href="">
+					<img src="./img/nav/booking.png">
+					<p>Booking notice</p>
+				</a>
+			</div>
+			<div class="column-3 push-2">
+				<a href="">
+					<img src="./img/nav/list.png">
+					<p>Client</p>
+				</a>
+			</div>
+			<div class="column-3 push-2">
+				<a href="">
+					<img class="xero" src="./img/nav/xero.png">
+				</a>
+			</div>
+		</div>
+	{{/content}}
+
+	{{#content "main" mode="append"}}
+
+		<div class="column-14 push-1 model-generic">
+			<div class="panel-header">
+				<h3>Orders</h3>
+				<button class="button blue" onclick="window.location.href='/order/new'">+</button>
+				<!-- TODO: search bar here -->
+			</div>
+
+			<div class="panel-body table-responsive model-overflow">
+				<table class="table table-full">
+					<th><h5>#</h5></th>
+					<th><h5>Reference</h5></th>
+					<th><h5>Date</h5></th>
+					<th><h5>Consignee</h5></th>
+					<th><h5>Loading Place</h5></th>
+					<th><h5>Delivery Place</h5></th>
+				
+				  	{{#each data}}
+				  		<tr>
+				  			<td><a href="/order/id"><p>{{num}}</p></a></td>
+							<td><a href="/order/id"><p>{{bookingRef}}</p></a></td>
+							<td><a href="/order/id"><p>{{date}}</p></a></td>
+							<td><a href="/order/id"><p>{{client}}</p></a></td>
+							<td><a href="/order/id"><p>{{loadingPlace}}</p></a></td>
+							<td><a href="/order/id"><p>{{deliveryPlace}}</p></a></td>
+						</tr>
+					{{/each}}
+				</table>
+			</div>
+		</div>
+
+		{{~#if overlay}}
+		<div class="overlay">
+			<div class="column-10 push-3 model-generic model-top">
+				<div class="panel-header">
+					<h3>New entry</h3>
+				</div>
+				<div class="panel-body">
+					<form action="/order/create" method="POST">
+						<p>Reference number</p>
+						<input type="text" name="referenceNumber">
+						<p>Date</p>
+						<input type="text" name="date">
+						<p>Consignee</p>
+						<input type="text" name="consignee">
+						<p>Loading place</p>
+						<input type="text" name="loadingPlace">
+						<p>Delivery place</p>
+						<input type="text" name="deliveryPlace">
+						<p>Container type/vehicle</p>
+						<input type="text" name="containerType">
+						<p>Reference</p>
+						<input type="text" name="reference">
+						<p>Commodity description</p>
+						<input type="text" name="commodityDescription">
+						<p>Collection time</p>
+						<input type="text" name="collectionTime">
+						<p>Shipper</p>
+						<input type="text" name="shipper">
+						<p>Notify</p>
+						<input type="text" name="notify">
+						<p>Additional information</p>
+						<input type="text" name="additionalInformation">
+						<p>Contact details</p>
+						<input type="text" name="contactDetails">
+						<input type="submit" class="button charcoal" value="Done">
+					</form>
+				</div>
+			</div>
+		</div>
+		{{~/if~}}
+
+	{{/content}}
+
+{{/extend}}

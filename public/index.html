@@ -11,8 +11,8 @@
 
 
         <link href="./img/logo.png" rel="shortcut icon" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" media="screen" href="./css/vendors/concise.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="../css/vendors/concise.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
 
     </head>
     <body>
@@ -23,19 +23,23 @@
                     <h1>Coot Freight</h1>
                 </div>
 
-                <div class="column-2 float-right">
-                    <a href="/logout">
-                        <p>Logout</p>
-                    </a>
+                <div class="column-6 float-right">
+                    {{#block "header"}}
+                    {{/block}}
                 </div>
             </div>
 
+            {{#block "nav"}}
+            {{/block}}
         </header>
 
         <main class="container">
             {{#block "main"}}
             {{/block}}
         </main>
+
+        {{#block "overlay"}}
+            {{/block}}
 
     </body>
 </html>

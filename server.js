@@ -25,8 +25,6 @@ var server = http.createServer(function (req, res) {
     }
 });
 
-console.log(Config.port);
-
 server.listen(Config.port, function () {
 	console.log('Server running on port:',server.address().port);
 });
