@@ -9,24 +9,36 @@
 		  	handler.home(req, res);
 		});
 
+	/* -------------------------------*
+	 *	   Authentication Routes
+	 * -------------------------------*/
+
+		router.addRoute('/login', function (req, res, match){
+		  	handler.login(req, res);
+		});
+
+	/* -------------------------------*
+	 *	   Order Routes
+	 * -------------------------------*/
+
 		router.addRoute('/orders', function (req, res, match){
 		  	handler.orders(req, res);
 		});
 
-		router.addRoute('/orders/new', function (req, res, match){
+		router.addRoute('/order/id', function (req, res, match){
+		  	handler.viewOrder(req, res);
+		});
+
+		router.addRoute('/order/new', function (req, res, match){
 		  	handler.newOrder(req, res);
 		});
 
-		router.addRoute('/orders/remove', function (req, res, match){
+		router.addRoute('/order/remove', function (req, res, match){
 		  	handler.removeOrder(req, res);
 		});
 
-		router.addRoute('/orders/edit', function (req, res, match){
+		router.addRoute('/order/edit', function (req, res, match){
 		  	handler.editOrder(req, res);
-		});
-
-		router.addRoute('/login', function (req, res, match){
-		  	handler.login(req, res);
 		});
 	};
 

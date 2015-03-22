@@ -4,7 +4,7 @@
 ************************************************/
 
 $primary: #49A4A5;
-$dark: #0A2239;
+$dark: #369394;
 $light: #65DDDF;
 
 $charcoal: #282828;
@@ -17,6 +17,11 @@ $lightest-grey: #FAFAFA;
 @mixin blue-background {
   	background-color: $primary;
   	background-image: linear-gradient($light, $primary);
+}
+
+@mixin blue-hover {
+    background-color: $light;
+    background-image: linear-gradient($light, #56C9CB);
 }
 
 @mixin charcoal-background {

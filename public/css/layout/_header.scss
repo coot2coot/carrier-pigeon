@@ -9,7 +9,9 @@ header {
 		color: white;
 	  	float: right;
 	  	padding: 0.5em 5em 0 0em;
-	  	&:hover {
+	}
+	a {
+		&:hover {
 	  		font-weight: 600;
 	  	}
 	}

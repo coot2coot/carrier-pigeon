@@ -41,10 +41,11 @@
 		<div class="column-14 push-1 model-generic">
 			<div class="panel-header">
 				<h3>Orders</h3>
+				<button class="button blue">+</button>
 				<!-- TODO: search bar here -->
 			</div>
 
-			<div class="panel-body table-responsive">
+			<div class="panel-body table-responsive model-overflow">
 				<table class="table table-full">
 					<th><h5>#</h5></th>
 					<th><h5>Reference</h5></th>
@@ -55,38 +56,59 @@
 				
 				  	{{#each data}}
 				  		<tr>
-				  			<td><p>1</p></td>
-							<td><p>{{bookingRef}}</p></td>
-							<td><p>{{date}}</p></td>
-							<td><p>{{client}}</p></td>
-							<td><p>{{loadingPlace}}</p></td>
-							<td><p>{{deliveryPlace}}</p></td>
+				  			<td><a href="/order/id"><p>1</p></a></td>
+							<td><a href="/order/id"><p>{{bookingRef}}</p></a></td>
+							<td><a href="/order/id"><p>{{date}}</p></a></td>
+							<td><a href="/order/id"><p>{{client}}</p></a></td>
+							<td><a href="/order/id"><p>{{loadingPlace}}</p></a></td>
+							<td><a href="/order/id"><p>{{deliveryPlace}}</p></a></td>
 						</tr>
 					{{/each}}
 				</table>
 			</div>
 		</div>
 
-
-
-		<div class="row">
-			<form action="/orders/new" method="POST">
-				<input type="text" name="date" placeholder="Date">
-				<input type="text" name="consignee" placeholder="Consignee">
-				<input type="text" name="loadingPlace" placeholder="Loading place">
-				<input type="text" name="deliveryPlace" placeholder="Delivery place">
-				<!-- <input type="text" placeholder="Container type/vehicle">
-				<input type="text" placeholder="Reference">
-				<input type="text" placeholder="Commodity description">
-				<input type="text" placeholder="Collection time">
-				<input type="text" placeholder="Shipper">
-				<input type="text" placeholder="Notify">
-				<input type="text" placeholder="Additional information">
-				<input type="text" placeholder="Contact details"> -->
-				<input type="submit" value="submit">
-			</form>
+		{{#if overlay}}
+		<div class="overlay">
+			<div class="column-10 push-3 model-generic model-top">
+				<div class="panel-header">
+					<h3>New entry</h3>
+				</div>
+				<div class="panel-body">
+					<form action="/order/new" method="POST">
+						<p>Reference number</p>
+						<input type="text" name="referenceNumber">
+						<p>Date</p>
+						<input type="text" name="date">
+						<p>Consignee</p>
+						<input type="text" name="consignee">
+						<p>Loading place</p>
+						<input type="text" name="loadingPlace">
+						<p>Delivery place</p>
+						<input type="text" name="deliveryPlace">
+						<p>Container type/vehicle</p>
+						<input type="text" name="containerType">
+						<p>Reference</p>
+						<input type="text" name="reference">
+						<p>Commodity description</p>
+						<input type="text" name="commodityDescription">
+						<p>Collection time</p>
+						<input type="text" name="collectionTime">
+						<p>Shipper</p>
+						<input type="text" name="shipper">
+						<p>Notify</p>
+						<input type="text" name="notify">
+						<p>Additional information</p>
+						<input type="text" name="additionalInformation">
+						<p>Contact details</p>
+						<input type="text" name="contactDetails">
+						<input type="submit" class="button charcoal" value="Done">
+					</form>
+				</div>
+			</div>
 		</div>
-
+		{{#if else}}
+		
 	{{/content}}
 
 {{/extend}}

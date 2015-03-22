@@ -20,11 +20,33 @@
 	    res.end();
 	};
 
+	/* -------------------------------*
+	 *	   Authentication Handlers
+	 * -------------------------------*/
+
+	serverHandlers.login = function (req, res) {
+		res.writeHead(200, { 'Content-Type': 'text/html' });
+		res.end(loginPage());
+	};
+
+	/* -------------------------------*
+	 *	   Order Handlers
+	 * -------------------------------*/
+
 	serverHandlers.orders = function (req, res) {
 		db.get(function (orders) {
 			res.writeHead(200, {"Content-Type" : "text/html"});
 			res.end(ordersPage({ 
 				data: orders
+			}));
+		});
+	};
+
+	serverHandlers.viewOrder = function (req, res) {
+		db.getOne(function (order) {
+			res.writeHead(200, {"Content-Type" : "text/html"});
+			res.end(ordersPage({ 
+				data: order
 			}));
 		});
 	};
@@ -53,11 +75,6 @@
 
 	serverHandlers.editOrder = function (req, res) {
 		//TODO.
-	};
-
-	serverHandlers.login = function (req, res) {
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(loginPage());
 	};
 
 	module.exports = serverHandlers;
