@@ -13,8 +13,8 @@ function connect (request, cb, change) {
 	});
 }
 
-function get (db, orders, cb){
-	orders.find({}).toArray(function (err, docs) {
+function get (db, collection, cb){
+	collection.find({}).toArray(function (err, docs) {
 		if (err) {
 			console.error(err);
 		} else {
@@ -24,28 +24,30 @@ function get (db, orders, cb){
      });
 }
 
-function post (db, orders, cb, order) {
-	orders.insert(order, function (err, result) {
+function post (db, collection, cb, doc) {
+	collection.insert(doc, function (err, result) {
 		if (err) {
 			console.error(err);
 		} else {
 			db.close();
+			cb();
 		}
 	});
 }
 
-function put (db, orders, cb, newOrder) {
-	order.update({_id: ObjectID(newOrder.id)}, function (err) {
+function put (db, collection, cb, doc) {
+	collection.update({_id: ObjectID(doc.id)}, function (err) {
 		if (err) {
 			console.error(err);
 		} else {
 			db.close();
+			cb();
 		}
 	});
 }
 
-function remove (db, orders, cb, newOrder) {
-	order.remove({_id: ObjectID(newOrder.id)}, function (err) {
+function remove (db, collection, cb, doc) {
+	collection.remove({_id: ObjectID(doc.id)}, function (err) {
 		if (err) {
 			console.error(err);
 		} else {
@@ -57,19 +59,19 @@ function remove (db, orders, cb, newOrder) {
 var dataBase = {};
 
 dataBase.get = function (cb) {
-	return connect(get, cb);
+	connect(get, cb);
 }
 
 dataBase.post = function (order, cb) {
-	connect(post, order, cb);
+	connect(post, cb, order);
 }
 
 dataBase.put = function (order, cb) {
-	connect(put, order, cb);
+	connect(put, cb, order);
 }
 
 dataBase.remove = function (order, cb) {
-	connect(remove, order, cb);
+	connect(remove, cb, order);
 }
 
 module.exports = dataBase;
