@@ -33,6 +33,10 @@
 		  	handler.newOrder(req, res);
 		});
 
+		router.addRoute('/order/create', function (req, res, match){
+		  	handler.createOrder(req, res);
+		});
+
 		router.addRoute('/order/remove', function (req, res, match){
 		  	handler.removeOrder(req, res);
 		});

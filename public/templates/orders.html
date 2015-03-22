@@ -41,7 +41,7 @@
 		<div class="column-14 push-1 model-generic">
 			<div class="panel-header">
 				<h3>Orders</h3>
-				<button class="button blue">+</button>
+				<button class="button blue" onclick="window.location.href='/order/new'">+</button>
 				<!-- TODO: search bar here -->
 			</div>
 
@@ -68,14 +68,14 @@
 			</div>
 		</div>
 
-		{{#if overlay}}
+		{{~#if overlay}}
 		<div class="overlay">
 			<div class="column-10 push-3 model-generic model-top">
 				<div class="panel-header">
 					<h3>New entry</h3>
 				</div>
 				<div class="panel-body">
-					<form action="/order/new" method="POST">
+					<form action="/order/create" method="POST">
 						<p>Reference number</p>
 						<input type="text" name="referenceNumber">
 						<p>Date</p>
@@ -107,8 +107,8 @@
 				</div>
 			</div>
 		</div>
-		{{#if else}}
-		
+		{{~/if~}}
+
 	{{/content}}
 
 {{/extend}}

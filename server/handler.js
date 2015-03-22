@@ -37,7 +37,8 @@
 		db.get(function (orders) {
 			res.writeHead(200, {"Content-Type" : "text/html"});
 			res.end(ordersPage({ 
-				data: orders
+				data: orders,
+				overlay: false
 			}));
 		});
 	};
@@ -52,6 +53,17 @@
 	};
 
 	serverHandlers.newOrder = function (req, res) {
+		db.get(function (orders) {
+			res.writeHead(200, {"Content-Type" : "text/html"});
+			res.end(ordersPage({ 
+				data: orders,
+				overlay: true
+			}));
+		});
+	};
+
+	serverHandlers.createOrder = function (req, res) {
+
 		var orderInfo = "";
 
 	  	req.on('data', function (data) {
