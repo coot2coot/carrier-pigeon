@@ -8,21 +8,22 @@
 	var hbsLayouts = require('handlebars-layouts')(Handlebars);
 
 	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
-	var orders = Handlebars.compile(fs.readFileSync('./public/templates/orders.html').toString());
-	var login = Handlebars.compile(fs.readFileSync('./public/templates/login.html').toString());
+	var ordersPage = Handlebars.compile(fs.readFileSync('./public/templates/orders.html').toString());
+	var loginPage = Handlebars.compile(fs.readFileSync('./public/templates/login.html').toString());
 
 	var serverHandlers = {};
 
-
-	var page = {
-	    title: "Booking Notice",
-	    content: "More infomation needed"
+	serverHandlers.home = function (req, res) {
+		res.writeHead(302, {
+  			'Location': '/login'
+  		});
+	    res.end();
 	};
 
 	serverHandlers.orders = function (req, res) {
 		db.get(function (orders) {
 			res.writeHead(200, {"Content-Type" : "text/html"});
-			res.end(orders({ 
+			res.end(ordersPage({ 
 				data: orders
 			}));
 		});
@@ -38,7 +39,6 @@
 		  	var newOrder = querystring.parse(orderInfo);
 
 		  	db.post(newOrder, function() {
-		  		console.log('check your db!')
 		  		res.writeHead(302, {
 		  			'Location': '/orders'
 		  		});
@@ -57,7 +57,7 @@
 
 	serverHandlers.login = function (req, res) {
 		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(login());
+		res.end(loginPage());
 	};
 
 	module.exports = serverHandlers;

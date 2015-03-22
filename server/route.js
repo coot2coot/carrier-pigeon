@@ -5,6 +5,10 @@
 
 	var serverRoutes =  function (router) {
 
+		router.addRoute('/', function (req, res, match){
+		  	handler.home(req, res);
+		});
+
 		router.addRoute('/orders', function (req, res, match){
 		  	handler.orders(req, res);
 		});

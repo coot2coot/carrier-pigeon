@@ -1,0 +1,22 @@
+/***********************************************
+*   DATA TABLE
+*	Description: Colour variables
+************************************************/
+
+table.table th, table.table td {
+  padding: 0.5em;
+}
+
+td {
+	border-right: 0.1em $light-grey solid;
+	border-left: 0.1em $light-grey solid;
+	background: white;
+	p {
+		color: $dark-grey;
+	}
+}
+
+th {
+	@include light-background;
+
+}

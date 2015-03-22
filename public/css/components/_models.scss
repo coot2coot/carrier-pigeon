@@ -2,19 +2,26 @@
 	border-radius: 0.2em;
   	overflow: hidden;
   	@include box-shadow;
-  	top: 35%;
-  	position: absolute;
 	div.panel-header {
 		@include blue-background;
 	}
 	div.panel-body {
 		background: $lightest-grey;
-		padding: 0 1em 2em 1em;
 		border: 0.1em $light-grey solid;
+		max-height: 25em;
+  		overflow: scroll;
 		p {
 			margin-top: 0.7em;
 		}
 	}
+}
+
+.model-middle {
+	top: 35%;
+  	position: absolute;
+  	div.panel-body {
+  		padding: 0 1em 2em 1em;
+  	}
 }
 
 p.small {

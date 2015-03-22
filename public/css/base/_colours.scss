@@ -33,3 +33,8 @@ $lightest-grey: #FAFAFA;
   	background-color: $grey;
   	background-image: linear-gradient($light-grey, $grey);
 }
+
+@mixin light-background {
+  	background-color: $lightest-grey;
+  	background-image: linear-gradient($lightest-grey, $light-grey);
+}

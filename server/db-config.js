@@ -8,7 +8,11 @@ function connect (request, cb, change) {
 		} else {
 			var orders = db.collection('orders');
 
-			request(db, orders, cb, change);
+			if (change) {
+				request(db, orders, cb, change);
+			} else {
+				request(db, orders, cb);
+			}
 		}
 	});
 }
