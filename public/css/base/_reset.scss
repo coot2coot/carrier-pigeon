@@ -8,3 +8,25 @@ body, html {
 	height: 100%;
 	width: 100%;
 }
+
+h1, h2, h3, h4, h5, h6, p ,input{
+	font-family: $font;
+	margin: 0;
+}
+
+h1 {
+	@include company-name;
+}
+
+h2 {
+	@include page-title;
+}
+
+p {
+	font-size: 0.85em;
+	color: $grey;
+}
+
+input {
+	font-size: 0.9em;
+}

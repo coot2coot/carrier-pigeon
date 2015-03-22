@@ -1,2 +1,19 @@
-<div class="column-16">
-</div>
+{{#extend "layout"}}
+
+	{{#content "main" mode="append"}}
+		<div class="column-6 push-5 model-generic">
+			<div class="panel-header">
+				<h2>Login</h2>
+			</div>
+			<div class="panel-body">
+				<p>Username</p>
+				<input type="text" name="username">
+				<p>Password</p>
+				<input type="text" name="passwork">
+				<input type="checkbox" name="remember"><p class="small">Remember me</p>
+				<input type="submit" class="button-charcoal" value="Login">
+			</div>
+		</div>
+	{{/content}}
+
+{{/extend}}

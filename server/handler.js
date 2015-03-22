@@ -8,7 +8,8 @@
 	var hbsLayouts = require('handlebars-layouts')(Handlebars);
 
 	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
-	var template = Handlebars.compile(fs.readFileSync('./public/templates/booking.html').toString());
+	var orders = Handlebars.compile(fs.readFileSync('./public/templates/orders.html').toString());
+	var login = Handlebars.compile(fs.readFileSync('./public/templates/login.html').toString());
 
 	var serverHandlers = {};
 
@@ -21,7 +22,7 @@
 	serverHandlers.orders = function (req, res) {
 		db.get(function (orders) {
 			res.writeHead(200, {"Content-Type" : "text/html"});
-			res.end(template({ 
+			res.end(orders({ 
 				data: orders
 			}));
 		});
@@ -46,9 +47,17 @@
 		});
 	};
 
+	serverHandlers.removeOrder = function (req, res) {
+		//TODO.
+	};
+
+	serverHandlers.editOrder = function (req, res) {
+		//TODO.
+	};
+
 	serverHandlers.login = function (req, res) {
 		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(template());
+		res.end(login());
 	};
 
 	module.exports = serverHandlers;

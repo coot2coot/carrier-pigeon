@@ -1,0 +1,14 @@
+input.button-charcoal {
+	@include charcoal-background;
+	border-radius: 0.4em;
+	border: none;
+	color: white;
+	font-weight: 600;
+	width: 6.5em;
+	padding: 0.15em 0 0.3em;
+	float: right;
+  	margin-top: 1em;
+  	&:hover {
+  		@include charcoal-hover;
+  	}
+}

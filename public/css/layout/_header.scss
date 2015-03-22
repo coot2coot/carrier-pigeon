@@ -4,10 +4,9 @@
 ************************************************/
 
 header {
-	background: $primary;
-	h1 {
-		color: white;
-	}
+	// fallback background for old browsers
+  	background-color: $primary;
+  	background-image: linear-gradient($light, $primary);
 	p {
 		color: $light;
 	}

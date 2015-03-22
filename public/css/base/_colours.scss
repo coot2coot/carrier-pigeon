@@ -5,9 +5,31 @@
 
 $primary: #49A4A5;
 $dark: #0A2239;
-$light: #BEE9E8;
+$light: #65DDDF;
 
-$charcoal: #1C1C1C;
-$grey: #6D8397;
-$light-grey: #D8D7D7;
-$dark-grey: #3C444A;
+$charcoal: #282828;
+$dark-grey: #434343;
+$grey: #6E6E6E;
+$light-grey: #D8D8D8;
+$lightest-grey: #FAFAFA;
+
+
+@mixin blue-background {
+  	background-color: $primary;
+  	background-image: linear-gradient($light, $primary);
+}
+
+@mixin charcoal-background {
+  	background-color: $charcoal;
+  	background-image: linear-gradient($charcoal, $dark-grey);
+}
+
+@mixin charcoal-hover {
+  	background-color: $dark-grey;
+  	background-image: linear-gradient($dark-grey, $grey);
+}
+
+@mixin grey-background {
+  	background-color: $grey;
+  	background-image: linear-gradient($light-grey, $grey);
+}

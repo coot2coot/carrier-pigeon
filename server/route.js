@@ -14,7 +14,11 @@
 		});
 
 		router.addRoute('/orders/remove', function (req, res, match){
-		  	handler.newOrder(req, res);
+		  	handler.removeOrder(req, res);
+		});
+
+		router.addRoute('/orders/edit', function (req, res, match){
+		  	handler.editOrder(req, res);
 		});
 
 		router.addRoute('/login', function (req, res, match){
