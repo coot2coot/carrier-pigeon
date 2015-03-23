@@ -9,6 +9,8 @@ env:
     secure: SE0hRL6Aa2sU9yj5gK+7mWudaCYK8ClvP5MHrDMv46Tdn6GwBdEp8RRgV4Ojl0FvQW+jJZUMpSk3Wv1gNXymiTt/xM2fKGQ1kP9V/IuzQo2WwERmonHaQjgfMBrzPa7ur3nVq8npuAWVPaw9GAEVSH/juF7OMJelByFEN5L6mXI=
 before_install:
 - npm install -g gulp
+- git config --global user.email USER_EMAIL
+- git config --global user.name USER_NAME
 install:
 - npm install
 before_script:
