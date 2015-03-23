@@ -1,5 +1,18 @@
-var mongodb = require('mongodb'),
-	uri = require('./credentials.json').mongodburi || MONGOLAB_URI;
+var mongodb = require('mongodb');
+
+
+try {
+	var uri = require('./credentials.json').mongodburi;
+} catch (err) {
+	console.log(err);
+}
+
+try {
+	var uri = MONGOLAB_URI;
+} catch (err) {
+	console.log(err);
+}
+
 
 function connect (request, cb, change) {
 	return mongodb.MongoClient.connect(uri, function (err, db) {
