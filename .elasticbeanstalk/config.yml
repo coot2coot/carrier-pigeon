@@ -3,6 +3,8 @@ branch-defaults:
     environment: carrier-pigeon-fc-dev
   master:
     environment: carrier-pigeon-fc-dev
+  testing-setup:
+    environment: carrier-pigeon-fc-dev
 global:
   application_name: carrier-pigeon-fc
   default_ec2_keyname: null
