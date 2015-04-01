@@ -68,7 +68,7 @@
         });
     })
 
-    gulp.task('test', ["integration-tests", "unit-tests", "e2e"], function () {
+    gulp.task('test', ["integration-tests", "unit-tests"], function () {
         console.log("Done testing");
     });
 
