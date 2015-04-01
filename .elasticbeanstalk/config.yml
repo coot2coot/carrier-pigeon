@@ -1,0 +1,12 @@
+branch-defaults:
+  amazon:
+    environment: carrier-pigeon-fc-dev
+  master:
+    environment: carrier-pigeon-fc-dev
+global:
+  application_name: carrier-pigeon-fc
+  default_ec2_keyname: null
+  default_platform: Node.js
+  default_region: eu-west-1
+  profile: eb-cli
+  sc: git
