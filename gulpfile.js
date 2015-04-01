@@ -37,7 +37,10 @@
                 cliArgs: {
                     env: 'chrome',
                 }
-            }));
+            }))
+            .on('end', function() {
+                process.kill();
+            })
     });
 
 /*******************************
@@ -53,9 +56,17 @@
     ]));
 
     //Please run task `gulp selenium-install` before running
-    gulp.task("e2e", ["selenium-install"], shell.task([
-        "node_modules/.bin/selenium-standalone start && gulp nightwatch"
-    ]))
+    gulp.task("e2e", ["selenium-install"], function () {
+        nodemon({
+            script: "server.js",
+            ext: "js html",
+            ignore: ["node_modules"]
+        })
+        .on("start", function(){
+            return gulp.src("")
+            .pipe(shell(["node_modules/.bin/selenium-standalone start && gulp nightwatch"]));
+        });
+    })
 
     gulp.task('test', ["integration-tests", "unit-tests", "e2e"], function () {
         console.log("Done testing");
