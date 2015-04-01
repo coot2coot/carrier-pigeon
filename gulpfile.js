@@ -5,7 +5,10 @@
 		sass = require("gulp-sass"),
 		nodemon = require("gulp-nodemon"),
         shell = require('gulp-shell'),
-        nightwatch = require('gulp-nightwatch');
+        nightwatch = require('gulp-nightwatch'),
+        sauceUsername = /*SAUCE_USERNAME ||*/ require("./credentials.json").username,
+        sauceAccessKey = /*SAUCE_ACCESS_KEY ||*/ require("./credentials.json").accessKey,
+        sauceConnectLauncher = require("sauce-connect-launcher");
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
@@ -33,7 +36,7 @@
     gulp.task('nightwatch', function(){
         gulp.src(e2eFiles)
             .pipe(nightwatch({
-                configFile: 'tests/acceptance/nightwatch.json',
+                configFile: 'tests/acceptance/nightwatch.config.json',
                 cliArgs: {
                     env: 'chrome',
                 }
@@ -56,7 +59,7 @@
     ]));
 
     //Please run task `gulp selenium-install` before running
-    gulp.task("e2e", ["selenium-install"], function () {
+    gulp.task("e2e-local", ["selenium-install"], function () {
         nodemon({
             script: "server.js",
             ext: "js html",
@@ -67,6 +70,32 @@
             .pipe(shell(["node_modules/.bin/selenium-standalone start && gulp nightwatch"]));
         });
     })
+
+    //Runs on SauceLabs
+    gulp.task("e2e", function() {
+        sauceConnectLauncher({
+            username: sauceUsername,
+            accessKey: sauceAccessKey
+        }, function (err, sauceConnectProcess) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+            gulp.src(e2eFiles)
+                .pipe(nightwatch({
+                    configFile: 'tests/acceptance/saucelabs.config.json',
+                    cliArgs: {
+                        env: 'chrome',
+                    }
+                }))
+                .on('end', function() {
+                    sauceConnectProcess.close(function () {
+                        console.log("Closed Sauce Connect process");
+                        process.kill();
+                    });
+                });
+            })
+    });
 
     gulp.task('test', ["integration-tests", "unit-tests"], function () {
         console.log("Done testing");
