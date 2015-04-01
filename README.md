@@ -19,3 +19,9 @@ gulp
 ```
 
 This compiles the sass and starts the server
+
+To run all the tests, use 
+
+```
+gulp test
+```

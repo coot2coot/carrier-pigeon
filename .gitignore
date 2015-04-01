@@ -2,3 +2,4 @@ node_modules/
 *.css
 prep/
 credentials.json
+tests/acceptance/reports
