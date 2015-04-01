@@ -4,7 +4,7 @@
 	var fs = require("fs");
 	var querystring = require("querystring");
 	var Handlebars = require("handlebars");
-	var db = require("./db-config.js");
+	// var db = require("./db-config.js");
 	var hbsLayouts = require('handlebars-layouts')(Handlebars);
 
 	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
