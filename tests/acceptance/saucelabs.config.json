@@ -32,7 +32,7 @@
       },
       "desiredCapabilities": {
         "name" : "test-example",
-        "browserName": "firefox"
+        "browserName": "chrome"
       },
       "selenium" : {
         "start_process" : true
@@ -41,7 +41,30 @@
     
     "chrome" : {
       "desiredCapabilities": {
+        "name": "Chrome Carrier-Pigeon",
         "browserName": "chrome",
+        "version": "41.0",
+        "platform": "OS X 10.9",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    },
+    "firefox" : {
+      "desiredCapabilities": {
+        "name": "Firefox Carrier-Pigeon",
+        "browserName": "firefox",
+        "version": "35.0",
+        "platform": "OS X 10.9",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    },
+    "safari" : {
+      "desiredCapabilities": {
+        "name": "Safari Carrier-Pigeon",
+        "browserName": "safari",
+        "version": "8.0",
+        "platform": "OS X 10.10",
         "javascriptEnabled": true,
         "acceptSslCerts": true
       }

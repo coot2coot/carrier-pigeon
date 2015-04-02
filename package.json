@@ -35,6 +35,7 @@
     "istanbul": "^0.3.8",
     "nightwatch": "^0.5.36",
     "nodemon": "^1.3.7",
+    "run-sequence": "^1.0.2",
     "sauce-connect-launcher": "^0.10.3",
     "selenium-standalone": "^4.2.2",
     "shot": "^1.4.2",
