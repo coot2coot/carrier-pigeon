@@ -7,8 +7,8 @@
         shell = require('gulp-shell'),
         nightwatch = require('gulp-nightwatch'),
         runSequence = require('run-sequence'),
-        sauceUsername = /*SAUCE_USERNAME ||*/ require("./credentials.json").username,
-        sauceAccessKey = /*SAUCE_ACCESS_KEY ||*/ require("./credentials.json").accessKey,
+        // sauceUsername = /*SAUCE_USERNAME ||*/ require("./credentials.json").username,
+        // sauceAccessKey = /*SAUCE_ACCESS_KEY ||*/ require("./credentials.json").accessKey,
         sauceConnectLauncher = require("sauce-connect-launcher");
 
 

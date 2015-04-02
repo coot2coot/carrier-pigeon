@@ -31,4 +31,3 @@ deploy:
     region: eu-west-1
     app: carrier-pigeon-fac
     env: carrierPigeonFac-env
-    # bucket_name: <S3 bucket name that is used by elastic beanstalk>
