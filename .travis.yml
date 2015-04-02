@@ -1,12 +1,12 @@
 branches:
-  only:
-  - master
+    only:
+    - master
 language: node_js
 node_js:
 - 0.10.32
 env:
-  global:
-    secure: SE0hRL6Aa2sU9yj5gK+7mWudaCYK8ClvP5MHrDMv46Tdn6GwBdEp8RRgV4Ojl0FvQW+jJZUMpSk3Wv1gNXymiTt/xM2fKGQ1kP9V/IuzQo2WwERmonHaQjgfMBrzPa7ur3nVq8npuAWVPaw9GAEVSH/juF7OMJelByFEN5L6mXI=
+    global:
+        secure: SE0hRL6Aa2sU9yj5gK+7mWudaCYK8ClvP5MHrDMv46Tdn6GwBdEp8RRgV4Ojl0FvQW+jJZUMpSk3Wv1gNXymiTt/xM2fKGQ1kP9V/IuzQo2WwERmonHaQjgfMBrzPa7ur3nVq8npuAWVPaw9GAEVSH/juF7OMJelByFEN5L6mXI=
 before_install:
 - npm install -g gulp
 - git config --global user.email USER_EMAIL
@@ -24,6 +24,12 @@ before_deploy:
 - git add -A 
 - git commit -m "carrier-pigeon-beta"
 deploy:
-  provider: heroku
-  api_key: a936e391-014f-4d64-8cff-01eb58e469cb
-  app: carrier-pigeon-beta
+    provider: elasticbeanstalk
+    access_key_id: ACCESS_KEY_ID
+    secret_access_key:
+        secure: CpvUTN0SP7HVOZ+DMozJj7nEeXD/8tpjJ4zmFEEVd7y4auViIY5HerIl09KgC9fnh2shKaTf35Xdgw1IGtRPERwvlkSt80PvgxMdvX5c3Jq2rVCKonWVi8ZBv9mNeHHWtK61agt1wBv3H4Yckoodg2NrwD2J5AZ4Dwj7t2LYlSA=
+    region: eu-west-1
+    app: carrier-pigeon-fc-dev
+    # two below you may need it.
+    # env: carrier-pigeon-fc-dev
+    # bucket_name: <S3 bucket name that is used by elastic beanstalk>
