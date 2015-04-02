@@ -1,12 +1,13 @@
 branches:
-    only:
-    - master
+  only:
+  - master
 language: node_js
 node_js:
 - 0.10.32
 env:
-    global:
-        secure: SE0hRL6Aa2sU9yj5gK+7mWudaCYK8ClvP5MHrDMv46Tdn6GwBdEp8RRgV4Ojl0FvQW+jJZUMpSk3Wv1gNXymiTt/xM2fKGQ1kP9V/IuzQo2WwERmonHaQjgfMBrzPa7ur3nVq8npuAWVPaw9GAEVSH/juF7OMJelByFEN5L6mXI=
+  global:
+  - secure: SE0hRL6Aa2sU9yj5gK+7mWudaCYK8ClvP5MHrDMv46Tdn6GwBdEp8RRgV4Ojl0FvQW+jJZUMpSk3Wv1gNXymiTt/xM2fKGQ1kP9V/IuzQo2WwERmonHaQjgfMBrzPa7ur3nVq8npuAWVPaw9GAEVSH/juF7OMJelByFEN5L6mXI=
+  - secure: LccbIclRLUkFxwvaJN/GJWuuo3j2uKd46kBjaWvZCG5EE/4AFLLez/CRZZQJOfPPCWUEW+cYYT80QF2aEwQW+iNgr0ZZTrAeANWNU49Dre0cZteIqmDcmdd/wkw/93hFNw5cG9AaRuL9oxwcD3rLqoyMzuOhdQfxdNwoULyAQUA=
 before_install:
 - npm install -g gulp
 - git config --global user.email USER_EMAIL
@@ -21,13 +22,12 @@ script:
 - gulp build
 before_deploy:
 - git status
-- git add -A 
+- git add -A
 - git commit -m "carrier-pigeon-beta"
 deploy:
-    provider: elasticbeanstalk
-    access_key_id: ACCESS_KEY_ID
-    secret_access_key:
-        secure: cCPvl0VM0A9p850n07HNEA0fLlp+ls63VLaZ5sGTg/M+gxcOocGeIHpQldy5YQdB4w5OqZikoQlA0Q7tZQ4bW+IJNL5Z4vt0Ps6c5Pjw+vU3qjsktqiyw6RecJPrBxjGkrbS8hdIexx00yAuVpOSdVrD+uBmXWG/QBWwgPUDpWA=
-    region: eu-west-1
-    app: carrier-pigeon-fac
-    env: carrierPigeonFac-env
+  provider: elasticbeanstalk
+  access_key_id: ACCESS_KEY_ID
+  secret_access_key: SECRET_ACCESS_KEY
+  region: eu-west-1
+  app: carrier-pigeon-fac
+  env: carrierPigeonFac-env
