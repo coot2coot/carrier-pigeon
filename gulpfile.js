@@ -4,16 +4,44 @@
 	var gulp = require("gulp"),
 		sass = require("gulp-sass"),
 		nodemon = require("gulp-nodemon"),
-        shell = require('gulp-shell');
+        shell = require('gulp-shell'),
+        nightwatch = require('gulp-nightwatch');
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
-		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"];
+		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"],
+        e2eFiles = ["./tests/acceptance/landing.js"];
 
+
+/*******************************
+*       PREREQUISITE TASKS
+********************************/
 
     gulp.task('open', shell.task([
       'open http://localhost:8000'
     ]));
+
+    gulp.task('selenium-install', shell.task([
+        'node_modules/.bin/selenium-standalone install'
+    ]))
+
+    gulp.task('selenium-start',shell.task([
+        'node_modules/.bin/selenium-standalone start'
+    ]))
+
+     //Need a selenium server to run with this.
+    gulp.task('nightwatch', function(){
+        gulp.src(e2eFiles)
+            .pipe(nightwatch({
+                configFile: 'tests/acceptance/nightwatch.json',
+                cliArgs: {
+                    env: 'chrome',
+                }
+            }))
+            .on('end', function() {
+                process.kill();
+            })
+    });
 
 /*******************************
 *       TEST TASKS
@@ -26,6 +54,19 @@
     gulp.task('unit-tests', shell.task([
       'tape tests/unit/*.js'
     ]));
+
+    //Please run task `gulp selenium-install` before running
+    gulp.task("e2e", ["selenium-install"], function () {
+        nodemon({
+            script: "server.js",
+            ext: "js html",
+            ignore: ["node_modules"]
+        })
+        .on("start", function(){
+            return gulp.src("")
+            .pipe(shell(["node_modules/.bin/selenium-standalone start && gulp nightwatch"]));
+        });
+    })
 
     gulp.task('test', ["integration-tests", "unit-tests"], function () {
         console.log("Done testing");
