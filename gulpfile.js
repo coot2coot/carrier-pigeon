@@ -198,13 +198,20 @@
     });
 
     gulp.task("deploy", ["build", "test"] , function() {
-        gulp.src(e2eFiles)
-            .pipe(nightwatch({
-                configFile: 'tests/acceptance/saucelabs.conf.js',
-                cliArgs: {
-                    env: 'chrome'
-                  }
-            }))
+        nodemon({
+            script: "server.js",
+            ext: "js html",
+            ignore: ["node_modules"]
+        })
+        .on("start", function(){
+            return gulp.src(e2eFiles)
+                .pipe(nightwatch({
+                    configFile: 'tests/acceptance/saucelabs.conf.js',
+                    cliArgs: {
+                        env: 'chrome'
+                      }
+                }));
+        })
     });
 
 	gulp.task("default",["build","open"], function() {
