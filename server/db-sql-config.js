@@ -1,5 +1,5 @@
 var pg = require("pg");
-var param = "postgres://" +require('./credentials.js').postgres+"/carrier-pigeon-dev";
+var param = "postgres://" +require('../credentials.json').postgres+"/carrier-pigeon-dev";
 ;
 var client = new pg.Client(param);
 var dataBase = {};
@@ -25,7 +25,7 @@ function get(table, cb) {
 }
 
 function put(table, cb, doc) {
-	client.query('INSERT INTO ' + table + ' ' + doc.columns' VALUES ' + doc.values, function(err, result) {
+	client.query('INSERT INTO ' + table + ' ' + doc.columns+' VALUES ' + doc.values, function(err, result) {
 	    if(err) {
 	      return console.error('error running query', err);
 	    }
@@ -35,7 +35,7 @@ function put(table, cb, doc) {
 }
 
 function remove(table, cb, doc) {
-	client.query('DELETE FROM ' + table + ' WHERE ' + cd.column' = ' + cd.column.values, function(err, result) {
+	client.query('DELETE FROM ' + table + ' WHERE ' + cd.column +' = ' + cd.column.values, function(err, result) {
 	    if(err) {
 	      return console.error('error running query', err);
 	    }
