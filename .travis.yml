@@ -26,8 +26,8 @@ before_deploy:
 - git commit -m "carrier-pigeon-beta"
 deploy:
   provider: elasticbeanstalk
-  access_key_id: ACCESS_KEY_ID
-  secret_access_key: ACCESS_KEY_SECRET
+  access_key_id: AKIAJAURREM62SU3KNYQ
+  secret_access_key: 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
   region: eu-west-1
   app: carrier-pigeon-fac
   env: carrierPigeonFac-env
