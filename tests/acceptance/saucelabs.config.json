@@ -21,8 +21,8 @@
     "default" : {
       "selenium_host" : "ondemand.saucelabs.com",
       "selenium_port" : 80,
-      "username" : "NataliaLKB",
-      "access_key" : "39f494a3-0105-4c98-902e-f69773ff053e",
+      "username" : "SAUCE_USERNAME",
+      "access_key" : "SAUCE_ACCESS_KEY",
       "use_ssl" : false,
       "silent" : true,
       "output" : true,
@@ -35,11 +35,22 @@
         "browserName": "chrome"
       },
       "selenium" : {
-        "start_process" : true
+        "start_process" : false
       }
     },
     
     "chrome" : {
+      "selenium_host" : "ondemand.saucelabs.com",
+      "selenium_port" : 80,
+      "username" : "SAUCE_USERNAME",
+      "access_key" : "SAUCE_ACCESS_KEY",
+      "use_ssl" : false,
+      "silent" : true,
+      "output" : true,
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
       "desiredCapabilities": {
         "name": "Chrome Carrier-Pigeon",
         "browserName": "chrome",
@@ -47,9 +58,23 @@
         "platform": "OS X 10.9",
         "javascriptEnabled": true,
         "acceptSslCerts": true
+      },
+      "selenium" : {
+        "start_process" : false
       }
     },
     "firefox" : {
+      "selenium_host" : "ondemand.saucelabs.com",
+      "selenium_port" : 80,
+      "username" : "SAUCE_USERNAME",
+      "access_key" : "SAUCE_ACCESS_KEY",
+      "use_ssl" : false,
+      "silent" : true,
+      "output" : true,
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
       "desiredCapabilities": {
         "name": "Firefox Carrier-Pigeon",
         "browserName": "firefox",
@@ -57,9 +82,23 @@
         "platform": "OS X 10.9",
         "javascriptEnabled": true,
         "acceptSslCerts": true
+      },
+      "selenium" : {
+        "start_process" : false
       }
     },
     "safari" : {
+      "selenium_host" : "ondemand.saucelabs.com",
+      "selenium_port" : 80,
+      "username" : "SAUCE_USERNAME",
+      "access_key" : "SAUCE_ACCESS_KEY",
+      "use_ssl" : false,
+      "silent" : true,
+      "output" : true,
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
       "desiredCapabilities": {
         "name": "Safari Carrier-Pigeon",
         "browserName": "safari",
@@ -67,6 +106,9 @@
         "platform": "OS X 10.10",
         "javascriptEnabled": true,
         "acceptSslCerts": true
+      },
+      "selenium" : {
+        "start_process" : false
       }
     }
   }
