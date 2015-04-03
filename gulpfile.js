@@ -55,7 +55,7 @@
             }
             gulp.src(e2eFiles)
                 .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
+                    configFile: 'tests/acceptance/nightwatch.conf.js',
                     cliArgs: {
                         env: 'chrome'
                     }
@@ -79,7 +79,7 @@
             }
             gulp.src(e2eFiles)
                 .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
+                    configFile: 'tests/acceptance/nightwatch.conf.js',
                     cliArgs: {
                         env: 'safari'
                     }
@@ -103,7 +103,7 @@
             }
             gulp.src(e2eFiles)
                 .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
+                    configFile: 'tests/acceptance/nightwatch.conf.js',
                     cliArgs: {
                         env: 'firefox'
                     }
@@ -206,7 +206,7 @@
         .on("start", function(){
             return gulp.src(e2eFiles)
                 .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
+                    configFile: 'tests/acceptance/nightwatch.conf.js',
                     cliArgs: {
                         env: 'chrome'
                       }
