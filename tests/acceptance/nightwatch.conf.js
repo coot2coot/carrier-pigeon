@@ -1,4 +1,4 @@
-{
+module.exports = {
     "src_folders" : ["./tests/acceptance"],
     "output_folder" : "./tests/acceptance/reports",
     "custom_commands_path" : "",
