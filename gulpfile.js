@@ -202,7 +202,7 @@
             .pipe(nightwatch({
                 configFile: 'tests/acceptance/saucelabs.conf.js',
                 cliArgs: {
-                    env: 'safari'
+                    env: 'chrome'
                   }
             }))
     });
