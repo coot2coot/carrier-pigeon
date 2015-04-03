@@ -27,7 +27,8 @@ before_deploy:
 deploy:
   provider: elasticbeanstalk
   access_key_id: ACCESS_KEY_ID
-  secret_access_key: ACCESS_SECRET
+  secret_access_key: ACCESS_KEY_SECRET
   region: eu-west-1
   app: carrier-pigeon-fac
   env: carrierPigeonFac-env
+  bucket_name: carrier-pigeon-1428062159
