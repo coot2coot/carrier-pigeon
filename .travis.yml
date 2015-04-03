@@ -7,7 +7,6 @@ node_js:
 env:
   global:
   - secure: SE0hRL6Aa2sU9yj5gK+7mWudaCYK8ClvP5MHrDMv46Tdn6GwBdEp8RRgV4Ojl0FvQW+jJZUMpSk3Wv1gNXymiTt/xM2fKGQ1kP9V/IuzQo2WwERmonHaQjgfMBrzPa7ur3nVq8npuAWVPaw9GAEVSH/juF7OMJelByFEN5L6mXI=
-  - secure: LccbIclRLUkFxwvaJN/GJWuuo3j2uKd46kBjaWvZCG5EE/4AFLLez/CRZZQJOfPPCWUEW+cYYT80QF2aEwQW+iNgr0ZZTrAeANWNU49Dre0cZteIqmDcmdd/wkw/93hFNw5cG9AaRuL9oxwcD3rLqoyMzuOhdQfxdNwoULyAQUA=
 before_install:
 - npm install -g gulp
 - git config --global user.email USER_EMAIL
@@ -26,8 +25,10 @@ before_deploy:
 - git commit -m "carrier-pigeon-beta"
 deploy:
   provider: elasticbeanstalk
-  access_key_id: AKIAJAURREM62SU3KNYQ
-  secret_access_key: 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
+  access_key_id: 
+    secure: "IsDxXIPQ/i68tZihBLAcswGN84LrItGcGG2/B/Zjm8N97pDHaWwDlluBWWNCDbNioZEiyDfDb8oqylh8qdKO8H568sIoFAU7T5GRPyePBPYWCJ4P3S2vVxDu13WZfRiZNB/5z65/Srh3gMw/WYIiJgOiNbB/6dCh5eS+VJSYNFs="
+  secret_access_key: 
+    secure: "EwPzSAJ69KU0K/DbTrnZ1B/vFiVfhwgVH5k2HnIp/fOENRWOec96siYU0IoCQVHPNecxJzGpbRlAWCGGicEhXSYrLCmQgcnzYBEbR1LdU5tBcrXEsrvXvw2d4Z4dEKV6SXZ2IKXCC0vxHeS9MJtlyy0IJiVcUrRJsjSEwD5f58Y="
   region: eu-west-1
   app: carrier-pigeon-fac
   env: carrierPigeonFac-env
