@@ -197,7 +197,7 @@
         return console.log("done building");
     });
 
-    gulp.task("deploy", ["build", "test"] , function() {
+    gulp.task("deploy", ["build"] , function() {
         nodemon({
             script: "server.js",
             ext: "js html",
