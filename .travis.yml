@@ -26,9 +26,9 @@ before_deploy:
 deploy:
   provider: elasticbeanstalk
   access_key_id: 
-    secure: "IsDxXIPQ/i68tZihBLAcswGN84LrItGcGG2/B/Zjm8N97pDHaWwDlluBWWNCDbNioZEiyDfDb8oqylh8qdKO8H568sIoFAU7T5GRPyePBPYWCJ4P3S2vVxDu13WZfRiZNB/5z65/Srh3gMw/WYIiJgOiNbB/6dCh5eS+VJSYNFs="
+    secure: IsDxXIPQ/i68tZihBLAcswGN84LrItGcGG2/B/Zjm8N97pDHaWwDlluBWWNCDbNioZEiyDfDb8oqylh8qdKO8H568sIoFAU7T5GRPyePBPYWCJ4P3S2vVxDu13WZfRiZNB/5z65/Srh3gMw/WYIiJgOiNbB/6dCh5eS+VJSYNFs=
   secret_access_key: 
-    secure: "EwPzSAJ69KU0K/DbTrnZ1B/vFiVfhwgVH5k2HnIp/fOENRWOec96siYU0IoCQVHPNecxJzGpbRlAWCGGicEhXSYrLCmQgcnzYBEbR1LdU5tBcrXEsrvXvw2d4Z4dEKV6SXZ2IKXCC0vxHeS9MJtlyy0IJiVcUrRJsjSEwD5f58Y="
+    secure: NNNaCVkBBP6w6dVZMUP89mcU5Dfi25txkANmsZN6AUI8ygsvRx6XaQKhzqaqKVheC4owfbyZqZYJzICyprtj+ZOzm0TPSazt9Okl6R5wo24+4nuq3RNyC5KJ/nlwS0ra9sxQ7TXDBI7876xyFgLhSjsF5oc1p0LzGw/H21aJ1lw=
   region: eu-west-1
   app: carrier-pigeon-fac
   env: carrierPigeonFac-env
