@@ -1,5 +1,5 @@
 var pg = require("pg");
-var param = "postgres://benjaminlees:pofywbi0@aa2xurcp6gqkuq.cbp7s6d11jp7.eu-west-1.rds.amazonaws.com:5432/carrier-pigeon-dev";
+var param = "postgres://" +require('./credentials.js').postgres+"/carrier-pigeon-dev";
 ;
 var client = new pg.Client(param);
 var dataBase = {};
