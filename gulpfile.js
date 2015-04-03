@@ -200,19 +200,19 @@
     gulp.task("deploy", ["build", "test"] , function() {
         gulp.src(e2eFiles)
             .pipe(nightwatch({
-                configFile: 'tests/acceptance/nightwatch.config.json',
+                configFile: 'tests/acceptance/saucelabs.config.json',
                 cliArgs: {
                     env: 'safari'
                   }
             }))
             .pipe(nightwatch({
-                configFile: 'tests/acceptance/nightwatch.config.json',
+                configFile: 'tests/acceptance/saucelabs.config.json',
                 cliArgs: {
                     env: 'chrome'
                   }
             }))
             .pipe(nightwatch({
-                configFile: 'tests/acceptance/nightwatch.config.json',
+                configFile: 'tests/acceptance/saucelabs.config.json',
                 cliArgs: {
                     env: 'firfox'
                   }
