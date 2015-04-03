@@ -197,6 +197,16 @@
         return console.log("done building");
     });
 
+    gulp.task("deploy", ["build", "test"] , function() {
+        gulp.src(e2eFiles)
+            .pipe(nightwatch({
+                configFile: 'tests/acceptance/saucelabs.config.json',
+                cliArgs: {
+                    env: 'safari'
+                  }
+            }))
+    });
+
 	gulp.task("default",["build","open"], function() {
         nodemon({
             script: "server.js",
