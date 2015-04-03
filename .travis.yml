@@ -7,6 +7,10 @@ node_js:
 env:
   global:
   - secure: SE0hRL6Aa2sU9yj5gK+7mWudaCYK8ClvP5MHrDMv46Tdn6GwBdEp8RRgV4Ojl0FvQW+jJZUMpSk3Wv1gNXymiTt/xM2fKGQ1kP9V/IuzQo2WwERmonHaQjgfMBrzPa7ur3nVq8npuAWVPaw9GAEVSH/juF7OMJelByFEN5L6mXI=
+  - secure: OYV0Q68p+wMZWw2EpGl/LdqZ1lmnhb16Qv+AMRKnNO3S8TpeFQyRYJ90uya+9dvGN4azhKLjtDQ/QhXIdeIyDz/47Gvj0o8WGiSinnsFeqSNOjN073BiK7r7+7SzgpVTJSR6Jp44D5qh2QZ5qZr9ppJ+3jcc5VXDc2JSCSKjJzE=
+  - secure: KFhvXwzrG6KM+ksePLZPLrkjvN4SfgDDetfSpi6At3vkm+kfvmaCL3D++n/rD0Nhztv81yyEKEdbTgoUHP0mZz24qo5LnRITuR3cWvQQtupqBC78jYfV4N0lzL35TbkrA9NUK04BImBAuN3INx1RAquh/Q//3qkyszjHDQep8aY=
+addons:
+  sauce_connect: true
 before_install:
 - npm install -g gulp
 - git config --global user.email USER_EMAIL
@@ -18,7 +22,7 @@ before_script:
 - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
 - echo node_modules/ > .gitignore
 script:
-- gulp build
+- gulp deploy
 before_deploy:
 - git status
 - git add -A
@@ -33,3 +37,5 @@ deploy:
   app: carrier-pigeon-fac
   env: carrierPigeonFac-env
   bucket_name: carrier-pigeon-1428062159
+  on:
+    branch: master
