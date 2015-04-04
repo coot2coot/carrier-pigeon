@@ -10,7 +10,7 @@ var webdriver = require('selenium-webdriver'),
     driver;
 
 var Capabilities = {
-	BROWSER_NAME: 'Chrome'
+	BROWSER_NAME: 'Safari'
 }
 
 function landingTests () {
@@ -18,9 +18,9 @@ function landingTests () {
 	    this.timeout(15000);
 
 	    before(function(){
-	        driver = new webdriver.Builder().
-	            withCapabilities(webdriver.Capabilities.chrome()).
-	            build();
+	        driver = new webdriver.Builder()
+	            .withCapabilities(Capabilities)
+	            .build();
 	    });
 
 	    it('if not authenticated, should redirect to login page', function() {
