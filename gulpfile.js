@@ -7,8 +7,8 @@
         shell = require('gulp-shell'),
         nightwatch = require('gulp-nightwatch'),
         runSequence = require('run-sequence'),
-        sauceUsername = process.env.SAUCE_USERNAME || require("./credentials.json").username,
-        sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey,
+        sauceUsername = process.env.SAUCE_USERNAME, //|| require("./credentials.json").username,
+        sauceAccessKey = process.env.SAUCE_ACCESS_KEY, //|| require("./credentials.json").accesskey,
         sauceConnectLauncher = require("sauce-connect-launcher");
 
 
@@ -55,7 +55,7 @@
             }
             gulp.src(e2eFiles)
                 .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
+                    configFile: 'tests/acceptance/nightwatch.conf.js',
                     cliArgs: {
                         env: 'chrome'
                     }
@@ -79,7 +79,7 @@
             }
             gulp.src(e2eFiles)
                 .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
+                    configFile: 'tests/acceptance/nightwatch.conf.js',
                     cliArgs: {
                         env: 'safari'
                     }
@@ -98,12 +98,12 @@
             accessKey: sauceAccessKey
         }, function (err, sauceConnectProcess) {
             if (err) {
-              console.error(err.message);
-              return;
+                console.error(err.message);
+                return;
             }
             gulp.src(e2eFiles)
                 .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
+                    configFile: 'tests/acceptance/nightwatch.conf.js',
                     cliArgs: {
                         env: 'firefox'
                     }
@@ -197,14 +197,26 @@
         return console.log("done building");
     });
 
-    gulp.task("deploy", ["build", "test"] , function() {
-        gulp.src(e2eFiles)
-            .pipe(nightwatch({
-                configFile: 'tests/acceptance/saucelabs.conf.js',
-                cliArgs: {
-                    env: 'chrome'
-                  }
-            }))
+    gulp.task("deploy", ["build"] , function() {
+        nodemon({
+            script: "server.js",
+            ext: "js html",
+            ignore: ["node_modules"]
+        })
+        .on("start", function(){
+            console.log("Tests starting!")
+            return gulp.src(e2eFiles)
+                .pipe(nightwatch({
+                    configFile: 'tests/acceptance/nightwatch.conf.js',
+                    cliArgs: {
+                        env: 'chrome'
+                      }
+                }))
+                .on('end', function() {
+                    console.log("tests finished!");
+                    process.kill();
+                });
+        })
     });
 
 	gulp.task("default",["build","open"], function() {
