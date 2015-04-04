@@ -48,6 +48,7 @@ nightwatchConfig = {
             "use_ssl" : false,
             "silent" : true,
             "output" : true,
+            "passed": true,
             "screenshots" : {
                 "enabled" : false,
                 "path" : ""
@@ -72,6 +73,7 @@ nightwatchConfig = {
             "use_ssl" : false,
             "silent" : true,
             "output" : true,
+            "passed": true,
             "screenshots" : {
                 "enabled" : false,
                 "path" : ""
@@ -96,6 +98,7 @@ nightwatchConfig = {
             "use_ssl" : false,
             "silent" : true,
             "output" : true,
+            "passed": true,
             "screenshots" : {
                 "enabled" : false,
                 "path" : ""
