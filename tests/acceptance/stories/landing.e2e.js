@@ -9,6 +9,9 @@ var webdriver = require('selenium-webdriver'),
     expect = chai.expect,
     driver;
 
+var Capabilities = {
+	BROWSER_NAME: 'Chrome'
+}
 
 function landingTests () {
 	describe('When site loads', function(){
