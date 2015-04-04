@@ -20,8 +20,15 @@ gulp
 
 This compiles the sass and starts the server
 
-To run all the tests, use 
+To run all the tests first use command:
+
+```
+npm install chromedriver -g
+```
+
+Then use 
 
 ```
 gulp test
+gulp e2e-local
 ```

@@ -1,33 +1,37 @@
-var landingTests = {};
+var webdriver = require('selenium-webdriver'),
+    test = require('selenium-webdriver/testing'),
+    chai = require('chai'),
+    
+    describe = test.describe,
+    it = test.it,
+    before = test.before,
+    after = test.after,
+    expect = chai.expect,
+    driver;
 
-landingTests.beforeEach = function (browser) {
-	browser.url("http://localhost:8000");
+
+function landingTests () {
+	describe('My Website', function(){
+	    this.timeout(15000);
+
+	    before(function(){
+	        driver = new webdriver.Builder().
+	            withCapabilities(webdriver.Capabilities.chrome()).
+	            build();
+	    });
+
+	    it('should work', function() {
+
+	        driver.get('http://localhost:8000');
+
+	        
+	    });
+
+	    after(function(){
+	        driver.quit();
+	    });
+	});
 }
 
-landingTests["title is correct"] = function (browser) {
-	browser
-		.assert.title("Coot Freight");
-}
-
-landingTests["You are correctly redirected to the login page"] = function (browser) {
-	browser
-		.assert.urlContains('login');
-}
-
-landingTests["Header has correct company name"] = function (browser) {
-	browser
-		.assert.containsText("h1", "Coot Freight");
-}
-
-// landingTests["When you enter a username and password, "] = function (browser) {
-// 	browser
-// 		.waitForElementVisible('input[type=submit]', 5000)
-// 		.setValue("input[name='username']", "username")
-// 		.setValue("input[name='password']", "password")
-// 		.click('input[type=submit]')  
-// 		.waitForElementVisible('main.container', 5000)
-// 		.assert.urlContains('orders')
-// 		.end();
-// }
 
 module.exports = landingTests;
