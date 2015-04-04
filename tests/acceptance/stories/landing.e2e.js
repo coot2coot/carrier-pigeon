@@ -11,7 +11,7 @@ var webdriver = require('selenium-webdriver'),
 
 
 function landingTests () {
-	describe('My Website', function(){
+	describe('When site loads', function(){
 	    this.timeout(15000);
 
 	    before(function(){
@@ -20,11 +20,12 @@ function landingTests () {
 	            build();
 	    });
 
-	    it('should work', function() {
+	    it('if not authenticated, should redirect to login page', function() {
 
 	        driver.get('http://localhost:8000');
-
-	        
+	        driver.getCurrentUrl().then(function(url) {
+	        	expect(url).to.have.string("login");
+	        })
 	    });
 
 	    after(function(){

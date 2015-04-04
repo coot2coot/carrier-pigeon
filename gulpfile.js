@@ -47,7 +47,11 @@
             return gulp.src(e2eFiles)
             .pipe(mocha({
                 reporter: 'nyan'
-            }));
+            }))
+            .on("end", function() {
+                console.log("Tests finished");
+                process.exit();
+            });
         });
     });
 
