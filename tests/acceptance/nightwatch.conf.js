@@ -42,7 +42,6 @@ nightwatchConfig = {
         
         "chrome" : {
             "selenium_host" : "ondemand.saucelabs.com",
-            "selenium_port" : 80,
             "username" : sauceUsername,
             "access_key" : sauceAccessKey,
             "use_ssl" : false,
@@ -67,7 +66,6 @@ nightwatchConfig = {
 
         "firefox" : {
             "selenium_host" : "ondemand.saucelabs.com",
-            "selenium_port" : 80,
             "username" : sauceUsername,
             "access_key" : sauceAccessKey,
             "use_ssl" : false,
@@ -92,7 +90,6 @@ nightwatchConfig = {
 
         "safari" : {
             "selenium_host" : "ondemand.saucelabs.com",
-            "selenium_port" : 80,
             "username" : sauceUsername,
             "access_key" : sauceAccessKey,
             "use_ssl" : false,

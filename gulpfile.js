@@ -198,42 +198,25 @@
     });
 
     gulp.task("deploy", ["build"] , function() {
-        sauceConnectLauncher({
-            username: sauceUsername,
-            accessKey: sauceAccessKey
-        }, function (err, sauceConnectProcess) {
-            if (err) {
-                console.log(sauceUsername);
-              console.error(err.message);
-              return;
-            }
-            gulp.src(e2eFiles)
+        nodemon({
+            script: "server.js",
+            ext: "js html",
+            ignore: ["node_modules"]
+        })
+        .on("start", function(){
+            console.log("Tests starting!")
+            return gulp.src(e2eFiles)
                 .pipe(nightwatch({
                     configFile: 'tests/acceptance/nightwatch.conf.js',
                     cliArgs: {
-                        env: 'safari'
-                    }
+                        env: 'chrome'
+                      }
                 }))
-                .on("end", function() {
-                    sauceConnectProcess.close(function () {
-                        console.log("Closed Sauce Connect process");
-                    });
+                .on('end', function() {
+                    console.log("tests finished!");
+                    process.kill();
                 });
-            });
-        // nodemon({
-        //     script: "server.js",
-        //     ext: "js html",
-        //     ignore: ["node_modules"]
-        // })
-        // .on("start", function(){
-        //     return gulp.src(e2eFiles)
-        //         .pipe(nightwatch({
-        //             configFile: 'tests/acceptance/nightwatch.conf.js',
-        //             cliArgs: {
-        //                 env: 'chrome'
-        //               }
-        //         }));
-        // })
+        })
     });
 
 	gulp.task("default",["build","open"], function() {
