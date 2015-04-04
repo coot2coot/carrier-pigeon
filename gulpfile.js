@@ -7,8 +7,8 @@
         shell = require('gulp-shell'),
         nightwatch = require('gulp-nightwatch'),
         runSequence = require('run-sequence'),
-        // sauceUsername = process.env.SAUCE_USERNAME || require("./credentials.json").username,
-        // sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey,
+        sauceUsername = process.env.SAUCE_USERNAME || require("./credentials.json").username,
+        sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey,
         sauceConnectLauncher = require("sauce-connect-launcher");
 
 
@@ -98,8 +98,8 @@
             accessKey: sauceAccessKey
         }, function (err, sauceConnectProcess) {
             if (err) {
-              console.error(err.message);
-              return;
+                console.error(err.message);
+                return;
             }
             gulp.src(e2eFiles)
                 .pipe(nightwatch({
