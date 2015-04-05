@@ -133,7 +133,13 @@
             return gulp.src(e2eFiles)
             .pipe(mocha({
                 reporter: 'nyan'
-            }));
+            }))
+            .once('error', function () {
+                process.exit(1);
+            })
+            .once('end', function () {
+                process.exit();
+            });
         });
     });
 
