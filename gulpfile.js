@@ -5,16 +5,15 @@
 		sass = require("gulp-sass"),
 		nodemon = require("gulp-nodemon"),
         shell = require('gulp-shell'),
-        nightwatch = require('gulp-nightwatch'),
-        runSequence = require('run-sequence'),
-        sauceUsername = process.env.SAUCE_USERNAME || require("./credentials.json").username,
-        sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey,
+        mocha = require('gulp-mocha'),
+        sauceUsername = process.env.SAUCE_USERNAME, //|| require("./credentials.json").username,
+        sauceAccessKey = process.env.SAUCE_ACCESS_KEY, //|| require("./credentials.json").accesskey,
         sauceConnectLauncher = require("sauce-connect-launcher");
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
 		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"],
-        e2eFiles = ["./tests/acceptance/landing.js"];
+        e2eFiles = ["./tests/acceptance/test.js"];
 
 
 /*******************************
@@ -24,97 +23,6 @@
     gulp.task('open', shell.task([
       'open http://localhost:8000'
     ]));
-
-    gulp.task('selenium-install', shell.task([
-        'node_modules/.bin/selenium-standalone install'
-    ]));
-
-    gulp.task('selenium-start',shell.task([
-        'node_modules/.bin/selenium-standalone start'
-    ]));
-
-     //Need a selenium server to run with this.
-    gulp.task('nightwatch', function(){
-        gulp.src(e2eFiles)
-            .pipe(nightwatch({
-                configFile: 'tests/acceptance/nightwatch.conf.js'
-            }))
-            .on('end', function() {
-                process.kill();
-            });
-    });
-
-    gulp.task("e2e-chrome", function() {
-        sauceConnectLauncher({
-            username: sauceUsername,
-            accessKey: sauceAccessKey
-        }, function (err, sauceConnectProcess) {
-            if (err) {
-              console.error(err.message);
-              return;
-            }
-            gulp.src(e2eFiles)
-                .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
-                    cliArgs: {
-                        env: 'chrome'
-                    }
-                }))
-                .on("end", function() {
-                    sauceConnectProcess.close(function () {
-                        console.log("Closed Sauce Connect process");
-                    });
-                });
-            });
-    });
-
-    gulp.task("e2e-safari", function() {
-        sauceConnectLauncher({
-            username: sauceUsername,
-            accessKey: sauceAccessKey
-        }, function (err, sauceConnectProcess) {
-            if (err) {
-              console.error(err.message);
-              return;
-            }
-            gulp.src(e2eFiles)
-                .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
-                    cliArgs: {
-                        env: 'safari'
-                    }
-                }))
-                .on("end", function() {
-                    sauceConnectProcess.close(function () {
-                        console.log("Closed Sauce Connect process");
-                    });
-                });
-            });
-    });
-
-    gulp.task("e2e-firefox", function() {
-        sauceConnectLauncher({
-            username: sauceUsername,
-            accessKey: sauceAccessKey
-        }, function (err, sauceConnectProcess) {
-            if (err) {
-              console.error(err.message);
-              return;
-            }
-            gulp.src(e2eFiles)
-                .pipe(nightwatch({
-                    configFile: 'tests/acceptance/saucelabs.conf.js',
-                    cliArgs: {
-                        env: 'firefox'
-                    }
-                }))
-                .on("end", function() {
-                    sauceConnectProcess.close(function () {
-                        console.log("Closed Sauce Connect process");
-                    });
-                });
-            });
-    });
 
 /*******************************
 *       TEST TASKS
@@ -129,26 +37,44 @@
     ]));
 
     //Please run task `gulp selenium-install` before running
-    gulp.task("e2e-local", ["selenium-install"], function () {
+    gulp.task("e2e-local", function () {
         nodemon({
             script: "server.js",
             ext: "js html",
             ignore: ["node_modules"]
         })
         .on("start", function(){
-            return gulp.src("")
-            .pipe(shell(["node_modules/.bin/selenium-standalone start && gulp nightwatch"]));
+            return gulp.src(e2eFiles)
+            .pipe(mocha({
+                reporter: 'nyan'
+            }))
+            .on("end", function() {
+                console.log("Tests finished");
+                process.exit();
+            });
         });
     });
 
     //Runs on SauceLabs
     gulp.task("e2e", function() {
-        runSequence("e2e-safari", 
-                    "e2e-chrome", 
-                    "e2e-firefox", 
-                    function () {
-                        console.log("Testing is finished");
+        sauceConnectLauncher({
+            username: sauceUsername,
+            accessKey: sauceAccessKey
+        }, function (err, sauceConnectProcess) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+            return gulp.src(e2eFiles)
+                .pipe(mocha({
+                    reporter: 'nyan'
+                }))
+                .on("end", function() {
+                    sauceConnectProcess.close(function () {
+                        console.log("Closed Sauce Connect process");
                     });
+                });
+        });
     });
 
     gulp.task('test', ["integration-tests", "unit-tests"], function () {
@@ -197,14 +123,18 @@
         return console.log("done building");
     });
 
-    gulp.task("deploy", ["build", "test"] , function() {
-        gulp.src(e2eFiles)
-            .pipe(nightwatch({
-                configFile: 'tests/acceptance/saucelabs.conf.js',
-                cliArgs: {
-                    env: 'chrome'
-                  }
-            }))
+    gulp.task("deploy", ["build"] , function() {
+        nodemon({
+            script: "server.js",
+            ext: "js html",
+            ignore: ["node_modules"]
+        })
+        .on("start", function(){
+            return gulp.src(e2eFiles)
+            .pipe(mocha({
+                reporter: 'nyan'
+            }));
+        });
     });
 
 	gulp.task("default",["build","open"], function() {

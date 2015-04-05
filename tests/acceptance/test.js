@@ -1,6 +1,19 @@
-var tests = {};
+require('colors');
+var chai = require("chai"),
+    chaiAsPromised = require("chai-as-promised"),
+    wd = require('wd'),
 
-tests.landing = require("./stories/landing.e2e.js");
+    landingTests = require("./stories/landing.e2e.js");
+    
+chai.use(chaiAsPromised);
+chai.should();
 
 
-module.exports = tests;
+
+chaiAsPromised.transferPromiseness = wd.transferPromiseness;
+
+describe('mocha spec examples', function() {
+    this.timeout(100000);
+
+    landingTests(wd);
+});
