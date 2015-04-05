@@ -1,33 +1,60 @@
-var landingTests = {};
+var sauceUsername = process.env.SAUCE_USERNAME || require("../../../credentials.json").username,
+    sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("../../../credentials.json").accesskey;
 
-landingTests.beforeEach = function (browser) {
-	browser.url("http://localhost:8000");
-}
+function landingTests (wd) {
+  	describe("regular mocha usage", function() {
+        var browser;
 
-landingTests["title is correct"] = function (browser) {
-	browser
-		.assert.title("Coot Freight");
-}
+        before(function(done) {
 
-landingTests["You are correctly redirected to the login page"] = function (browser) {
-	browser
-		.assert.urlContains('login');
-}
+            browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, sauceUsername, sauceAccessKey);
+            browser.on('status', function(info) {
+                console.log(info);
+            });
+            browser.on('command', function(meth, path, data) {
+                console.log(' > ' + meth, path, data || '');
+            });
+             browser
+             .init({browserName:'firefox'})
+                // .init({
+                //     browserName: "chrome"
+                // })
+                .nodeify(done);  //same as : .then(function() { done(); });
+        });
 
-landingTests["Header has correct company name"] = function (browser) {
-	browser
-		.assert.containsText("h1", "Coot Freight");
-}
+        beforeEach(function(done) {
+            browser
+                .get("http://localhost:8000")
+                .nodeify(done);
+        });
 
-// landingTests["When you enter a username and password, "] = function (browser) {
-// 	browser
-// 		.waitForElementVisible('input[type=submit]', 5000)
-// 		.setValue("input[name='username']", "username")
-// 		.setValue("input[name='password']", "password")
-// 		.click('input[type=submit]')  
-// 		.waitForElementVisible('main.container', 5000)
-// 		.assert.urlContains('orders')
-// 		.end();
-// }
+        after(function(done) {
+            browser
+                .quit()
+                .nodeify(done);
+        });
+
+        it("should retrieve the page title", function(done) {
+            browser
+                .title()
+                .then(function(title) {
+                    title.should.equal("Coot Freight");
+                })
+                .nodeify(done);
+        });
+
+        it('if not authenticated, should redirect to login page', function(done) {
+            browser
+                .url(function(err, url) {
+                if (err) {
+                    return console.log(err);
+                }
+                console.log(url);
+                expect(url).to.have.string("login");
+            })
+            .nodeify(done);
+        });
+    });
+};
 
 module.exports = landingTests;
