@@ -7,7 +7,7 @@ function landingTests (wd) {
 
         before(function(done) {
 
-            browser = wd.promiseChainRemote("http://localhost", 4445, sauceUsername, sauceAccessKey);
+            browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, sauceUsername, sauceAccessKey);
             browser.on('status', function(info) {
                 console.log(info);
             });
