@@ -21,7 +21,6 @@
     "fs": "0.0.2",
     "handlebars": "^3.0.0",
     "handlebars-layouts": "^1.1.0",
-    "mongodb": "^2.0.23",
     "node-static": "^0.7.6",
     "querystring": "^0.2.0",
     "routes": "^2.0.0"
@@ -37,6 +36,7 @@
     "gulp-shell": "^0.4.0",
     "istanbul": "^0.3.8",
     "mocha": "^2.2.1",
+    "mocha-sauce": "file:../../../../../var/folders/_5/z26sbq31735619n3zjwr5zx40000gn/T/npm-5541-e8cfa1a9/1428256409518-0.03886740771122277/4e53709e95775c51ac4b0a5ab4a3e30a836b3fac",
     "nodemon": "^1.3.7",
     "pg": "^4.3.0",
     "run-sequence": "^1.0.2",

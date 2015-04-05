@@ -1,10 +1,13 @@
+var sauceUsername = process.env.SAUCE_USERNAME || require("../../../credentials.json").username,
+    sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("../../../credentials.json").accesskey;
+
 function landingTests (wd) {
   	describe("regular mocha usage", function() {
         var browser;
 
         before(function(done) {
 
-            browser = wd.promiseChainRemote();
+            browser = wd.promiseChainRemote("http://localhost", 4445, sauceUsername, sauceAccessKey);
             browser.on('status', function(info) {
                 console.log(info);
             });
@@ -12,11 +15,10 @@ function landingTests (wd) {
                 console.log(' > ' + meth, path, data || '');
             });
              browser
-                .init({
-                    browserName: "firefox",
-                    version: "35.0",
-                    platform: "OS X 10.9"
-                })
+             .init({browserName:'firefox'})
+                // .init({
+                //     browserName: "chrome"
+                // })
                 .nodeify(done);  //same as : .then(function() { done(); });
         });
 

@@ -10,6 +10,7 @@ Once you have cloned the project with git, run:
 ```
 npm install
 npm install gulp -g
+npm install git://github.com/pbakaus/mocha-sauce.git
 ```
 
 and use command:
