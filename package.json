@@ -29,6 +29,7 @@
   "devDependencies": {
     "chai": "^2.2.0",
     "chai-as-promised": "^4.3.0",
+    "colors": "^1.0.3",
     "gulp": "^3.8.11",
     "gulp-mocha": "^2.0.1",
     "gulp-nodemon": "^1.0.5",
