@@ -109,7 +109,7 @@
         return console.log("done building");
     });
 
-    gulp.task("deploy", ["build"] , function() {
+    gulp.task("deploy", ["build", "test"] , function() {
         nodemon({
             script: "server.js",
             ext: "js html",
