@@ -1,8 +1,8 @@
 var sauceUsername = process.env.SAUCE_USERNAME || require("../../../credentials.json").username,
     sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("../../../credentials.json").accesskey;
 
-function landingTests (wd) {
-  	describe("regular mocha usage", function() {
+function landingTests (wd, capability) {
+  	describe("When landing on the website", function() {
         var browser;
 
         before(function(done) {
@@ -14,12 +14,9 @@ function landingTests (wd) {
             browser.on('command', function(meth, path, data) {
                 console.log(' > ' + meth, path, data || '');
             });
-             browser
-             .init({browserName:'firefox'})
-                // .init({
-                //     browserName: "chrome"
-                // })
-                .nodeify(done);  //same as : .then(function() { done(); });
+            browser
+                .init(capability)
+                .nodeify(done);
         });
 
         beforeEach(function(done) {
@@ -34,15 +31,6 @@ function landingTests (wd) {
                 .nodeify(done);
         });
 
-        it("should retrieve the page title", function(done) {
-            browser
-                .title()
-                .then(function(title) {
-                    title.should.equal("Coot Freight");
-                })
-                .nodeify(done);
-        });
-
         it('if not authenticated, should redirect to login page', function(done) {
             browser
                 .url(function(err, url) {
@@ -53,6 +41,15 @@ function landingTests (wd) {
                 expect(url).to.have.string("login");
             })
             .nodeify(done);
+        });
+
+        it("should retrieve the page title", function(done) {
+            browser
+                .title()
+                .then(function(title) {
+                    title.should.equal("Coot Freight");
+                })
+                .nodeify(done);
         });
     });
 };
