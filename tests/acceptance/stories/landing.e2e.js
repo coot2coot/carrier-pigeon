@@ -1,19 +1,23 @@
 var sauceUsername = process.env.SAUCE_USERNAME || require("../../../credentials.json").username,
     sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("../../../credentials.json").accesskey;
 
-function landingTests (wd, capability) {
+function landingTests (wd, capability, remote) {
   	describe("When landing on the website", function() {
         var browser;
 
         before(function(done) {
 
-            browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, sauceUsername, sauceAccessKey);
-            browser.on('status', function(info) {
-                console.log(info);
-            });
-            browser.on('command', function(meth, path, data) {
-                console.log(' > ' + meth, path, data || '');
-            });
+            if (remote) {
+                browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, sauceUsername, sauceAccessKey);
+            } else {
+                browser = wd.promiseChainRemote();
+            }
+            // browser.on('status', function(info) {
+            //     console.log(info);
+            // });
+            // browser.on('command', function(meth, path, data) {
+            //     console.log(' > ' + meth, path, data || '');
+            // });
             browser
                 .init(capability)
                 .nodeify(done);

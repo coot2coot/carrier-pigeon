@@ -5,12 +5,13 @@
 		sass = require("gulp-sass"),
 		nodemon = require("gulp-nodemon"),
         shell = require('gulp-shell'),
-        mocha = require('gulp-mocha');
-
+        mocha = require('gulp-mocha'),
+        sauceUsername = process.env.SAUCE_USERNAME || require("./credentials.json").username,
+        sauceAccesskey = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey,
+        sauceConnectLauncher = require("sauce-connect-launcher");
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
-		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"],
-        e2eFiles = ["./tests/acceptance/test.js"];
+		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"];
 
 
 /*******************************
@@ -42,20 +43,58 @@
     ]));
 
     //Please run task `gulp selenium-start` before running
-    gulp.task("e2e", function() {
+    gulp.task("e2e-local", function() {
         nodemon({
             script: "server.js",
             ext: "js html",
             ignore: ["node_modules"]
         })
         .on("start", function(){
-            return gulp.src(e2eFiles)
+            return gulp.src("./tests/acceptance/test-local.js")
             .pipe(mocha({
                 reporter: 'nyan'
             }))
             .on("end", function() {
                 console.log("Tests finished");
                 process.exit();
+            });
+        });
+    });
+
+    //run server as well as this.
+    gulp.task("e2e", function() {
+        sauceConnectLauncher({
+            username: sauceUsername,
+            accessKey: sauceAccesskey
+        }, function (err, sauceConnectProcess) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+             nodemon({
+                script: "server.js",
+                ext: "js html",
+                ignore: ["node_modules"]
+            })
+            .on("start", function(){
+                gulp.src("./tests/acceptance/test.js")
+                    .pipe(mocha({
+                        reporter: 'nyan'
+                    }))
+                    .on("end", function() {
+                        console.log("Tests finished");
+                        process.exit();
+                    })
+                    .on("error", function(e) {
+                        sauceConnectProcess.close(function () {
+                            console.log("Closed Sauce Connect process");
+                        });
+                    });
+            })
+            .on("end", function(e) {
+                sauceConnectProcess.close(function () {
+                    console.log("Closed Sauce Connect process");
+                });
             });
         });
     });
@@ -107,21 +146,38 @@
     });
 
     gulp.task("deploy", ["build", "test"] , function() {
-        nodemon({
-            script: "server.js",
-            ext: "js html",
-            ignore: ["node_modules"]
-        })
-        .on("start", function(){
-            return gulp.src(e2eFiles)
-            .pipe(mocha({
-                reporter: 'nyan'
-            }))
-            .once('error', function () {
-                process.exit(1);
+        sauceConnectLauncher({
+            username: sauceUsername,
+            accessKey: sauceAccesskey
+        }, function (err, sauceConnectProcess) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+             nodemon({
+                script: "server.js",
+                ext: "js html",
+                ignore: ["node_modules"]
             })
-            .once('end', function () {
-                process.exit();
+            .on("start", function(){
+                gulp.src("./tests/acceptance/test.js")
+                    .pipe(mocha({
+                        reporter: 'nyan'
+                    }))
+                    .on("end", function() {
+                        console.log("Tests finished");
+                        process.exit();
+                    })
+                    .on("error", function(e) {
+                        sauceConnectProcess.close(function () {
+                            console.log("Closed Sauce Connect process");
+                        });
+                    });
+            })
+            .on("end", function(e) {
+                sauceConnectProcess.close(function () {
+                    console.log("Closed Sauce Connect process");
+                });
             });
         });
     });

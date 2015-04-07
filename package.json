@@ -23,6 +23,7 @@
     "handlebars-layouts": "^1.1.0",
     "node-static": "^0.7.6",
     "querystring": "^0.2.0",
+    "react": "^0.13.1",
     "routes": "^2.0.0"
   },
   "devDependencies": {

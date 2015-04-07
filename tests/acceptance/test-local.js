@@ -13,21 +13,15 @@ chaiAsPromised.transferPromiseness = webdriver.transferPromiseness;
 capabilites = [
 	{
 		name: "Chrome Carrier-Pigeon",
-		browserName: "chrome",
-		version: "41.0",
-		platform: "OS X 10.9"
+		browserName: "chrome"
 	},
 	{
 		name: "Firefox Carrier-Pigeon",
-		browserName: "firefox",
-		version: "35.0",
-		platform: "OS X 10.9"
+		browserName: "firefox"
 	},
 	{
 		name: "Safari Carrier-Pigeon",
-		browserName: "safari",
-		version: "8.0",
-		platform: "OS X 10.10"
+		browserName: "safari"
 	}
 ];
 
@@ -37,6 +31,6 @@ describe('', function() {
     	length = capabilites.length;
 
     for (i = length - 1; i >= 0; i--) {
-    	landingTests(webdriver, capabilites[i], true);
+    	landingTests(webdriver, capabilites[i]);
     };
 });
