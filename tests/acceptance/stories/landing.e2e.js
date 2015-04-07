@@ -12,12 +12,6 @@ function landingTests (wd, capability, remote) {
             } else {
                 browser = wd.promiseChainRemote();
             }
-            // browser.on('status', function(info) {
-            //     console.log(info);
-            // });
-            // browser.on('command', function(meth, path, data) {
-            //     console.log(' > ' + meth, path, data || '');
-            // });
             browser
                 .init(capability)
                 .nodeify(done);

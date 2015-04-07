@@ -1,17 +1,18 @@
 (function () {
 	"use strict";
 
-	var fs = require("fs");
-	var querystring = require("querystring");
-	var Handlebars = require("handlebars");
-	// var db = require("./db-config.js");
-	var hbsLayouts = require('handlebars-layouts')(Handlebars);
+	var fs = require("fs"),
+		querystring = require("querystring"),
+		React = require('react'),
+		db = require("./db-sql-config.js"),
+		DOM = React.DOM, 
+		body = DOM.body, 
+		div = DOM.div, 
+		script = DOM.script,
+		// App = React.createFactory(require('../public/app')),
+		serverHandlers = {};
 
-	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
-	var ordersPage = Handlebars.compile(fs.readFileSync('./public/templates/orders.html').toString());
-	var loginPage = Handlebars.compile(fs.readFileSync('./public/templates/login.html').toString());
 
-	var serverHandlers = {};
 
 	serverHandlers.home = function (req, res) {
 		res.writeHead(302, {
@@ -25,8 +26,22 @@
 	 * -------------------------------*/
 
 	serverHandlers.login = function (req, res) {
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(loginPage());
+		// res.setHeader('Content-Type', 'text/html')
+
+    // 	var html = React.renderToStaticMarkup(body(null,
+
+	   //  div({id: 'content', dangerouslySetInnerHTML: {__html:
+	   //      React.renderToString(App)
+	   //  }}),
+
+	   //  script({src: '/js/bundle.js'})
+    // ))
+
+    // Return the page to the browser
+    	fs.readFile("./public/index.html", function(err, text){
+	     	res.setHeader("Content-Type", "text/html");
+	      	res.end(text);
+	    });
 	};
 
 	/* -------------------------------*

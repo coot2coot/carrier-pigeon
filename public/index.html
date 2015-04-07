@@ -13,33 +13,19 @@
         <link href="./img/logo.png" rel="shortcut icon" type="image/x-icon">
         <link rel="stylesheet" type="text/css" media="screen" href="../css/vendors/concise.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
-
     </head>
     <body>
-
         <header class="container-fluid">
             <div class="row">
                 <div class="column-6 push-2">
                     <h1>Coot Freight Ltd</h1>
                 </div>
 
-                <div class="column-6 float-right">
-                    {{#block "header"}}
-                    {{/block}}
-                </div>
             </div>
-
-            {{#block "nav"}}
-            {{/block}}
         </header>
 
-        <main class="container">
-            {{#block "main"}}
-            {{/block}}
-        </main>
+        <div id="content"></div>
 
-        {{#block "overlay"}}
-            {{/block}}
-
+        <script type="text/javascript" src="./js/bundle.js"></script>
     </body>
 </html>
