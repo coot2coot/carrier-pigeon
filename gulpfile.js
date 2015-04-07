@@ -20,6 +20,14 @@
 *       PREREQUISITE TASKS
 ********************************/
 
+    gulp.task('selenium-install', shell.task([
+      'node_modules/.bin/selenium-standalone install'
+    ]));
+
+    gulp.task('selenium-start', shell.task([
+      'node_modules/.bin/selenium-standalone start'
+    ]));
+
     gulp.task('open', shell.task([
       'open http://localhost:8000'
     ]));
@@ -36,8 +44,8 @@
       'tape tests/unit/*.js'
     ]));
 
-    //Please run task `gulp selenium-install` before running
-    gulp.task("e2e-local", function () {
+    //Please run task `gulp selenium-start` before running
+    gulp.task("e2e", function() {
         nodemon({
             script: "server.js",
             ext: "js html",
@@ -52,28 +60,6 @@
                 console.log("Tests finished");
                 process.exit();
             });
-        });
-    });
-
-    //Runs on SauceLabs
-    gulp.task("e2e", function() {
-        sauceConnectLauncher({
-            username: sauceUsername,
-            accessKey: sauceAccessKey
-        }, function (err, sauceConnectProcess) {
-            if (err) {
-              console.error(err.message);
-              return;
-            }
-            return gulp.src(e2eFiles)
-                .pipe(mocha({
-                    reporter: 'nyan'
-                }))
-                .on("end", function() {
-                    sauceConnectProcess.close(function () {
-                        console.log("Closed Sauce Connect process");
-                    });
-                });
         });
     });
 
