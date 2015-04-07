@@ -6,6 +6,11 @@
 		nodemon = require("gulp-nodemon"),
         shell = require('gulp-shell'),
         mocha = require('gulp-mocha'),
+        browserify = require("browserify"),
+        reactify = require('reactify'),
+        watchify = require("watchify"),
+        uglify = require('gulp-uglify'),
+        source = require('vinyl-source-stream'),
         sauceUsername = process.env.SAUCE_USERNAME || require("./credentials.json").username,
         sauceAccesskey = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey,
         sauceConnectLauncher = require("sauce-connect-launcher");
@@ -17,6 +22,10 @@
 /*******************************
 *       PREREQUISITE TASKS
 ********************************/
+    
+    gulp.task('open', shell.task([
+        'open http://localhost:8000'
+    ]));
 
     gulp.task('selenium-install', shell.task([
       'node_modules/.bin/selenium-standalone install'
@@ -24,10 +33,6 @@
 
     gulp.task('selenium-start', shell.task([
       'node_modules/.bin/selenium-standalone start'
-    ]));
-
-    gulp.task('open', shell.task([
-      'open http://localhost:8000'
     ]));
 
 /*******************************
@@ -136,12 +141,48 @@
         gulp.watch(sassFiles, ["sass-dev", "concise"]);
     });
 
+    gulp.task("bundle", function () {
+
+        var b = browserify();
+          b.transform(reactify);
+          b.add('./public/app.jsx');
+          return b.bundle()
+            .pipe(source('bundle.js'))
+            .pipe(gulp.dest('./public/js/'));
+    });
+
+    gulp.task("watchify", function () {
+
+        var b = browserify({
+            entries: ['./public/app.jsx'], 
+            transform: [reactify],
+            debug: true,
+            cache: {}, packageCache: {}, fullPaths: true 
+        });
+
+        var watcher  = watchify(b);
+
+        return watcher
+            .on('update', function () { 
+                var updateStart = Date.now();
+                watcher.bundle()
+                    .pipe(source("bundle.js"))
+                    .pipe(gulp.dest('./public/js/'));
+            console.log('Updated!', (Date.now() - updateStart) + 'ms');
+        })
+        .bundle()
+        .pipe(source("bundle.js"))
+        .pipe(gulp.dest('./public/js/'));
+    });
+
 
 /*******************************
 *       BUILD TASKS
 ********************************/
 	
-	gulp.task("build", ["sass-production"] , function() {
+    gulp.task("watch", ["sass-watch", "watchify"])
+
+	gulp.task("build", ["sass-production", "build"] , function() {
         return console.log("done building");
     });
 
@@ -182,7 +223,7 @@
         });
     });
 
-	gulp.task("default",["build","open"], function() {
+	gulp.task("default", ["watch", "open"], function() {
         nodemon({
             script: "server.js",
             ext: "js html",
