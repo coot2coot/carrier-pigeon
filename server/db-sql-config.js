@@ -1,6 +1,7 @@
 var pg = require("pg");
-var param = "postgres://" +require('../credentials.json').postgres+"/carrier-pigeon-dev";
-;
+var postgresUrl = process.env.POSTGRES_URL || require('../credentials.json').postgres;
+var param = "postgres://" + postgresUrl +"/carrier-pigeon-dev";
+
 var client = new pg.Client(param);
 var dataBase = {};
 

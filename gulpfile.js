@@ -5,10 +5,7 @@
 		sass = require("gulp-sass"),
 		nodemon = require("gulp-nodemon"),
         shell = require('gulp-shell'),
-        mocha = require('gulp-mocha'),
-        sauceUsername = process.env.SAUCE_USERNAME, //|| require("./credentials.json").username,
-        sauceAccessKey = process.env.SAUCE_ACCESS_KEY, //|| require("./credentials.json").accesskey,
-        sauceConnectLauncher = require("sauce-connect-launcher");
+        mocha = require('gulp-mocha');
 
 
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
