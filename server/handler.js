@@ -4,7 +4,7 @@
 	var fs = require("fs");
 	var querystring = require("querystring");
 	var Handlebars = require("handlebars");
-	// var db = require("./db-config.js");
+	var db = require("./db-sql-config.js");
 	var hbsLayouts = require('handlebars-layouts')(Handlebars);
 
 	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
@@ -34,7 +34,7 @@
 	 * -------------------------------*/
 
 	serverHandlers.orders = function (req, res) {
-		db.get(function (orders) {
+		db.get("orders",function (orders) {
 			res.writeHead(200, {"Content-Type" : "text/html"});
 			res.end(ordersPage({ 
 				data: orders,
@@ -43,51 +43,61 @@
 		});
 	};
 
-	serverHandlers.viewOrder = function (req, res) {
-		db.getOne(function (order) {
-			res.writeHead(200, {"Content-Type" : "text/html"});
-			res.end(ordersPage({ 
-				data: order
-			}));
-		});
-	};
+	// serverHandlers.orders = function (req, res) {
+	// 	db.get(function (orders) {
+	// 		res.writeHead(200, {"Content-Type" : "text/html"});
+	// 		res.end(ordersPage({ 
+	// 			data: orders,
+	// 			overlay: false
+	// 		}));
+	// 	});
+	// };
 
-	serverHandlers.newOrder = function (req, res) {
-		db.get(function (orders) {
-			res.writeHead(200, {"Content-Type" : "text/html"});
-			res.end(ordersPage({ 
-				data: orders,
-				overlay: true
-			}));
-		});
-	};
+	// serverHandlers.viewOrder = function (req, res) {
+	// 	db.getOne(function (order) {
+	// 		res.writeHead(200, {"Content-Type" : "text/html"});
+	// 		res.end(ordersPage({ 
+	// 			data: order
+	// 		}));
+	// 	});
+	// };
 
-	serverHandlers.createOrder = function (req, res) {
+	// serverHandlers.newOrder = function (req, res) {
+	// 	db.get(function (orders) {
+	// 		res.writeHead(200, {"Content-Type" : "text/html"});
+	// 		res.end(ordersPage({ 
+	// 			data: orders,
+	// 			overlay: true
+	// 		}));
+	// 	});
+	// };
 
-		var orderInfo = "";
+	// serverHandlers.createOrder = function (req, res) {
 
-	  	req.on('data', function (data) {
-	    	orderInfo += data;
-	  	});
-		req.on('end', function () {
-		  	var newOrder = querystring.parse(orderInfo);
+	// 	var orderInfo = "";
 
-		  	db.post(newOrder, function() {
-		  		res.writeHead(302, {
-		  			'Location': '/orders'
-		  		});
-			    res.end();
-		  	})
-		});
-	};
+	//   	req.on('data', function (data) {
+	//     	orderInfo += data;
+	//   	});
+	// 	req.on('end', function () {
+	// 	  	var newOrder = querystring.parse(orderInfo);
 
-	serverHandlers.removeOrder = function (req, res) {
-		//TODO.
-	};
+	// 	  	db.post(newOrder, function() {
+	// 	  		res.writeHead(302, {
+	// 	  			'Location': '/orders'
+	// 	  		});
+	// 		    res.end();
+	// 	  	})
+	// 	});
+	// };
 
-	serverHandlers.editOrder = function (req, res) {
-		//TODO.
-	};
+	// serverHandlers.removeOrder = function (req, res) {
+	// 	//TODO.
+	// };
+
+	// serverHandlers.editOrder = function (req, res) {
+	// 	//TODO.
+	// };
 
 	module.exports = serverHandlers;
 })();

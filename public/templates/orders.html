@@ -48,20 +48,22 @@
 			<div class="panel-body table-responsive model-overflow">
 				<table class="table table-full">
 					<th><h5>#</h5></th>
-					<th><h5>Reference</h5></th>
-					<th><h5>Date</h5></th>
+					<th><h5>Vendor</h5></th>
+					<th><h5>Client</h5></th>
 					<th><h5>Consignee</h5></th>
-					<th><h5>Loading Place</h5></th>
-					<th><h5>Delivery Place</h5></th>
+					<th><h5>Unit Type</h5></th>
+					<th><h5>Shippers</h5></th>
+					<th><h5>Notify</h5></th>
 				
 				  	{{#each data}}
 				  		<tr>
-				  			<td><a href="/order/id"><p>{{num}}</p></a></td>
-							<td><a href="/order/id"><p>{{bookingRef}}</p></a></td>
-							<td><a href="/order/id"><p>{{date}}</p></a></td>
+				  			<td><a href="/order/id"><p>{{order_id}}</p></a></td>
+							<td><a href="/order/id"><p>{{vendor}}</p></a></td>
 							<td><a href="/order/id"><p>{{client}}</p></a></td>
-							<td><a href="/order/id"><p>{{loadingPlace}}</p></a></td>
-							<td><a href="/order/id"><p>{{deliveryPlace}}</p></a></td>
+							<td><a href="/order/id"><p>{{consignee}}</p></a></td>
+							<td><a href="/order/id"><p>{{unit_type}}</p></a></td>
+							<td><a href="/order/id"><p>{{shipper}}</p></a></td>
+							<td><a href="/order/id"><p>{{notify}}</p></a></td>
 						</tr>
 					{{/each}}
 				</table>
@@ -77,8 +79,6 @@
 				<div class="panel-body">
 					<form action="/order/create" method="POST">
 						<p>Reference number</p>
-						<input type="text" name="referenceNumber">
-						<p>Date</p>
 						<input type="text" name="date">
 						<p>Consignee</p>
 						<input type="text" name="consignee">
