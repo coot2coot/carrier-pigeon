@@ -1,17 +1,17 @@
 var pg = require("pg");
-var postgresUrl = process.env.POSTGRES_URL || require('../credentials.json').postgres;
-var param = "postgres://" + postgresUrl +"/carrier-pigeon-dev";
+var dataBase = process.env.POSTGRESS || require('../credentials.json').postgres;
+var param = "postgres://" + dataBase + "/carrier-pigeon-dev";
 
 var client = new pg.Client(param);
 var dataBase = {};
 
 
-var connect = function (query,table,cb,cos) {
+var connect = function (query,table,cb) {
 	client.connect(function(err) {
 	  	if(err) {
 	    	return console.error('could not connect to postgres', err);
 	  	}
-	  	query(table,cb,doc);
+	  	query(table,cb);
 	});
 }
 

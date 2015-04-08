@@ -1,0 +1,25 @@
+/***********************************************
+*   TYPOGRAPHY 
+*   mixins
+************************************************/
+
+@mixin company-name() {
+    font-family: $font;
+    font-weight: 700;
+    padding: 0.5em 0 0.2em;
+    font-size: 2em;
+    color: white;
+    @include respond (mobile) {
+        font-size: 1.5em;
+        padding: 0.5em 0 1em 1em;
+    }
+}
+
+@mixin page-title() {
+    font-family: $font;
+    font-weight: 600;
+    padding: 0.5em 0.7em;
+    font-size: 1.4em;
+    color: white;
+    margin: 0;
+}

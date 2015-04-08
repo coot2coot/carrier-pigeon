@@ -9,7 +9,6 @@
 		body = DOM.body, 
 		div = DOM.div, 
 		script = DOM.script,
-		// App = React.createFactory(require('../public/app')),
 		serverHandlers = {};
 
 
@@ -37,7 +36,7 @@
 	 * -------------------------------*/
 
 	serverHandlers.orders = function (req, res) {
-		db.get(function (orders) {
+		db.get("orders",function (orders) {
 			res.writeHead(200, {"Content-Type" : "text/html"});
 			res.end(ordersPage({ 
 				data: orders,

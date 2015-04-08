@@ -6,6 +6,7 @@ node_js:
 - 0.10.32
 env:
   global:
+  - secure: Yr9YkCpVGIIUbyGgdqmb3Xice24W2ypYr5E273KgPJAOvRNmhnzZWLToJt/ZRnZ32SuLUyoYsYpxkx1nYhek4YpmleFao1KXnVyjpUskGgW3/PpJZrEiuu09K6Pjb+vFD6cYL3VBIW3ll+TH9zBX2cUS4ttofS9Rumlx40MR1ZA=
   - secure: SE0hRL6Aa2sU9yj5gK+7mWudaCYK8ClvP5MHrDMv46Tdn6GwBdEp8RRgV4Ojl0FvQW+jJZUMpSk3Wv1gNXymiTt/xM2fKGQ1kP9V/IuzQo2WwERmonHaQjgfMBrzPa7ur3nVq8npuAWVPaw9GAEVSH/juF7OMJelByFEN5L6mXI=
   - secure: KcwwJFeEmvk9lyZgkvwOySU+b9RAsKv6NZ6uMkWK5A+pWOo9VB5AhETUjwEmWWPjkrfsiAb/NrYbBJi3vOqKbvyIGfMp7pNzsYd6rNayAJfI0X0UJC6hWNfuMvnGLWTQcbypdA/C6iEQdrrbi69CoNEVfALl3+JTe/KoRTGBDHA=
   - secure: OxmjBfEBIqjOFnht1OJnkpaojp7aEWjbebMYGJHwk/uOX7HAt0ZvFsr1PmGDbV4XqqFA1siUGXfMQ9mx37LLjB2oTSEgUcQXxFWfTBeVUv4TAwyiI3BATc/W6d4ms/aQCabQeGtjJjBRxvesh/z0nCgGavUIeHY2aW2x0w7CUZw=
