@@ -3,11 +3,10 @@
 *   Description: Responsive Breakpoints
 ************************************************/
 
-$extra-small: 400px;
-$small: 620px;
-$regular: 768px;
-$large: 960px;
-$extra-large: 1140px;
+$extra-small: 480px;
+$small: 768px;
+$regular: 992px;
+$large: 1200px;
 
 @mixin respond($size) {
     @if $size == extraSmall {
@@ -15,23 +14,23 @@ $extra-large: 1140px;
             @content;
         }
     }
-    @else if $size == small {
-        @media (min-width: $small) and (max-width: $small-size) {
+    @else if $size == mobile {
+        @media (max-width: $small) {
             @content;
         }
     }
-    @else if $size == regular {
-        @media (min-width: $regular) and (max-width: $large-size) {
+    @else if $size == tablet {
+        @media (max-width: $regular) {
             @content;
         }
     }
-    @else if $size == large {
+    @else if $size == desktop {
+        @media (max-width: $large) {
+            @content;
+        }
+    }
+    @else if $size == monitor {
         @media (min-width: $large) {
-            @content;
-        }
-    }
-    @else if $size == extraLarge {
-        @media (min-width: $extra-large) {
             @content;
         }
     }

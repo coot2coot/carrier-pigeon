@@ -54,3 +54,10 @@ a {
 		text-decoration: none;
 	}
 }
+
+.column-6 {
+	@include respond(mobile){ 
+		width: 60%;
+		float: left;
+	}
+}
