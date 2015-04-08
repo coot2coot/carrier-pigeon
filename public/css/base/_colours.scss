@@ -21,7 +21,14 @@ $lightest-grey: #FAFAFA;
 
 @mixin blue-hover {
     background-color: $light;
-    background-image: linear-gradient($light, #56C9CB);
+    background-image: linear-gradient(#74FAFC, #49B3B5);
+}
+
+@mixin blue-border {
+    border-left: 0.12em $light solid;
+    border-top: 0.12em $light solid;
+    border-right: 0.12em $primary solid;
+    border-bottom: 0.12em $primary solid;
 }
 
 @mixin charcoal-background {
