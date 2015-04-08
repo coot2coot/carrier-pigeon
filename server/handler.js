@@ -15,10 +15,10 @@
 
 
 	serverHandlers.home = function (req, res) {
-		res.writeHead(302, {
-  			'Location': '/login'
-  		});
-	    res.end();
+		fs.readFile("./public/index.html", function(err, text){
+	     	res.setHeader("Content-Type", "text/html");
+	      	res.end(text);
+	    });
 	};
 
 	/* -------------------------------*
@@ -26,19 +26,7 @@
 	 * -------------------------------*/
 
 	serverHandlers.login = function (req, res) {
-		// res.setHeader('Content-Type', 'text/html')
-
-    // 	var html = React.renderToStaticMarkup(body(null,
-
-	   //  div({id: 'content', dangerouslySetInnerHTML: {__html:
-	   //      React.renderToString(App)
-	   //  }}),
-
-	   //  script({src: '/js/bundle.js'})
-    // ))
-
-    // Return the page to the browser
-    	fs.readFile("./public/index.html", function(err, text){
+		fs.readFile("./public/index.html", function(err, text){
 	     	res.setHeader("Content-Type", "text/html");
 	      	res.end(text);
 	    });
