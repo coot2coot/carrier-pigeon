@@ -2,25 +2,21 @@
 var React = require('react');
 var Navbar = require("./nav.jsx");
 
-var Buttons = <div>
+var Buttons = React.createClass({
+   	render: function() {
+      	return (
+			<div>
 				<a href="/login">
 					<p>Logout</p>
 				</a>
 				<p>Welcome username</p>
-			</div>;
-
-var If = React.createClass({
-    render: function() {
-        if (this.props.test) {
-            return this.props.children;
-        }
-        else {
-            return false;
-        }
-    }
+			</div>
+		)
+	}
 });
 
-var isAuthenticated = false;
+//TODO: Make this dependent on real authentication
+var isAuthenticated = true;
 
 module.exports = React.createClass({
     login: function(e) {
@@ -33,11 +29,15 @@ module.exports = React.createClass({
 	                <div className="column-6 push-2">
 	                    <h1>Coot Freight Ltd</h1>
 	                </div>
-	                <If test={isAuthenticated}>
-	                	{Buttons}
-	                	{Navbar}
-	                </If>
+	                {(isAuthenticated
+				        ? <Buttons />     
+				        : <div>Never showing false item</div>
+				    )}
 	            </div>
+	            {(isAuthenticated
+			        ? <Navbar />     
+			        : <div>Never showing false item</div>
+			    )}
 	        </header>
         );
     }
