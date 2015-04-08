@@ -13,7 +13,17 @@ var MyAboutView = React.createClass({
   render: function() {
     return (
       <div >
-         My About
+         <p>My About</p>
+      </div>
+    );
+  }
+});
+
+var Orders = React.createClass({
+  render: function() {
+    return (
+      <div >
+         <p>Orders!</p>
       </div>
     );
   }
@@ -21,17 +31,14 @@ var MyAboutView = React.createClass({
 
 
 var routes = (
-    <Route handler={Header} path="/">
-        <Route name="login" path="/login" handler={Login}/>
-        <Route name="orders" path="/orders" handler={Login}/>
-        <Route name="MyAboutView" path="/view" handler={MyAboutView}/>
+    <Route>  
+    <Route name= "orders" path="/orders" handler={Orders} />
+    <Route name= "login" path="/login" handler={Login} />
+    <Route name="MyAboutView" path="/view" handler={MyAboutView}/>
+    <DefaultRoute handler={Header}/>  
     </Route>
 );
 
-Router.run(routes, Router.HistoryLocation, function (Handler) {
-    console.log(Handler);
-    React.render(
-        <Handler/>, 
-        document.body
-    );
+Router.run(routes, function (Handler) {
+    React.render(<Handler/>, document.body);
 });
