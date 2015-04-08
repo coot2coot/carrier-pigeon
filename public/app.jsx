@@ -3,6 +3,8 @@ var Router = require('react-router');
 
 var Login = require("./components/loginPage.jsx");
 
+var Orders = require("./components/ordersPage.jsx")
+
 var DefaultRoute = Router.DefaultRoute;
 var Link = Router.Link;
 var Route = Router.Route;
@@ -17,10 +19,9 @@ var App = React.createClass({
 });
 
 var routes = (
-    <Route handler={App} path="/">
-        <Route name="login" path="/login" handler={Login}/>
-        <Route name="orders" path="/orders" handler={Login}/>
-        <DefaultRoute handler={App}/>
+    <Route>  
+    <Route name= "orders" handler={Orders} /> 
+    <DefaultRoute handler={Login}/>  
     </Route>
 );
 

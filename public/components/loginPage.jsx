@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
+var Router = require('react-router');
+var  Link  = Router.Link;
 
 module.exports = React.createClass({
     login: function(e) {
@@ -17,9 +19,9 @@ module.exports = React.createClass({
                         <p>Password</p>
                         <input type="text" name="password" />
                         <input type="checkbox" name="remember" /><p className="small">Remember me</p>
-                        <a href="/orders">
-                            <input type="submit" className="button charcoal" value="Login" />
-                        </a>
+                        <Link to = "orders">
+                            sign in
+                        </Link>
                 </div>
             </div>
         );
