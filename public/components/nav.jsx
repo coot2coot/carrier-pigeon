@@ -8,8 +8,8 @@ module.exports = React.createClass({
     render: function() {
         return (
 
-        	<nav className="nav-responsive">
-			  	<ul className="list-inline">
+        	<nav className="nav">
+			  	<ul>
 			    	<li>
 				    	<a href="">
 							<img src="../img/nav/shipping.png" />
@@ -18,14 +18,14 @@ module.exports = React.createClass({
 					</li>
 					<li>
 				    	<a href="">
-							<img src="../img/nav/booking.png" />
-							<h5>Booking notice</h5>
+							<img src="../img/nav/list.png" />
+							<h5>Contacts</h5>
 						</a>
 					</li>
 					<li>
 				    	<a href="">
-							<img src="../img/nav/list.png" />
-							<h5>Client</h5>
+							<img src="../img/nav/booking.png" />
+							<h5>Reports</h5>
 						</a>
 					</li>
 			  	</ul>
@@ -33,25 +33,3 @@ module.exports = React.createClass({
         );
     }
 })
-
-// <div className="row nav">
-// 				<div className="column-4 push-2">
-// 					<a href="">
-// 						<img src="./img/nav/shipping.png" />
-// 						<br />
-// 						<p>Orders</p>
-// 					</a>
-// 				</div>
-// 				<div className="column-4 push-2">
-// 					<a href="">
-// 						<img src="./img/nav/booking.png" />
-// 						<p>Booking notice</p>
-// 					</a>
-// 				</div>
-// 				<div className="column-4 push-2">
-// 					<a href="">
-// 						<img src="./img/nav/list.png" />
-// 						<p>Client</p>
-// 					</a>
-// 				</div>
-// 			</div>

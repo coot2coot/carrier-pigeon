@@ -6,12 +6,15 @@
 header {
   	@include blue-background;
   	.row {
-  		margin-bottom: 0;
+  		margin-bottom: 0.5em;
   	}
 	p {
 		color: white;
 	  	float: right;
 	  	padding: 0.5em 5em 0 0em;
+	  	@include respond(mobile) {
+	  		padding: 1em 1em 1.5em 2em;
+	  	}
 	}
 	a {
 		&:hover {

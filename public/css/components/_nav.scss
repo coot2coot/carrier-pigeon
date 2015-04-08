@@ -3,7 +3,7 @@
 *	
 ************************************************/
 
-.nav-responsive {
+nav {
 	img {
 		 height: 1.5em;
 		 display: inline-block;
@@ -11,18 +11,44 @@
 	}
 	h5 {
 		display: inline-block;
-		padding: 0.2em 2em 0 0;
 		color: white;
 		position: relative;
   		top: -0.2em;
 	}
 	li {
+		width: 22%;
+		padding-right: 3%;
 		display: inline-block;
 		margin-right: 0;
+		text-align: center;
 		@include blue-border;
 		@include blue-background;
 		&:hover {
 			@include blue-hover;
+		}
+	}
+	@include respond(desktop) {
+		li {
+			width: 30%;
+		}
+	}
+	@include respond(tablet) {
+		li {
+			width: 33.33%;
+		}
+		h5 {
+			display: inline-block;
+		}
+	}
+	@include respond(mobile) {
+		img {
+			display: none;
+			visibility: hidden;
+		}
+		h5 {
+			display: inline-block;
+			color: white;
+	  		top: 0;
 		}
 	}
 }

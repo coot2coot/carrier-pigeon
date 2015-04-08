@@ -5,13 +5,14 @@
 ************************************************/
 
 
-@import 		
+@import
+		"helpers/mobile",
+		"helpers/mixins",
+		"helpers/typography",
+
 		"base/colours",
 		"base/typography",
 		"base/reset",
-
-		"helpers/mixins",
-		"helpers/mobile",
 		
 		"layout/footer",
 		"layout/header",

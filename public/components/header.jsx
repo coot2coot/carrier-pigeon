@@ -31,7 +31,7 @@ var Buttons = React.createClass({
                 <a href="/login">
                     <p>Logout</p>
                 </a>
-                <p>Welcome username</p>
+                <p className="hide-extra-small">Welcome username</p>
             </div>
         )
     }
@@ -54,6 +54,8 @@ module.exports = React.createClass({
                         : <div>Never showing false item</div>
                     )}
                     </div>
+                </div>
+                <div className="row">
                     <div className="column-12 push-1">
                         {(isAuthenticated
                             ? <Navbar />     
