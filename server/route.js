@@ -2,8 +2,6 @@
 	"use strict";
 
 	var handler = require("./handler.js");
-	var Static = require('node-static');
-	var file = new Static.Server('./public');
 
 	var serverRoutes =  function (router) {
 
@@ -45,12 +43,6 @@
 
 		router.addRoute('/order/edit', function (req, res, match){
 		  	handler.editOrder(req, res);
-		});
-
-		router.addRoute('/public/*', function (req, res, match){
-		  	req.addListener('end', function () {
-		        file.serve(req, res);
-		    }).resume();
 		});
 	};
 

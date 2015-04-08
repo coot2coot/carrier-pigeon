@@ -11,13 +11,14 @@
 		script = DOM.script,
 		serverHandlers = {};
 
+var Static = require('node-static');
+	var file = new Static.Server('./public');
 
 
 	serverHandlers.home = function (req, res) {
-		fs.readFile("./public/index.html", function(err, text){
-	     	res.setHeader("Content-Type", "text/html");
-	      	res.end(text);
-	    });
+		req.addListener('end', function () {
+	        file.serve(req, res);
+	    }).resume();
 	};
 
 	/* -------------------------------*

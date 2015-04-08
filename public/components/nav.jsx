@@ -11,19 +11,19 @@ module.exports = React.createClass({
         	<nav className="nav">
 			  	<ul>
 			    	<li>
-				    	<a href="">
+				    	<a href="/orders">
 							<img src="../img/nav/shipping.png" />
 							<h5>Orders</h5>
 						</a>
 					</li>
 					<li>
-				    	<a href="">
+				    	<a href="/contacts">
 							<img src="../img/nav/list.png" />
 							<h5>Contacts</h5>
 						</a>
 					</li>
 					<li>
-				    	<a href="">
+				    	<a href="/reports">
 							<img src="../img/nav/booking.png" />
 							<h5>Reports</h5>
 						</a>
