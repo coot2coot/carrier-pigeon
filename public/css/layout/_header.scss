@@ -5,6 +5,9 @@
 
 header {
   	@include blue-background;
+  	.row {
+  		margin-bottom: 0;
+  	}
 	p {
 		color: white;
 	  	float: right;
@@ -14,33 +17,5 @@ header {
 		&:hover {
 	  		font-weight: 600;
 	  	}
-	}
-}
-
-.nav {
-	background: $charcoal;
-	padding: 0.5em 0 0;
-	div {
-		text-align: center;
-		&:hover {
-			opacity: 0.9;
-		}
-	}
-	p {
-		margin-top: -0.6em;
-  		padding: 0;
-  		float: none;
-	}
-	img {
-		height: 2em;
-		&:hover {
-			height: 2.1em;
-		}
-	}
-	.xero {
-		height: 3.2em;
-		&:hover {
-			height: 3.3em;
-		}
 	}
 }
