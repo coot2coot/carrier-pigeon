@@ -4,29 +4,30 @@ var React = require('react');
 module.exports = React.createClass({
 	render: function() {
 		return (
-			<div className="row nav">
-				<div className="column-4 push-2">
-					<a href="">
-						<img src="./img/nav/shipping.png"/>
-						<p>Orders</p>
-					</a>
+			<div className="column-14 push-1 model-generic">
+				<div className="panel-header">
+					<h3>Orders</h3>
+					<button className="button blue">+</button>
 				</div>
-				<div className="column-4 push-2">
-					<a href="">
-						<img src="./img/nav/booking.png"/>
-						<p>Booking notice</p>
-					</a>
-				</div>
-				<div className="column-4 push-2">
-					<a href="">
-						<img src="./img/nav/list.png"/>
-						<p>Client</p>
-					</a>
-				</div>
-				<div className="column-3 push-2">
-					<a href="">
-						<img className="xero" src="./img/nav/xero.png"/>
-					</a>
+
+				<div className="panel-body table-responsive model-overflow">
+					<table className="table table-full">
+						<th><h5>#</h5></th>
+						<th><h5>Reference</h5></th>
+						<th><h5>Date</h5></th>
+						<th><h5>Consignee</h5></th>
+						<th><h5>Loading Place</h5></th>
+						<th><h5>Delivery Place</h5></th>
+
+					  		<tr>
+					  			<td><a><p></p></a></td>
+								<td><a><p></p></a></td>
+								<td><a ><p></p></a></td>
+								<td><a ><p></p></a></td>
+								<td><a ><p></p></a></td>
+								<td><a ><p></p></a></td>
+							</tr>
+					</table>
 				</div>
 			</div>
 		);
