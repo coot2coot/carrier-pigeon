@@ -12,34 +12,66 @@
 
 
 
+	var fake = { 
+	    username: 'username', 
+	    password: 'password' 
+	};
+
 	serverHandlers.home = function (req, res) {
 		req.addListener('end', function () {
 	        file.serve(req, res);
 	    }).resume();
 	};
 
+	// getInitialState: function() {
+ //        return {todo: {}};
+ //    },
+ //    componentWillMount: function() {
+ //        var until = this.deferMount(),
+ //            self = this;
+ //        http.get('/api/todos/' + this.props.todoId, function(todo) {
+ //            self.setState({todo: todo});
+ //            until();
+ //        }
+ //    },
+
 	/* -------------------------------*
 	 *	   Authentication Handlers
 	 * -------------------------------*/
 
 	serverHandlers.loginUser = function (req, res) {
-		//Get posted username password
-		// save token in session storage
-		//If checked save in local storage
-		var orderInfo = "";
 
-	  	req.on('data', function (data) {
-	    	orderInfo += data;
-	  	});
-		req.on('end', function () {
-		  	var newOrder = querystring.parse(orderInfo);
+	  	if (req.method === 'POST') {
 
-		  	console.log(newOrder);
-	  		res.writeHead(302, {
-	  			'Location': '/#/orders'
-	  		});
-		    res.end();
-		});
+	        var body = '';
+	        var remember = false;
+
+	        req.on('data', function (data) {
+	            body += data;
+
+	        }).on('end', function () {
+
+	            var user = querystring.parse(body);
+
+	            //TODO: function that checks this is in the database
+	            if(user.username && 
+	            	user.username === fake.username && 
+	            	user.password && user.password === fake.password) {
+
+	            	if (user.remember === "on") {
+	            		remember = true
+	            	}
+	            	auth.success(req, res, remember);
+				    
+	            } else {
+	                return authFail(res);
+	            }
+	        });
+	    }
+	};
+
+	serverHandlers.VerifyToken = function (req, res) {
+		
 	};
 
 	serverHandlers.logoutUser = function (req, res) {

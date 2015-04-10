@@ -19,8 +19,6 @@
   "homepage": "https://github.com/foundersandcoders/carrier-pigeon",
   "dependencies": {
     "fs": "0.0.2",
-    "handlebars": "^3.0.0",
-    "handlebars-layouts": "^1.1.0",
     "jsonwebtoken": "^4.2.2",
     "node-static": "^0.7.6",
     "querystring": "^0.2.0",
