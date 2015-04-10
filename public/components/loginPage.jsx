@@ -16,14 +16,14 @@ module.exports = function (React, Link) {
                             <h2>Login</h2>
                         </div>
                         <div className="panel-body">
+                            <form action="/login/username" method="post">
                                 <p>Username</p>
                                 <input type="text" name="username" />
                                 <p>Password</p>
                                 <input type="text" name="password" />
                                 <input type="checkbox" name="remember" /><p className="small">Remember me</p>
-                                <Link to = "orders">
-                                    sign in
-                                </Link>
+                                <input className="button charcoal" type="submit" value="Login" />
+                            </form>
                         </div>
                     </div>
                 </div>

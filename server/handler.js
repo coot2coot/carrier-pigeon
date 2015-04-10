@@ -3,16 +3,13 @@
 
 	var fs = require("fs"),
 		querystring = require("querystring"),
-		React = require('react'),
+		Static = require('node-static'),
+		file = new Static.Server('./public'),
+
 		db = require("./db-sql-config.js"),
-		DOM = React.DOM, 
-		body = DOM.body, 
-		div = DOM.div, 
-		script = DOM.script,
+		auth = require('./auth.js'),
 		serverHandlers = {};
 
-var Static = require('node-static');
-	var file = new Static.Server('./public');
 
 
 	serverHandlers.home = function (req, res) {
@@ -25,11 +22,28 @@ var Static = require('node-static');
 	 *	   Authentication Handlers
 	 * -------------------------------*/
 
-	serverHandlers.login = function (req, res) {
-		fs.readFile("./public/index.html", function(err, text){
-	     	res.setHeader("Content-Type", "text/html");
-	      	res.end(text);
-	    });
+	serverHandlers.loginUser = function (req, res) {
+		//Get posted username password
+		// save token in session storage
+		//If checked save in local storage
+		var orderInfo = "";
+
+	  	req.on('data', function (data) {
+	    	orderInfo += data;
+	  	});
+		req.on('end', function () {
+		  	var newOrder = querystring.parse(orderInfo);
+
+		  	console.log(newOrder);
+	  		res.writeHead(302, {
+	  			'Location': '/#/orders'
+	  		});
+		    res.end();
+		});
+	};
+
+	serverHandlers.logoutUser = function (req, res) {
+		
 	};
 
 	/* -------------------------------*
