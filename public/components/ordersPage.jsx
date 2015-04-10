@@ -2,6 +2,14 @@
 var React = require('react');
 
 module.exports = React.createClass({
+	getOrders: function() {
+		$.get(this.props.source, function(result) {
+		 	var orders = result;
+		 	this.setState({
+		 		orders: orders
+		 	});
+		}.bind(this));
+	},
 	render: function() {
 		return (
 			<div className="column-14 push-1 model-generic">
@@ -20,12 +28,12 @@ module.exports = React.createClass({
 						<th><h5>Delivery Place</h5></th>
 
 					  		<tr>
-					  			<td><a><p></p></a></td>
-								<td><a><p></p></a></td>
-								<td><a ><p></p></a></td>
-								<td><a ><p></p></a></td>
-								<td><a ><p></p></a></td>
-								<td><a ><p></p></a></td>
+					  			<td><a><p>{{this.state}}</p></a></td>
+								<td><a><p>{{this.state}}</p></a></td>
+								<td><a><p>{{this.state}}</p></a></td>
+								<td><a><p>{{this.state}}</p></a></td>
+								<td><a><p>{{this.state}}</p></a></td>
+								<td><a><p>{{this.state}}</p></a></td>
 							</tr>
 					</table>
 				</div>
