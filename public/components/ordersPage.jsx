@@ -26,14 +26,13 @@ module.exports = React.createClass({
 						<th><h5>Consignee</h5></th>
 						<th><h5>Loading Place</h5></th>
 						<th><h5>Delivery Place</h5></th>
-
 					  		<tr>
-					  			<td><a><p>{{this.state}}</p></a></td>
-								<td><a><p>{{this.state}}</p></a></td>
-								<td><a><p>{{this.state}}</p></a></td>
-								<td><a><p>{{this.state}}</p></a></td>
-								<td><a><p>{{this.state}}</p></a></td>
-								<td><a><p>{{this.state}}</p></a></td>
+					  			<td><a><p></p></a></td>
+								<td><a><p></p></a></td>
+								<td><a><p></p></a></td>
+								<td><a><p></p></a></td>
+								<td><a><p></p></a></td>
+								<td><a><p></p></a></td>
 							</tr>
 					</table>
 				</div>
