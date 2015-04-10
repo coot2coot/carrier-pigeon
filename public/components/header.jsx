@@ -1,43 +1,32 @@
 /** @jsx React.DOM */
 
-//TODO: Make this dependent on real authentication
-var isAuthenticated = true;
+// TODO: make sure there is validation on every page. And redirection if not validated.
+
+
+var token = sessionStorage.getItem('token') || localStorage.getItem('token');
+
+var auth = {
+    loggedIn: function () {
+        return !!token;
+    }
+};
+
+//TODO: 
 var isAdmin = true;
 
-// {(isAdmin
-//     ? <AdminLink />     
-//     : <div>Never showing false item</div>
-// )}
-
-
 module.exports = function(React, Link) {
-    var Navbar = require("./nav.jsx")(React, Link);
-    
-    var AdminLink = React.createClass({
-        render: function() {
-            return (
-                <Link to = "login">
-                    <p>Admin Panel</p>
-                </Link>
-            )
-        }
-    });
 
-    var Buttons = React.createClass({
-        render: function() {
-            return (
-                <div>
-                    <Link to = "login">
-                        <p>Logout</p>
-                    </Link>
-                    <p className="hide-extra-small">Welcome username</p>
-                </div>
-            )
-        }
-    });
+    var Navbar = require("./nav.jsx")(React, Link);
+    var HeaderLinks = require("./header-links.jsx")(React, Link, isAdmin);
+
     return React.createClass({
-        login: function(e) {
-            alert("hello there");
+        getInitialState: function(){
+            return null
+        },
+        componentWillMount: function() {
+            this.setState({
+                loggedIn: auth.loggedIn()
+            });
         },
         render: function() {
             return (
@@ -47,17 +36,17 @@ module.exports = function(React, Link) {
                             <h1>Coot Freight Ltd</h1>
                         </div>
                         <div>
-                        {(isAuthenticated
-                            ? <Buttons />     
-                            : <div>Never showing false item</div>
+                        {(this.state.loggedIn
+                            ? <HeaderLinks /> 
+                            : <p></p>
                         )}
                         </div>
                     </div>
                     <div className="row">
                         <div className="column-12 push-1">
-                            {(isAuthenticated
-                                ? <Navbar />     
-                                : <div>Never showing false item</div>
+                            {(this.state.loggedIn
+                                ? <Navbar />
+                                : <p></p>
                             )}
                         </div>
                     </div>

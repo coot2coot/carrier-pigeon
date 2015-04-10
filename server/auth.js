@@ -9,9 +9,14 @@ var secret = process.env.JWT_SECRET || require("./credentials").secret;
 
 var index = fs.readFileSync('./public/index.html');
 
-var fake = { 
+var fakeUser = { 
     username: 'username', 
     password: 'password' 
+};
+
+var fakeAdmin = { 
+    username: 'Admin', 
+    password: '1234' 
 };
 
 // TODO: generate a more secure one. Nelson recommends crypto
@@ -61,26 +66,20 @@ module.exports = {
         return res.end("hello")
     },
     validate: function (req, res, remember) {
-        var GUID   = generateGUID();
-        var token  = generateToken(req, GUID);
-        var record = {
-            "valid" : true,
-            "created" : new Date().getTime()
-        };
-        
-        //TODO: client side ajax to this, get the token, then save in Local storage
-        res.writeHead(200, {
-            'Content-Type': 'text/html',
-            'Authorization': token
-        });
-
-        if (remember) {
-            res.write(storageScript('local', token));
+        // Is validated?
+        // return Username for front page
+        // Is admin?
+    }, 
+    //TODO: Make this connect to the real database
+    inDatabase: function (user) {
+        if ((user.username === fakeUser.username && 
+            user.password === fakeUser.password) || 
+            (user.username === fakeAdmin.username && 
+            user.password === fakeAdmin.password)) {
+            return true;
         } else {
-            res.write(storageScript('session', token));
+            return false;
         }
-
-        return res.end("hello")
     }
 }
 

@@ -11,29 +11,12 @@
 		serverHandlers = {};
 
 
-
-	var fake = { 
-	    username: 'username', 
-	    password: 'password' 
-	};
-
 	serverHandlers.home = function (req, res) {
 		req.addListener('end', function () {
 	        file.serve(req, res);
 	    }).resume();
 	};
 
-	// getInitialState: function() {
- //        return {todo: {}};
- //    },
- //    componentWillMount: function() {
- //        var until = this.deferMount(),
- //            self = this;
- //        http.get('/api/todos/' + this.props.todoId, function(todo) {
- //            self.setState({todo: todo});
- //            until();
- //        }
- //    },
 
 	/* -------------------------------*
 	 *	   Authentication Handlers
@@ -53,10 +36,7 @@
 
 	            var user = querystring.parse(body);
 
-	            //TODO: function that checks this is in the database
-	            if(user.username && 
-	            	user.username === fake.username && 
-	            	user.password && user.password === fake.password) {
+	            if(auth.inDatabase(user)) {
 
 	            	if (user.remember === "on") {
 	            		remember = true

@@ -1,12 +1,13 @@
 /** @jsx React.DOM */
 
+var client = new XMLHttpRequest(),
+    headers;
+
+
 module.exports = function (React, Link) {
     var Header = require("./header.jsx")(React, Link);
 
     return React.createClass({
-        login: function(e) {
-            alert("hello there");
-        },
         render: function() {
             return (
                 <div>
@@ -20,7 +21,7 @@ module.exports = function (React, Link) {
                                 <p>Username</p>
                                 <input type="text" name="username" />
                                 <p>Password</p>
-                                <input type="text" name="password" />
+                                <input type="password" name="password" />
                                 <input type="checkbox" name="remember" /><p className="small">Remember me</p>
                                 <input className="button charcoal" type="submit" value="Login" />
                             </form>
@@ -31,3 +32,33 @@ module.exports = function (React, Link) {
         }
     })
 }
+
+// React.createClass({
+//     getInitialState: function() {
+//         return {
+//             username: '',
+//             lastGistUrl: ''
+//         };
+//     },
+
+//     componentDidMount: function() {
+//         $.get(this.props.source, function(result) {
+//           var lastGist = result[0];
+//           if (this.isMounted()) {
+//             this.setState({
+//               username: lastGist.owner.login,
+//               lastGistUrl: lastGist.html_url
+//             });
+//           }
+//         }.bind(this));
+//     },
+
+//     render: function() {
+//         return (
+//             <div>
+//                 {this.state.username}s last gist is
+//                 <a href={this.state.lastGistUrl}>here</a>.
+//             </div>
+//         );
+//     }
+// });
