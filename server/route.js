@@ -13,17 +13,17 @@
 	 *	   Authentication Routes
 	 * -------------------------------*/
 
-		router.addRoute('/login', function (req, res, match){
-		  	handler.login(req, res);
-		});
+		// router.addRoute('/login', function (req, res, match){
+		//   	handler.login(req, res);
+		// });
 
 	/* -------------------------------*
 	 *	   Order Routes
 	 * -------------------------------*/
 
-		router.addRoute('/orders', function (req, res, match){
-		  	handler.orders(req, res);
-		});
+		// router.addRoute('/orders', function (req, res, match){
+		//   	handler.orders(req, res);
+		// });
 
 		router.addRoute('/order/id', function (req, res, match){
 		  	handler.viewOrder(req, res);

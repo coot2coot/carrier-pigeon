@@ -4,6 +4,8 @@ var Router = require('react-router');
 var Login = require("./components/loginPage.jsx");
 var Header = require("./components/header.jsx");
 
+var Orders = require("./components/ordersPage.jsx")
+
 var DefaultRoute = Router.DefaultRoute;
 var Link = Router.Link;
 var Route = Router.Route;
@@ -18,17 +20,6 @@ var MyAboutView = React.createClass({
     );
   }
 });
-
-var Orders = React.createClass({
-  render: function() {
-    return (
-      <div >
-         <p>Orders!</p>
-      </div>
-    );
-  }
-});
-
 
 var routes = (
     <Route>  
