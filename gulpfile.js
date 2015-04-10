@@ -179,12 +179,15 @@
 /*******************************
 *       BUILD TASKS
 ********************************/
-	
+
+	// For development
     gulp.task("watch", ["sass-watch", "watchify"])
 
+    // For Production
 	gulp.task("build", ["sass-production", "bundle"] , function() {
         return console.log("done building");
     });
+    
     //TODO: Need to add tests task back in here once tests are updated
     gulp.task("deploy", ["build"], function() {
         sauceConnectLauncher({
