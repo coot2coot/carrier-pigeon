@@ -66,12 +66,6 @@ var Static = require('node-static');
 		})
 	}
 
-	// serverHandlers.viewOrder = function (req, res) {
-	// 	db.getOne(function (order) {
-	// 		res.writeHead(200, {"Content-Type" : "text/html"});
-	// 		res.end(order);
-	// 	});
-	// };
 
 
 	serverHandlers.editOrder = function (req, res) {
