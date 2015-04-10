@@ -6,12 +6,12 @@ var client = new pg.Client(param);
 var dataBase = {};
 
 
-var connect = function (query,table,cb) {
+var connect = function (query,table,cb,doc) {
 	client.connect(function(err) {
 	  	if(err) {
 	    	return console.error('could not connect to postgres', err);
 	  	}
-	  	query(table,cb);
+	  	query(table, cb, doc);
 	});
 }
 
@@ -25,8 +25,18 @@ function get(table, cb) {
 	});
 }
 
-function put(table, cb, doc) {
-	client.query('INSERT INTO ' + table + ' ' + doc.columns+' VALUES ' + doc.values, function(err, result) {
+function getOne(table, cb, doc) {
+	client.query('SELECT * FROM ' + table + ' WHERE ' +doc.columns +'=' + doc.values, function(err, result) {
+	    if(err) {
+	      return console.error('error running query', err);
+	    }
+	    cb(result.rows);
+	    client.end();
+	});
+}
+
+function post(table, cb, doc) {
+	client.query('INSERT INTO ' + table + ' ' + doc.columns +' VALUES ' + doc.values, function(err, result) {
 	    if(err) {
 	      return console.error('error running query', err);
 	    }
@@ -36,7 +46,7 @@ function put(table, cb, doc) {
 }
 
 function remove(table, cb, doc) {
-	client.query('DELETE FROM ' + table + ' WHERE ' + cd.column +' = ' + cd.column.values, function(err, result) {
+	client.query('DELETE FROM ' + table + ' WHERE ' +doc.columns +'=' + doc.values, function(err, result) {
 	    if(err) {
 	      return console.error('error running query', err);
 	    }
@@ -49,12 +59,16 @@ dataBase.get = function (table, cb){
  	connect(get,table,cb);
 };
 
-dataBase.put = function (table, cb, doc){
- 	connect(put,table,cb,doc);
+dataBase.post = function (table, doc, cb){
+ 	connect(post,table,cb,doc);
 };
 
-dataBase.remove = function (table, cb, doc){
+dataBase.remove = function (table, doc, cb){
  	connect(remove,table,cb,doc);
+};
+
+dataBase.getOne = function (table, doc, cb){
+ 	connect(getOne,table,cb,doc);
 };
 
 

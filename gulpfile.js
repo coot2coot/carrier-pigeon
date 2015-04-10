@@ -222,7 +222,7 @@
         });
     });
 
-	gulp.task("default", ["watch", "open"], function() {
+	gulp.task("default", ["build", "open"], function() {
         nodemon({
             script: "server.js",
             ext: "js html",
