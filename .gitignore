@@ -7,3 +7,5 @@ tests/acceptance/reports
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+bundle.js
+bundle.min.js

@@ -6,19 +6,26 @@
 		nodemon = require("gulp-nodemon"),
         shell = require('gulp-shell'),
         mocha = require('gulp-mocha'),
-        sauceUsername = process.env.SAUCE_USERNAME, //|| require("./credentials.json").username,
-        sauceAccessKey = process.env.SAUCE_ACCESS_KEY, //|| require("./credentials.json").accesskey,
+        browserify = require("browserify"),
+        reactify = require('reactify'),
+        watchify = require("watchify"),
+        uglify = require('gulp-uglify'),
+        source = require('vinyl-source-stream'),
+        sauceUsername = process.env.SAUCE_USERNAME || require("./credentials.json").username,
+        sauceAccesskey = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey,
         sauceConnectLauncher = require("sauce-connect-launcher");
 
-
 	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
-		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"],
-        e2eFiles = ["./tests/acceptance/test.js"];
+		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"];
 
 
 /*******************************
 *       PREREQUISITE TASKS
 ********************************/
+    
+    gulp.task('open', shell.task([
+        'open http://localhost:8000'
+    ]));
 
     gulp.task('selenium-install', shell.task([
       'node_modules/.bin/selenium-standalone install'
@@ -26,10 +33,6 @@
 
     gulp.task('selenium-start', shell.task([
       'node_modules/.bin/selenium-standalone start'
-    ]));
-
-    gulp.task('open', shell.task([
-      'open http://localhost:8000'
     ]));
 
 /*******************************
@@ -45,20 +48,58 @@
     ]));
 
     //Please run task `gulp selenium-start` before running
-    gulp.task("e2e", function() {
+    gulp.task("e2e-local", function() {
         nodemon({
             script: "server.js",
             ext: "js html",
             ignore: ["node_modules"]
         })
         .on("start", function(){
-            return gulp.src(e2eFiles)
+            return gulp.src("./tests/acceptance/test-local.js")
             .pipe(mocha({
                 reporter: 'nyan'
             }))
             .on("end", function() {
                 console.log("Tests finished");
                 process.exit();
+            });
+        });
+    });
+
+    //run server as well as this.
+    gulp.task("e2e", function() {
+        sauceConnectLauncher({
+            username: sauceUsername,
+            accessKey: sauceAccesskey
+        }, function (err, sauceConnectProcess) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+             nodemon({
+                script: "server.js",
+                ext: "js html",
+                ignore: ["node_modules"]
+            })
+            .on("start", function(){
+                gulp.src("./tests/acceptance/test.js")
+                    .pipe(mocha({
+                        reporter: 'nyan'
+                    }))
+                    .on("end", function() {
+                        console.log("Tests finished");
+                        process.exit();
+                    })
+                    .on("error", function(e) {
+                        sauceConnectProcess.close(function () {
+                            console.log("Closed Sauce Connect process");
+                        });
+                    });
+            })
+            .on("end", function(e) {
+                sauceConnectProcess.close(function () {
+                    console.log("Closed Sauce Connect process");
+                });
             });
         });
     });
@@ -100,36 +141,88 @@
         gulp.watch(sassFiles, ["sass-dev", "concise"]);
     });
 
+    gulp.task("bundle", function () {
+
+        var b = browserify();
+          b.transform(reactify);
+          b.add('./public/app.jsx');
+          return b.bundle()
+            .pipe(source('bundle.js'))
+            .pipe(gulp.dest('./public/js/'));
+    });
+
+    gulp.task("watchify", function () {
+
+        var b = browserify({
+            entries: ['./public/app.jsx'], 
+            transform: [reactify],
+            debug: true,
+            cache: {}, packageCache: {}, fullPaths: true 
+        });
+
+        var watcher  = watchify(b);
+
+        return watcher
+            .on('update', function () { 
+                var updateStart = Date.now();
+                watcher.bundle()
+                    .pipe(source("bundle.js"))
+                    .pipe(gulp.dest('./public/js/'));
+            console.log('Updated!', (Date.now() - updateStart) + 'ms');
+        })
+        .bundle()
+        .pipe(source("bundle.js"))
+        .pipe(gulp.dest('./public/js/'));
+    });
+
 
 /*******************************
 *       BUILD TASKS
 ********************************/
 	
-	gulp.task("build", ["sass-production"] , function() {
+    gulp.task("watch", ["sass-watch", "watchify"])
+
+	gulp.task("build", ["sass-production", "bundle"] , function() {
         return console.log("done building");
     });
-
-    gulp.task("deploy", ["build"] , function() {
-        nodemon({
-            script: "server.js",
-            ext: "js html",
-            ignore: ["node_modules"]
-        })
-        .on("start", function(){
-            return gulp.src(e2eFiles)
-            .pipe(mocha({
-                reporter: 'nyan'
-            }))
-            .once('error', function () {
-                process.exit(1);
+    //TODO: Need to add tests task back in here once tests are updated
+    gulp.task("deploy", ["build"], function() {
+        sauceConnectLauncher({
+            username: sauceUsername,
+            accessKey: sauceAccesskey
+        }, function (err, sauceConnectProcess) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+             nodemon({
+                script: "server.js",
+                ext: "js html",
+                ignore: ["node_modules"]
             })
-            .once('end', function () {
-                process.exit();
-            });
+            .on("start", function(){
+                gulp.src("./tests/acceptance/test.js")
+                    .pipe(mocha({
+                        reporter: 'nyan'
+                    }))
+                    .on("end", function() {
+                        sauceConnectProcess.close(function () {
+                            console.log("Closed Sauce Connect process");
+                            console.log("Tests finished");
+                            process.exit();
+                        });
+                    })
+                    .on("error", function(e) {
+                        console.log(e);
+                        sauceConnectProcess.close(function () {
+                            console.log("Closed Sauce Connect process");
+                        });
+                    });
+            })
         });
     });
 
-	gulp.task("default",["build","open"], function() {
+	gulp.task("default", ["watch", "open"], function() {
         nodemon({
             script: "server.js",
             ext: "js html",

@@ -1,23 +1,24 @@
 (function () {
 	"use strict";
 
-	var fs = require("fs");
-	var querystring = require("querystring");
-	var Handlebars = require("handlebars");
-	var db = require("./db-sql-config.js");
-	var hbsLayouts = require('handlebars-layouts')(Handlebars);
+	var fs = require("fs"),
+		querystring = require("querystring"),
+		React = require('react'),
+		db = require("./db-sql-config.js"),
+		DOM = React.DOM, 
+		body = DOM.body, 
+		div = DOM.div, 
+		script = DOM.script,
+		serverHandlers = {};
 
-	Handlebars.registerPartial('layout', fs.readFileSync('./public/index.html').toString());
-	var ordersPage = Handlebars.compile(fs.readFileSync('./public/templates/orders.html').toString());
-	var loginPage = Handlebars.compile(fs.readFileSync('./public/templates/login.html').toString());
+var Static = require('node-static');
+	var file = new Static.Server('./public');
 
-	var serverHandlers = {};
 
 	serverHandlers.home = function (req, res) {
-		res.writeHead(302, {
-  			'Location': '/login'
-  		});
-	    res.end();
+		req.addListener('end', function () {
+	        file.serve(req, res);
+	    }).resume();
 	};
 
 	/* -------------------------------*
@@ -25,8 +26,10 @@
 	 * -------------------------------*/
 
 	serverHandlers.login = function (req, res) {
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end(loginPage());
+		fs.readFile("./public/index.html", function(err, text){
+	     	res.setHeader("Content-Type", "text/html");
+	      	res.end(text);
+	    });
 	};
 
 	/* -------------------------------*
@@ -43,61 +46,41 @@
 		});
 	};
 
-	// serverHandlers.orders = function (req, res) {
-	// 	db.get(function (orders) {
-	// 		res.writeHead(200, {"Content-Type" : "text/html"});
-	// 		res.end(ordersPage({ 
-	// 			data: orders,
-	// 			overlay: false
-	// 		}));
-	// 	});
-	// };
+	serverHandlers.viewOrder = function (req, res) {
+		db.getOne(function (order) {
+			res.writeHead(200, {"Content-Type" : "text/html"});
+			res.end(ordersPage({ 
+				data: order
+			}));
+		});
+	};
 
-	// serverHandlers.viewOrder = function (req, res) {
-	// 	db.getOne(function (order) {
-	// 		res.writeHead(200, {"Content-Type" : "text/html"});
-	// 		res.end(ordersPage({ 
-	// 			data: order
-	// 		}));
-	// 	});
-	// };
+	serverHandlers.createOrder = function (req, res) {
 
-	// serverHandlers.newOrder = function (req, res) {
-	// 	db.get(function (orders) {
-	// 		res.writeHead(200, {"Content-Type" : "text/html"});
-	// 		res.end(ordersPage({ 
-	// 			data: orders,
-	// 			overlay: true
-	// 		}));
-	// 	});
-	// };
+		var orderInfo = "";
 
-	// serverHandlers.createOrder = function (req, res) {
+	  	req.on('data', function (data) {
+	    	orderInfo += data;
+	  	});
+		req.on('end', function () {
+		  	var newOrder = querystring.parse(orderInfo);
 
-	// 	var orderInfo = "";
+		  	db.post(newOrder, function() {
+		  		res.writeHead(302, {
+		  			'Location': '/orders'
+		  		});
+			    res.end();
+		  	});
+		});
+	};
 
-	//   	req.on('data', function (data) {
-	//     	orderInfo += data;
-	//   	});
-	// 	req.on('end', function () {
-	// 	  	var newOrder = querystring.parse(orderInfo);
+	serverHandlers.removeOrder = function (req, res) {
+		//TODO.
+	};
 
-	// 	  	db.post(newOrder, function() {
-	// 	  		res.writeHead(302, {
-	// 	  			'Location': '/orders'
-	// 	  		});
-	// 		    res.end();
-	// 	  	})
-	// 	});
-	// };
-
-	// serverHandlers.removeOrder = function (req, res) {
-	// 	//TODO.
-	// };
-
-	// serverHandlers.editOrder = function (req, res) {
-	// 	//TODO.
-	// };
+	serverHandlers.editOrder = function (req, res) {
+		//TODO.
+	};
 
 	module.exports = serverHandlers;
 })();
