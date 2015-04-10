@@ -45,7 +45,7 @@ function landingTests (wd, capability, remote) {
             browser
                 .title()
                 .then(function(title) {
-                    title.should.equal("Coot Freight");
+                    title.should.equal("Coot Freight Ltd");
                 })
                 .nodeify(done);
         });

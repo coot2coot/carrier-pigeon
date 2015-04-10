@@ -182,11 +182,11 @@
 	
     gulp.task("watch", ["sass-watch", "watchify"])
 
-	gulp.task("build", ["sass-production", "build"] , function() {
+	gulp.task("build", ["sass-production", "bundle"] , function() {
         return console.log("done building");
     });
-
-    gulp.task("deploy", ["build", "test"] , function() {
+    //TODO: Need to add tests task back in here once tests are updated
+    gulp.task("deploy", ["build"], function() {
         sauceConnectLauncher({
             username: sauceUsername,
             accessKey: sauceAccesskey
@@ -206,20 +206,19 @@
                         reporter: 'nyan'
                     }))
                     .on("end", function() {
-                        console.log("Tests finished");
-                        process.exit();
+                        sauceConnectProcess.close(function () {
+                            console.log("Closed Sauce Connect process");
+                            console.log("Tests finished");
+                            process.exit();
+                        });
                     })
                     .on("error", function(e) {
+                        console.log(e);
                         sauceConnectProcess.close(function () {
                             console.log("Closed Sauce Connect process");
                         });
                     });
             })
-            .on("end", function(e) {
-                sauceConnectProcess.close(function () {
-                    console.log("Closed Sauce Connect process");
-                });
-            });
         });
     });
 
