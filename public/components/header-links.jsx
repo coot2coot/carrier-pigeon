@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 module.exports = function(React, Link, admin) {
-    //TODO: show if admin
+
     var AdminLink = React.createClass({
         render: function() {
             return (
@@ -12,7 +12,8 @@ module.exports = function(React, Link, admin) {
         }
     });
 
-    return React.createClass({
+    return  React.createClass({
+
         render: function() {
             return (
                 <div>
@@ -25,7 +26,7 @@ module.exports = function(React, Link, admin) {
                             : <p></p>
                         )}
                     </div>
-                    <p className="hide-extra-small">Welcome username</p>
+                    <p className="hide-extra-small">Welcome {this.props.name}</p>
                 </div>
             )
         }
