@@ -28,7 +28,7 @@ var routes = (
     <Route name= "login" path="/login" handler={Login} />
     <Route name= "reports" path="/reports" handler={Test} />
     <Route name= "contacts" path="/contacts" handler={Test} />
-    <DefaultRoute handler={Header}/>  
+    <DefaultRoute handler={Login}/>  
     </Route>
 );
 
