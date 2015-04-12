@@ -20,8 +20,8 @@ function get(table, cb) {
 	    if(err) {
 	      return console.error('error running query', err);
 	    }
-	    cb(result.rows);
 	    client.end();
+	    cb(result.rows);
 	});
 }
 
@@ -30,8 +30,8 @@ function getOne(table, cb, doc) {
 	    if(err) {
 	      return console.error('error running query', err);
 	    }
-	    cb(result.rows);
 	    client.end();
+	    cb(result.rows);
 	});
 }
 
