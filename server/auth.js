@@ -1,23 +1,22 @@
-var qs   = require('querystring');
-var fs   = require('fs');
-var path = require('path');
-var jwt  = require('jsonwebtoken');
-var fs = require('fs');
+var fs       = require('fs');
+var path     = require('path');
+var jwt      = require('jsonwebtoken');
+var secret   = process.env.JWT_SECRET || require("../credentials").secret;
+var index    = fs.readFileSync('./public/index.html');
+var Cookies   = require('cookies');
+
+//HELPER FUNCTIONS:
+var authFailed  = require('./lib/auth-failed.js');
+var getFormData = require('./lib/get-form-data.js');
+var getUser     = require('./lib/select-user-db.js');
 
 
-var secret = process.env.JWT_SECRET || require("./credentials").secret;
+function checkIfUserExists(req, res, cb) {
+    getFormData(req, function(logins) {
+        getUser(logins.username, logins.password, cb);
+    })
+}
 
-var index = fs.readFileSync('./public/index.html');
-
-var fakeUser = { 
-    username: 'username', 
-    password: 'password' 
-};
-
-var fakeAdmin = { 
-    username: 'Admin', 
-    password: '1234' 
-};
 
 // TODO: generate a more secure one. Nelson recommends crypto
 function generateGUID() {
@@ -27,141 +26,160 @@ function generateGUID() {
 function generateToken(req, GUID) {
     var token = jwt.sign({
         auth:  GUID,
-        agent: req.headers['user-agent'],
         exp:   new Date().getTime() + 7*24*60*60*1000
     }, secret);
     return token;
 }
 
-function storageScript (storageType, value) {
-    return script = '<script>' +
-                        'if(typeof(Storage) !== "undefined") {' +
-                            storageType + 'Storage.setItem("token","' + value + '")' +
-                        '}' +
-                        'window.location="/#/orders";' +
-                    '</script>';
+function verify(token) {
+    var decoded = false;
+    try {
+        decoded = jwt.verify(token, secret);
+    } catch (e) {
+        decoded = false;
+    }
+    return decoded;
 }
 
-module.exports = {
-    success: function (req, res, remember) {
-        var GUID   = generateGUID();
-        var token  = generateToken(req, GUID);
-        var record = {
-            "valid" : true,
-            "created" : new Date().getTime()
-        };
-        
-        //TODO: client side ajax to this, get the token, then save in Local storage
+var auth = {};
+
+auth.login = function (req, res) {
+
+    checkIfUserExists(req, res, function(err, user, message) {
+        if (err || message) {
+            console.log(err, message);
+            authFailed(res);
+        }
+        if (user) {
+
+            var GUID   = generateGUID();
+            var token  = generateToken(user, GUID);
+            var record = {
+                "valid" : true,
+                "created" : new Date().getTime()
+            };
+
+            var cookies = new Cookies(req, res)
+            cookies.set( "token", token);
+
+            //need to respond with cookie
+            res.writeHead(303, {
+                'Location': '/#/orders'
+            });
+
+            res.end();
+        }
+    });
+}
+
+auth.validate = function (req, res) {
+
+    var cookie = req.headers.cookie.split("=");
+    var token = cookie[1];
+    var decoded = verify(token);
+
+    if(!decoded || !decoded.auth) {
+        res.writeHead(303, {
+            'Location': '/#/login'
+        });
+        res.end();
+    } else {
+        console.log('Authenticated!');
+
         res.writeHead(200, {
-            'Content-Type': 'text/html',
-            'Authorization': token
+            'Content-Type': 'application/json'
+        });
+        var response = JSON.stringify({
+            username: 'username'
         });
 
-        if (remember) {
-            res.write(storageScript('local', token));
-        } else {
-            res.write(storageScript('session', token));
-        }
-
-        return res.end("hello")
-    },
-    validate: function (req, res, remember) {
-        // Is validated?
-        // return Username for front page
-        // Is admin?
-    }, 
-    //TODO: Make this connect to the real database
-    inDatabase: function (user) {
-        if ((user.username === fakeUser.username && 
-            user.password === fakeUser.password) || 
-            (user.username === fakeAdmin.username && 
-            user.password === fakeAdmin.password)) {
-            return true;
-        } else {
-            return false;
-        }
+        res.end(response);
     }
 }
 
+auth.logout = function (req, res) {
+    //validate, delete cookie
+        // FIXME: req.headers.auth... not woring
+        console.log(req.headers);
+        var token = req.headers.authorization;
+        var decoded = verify(token);
 
+        if(decoded) {
+            res.end(logoutScript);
+            // TODO: delete from db
+        } else {
+            res.writeHead(303, {
+                'Location': '/#/login'
+            });
+            res.end();
+        }
+}
 
+module.exports = auth;
 
+// passport.serializeUser(function(user, done) {
+//     console.log("serializeUser")
+//     done(null, user);
+// });
 
+// passport.deserializeUser(function(id, done) {
 
+//      console.log("deserializeUser")
+//     client.connect(function(err, user) {
+//         if (err) {
+//             return console.error('could not connect to postgres', err);
+//         }
+//         console.log(user);
 
-
-
-
-
-
-
-
-
-
-
-// function verify(token) {
-//     var decoded = false;
-//     try {
-//         decoded = jwt.verify(token, secret);
-//     } catch (e) {
-//         decoded = false;
-//     }
-//     return decoded;
-// }
-
-// function private(res, token) {
-//     res.writeHead(200, {
-//         'Content-Type': 'text/html',
-//         'authorization': token
+//         client.query('SELECT * FROM users WHERE user_name = $1', [username],function(err, user) {
+//             if (err) {
+//                 return done(err);
+//             }
+//             if (user) {
+//                 return done(err, user);
+//             }
+//         });
 //     });
-//     return res.end(restricted);
-// }
+// });
 
-// function validate(req, res, callback) {
-//     var token = req.headers.authorization;
-//     var decoded = verify(token);
+// var auth = {}
 
-//     if(!decoded || !decoded.auth) {
-//         authFail(res);
-//         return callback(res);
-//     } else {
-//     // check if a key exists, else import word list:
-//     db.get(decoded.auth, function (err, record) {
-//       var r;
-//       try {
-//         r = JSON.parse(record);
-//       } catch (e) {
-//         r = { valid : false };
-//       }
-//       if (err || !r.valid) {
-//         authFail(res);
-//         return callback(res);
-//       } else {
-//         privado(res, token);
-//         return callback(res);
-//       }
+// auth.login = function(req, res) {
+//     var formData = "";
+
+//     req.on('data', function (data) {
+//             formData += data;
+//         });
+//     req.on('end', function () {
+//         var logins = qs.parse(formData);
+
+//         req.body = logins;
+
+
+//         passport.authenticate('local', function (error, user, message) {
+//             if (!user) {
+//                 console.log('no user: ' + user + ' ' + error + ' ' + message);
+//                 res.writeHead(302, {
+//                     'Location': '/#/login',
+//                 });
+//                 return;
+//             } else {
+//                 res.writeHead(302, {
+//                     'Location': '/#/orders',
+//                     'user': user.rows[0].user_name
+//                 });
+//                 res.end();
+//                 return;
+//             }
+//         })(req, res);
 //     });
-//   }
 // }
 
-// function logout(req, res, callback) {
-//     // invalidate the token
-//     var token = req.headers.authorization;
-//     // console.log(' >>> ', token)
-//     var decoded = verify(token);
-//     if(decoded) {
-//         db.get(decoded.auth, function(err, record){
-//             var updated    = JSON.parse(record);
-//             updated.valid  = false;
-//             db.put(decoded.auth, updated, function (err) {
-//                 // console.log('updated: ', updated)
-//                 res.writeHead(200, {'Content-Type': 'text/plain'});
-//                 res.end('Logged Out!');
-//                 return callback(res);
-//             });
-//          });
-//     } else {
-//         authFail(res, done);
-//         return callback(res);
-//     }
+// auth.logout = function(req, res) {
+    
+// }
+
+// auth.validate = function(req, res) {
+//     req.isAuthenticated();
+//     console.log(req.headers.cookie);
 // }

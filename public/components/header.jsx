@@ -1,8 +1,5 @@
 /** @jsx React.DOM */
 
-// TODO: make sure there is validation on every page. And redirection if not validated.
-var token = sessionStorage.getItem('token') || localStorage.getItem('token');
-
 //TODO: 
 var isAdmin = false;
 
@@ -18,22 +15,21 @@ module.exports = function(React, Link) {
         componentWillMount: function() {
             var url = "/login/verify";
 
-            $.ajax({
-                url: url,
-                 headers: {
-                    "Authorization":token
-                },
-                dataType: 'text',
-                success: function(data) {
-                    this.setState({
-                        loggedIn: true,
-                        username: data
-                    });
-                }.bind(this),
-                error: function(xhr, status, err) {
-                    console.log(xhr, status, err);
-                }.bind(this)
-            });
+            if (!this.props.loggedOut) {
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    success: function(data) {
+                        this.setState({
+                            loggedIn: true,
+                            username: data.username
+                        });
+                    }.bind(this),
+                    error: function(xhr, status, err) {
+                        console.log(xhr, status, err);
+                    }.bind(this)
+                });
+            }
         },
         render: function() {
             return (
