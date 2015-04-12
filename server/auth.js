@@ -8,7 +8,7 @@ var Cookies   = require('cookies');
 //HELPER FUNCTIONS:
 var authFailed  = require('./lib/auth-failed.js');
 var getFormData = require('./lib/get-form-data.js');
-var getUser     = require('./lib/select-user-db.js');
+var getUser     = require('./db/select-user.js');
 
 
 function checkUserLogins(req, res, cb) {

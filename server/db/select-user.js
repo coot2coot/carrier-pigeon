@@ -1,6 +1,6 @@
 var pg       = require("pg");
 var dataBase = process.env.POSTGRESS || require('../credentials.json').postgres;
-var client   = new pg.Client("postgres://benjaminlees:pofywbi0@aa2xurcp6gqkuq.cbp7s6d11jp7.eu-west-1.rds.amazonaws.com:5432/carrier-pigeon-dev");
+var client   = new pg.Client("postgres://"+ dataBase + "/carrier-pigeon-dev");
 
 module.exports = function (username, password, remember, done) {
     client.connect(function(err) {

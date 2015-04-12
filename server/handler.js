@@ -42,47 +42,37 @@
 	 *	   Order Handlers
 	 * -------------------------------*/
 
-	serverHandlers.orders = function (req, res) {
-		db.get("orders",function (orders) {
-			res.writeHead(200, {"Content-Type" : "text/html"});
-			res.end(ordersPage({ 
-				data: orders,
-				overlay: false
-			}));
+	serverHandlers.getOrders = function (req, res) {
+		db.get('orders',function (orders) {
+			res.writeHead(200, {"Content-Type" : "application/json"});
+			var orderString = JSON.stringify(orders);
+			res.end(orderString);
 		});
 	};
 
-	serverHandlers.viewOrder = function (req, res) {
-		db.getOne(function (order) {
-			res.writeHead(200, {"Content-Type" : "text/html"});
-			res.end(ordersPage({ 
-				data: order
-			}));
+	serverHandlers.getOrder = function (req, res) {
+		db.getOne('orders', req.docs, function (orders) {
+			res.writeHead(200, {"Content-Type" : "application/json"});
+			var orderString = JSON.stringify(orders);
+			res.end(orderString);
 		});
 	};
 
 	serverHandlers.createOrder = function (req, res) {
-
-		var orderInfo = "";
-
-	  	req.on('data', function (data) {
-	    	orderInfo += data;
-	  	});
-		req.on('end', function () {
-		  	var newOrder = querystring.parse(orderInfo);
-
-		  	db.post(newOrder, function() {
-		  		res.writeHead(302, {
-		  			'Location': '/orders'
-		  		});
-			    res.end();
-		  	});
-		});
-	};
+		db.post('orders', req.docs, function (orders) {
+			res.writeHead(200);
+			res.end();
+		})
+	}
 
 	serverHandlers.removeOrder = function (req, res) {
-		//TODO.
-	};
+		db.remove('orders', req.docs, function (orders) {
+			res.writeHead(200);
+			res.end();
+		})
+	}
+
+
 
 	serverHandlers.editOrder = function (req, res) {
 		//TODO.

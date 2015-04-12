@@ -29,24 +29,24 @@
 	 *	   Order Routes
 	 * -------------------------------*/
 
-		// router.addRoute('/orders', function (req, res, match){
-		//   	handler.orders(req, res);
-		// });
-
-		router.addRoute('/order/id', function (req, res, match){
-		  	handler.viewOrder(req, res);
+		router.addRoute('/server/getorders', function (req, res, match){
+		  	handler.getOrders(req, res);
 		});
 
-		router.addRoute('/order/new', function (req, res, match){
-		  	handler.newOrder(req, res);
+		router.addRoute('/server/getorder', function (req, res, match){
+		  	handler.getOrder(req, res);
 		});
 
-		router.addRoute('/order/create', function (req, res, match){
+		router.addRoute('/server/postorder', function (req, res, match){
 		  	handler.createOrder(req, res);
 		});
 
-		router.addRoute('/order/remove', function (req, res, match){
+		router.addRoute('/server/removeorder', function (req, res, match){
 		  	handler.removeOrder(req, res);
+		});
+
+		router.addRoute('/order/id', function (req, res, match){
+		  	handler.viewOrder(req, res);
 		});
 
 		router.addRoute('/order/edit', function (req, res, match){
