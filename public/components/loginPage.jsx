@@ -1,8 +1,5 @@
 /** @jsx React.DOM */
 
-var client = new XMLHttpRequest(),
-    headers;
-
 
 module.exports = function (React, Link) {
     var Header = require("./header.jsx")(React, Link);
@@ -11,7 +8,7 @@ module.exports = function (React, Link) {
         render: function() {
             return (
                 <div>
-                    <Header />
+                    <Header loggedOut="true" />
                     <div className="column-6 push-5 model-generic model-middle">
                         <div className="panel-header">
                             <h2>Login</h2>
@@ -32,33 +29,3 @@ module.exports = function (React, Link) {
         }
     })
 }
-
-// React.createClass({
-//     getInitialState: function() {
-//         return {
-//             username: '',
-//             lastGistUrl: ''
-//         };
-//     },
-
-//     componentDidMount: function() {
-//         $.get(this.props.source, function(result) {
-//           var lastGist = result[0];
-//           if (this.isMounted()) {
-//             this.setState({
-//               username: lastGist.owner.login,
-//               lastGistUrl: lastGist.html_url
-//             });
-//           }
-//         }.bind(this));
-//     },
-
-//     render: function() {
-//         return (
-//             <div>
-//                 {this.state.username}s last gist is
-//                 <a href={this.state.lastGistUrl}>here</a>.
-//             </div>
-//         );
-//     }
-// });

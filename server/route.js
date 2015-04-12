@@ -21,7 +21,7 @@
 		  	handler.verifyToken(req, res);
 		});
 
-		router.addRoute('/logout/username', function (req, res, match){
+		router.addRoute('/logout', function (req, res, match){
 		  	handler.logoutUser(req, res);
 		});
 
