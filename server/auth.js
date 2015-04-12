@@ -5,7 +5,7 @@ var jwt  = require('jsonwebtoken');
 var fs = require('fs');
 
 
-var secret = process.env.JWT_SECRET || require("./credentials").secret;
+var secret = process.env.JWT_SECRET || require("../credentials.json").secret;
 
 var index = fs.readFileSync('./public/index.html');
 
