@@ -36,7 +36,7 @@ deploy:
     secure: CKsH+zinba82J7suOnMZ0ULFXOQvY1MkfDJ3YU+Uqtl54B/ezXtkDA37jm5NItbOAaLQ3ueWatKOzFVY2iyyFOrVP3QgqoXAWAATgPz48POWOD3KPekmox7vT2usoih7vBfY2L+SVYeTerE56/LSqydQ3rdMbXZsic8hcHQsa+A=
   region: eu-west-1
   app: carrier-pigeon-fac
-  env: carrierPigeonFac-env
+  env: carrierPigeonFac-Se-env
   bucket_name: carrier-pigeon-1428062159
   on:
     branch: master
