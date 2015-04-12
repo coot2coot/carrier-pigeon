@@ -17,9 +17,9 @@ module.exports = function(React, Link, admin) {
         render: function() {
             return (
                 <div>
-                    <Link to = "login">
+                    <a href="/logout">
                         <p>Logout</p>
-                    </Link>
+                    </a>
                     <div>
                         {(admin
                             ? <AdminLink /> 

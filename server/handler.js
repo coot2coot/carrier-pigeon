@@ -23,39 +23,19 @@
 	 * -------------------------------*/
 
 	serverHandlers.loginUser = function (req, res) {
-
-	  	if (req.method === 'POST') {
-
-	        var body = '';
-	        var remember = false;
-
-	        req.on('data', function (data) {
-	            body += data;
-
-	        }).on('end', function () {
-
-	            var user = querystring.parse(body);
-
-	            if(auth.inDatabase(user)) {
-
-	            	if (user.remember === "on") {
-	            		remember = true
-	            	}
-	            	auth.success(req, res, remember);
-				    
-	            } else {
-	                return authFail(res);
-	            }
-	        });
-	    }
+		if (req.method === "POST") {
+			auth.login(req, res);
+		} else {
+			require('./lib/auth-failed.js')(req, res);
+		}
 	};
 
-	serverHandlers.VerifyToken = function (req, res) {
-		
+	serverHandlers.verifyToken = function (req, res) {
+		auth.validate(req, res);
 	};
 
 	serverHandlers.logoutUser = function (req, res) {
-		
+		auth.logout(req, res);
 	};
 
 	/* -------------------------------*
