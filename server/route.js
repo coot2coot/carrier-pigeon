@@ -13,9 +13,17 @@
 	 *	   Authentication Routes
 	 * -------------------------------*/
 
-		// router.addRoute('/login', function (req, res, match){
-		//   	handler.login(req, res);
-		// });
+		router.addRoute('/login/username', function (req, res, match){
+		  	handler.loginUser(req, res);
+		});
+
+		router.addRoute('/login/verify', function (req, res, match){
+		  	handler.verifyToken(req, res);
+		});
+
+		router.addRoute('/logout/username', function (req, res, match){
+		  	handler.logoutUser(req, res);
+		});
 
 	/* -------------------------------*
 	 *	   Order Routes

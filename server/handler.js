@@ -3,16 +3,12 @@
 
 	var fs = require("fs"),
 		querystring = require("querystring"),
-		React = require('react'),
-		db = require("./db-sql-config.js"),
-		DOM = React.DOM, 
-		body = DOM.body, 
-		div = DOM.div, 
-		script = DOM.script,
-		serverHandlers = {};
+		Static = require('node-static'),
+		file = new Static.Server('./public'),
 
-var Static = require('node-static');
-	var file = new Static.Server('./public');
+		db = require("./db-sql-config.js"),
+		auth = require('./auth.js'),
+		serverHandlers = {};
 
 
 	serverHandlers.home = function (req, res) {
@@ -21,15 +17,45 @@ var Static = require('node-static');
 	    }).resume();
 	};
 
+
 	/* -------------------------------*
 	 *	   Authentication Handlers
 	 * -------------------------------*/
 
-	serverHandlers.login = function (req, res) {
-		fs.readFile("./public/index.html", function(err, text){
-	     	res.setHeader("Content-Type", "text/html");
-	      	res.end(text);
-	    });
+	serverHandlers.loginUser = function (req, res) {
+
+	  	if (req.method === 'POST') {
+
+	        var body = '';
+	        var remember = false;
+
+	        req.on('data', function (data) {
+	            body += data;
+
+	        }).on('end', function () {
+
+	            var user = querystring.parse(body);
+
+	            if(auth.inDatabase(user)) {
+
+	            	if (user.remember === "on") {
+	            		remember = true
+	            	}
+	            	auth.success(req, res, remember);
+				    
+	            } else {
+	                return authFail(res);
+	            }
+	        });
+	    }
+	};
+
+	serverHandlers.VerifyToken = function (req, res) {
+		
+	};
+
+	serverHandlers.logoutUser = function (req, res) {
+		
 	};
 
 	/* -------------------------------*
