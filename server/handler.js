@@ -5,6 +5,7 @@
 		querystring = require("querystring"),
 		Static = require('node-static'),
 		file = new Static.Server('./public'),
+		store = require("./store"),
 
 		db = require("./db-sql-config.js"),
 		auth = require('./auth.js'),
@@ -43,11 +44,7 @@
 	 * -------------------------------*/
 
 	serverHandlers.getOrders = function (req, res) {
-		db.get('orders',function (orders) {
-			res.writeHead(200, {"Content-Type" : "application/json"});
-			var orderString = JSON.stringify(orders);
-			res.end(orderString);
-		});
+		store.get(req,res);
 	};
 
 	serverHandlers.getOrder = function (req, res) {
