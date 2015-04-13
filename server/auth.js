@@ -1,3 +1,4 @@
+
 var fs       = require('fs');
 var path     = require('path');
 var jwt      = require('jsonwebtoken');
@@ -16,6 +17,7 @@ function checkUserLogins(req, res, cb) {
         getUser(logins.username, logins.password, logins.remember, cb);
     })
 }
+
 
 function checkIfUserExists(user, cb) {
     getUser(user.user_name, user.password, user.remember, cb);

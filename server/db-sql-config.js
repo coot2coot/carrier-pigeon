@@ -46,7 +46,7 @@ function post(table, cb, doc) {
 }
 
 function remove(table, cb, doc) {
-	client.query('DELETE FROM ' + table + ' WHERE ' +doc.columns +'=' + doc.values, function(err, result) {
+	client.query('DELETE FROM ' + table + ' WHERE ' + doc.columns +'=' + doc.values, function(err, result) {
 	    if(err) {
 	      return console.error('error running query', err);
 	    }

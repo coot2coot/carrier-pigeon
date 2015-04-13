@@ -1,5 +1,5 @@
 
-module.exports = function(React, Link) {
+module.exports = function(React, Link, getOrdersUrl) {
 	var Header = require("./header.jsx")(React, Link);
 
 	return React.createClass({
@@ -7,7 +7,7 @@ module.exports = function(React, Link) {
           return {
             orders: [
 	            {
-	            	order_id : "",
+	            	order_id : "123",
 	            	client: "",
 	            	carrier: "",
 	            	collect_from: "",
@@ -18,7 +18,7 @@ module.exports = function(React, Link) {
         },
 
 		componentDidMount: function() {
-		    $.get("http://localhost:8000/server/getorders", function(result) {
+		    $.get( getOrdersUrl, function(result) {
 		    	var order = JSON.parse(result);
 		      	if (this.isMounted()) {
 		        	this.setState({
