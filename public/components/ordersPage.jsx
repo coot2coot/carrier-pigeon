@@ -1,5 +1,5 @@
 
-module.exports = function(React, Link, getOrdersUrl) {
+module.exports = function(React, Link, ordersUrl) {
 	var Header = require("./header.jsx")(React, Link);
 
 	return React.createClass({
@@ -7,7 +7,7 @@ module.exports = function(React, Link, getOrdersUrl) {
           return {
             orders: [
 	            {
-	            	order_id : "12",
+	            	job_number : "",
 	            	client: "",
 	            	carrier: "",
 	            	collect_from: "",
@@ -18,7 +18,7 @@ module.exports = function(React, Link, getOrdersUrl) {
         },
 
 		componentDidMount: function() {
-		    $.get( getOrdersUrl, function(result) {
+		    $.get( ordersUrl, function(result) {
 		    	if(result !== ""){
 			    	var order = JSON.parse(result);
 			      	if (this.isMounted()) {
@@ -27,7 +27,10 @@ module.exports = function(React, Link, getOrdersUrl) {
 			        	});
 			      	}
 			    }
-		    }.bind(this));
+		    }.bind(this))
+		    .fail(function () {
+		    	"get request failed"
+		    });
 		},
 
 		render: function() {
@@ -41,7 +44,7 @@ module.exports = function(React, Link, getOrdersUrl) {
 
 						<div className="panel-body table-responsive model-overflow">
 							<table className="table table-full">
-								<th><h5>#</h5></th>
+								<th><h5>Job Number</h5></th>
 								<th><h5>Client</h5></th>
 								<th><h5>Carrier</h5></th>
 								<th><h5>Consignee</h5></th>
@@ -51,7 +54,7 @@ module.exports = function(React, Link, getOrdersUrl) {
 							  		 {
 								        this.state.orders.map(function (order, i) {
 								            return <tr>
-								            		<td key={i + "first"}><a><p>{order.order_id}</p></a></td>
+								            		<td key={i + "first"}><a><p>{order.job_number}</p></a></td>
 													<td key={i + "second"}><a><p>{order.client}</p></a></td>
 													<td key={i + "third"}><a><p>{order.carrier}</p></a></td>
 													<td key={i + "fourth"}><a><p>{order.consignee}</p></a></td>
