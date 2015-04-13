@@ -1,18 +1,7 @@
 /** @jsx React.DOM */
 
-// TODO: make sure there is validation on every page. And redirection if not validated.
-
-
-var token = sessionStorage.getItem('token') || localStorage.getItem('token');
-
-var auth = {
-    loggedIn: function () {
-        return !!token;
-    }
-};
-
 //TODO: 
-var isAdmin = true;
+var isAdmin = false;
 
 module.exports = function(React, Link) {
 
@@ -20,13 +9,27 @@ module.exports = function(React, Link) {
     var HeaderLinks = require("./header-links.jsx")(React, Link, isAdmin);
 
     return React.createClass({
-        getInitialState: function(){
-            return null
+        getInitialState: function() {
+            return {username: 'test'};
         },
         componentWillMount: function() {
-            this.setState({
-                loggedIn: auth.loggedIn()
-            });
+            var url = "/login/verify";
+
+            if (!this.props.loggedOut) {
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    success: function(data) {
+                        this.setState({
+                            loggedIn: true,
+                            username: data.username
+                        });
+                    }.bind(this),
+                    error: function(xhr, status, err) {
+                        console.log(xhr, status, err);
+                    }.bind(this)
+                });
+            }
         },
         render: function() {
             return (
@@ -37,7 +40,7 @@ module.exports = function(React, Link) {
                         </div>
                         <div>
                         {(this.state.loggedIn
-                            ? <HeaderLinks /> 
+                            ? <HeaderLinks name={this.state.username} /> 
                             : <p></p>
                         )}
                         </div>
