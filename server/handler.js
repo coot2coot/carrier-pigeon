@@ -13,9 +13,12 @@
 
 
 	serverHandlers.home = function (req, res) {
-		req.addListener('end', function () {
-	        file.serve(req, res);
-	    }).resume();
+		auth.validate(req, res, function() {
+			res.writeHead(303, {
+                'Location': '/#/orders'
+            });
+			res.end();
+		});
 	};
 
 
@@ -32,7 +35,17 @@
 	};
 
 	serverHandlers.verifyToken = function (req, res) {
-		auth.validate(req, res);
+		auth.validate(req, res, function() {
+			res.writeHead(200, {
+                'Content-Type': 'application/json'
+            });
+
+            var response = JSON.stringify({
+                username: decoded.user.user_name
+            });
+
+            res.end(response);
+		});
 	};
 
 	serverHandlers.logoutUser = function (req, res) {
@@ -44,30 +57,37 @@
 	 * -------------------------------*/
 
 	serverHandlers.getOrders = function (req, res) {
-		cache.get(req,res);
+		
+		auth.validate(req, res, cache.get(req,res))
 	};
 
 	serverHandlers.getOrder = function (req, res) {
-		db.getOne('orders', req.docs, function (orders) {
-			res.writeHead(200, {"Content-Type" : "application/json"});
-			var orderString = JSON.stringify(orders);
-			res.end(orderString);
+		auth.validate(req, res, function() {
+			db.getOne('orders', req.docs, function (orders) {
+				res.writeHead(200, {"Content-Type" : "application/json"});
+				var orderString = JSON.stringify(orders);
+				res.end(orderString);
+			});
 		});
 	};
 
 	serverHandlers.createOrder = function (req, res) {
-		db.post('orders', req.docs, function (orders) {
-			res.writeHead(200);
-			res.end();
-		})
-	}
+		auth.validate(req, res, function() {
+			db.post('orders', req.docs, function (orders) {
+				res.writeHead(200);
+				res.end();
+			});
+		});
+	};
 
 	serverHandlers.removeOrder = function (req, res) {
-		db.remove('orders', req.docs, function (orders) {
-			res.writeHead(200);
-			res.end();
-		})
-	}
+		auth.validate(req, res, function() {
+			db.remove('orders', req.docs, function (orders) {
+				res.writeHead(200);
+				res.end();
+			});
+		});
+	};
 
 
 
