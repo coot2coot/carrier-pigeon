@@ -5,7 +5,7 @@
 		querystring = require("querystring"),
 		Static = require('node-static'),
 		file = new Static.Server('./public'),
-		store = require("./store"),
+		cache = require("./cache"),
 
 		db = require("./db-sql-config.js"),
 		auth = require('./auth.js'),
@@ -44,7 +44,7 @@
 	 * -------------------------------*/
 
 	serverHandlers.getOrders = function (req, res) {
-		store.get(req,res);
+		cache.get(req,res);
 	};
 
 	serverHandlers.getOrder = function (req, res) {
