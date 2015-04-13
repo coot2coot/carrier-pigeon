@@ -1,5 +1,5 @@
 var pg       = require("pg");
-var dataBase = process.env.POSTGRESS || require('../../credentials.json').postgres;
+var dataBase = process.env.POSTGRES || require('../../credentials.json').postgres;
 var client   = new pg.Client("postgres://"+ dataBase + "/carrier-pigeon-dev");
 
 module.exports = function (username, password, remember, done) {
