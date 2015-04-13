@@ -4,7 +4,7 @@
     var fs       = require('fs');
     var path     = require('path');
     var jwt      = require('jsonwebtoken');
-    var secret   = process.env.JWT_SECRET || require("../credentials").secret;
+    var secret   = process.env.JWT_SECRET || require("../credentials.json").secret;
     var index    = fs.readFileSync('./public/index.html');
     var Cookies  = require('cookies');
 
