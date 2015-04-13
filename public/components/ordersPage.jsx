@@ -19,7 +19,6 @@ module.exports = function(React, Link, getOrdersUrl) {
 
 		componentDidMount: function() {
 		    $.get( getOrdersUrl, function(result) {
-		    	console.log("result",result)
 		    	if(result !== ""){
 			    	var order = JSON.parse(result);
 			      	if (this.isMounted()) {
