@@ -13,12 +13,9 @@
 
 
 	serverHandlers.home = function (req, res) {
-		auth.validate(req, res, function() {
-			res.writeHead(303, {
-                'Location': '/#/orders'
-            });
-			res.end();
-		});
+		req.addListener('end', function () {
+	        file.serve(req, res);
+	    }).resume();
 	};
 
 
@@ -35,13 +32,13 @@
 	};
 
 	serverHandlers.verifyToken = function (req, res) {
-		auth.validate(req, res, function() {
+		auth.validate(req, res, function(user) {
 			res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
 
             var response = JSON.stringify({
-                username: decoded.user.user_name
+                username: user.user_name
             });
 
             res.end(response);
@@ -58,7 +55,9 @@
 
 	serverHandlers.getOrders = function (req, res) {
 		
-		auth.validate(req, res, cache.get(req,res))
+		auth.validate(req, res, function () {
+			cache.get(req,res);
+		});
 	};
 
 	serverHandlers.getOrder = function (req, res) {
