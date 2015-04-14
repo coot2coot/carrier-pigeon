@@ -71,12 +71,21 @@
 	};
 
 	serverHandlers.createOrder = function (req, res) {
-		auth.validate(req, res, function() {
-			db.post('orders', req.docs, function (orders) {
-				res.writeHead(200);
-				res.end();
+		require('./lib/get-form-data.js')(req, function (data) {
+			auth.validate(req, res, function() {
+				db.post('orders', data, function (err) {
+					if (err) {
+						res.writeHead(500);
+						res.write(err);
+						res.end();
+					} else {
+						res.writeHead(200);
+						res.write("order has been made!");
+						res.end();
+					}
+				});
 			});
-		});
+		})
 	};
 
 	serverHandlers.removeOrder = function (req, res) {

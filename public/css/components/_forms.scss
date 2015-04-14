@@ -4,3 +4,7 @@ input {
   	border: 0.1em $light-grey solid;
   	padding: 0.15em 0.3em 0.3em;
 }
+
+input.big {
+	height: 4.5em;
+}

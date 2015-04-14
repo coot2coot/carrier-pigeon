@@ -2,6 +2,8 @@
 module.exports = function(React, Link, ordersUrl) {
 	var Header = require("./header.jsx")(React, Link);
 	var ViewOrder = require("./view-order.jsx")(React, Link);
+	var CreateOrder = require("./add-order.jsx")(React, Link);
+
 	return React.createClass({
 		getInitialState: function() {
           return {
@@ -37,13 +39,20 @@ module.exports = function(React, Link, ordersUrl) {
 
 		onCloseComponent: function () {
 			this.setState({
-				selectedOrder: null
+				selectedOrder: null,
+				creatingOrder: null
 			})
 		},
 
 		orderHandler: function (item) {
 			this.setState({
 				selectedOrder: item
+			})
+		},
+
+		addOrder: function () {
+			this.setState({
+				creatingOrder: true
 			})
 		},
 
@@ -55,7 +64,7 @@ module.exports = function(React, Link, ordersUrl) {
 					<div className="column-14 push-1 model-generic">
 						<div className="panel-header">
 							<h3>Orders</h3>
-							<button data-tooltip="Add order" className="button blue add">+</button>
+							<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
 						</div>
 						<div className="panel-body table-responsive model-overflow">
 							<table className="table table-full">
@@ -116,6 +125,8 @@ module.exports = function(React, Link, ordersUrl) {
 					</div>
 					{(this.state.selectedOrder
                         ? <ViewOrder order={this.state.selectedOrder} closeView={this.onCloseComponent}/>
+                        : this.state.creatingOrder
+                        ? <CreateOrder closeView={this.onCloseComponent}/>
                         : <p></p>
                     )}
 				</div>

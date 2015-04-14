@@ -37,7 +37,7 @@
 		  	handler.getOrder(req, res);
 		});
 
-		router.addRoute('/server/postorder', function (req, res, match){
+		router.addRoute('/order/post', function (req, res, match){
 		  	handler.createOrder(req, res);
 		});
 
