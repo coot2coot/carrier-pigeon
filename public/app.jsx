@@ -25,11 +25,11 @@ var Test = React.createClass({
 
 var routes = (
     <Route>  
-    <Route name= "orders" path="/orders" handler={Orders} />
-    <Route name= "login" path="/login" handler={Login} />
-    <Route name= "reports" path="/reports" handler={Test} />
-    <Route name= "contacts" path="/contacts" handler={Test} />
-    <DefaultRoute handler={Login}/>  
+        <Route name= "orders" path="/orders" handler={Orders} />
+        <Route name= "login" path="/login" handler={Login} />
+        <Route name= "reports" path="/reports" handler={Test} />
+        <Route name= "contacts" path="/contacts" handler={Test} />
+        <DefaultRoute handler={Login}/>  
     </Route>
 );
 
