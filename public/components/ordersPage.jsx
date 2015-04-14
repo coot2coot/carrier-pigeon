@@ -55,7 +55,7 @@ module.exports = function(React, Link, ordersUrl) {
 					<div className="column-14 push-1 model-generic">
 						<div className="panel-header">
 							<h3>Orders</h3>
-							<button className="button blue add">+</button>
+							<button data-tooltip="Add order" className="button blue add">+</button>
 						</div>
 						<div className="panel-body table-responsive model-overflow">
 							<table className="table table-full">
@@ -66,16 +66,16 @@ module.exports = function(React, Link, ordersUrl) {
 									<h5>Client</h5>
 								</th>
 								<th>
-									<h5>Carrier</h5>
+									<h5>Unit Type</h5>
 								</th>
 								<th>
-									<h5>Consignee</h5>
+									<h5>Unit Number</h5>
 								</th>
 								<th>
-									<h5>Collect From</h5>
+									<h5>Shipper</h5>
 								</th>
 								<th>
-									<h5>Deliver To</h5>
+									<h5>Invoice</h5>
 								</th>
 							  		{ this.state.orders.map(function (order, i) {
 								        return <tr>
@@ -91,22 +91,22 @@ module.exports = function(React, Link, ordersUrl) {
 													</td>
 													<td key={i + "third"}>
 														<a onClick={Handler.bind(null, order)}>
-															<p>{order.carrier}</p>
+															<p>{order.unit_type}</p>
 														</a>
 													</td>
 													<td key={i + "fourth"}>
 														<a onClick={Handler.bind(null, order)}>
-															<p>{order.consignee}</p>
+															<p>{order.unit_number}</p>
 														</a>
 													</td>
 													<td key={i + "fith"}>
 														<a onClick={Handler.bind(null, order)}>
-															<p>{order.collect_from}</p>
+															<p>{order.shipper}</p>
 														</a>
 													</td>
 													<td key={i + "sixth"}>
 														<a onClick={Handler.bind(null, order)}>
-															<p>{order.deliver_to}</p>
+															<input type="checkbox"/>
 														</a>
 													</td>
 												</tr>
