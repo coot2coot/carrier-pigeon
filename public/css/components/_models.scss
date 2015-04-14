@@ -1,24 +1,29 @@
 .model-generic {
 	border-radius: 0.2em;
-  	overflow: hidden;
   	@include box-shadow;
-	div.panel-header {
-		@include blue-background;
-		h2, h3, h4 {
-			display: inline-block;
-		}
-	}
-	div.panel-body {
-		background: $lightest-grey;
-		border: 0.1em $light-grey solid;
-		p {
-			margin-top: 0.7em;
-		}
-	}
+}
+
+.panel-header {
+    @include blue-background;
+    h2, h3, h4 {
+        display: inline-block;
+    }
+    h3 {
+        padding: 0.2em 0.7em;
+    }
+}
+
+.panel-body {
+    background: $lightest-grey;
+    border: 0.1em $light-grey solid;
+    p {
+        margin-top: 0.7em;
+    }
 }
 
 .model-overflow {
 	max-height: 25em;
+    overflow: hidden;
     overflow-y: scroll;
 }
 .model-middle {
@@ -54,9 +59,19 @@ p.small {
     background-color: rgba(50, 50, 50, 0.7);
 }
 
-.view-orders {
-    h5, p {
+.view-order {
+    overflow: none;
+    h6, p {
         display: inline-block;
-        
+        margin: 0 0.5em;
+    }
+    h6 {
+        color: $grey;
+    }
+    p {
+        color: $charcoal;
+    }
+    .column-16 {
+        border-bottom: 0.1em $light-grey solid;
     }
 }

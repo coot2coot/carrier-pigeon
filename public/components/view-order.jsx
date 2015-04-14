@@ -4,14 +4,18 @@ module.exports = function(React, Link, ordersUrl) {
 		render: function() {
 			return (
 				<div className="overlay">
-					<div className="column-10 push-3 model-generic model-top view-orders">
+					<div className="column-10 push-3 model-generic model-top view-order">
 						<div className="panel-header">
-							<h2>{this.props.order.job_number}</h2>
+							<h3>{this.props.order.job_number}</h3>
+							<button className="button blue">Edit</button>
+							<button className="button blue">Copy</button>
+							<button className="button blue">Make a booking note</button>
+							<a className="close" onClick="">x</a>
 						</div>
 						<div className="panel-body">
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Date:</h5>
+									<h6>Date:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.date}</p>
@@ -19,15 +23,23 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Unit Type/qty:</h5>
+									<h6>Unit Type:</h6>
 								</div>
-								<div className="column-12">
-									<p>{this.props.order.unit_type}/{this.props.order.unit_quatity}</p>
+								<div className="column-4">
+									<p>{this.props.order.unit_type}</p>
+								</div>
+
+								<div className="column-4">
+									<h6>Qty:</h6>
+								</div>
+								<div className="column-4">
+									<p>{this.props.order.unit_quatity}</p>
 								</div>
 							</div>
+
 							<div className="column-16">
 								<div className="column-4">
-									<h5>client:</h5>
+									<h6>client:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.client}</p>
@@ -35,7 +47,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Vendor:</h5>
+									<h6>Vendor:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.vendor}</p>
@@ -43,7 +55,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Loading Reference:</h5>
+									<h6>Loading Reference:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.loading_reference}</p>
@@ -51,7 +63,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Unit Number:</h5>
+									<h6>Unit Number:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.unit_number}</p>
@@ -59,7 +71,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Collection From:</h5>
+									<h6>Collection From:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.collect_from}</p>
@@ -67,15 +79,22 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Collection Date/Time:</h5>
+									<h6>Collection Date:</h6>
 								</div>
-								<div className="column-12">
-									<p>{this.props.order.collection_date}/{this.props.order.collection_time}</p>
+								<div className="column-4">
+									<p>{this.props.order.collection_date}</p>
+								</div>
+
+								<div className="column-4">
+									<h6>Time:</h6>
+								</div>
+								<div className="column-4">
+									<p>{this.props.order.collection_time}</p>
 								</div>
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Contact Details:</h5>
+									<h6>Contact Details:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.contact_details}</p>
@@ -83,7 +102,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Deliver to:</h5>
+									<h6>Deliver to:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.deliver_to}</p>
@@ -91,7 +110,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Commodity Details:</h5>
+									<h6>Commodity Details:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.commodity_details}</p>
@@ -99,7 +118,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Special Instructions:</h5>
+									<h6>Special Instructions:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.special_instructions}</p>
@@ -107,7 +126,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Shipper:</h5>
+									<h6>Shipper:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.shipper}</p>
@@ -115,7 +134,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Consignee:</h5>
+									<h6>Consignee:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.consignee}</p>
@@ -123,7 +142,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Notify:</h5>
+									<h6>Notify:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.notify}</p>
@@ -131,7 +150,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Remarks:</h5>
+									<h6>Remarks:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.remarks}</p>
@@ -139,7 +158,7 @@ module.exports = function(React, Link, ordersUrl) {
 							</div>
 							<div className="column-16">
 								<div className="column-4">
-									<h5>Invoice:</h5>
+									<h6>Invoice:</h6>
 								</div>
 								<div className="column-12">
 									<p>{this.props.order.invoice}</p>
@@ -153,24 +172,3 @@ module.exports = function(React, Link, ordersUrl) {
 		}
 	})
 }
-
-// job_number text NOT NULL,
-//   date date,
-//   unit_type text,
-//   unit_quatity integer,
-//   client text,
-//   vendor text,
-//   loading_reference text,
-//   unit_number text,
-//   collect_from text,
-// collection_date
-// collection_time
-// contact_details
-//   deliver_to text,
-// commodity_details
-//   special_instructions text,
-//   shipper text,
-//   consignee text,
-//   notify text,
-//   remarks text,
-//   invoice boolean,

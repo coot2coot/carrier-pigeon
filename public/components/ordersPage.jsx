@@ -49,7 +49,7 @@ module.exports = function(React, Link, ordersUrl) {
 					<div className="column-14 push-1 model-generic">
 						<div className="panel-header">
 							<h3>Orders</h3>
-							<button className="button blue">+</button>
+							<button className="button blue add">+</button>
 						</div>
 						<div className="panel-body table-responsive model-overflow">
 							<table className="table table-full">
