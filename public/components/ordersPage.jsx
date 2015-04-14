@@ -107,11 +107,11 @@ module.exports = function(React, Link, ordersUrl) {
 								    })}
 							</table>
 						</div>
-						{(this.state.selectedOrder
-                            ? <ViewOrder order={this.state.selectedOrder}/>
-                            : <p></p>
-                        )}
 					</div>
+					{(this.state.selectedOrder
+                        ? <ViewOrder order={this.state.selectedOrder}/>
+                        : <p></p>
+                    )}
 				</div>
 			);
 		}

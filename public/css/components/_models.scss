@@ -30,7 +30,7 @@
 }
 
 .model-top {
-	top: 10.5em;
+	top: 15%;
   	position: absolute;
   	div.panel-body {
   		padding: 0 1em 2em 1em;
@@ -52,4 +52,11 @@ p.small {
     top: 0px;
     left: 0;
     background-color: rgba(50, 50, 50, 0.7);
+}
+
+.view-orders {
+    h5, p {
+        display: inline-block;
+        
+    }
 }
