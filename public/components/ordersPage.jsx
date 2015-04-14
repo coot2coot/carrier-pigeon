@@ -35,14 +35,20 @@ module.exports = function(React, Link, ordersUrl) {
 		    });
 		},
 
-		onMyClick: function (item) {
+		onCloseComponent: function () {
+			this.setState({
+				selectedOrder: null
+			})
+		},
+
+		orderHandler: function (item) {
 			this.setState({
 				selectedOrder: item
 			})
 		},
 
 		render: function() {
-			var Handler = this.onMyClick;
+			var Handler = this.orderHandler;
 			return (
 				<div>
 					<Header />
@@ -109,7 +115,7 @@ module.exports = function(React, Link, ordersUrl) {
 						</div>
 					</div>
 					{(this.state.selectedOrder
-                        ? <ViewOrder order={this.state.selectedOrder}/>
+                        ? <ViewOrder order={this.state.selectedOrder} closeView={this.onCloseComponent}/>
                         : <p></p>
                     )}
 				</div>

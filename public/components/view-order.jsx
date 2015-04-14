@@ -10,7 +10,7 @@ module.exports = function(React, Link, ordersUrl) {
 							<button className="button blue">Edit</button>
 							<button className="button blue">Copy</button>
 							<button className="button blue">Make a booking note</button>
-							<a className="close" onClick="">x</a>
+							<a className="close" onClick={this.props.closeView}>x</a>
 						</div>
 						<div className="panel-body">
 							<div className="column-16">
