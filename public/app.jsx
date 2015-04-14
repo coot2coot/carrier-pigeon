@@ -5,11 +5,10 @@ var DefaultRoute = Router.DefaultRoute;
 var Link = Router.Link;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
-var ordersUrl = "/server/getorders";
 
 var Login = require("./components/loginPage.jsx")(React, Link);
 var Header = require("./components/header.jsx")(React, Link);
-var Orders = require("./components/ordersPage.jsx")(React, Link, ordersUrl);
+var Orders = require("./components/ordersPage.jsx")(React, Link);
 
 
 var Test = React.createClass({

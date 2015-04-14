@@ -21,7 +21,7 @@ module.exports = function(React, Link, ordersUrl) {
         },
 
 		componentDidMount: function() {
-		    $.get( ordersUrl, function(result) {
+		    $.get("/orders/get", function(result) {
 		    	if(result !== ""){
 			    	var order = JSON.parse(result);
 

@@ -29,7 +29,7 @@
 	 *	   Order Routes
 	 * -------------------------------*/
 
-		router.addRoute('/server/getorders', function (req, res, match){
+		router.addRoute('/orders/get', function (req, res, match){
 		  	handler.getOrders(req, res);
 		});
 
