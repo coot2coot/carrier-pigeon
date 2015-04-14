@@ -26,3 +26,17 @@ To run all the tests first use command:
 gulp test
 gulp e2e
 ```
+
+
+To run local e2e tests in one terminal:
+
+```
+gulp selenium-install
+gulp selenium-start
+```
+
+In another termainal run:
+
+```
+gulp e2e-local
+```
