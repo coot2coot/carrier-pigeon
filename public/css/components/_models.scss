@@ -24,7 +24,6 @@
 .model-overflow {
 	max-height: 25em;
     overflow: hidden;
-    overflow-y: scroll;
 }
 .model-middle {
 	top: 35%;
@@ -40,7 +39,6 @@
   	div.panel-body {
   		padding: 0 1em 2em 1em;
         max-height: 27em;
-        overflow-y: scroll;
   	}
 }
 
