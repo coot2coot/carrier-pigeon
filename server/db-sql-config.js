@@ -1,8 +1,7 @@
-var pg = require("pg");
+var pg 		 = require("pg");
 var dataBase = process.env.POSTGRES_URI || require('../credentials.json').postgres;
-var param = "postgres://" + dataBase + "/carrier-pigeon-dev";
+var client   = new pg.Client("postgres://"+ dataBase + "/carrier-pigeon-dev");
 
-var client = new pg.Client(param);
 var dataBase = {};
 
 
@@ -35,8 +34,32 @@ function getOne(table, cb, doc) {
 	});
 }
 
+function stringifyData (result) {
+	var data = {},
+		value = [],
+		keys = [];
+
+	for(var k in result) {
+		keys.push(k);
+	    value.push(result[k]);
+	}
+
+	console.log(keys.length, value.length);
+	data.columns = keys.join(", ");
+	data.values = value.join(", ");
+	
+	return data;
+}
+
 function post(table, cb, doc) {
-	client.query('INSERT INTO ' + table + ' ' + doc.columns +' VALUES ' + doc.values, function(err, result) {
+
+	var data = stringifyData(doc);
+
+	console.log(table);
+	console.log('(' + data.columns + ')', data.columns.length);
+	console.log('(' + data.values + ')', data.values.length)
+
+	client.query('INSERT into ' + table + ' (' + data.columns +') VALUES (' + data.values +')', function(err, result) {
 	    if(err) {
 	      return console.error('error running query', err);
 	    }
@@ -48,7 +71,8 @@ function post(table, cb, doc) {
 function remove(table, cb, doc) {
 	client.query('DELETE FROM ' + table + ' WHERE ' + doc.columns +'=' + doc.values, function(err, result) {
 	    if(err) {
-	      return console.error('error running query', err);
+	    	console.error('error running query', err);
+	      	return cb(err);
 	    }
 	    client.end();
 	    cb();
