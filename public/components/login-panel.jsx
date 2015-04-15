@@ -14,7 +14,7 @@ module.exports = function (React, Link) {
                             <h2>Login</h2>
                         </div>
                         <div className="panel-body">
-                            <form action="/login/username" method="post">
+                            <form action="/login" method="post">
                                 <p>Username</p>
                                 <input type="text" name="username" />
                                 <p>Password</p>

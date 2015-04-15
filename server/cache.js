@@ -1,15 +1,16 @@
 (function () {
 	"use strict";
-	var db 		= require("./db-sql-config.js");
-	var NodeCache 	= require("node-cache");
-	var myCache 	= new NodeCache();
+	var db 			  = require("./db-sql-config.js");
+	var NodeCache 	  = require("node-cache");
+	var myCache 	  = new NodeCache();
 
+	var secondsToSave = 60 * 60 * 24 * 7;
 
 	var cache = {};
 
 	var getOrders = function (req, res) {
 		db.get('orders',function (orders) {		
-			myCache.set("orders", orders, 100000, function(err,success){
+			myCache.set("orders", orders, secondsToSave, function(err,success){
 				if(err){
 					console.error(err)
 				}

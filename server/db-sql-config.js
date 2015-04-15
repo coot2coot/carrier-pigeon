@@ -1,8 +1,8 @@
-var pg 		 = require("pg");
-var dataBase = process.env.POSTGRES_URI || require("../credentials.json").postgres;
-var client   = new pg.Client("postgres://"+ dataBase + "/carrier-pigeon-dev");
-
-var dataBase = {};
+var pg 		 	  = require("pg");
+var dataBase      = process.env.POSTGRES_URI || require("../credentials.json").postgres;
+var client   	  = new pg.Client("postgres://"+ dataBase + "/carrier-pigeon-dev");
+var stringifyData = require("./lib/stringify-data-sql.js");
+var dataBase 	  = {};
 
 
 var connect = function (query,table,cb,doc) {
@@ -16,37 +16,24 @@ var connect = function (query,table,cb,doc) {
 
 function get(table, cb) {
 	client.query("SELECT * FROM "+ table +";", function(err, result) {
+		client.end();
+
 	    if(err) {
 	      return console.error("error running query", err);
 	    }
-	    client.end();
 	    cb(result.rows);
 	});
 }
 
 function getOne(table, cb, doc) {
 	client.query("SELECT * FROM " + table + " WHERE " +doc.columns +"=" + doc.values, function(err, result) {
+		 client.end();
+
 	    if(err) {
 	      return console.error("error running query", err);
 	    }
-	    client.end();
 	    cb(result.rows);
 	});
-}
-
-function stringifyData (result) {
-	var data = {},
-		value = [],
-		keys = [];
-
-	for(var k in result) {
-		keys.push(k);
-	    value.push(result[k]);
-	}
-	data.columns = keys.join(", ");
-	data.values = value.join("', '");
-	
-	return data;
 }
 
 function post(table, cb, doc) {
@@ -79,8 +66,6 @@ dataBase.get = function (table, cb){
 
 dataBase.post = function (table, doc, cb){
 	var data = stringifyData(doc);
-
-	console.log("INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')");
 
  	connect(post,table,cb,doc);
 };

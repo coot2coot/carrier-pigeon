@@ -21,7 +21,17 @@ module.exports = function(React, Link, ordersUrl) {
         },
 
 		componentDidMount: function() {
-		    $.get("/orders/get", function(result) {
+			var getOrderUrl = "/orders/get";
+
+			console.log(this.props.getCurrentParams().update);
+
+			if (this.props.getCurrentParams().update) {
+				getOrderUrl = "/orders/get/nocache";
+			}
+
+			console.log(getOrderUrl);
+			
+		    $.get(getOrderUrl, function(result) {
 		    	if(result !== ""){
 			    	var order = JSON.parse(result);
 
@@ -58,6 +68,8 @@ module.exports = function(React, Link, ordersUrl) {
 
 		render: function() {
 			var Handler = this.orderHandler;
+			var oldUrl = document.referrer;
+			console.log(oldUrl);
 			return (
 				<div>
 					<Header />
