@@ -1,13 +1,19 @@
 module.exports = function(React, Link, ordersUrl) {
 
 	return React.createClass({
+		deleteMe: function (item) {
+			this.setState({
+				deleteOrder: item
+			})
+		},
+
 		render: function() {
 			return (
 				<div className="overlay">
 					<div className="column-10 push-3 model-generic model-top view-order">
 						<div className="panel-header">
 							<h3>{this.props.order.job_number}</h3>
-							<button className="button blue">Edit</button>
+							<a className="button blue" href={"/order/delete/" + this.props.order.job_number}>Delete</a>
 							<button className="button blue">Copy</button>
 							<button className="button blue">Make a booking note</button>
 							<a className="close" onClick={this.props.closeView}>x</a>

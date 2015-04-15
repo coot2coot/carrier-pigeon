@@ -64,7 +64,6 @@ dataBase.get = function (table, cb){
         clt.query("SELECT * FROM "+ table +" ORDER by date", function(err, result) {
 		    if (err) {
 		    	console.log('err >>>', err)
-	            if(!err) return false;
 
 	            done(clt);
 		    	return;
@@ -89,7 +88,6 @@ dataBase.post = function (table, doc, cb){
         clt.query("INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')", function(err, result) {
 		    if (err) {
 		    	console.log('err >>>', err)
-	            if(!err) return false;
 
 	            done(clt);
 		    	return;
@@ -134,7 +132,28 @@ dataBase.selectUser = function (username, password, remember, cb) {
 };
 
 dataBase.remove = function (table, doc, cb){
- 	connect(remove,table,cb,doc);
+	console.log(doc, doc.job_number);
+ 	pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
+
+    	if (err) {
+    		console.log(err)
+            return
+    	}
+
+        clt.query('DELETE FROM orders WHERE job_number = $1', [doc], function(err, user) {
+
+            if (err) {
+		    	console.log('err >>>', err)
+	            if(!err) return false;
+
+	            done(clt);
+		    	return;
+		    }
+
+            done();
+            cb()
+        });
+    });
 };
 
 dataBase.getOne = function (table, doc, cb){

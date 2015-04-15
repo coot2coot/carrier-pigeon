@@ -54,7 +54,7 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/create-db.js')(req, res);
 	});
 
-	router.addRoute('/order/delete', function (req, res, match){
+	router.addRoute('/order/delete/:id?', function (req, res, match){
 	  	require('./handlers/delete-db.js')(req, res);
 	});
 
