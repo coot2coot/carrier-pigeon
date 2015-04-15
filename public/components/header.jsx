@@ -25,7 +25,7 @@ module.exports = function(React, Link) {
                             username: data.username
                         });
                     }.bind(this),
-                    error: function(xhr, status, err) {
+                    error: function(xhr, status, err){
                         console.log(xhr, status, err);
                     }.bind(this)
                 });

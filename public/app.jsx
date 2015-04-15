@@ -5,11 +5,10 @@ var DefaultRoute = Router.DefaultRoute;
 var Link = Router.Link;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
-var ordersUrl = "/server/getorders";
 
-var Login = require("./components/loginPage.jsx")(React, Link);
+var Login = require("./components/login-panel.jsx")(React, Link);
 var Header = require("./components/header.jsx")(React, Link);
-var Orders = require("./components/ordersPage.jsx")(React, Link, ordersUrl);
+var Orders = require("./components/ordersPage.jsx")(React, Link);
 
 
 var Test = React.createClass({
@@ -25,10 +24,12 @@ var Test = React.createClass({
 
 var routes = (
     <Route>  
-        <Route name= "orders" path="/orders" handler={Orders} />
-        <Route name= "login" path="/login" handler={Login} />
-        <Route name= "reports" path="/reports" handler={Test} />
-        <Route name= "contacts" path="/contacts" handler={Test} />
+        <Route name="orders" path="/orders" handler={Orders}>
+            <Route name= "orderUpdate" path=":update" handler={Orders} />
+        </Route>
+        <Route name="login" path="/login" handler={Login} />
+        <Route name="reports" path="/reports" handler={Test} />
+        <Route name="contacts" path="/contacts" handler={Test} />
         <DefaultRoute handler={Login}/>  
     </Route>
 );

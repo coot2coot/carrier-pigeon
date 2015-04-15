@@ -18,7 +18,7 @@ module.exports = function(React, Link, ordersUrl) {
 									<h6>Date:</h6>
 								</div>
 								<div className="column-12">
-									<p>{this.props.order.date}</p>
+									<p>{this.props.order.date.slice(0, 10)}</p>
 								</div>
 							</div>
 							<div className="row">

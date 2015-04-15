@@ -1,3 +1,11 @@
+function sortJobIds (nums) {
+	var sorted = nums.sort(function (a, b) {
+		return a - b;
+	});
+
+	return sorted[0].job_number;
+}
+
 
 module.exports = function(React, Link, ordersUrl) {
 	var Header = require("./header.jsx")(React, Link);
@@ -21,13 +29,16 @@ module.exports = function(React, Link, ordersUrl) {
         },
 
 		componentDidMount: function() {
-		    $.get( ordersUrl, function(result) {
+			var getOrderUrl = "/orders/get";
+			
+		    $.get(getOrderUrl, function(result) {
 		    	if(result !== ""){
 			    	var order = JSON.parse(result);
 
 			      	if (this.isMounted()) {
 			        	this.setState({
-			          		orders : order
+			          		orders : order,
+			          		lastJobNo : sortJobIds(order)
 			        	});
 			      	}
 			    }
@@ -126,7 +137,7 @@ module.exports = function(React, Link, ordersUrl) {
 					{(this.state.selectedOrder
                         ? <ViewOrder order={this.state.selectedOrder} closeView={this.onCloseComponent}/>
                         : this.state.creatingOrder
-                        ? <CreateOrder closeView={this.onCloseComponent}/>
+                        ? <CreateOrder jobNo={this.state.lastJobNo} closeView={this.onCloseComponent}/>
                         : <p></p>
                     )}
 				</div>

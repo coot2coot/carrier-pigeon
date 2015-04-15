@@ -1,60 +1,67 @@
-(function () {
-	"use strict";
+"use strict";
 
-	var handler = require("./handler.js");
+var Static  = require('node-static');
+var file 	= new Static.Server('./public');
 
-	var serverRoutes =  function (router) {
 
-		router.addRoute('/', function (req, res, match){
-		  	handler.home(req, res);
-		});
+var serverRoutes =  function (router) {
 
-	/* -------------------------------*
-	 *	   Authentication Routes
-	 * -------------------------------*/
+	router.addRoute('/', function (req, res, match){
+		req.addListener('end', function () {
+	        file.serve(req, res);
+	    }).resume();
+	});
 
-		router.addRoute('/login/username', function (req, res, match){
-		  	handler.loginUser(req, res);
-		});
+/* -------------------------------*
+ *	   Authentication Routes
+ * -------------------------------*/
 
-		router.addRoute('/login/verify', function (req, res, match){
-		  	handler.verifyToken(req, res);
-		});
+	router.addRoute('/login/user', function (req, res, match){
+	  	require('./handlers/login.js')(req, res);
+	});
 
-		router.addRoute('/logout', function (req, res, match){
-		  	handler.logoutUser(req, res);
-		});
+	router.addRoute('/login/verify', function (req, res, match){
+	  	require('./lib/validate-user.js')(req, res, function(user) {
+			res.writeHead(200, {
+                'Content-Type': 'application/json'
+            });
 
-	/* -------------------------------*
-	 *	   Order Routes
-	 * -------------------------------*/
+            var response = JSON.stringify({
+                username: user.user_name
+            });
 
-		router.addRoute('/server/getorders', function (req, res, match){
-		  	handler.getOrders(req, res);
-		});
+            res.end(response);
+        });
+	});
 
-		router.addRoute('/server/getorder', function (req, res, match){
-		  	handler.getOrder(req, res);
-		});
+	router.addRoute('/logout', function (req, res, match){
+	  	require('./handlers/logout.js')(req, res);
+	});
 
-		router.addRoute('/order/post', function (req, res, match){
-		  	handler.createOrder(req, res);
-		});
+/* -------------------------------*
+ *	   Order Routes
+ * -------------------------------*/
 
-		router.addRoute('/server/removeorder', function (req, res, match){
-		  	handler.removeOrder(req, res);
-		});
+	router.addRoute('/orders/get', function (req, res, match){
+	  	require('./handlers/read-db.js').cached(req, res);
+	});
 
-		router.addRoute('/order/id', function (req, res, match){
-		  	handler.viewOrder(req, res);
-		});
+	router.addRoute('/orders/get/nocache', function (req, res, match){
+	  	require('./handlers/read-db.js').noCache(req, res);
+	});
 
-		router.addRoute('/order/edit', function (req, res, match){
-		  	handler.editOrder(req, res);
-		});
-	};
+	router.addRoute('/order/post', function (req, res, match){
+	  	require('./handlers/create-db.js')(req, res);
+	});
 
-	module.exports = serverRoutes;
-})();
+	router.addRoute('/order/delete', function (req, res, match){
+	  	require('./handlers/delete-db.js')(req, res);
+	});
 
+	router.addRoute('/order/edit', function (req, res, match){
+	  	require('./handlers/update-db.js')(req, res);
+	});
+};
+
+module.exports = serverRoutes;
 
