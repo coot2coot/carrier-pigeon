@@ -54,7 +54,26 @@ function remove(table, cb, doc) {
 }
 
 dataBase.get = function (table, cb){
- 	connect(get,table,cb);
+ 	pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
+
+    	if (err) {
+    		console.log(err)
+            return
+    	}
+
+        clt.query("SELECT * FROM "+ table +" ORDER by date", function(err, result) {
+		    if (err) {
+		    	console.log('err >>>', err)
+	            if(!err) return false;
+
+	            done(clt);
+		    	return;
+		    }
+
+            done();
+		    cb(result.rows);
+		});
+    });
 };
 
 dataBase.post = function (table, doc, cb){
