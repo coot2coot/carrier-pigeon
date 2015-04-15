@@ -1,8 +1,9 @@
 function sortJobIds (nums) {
 	var sorted = nums.sort(function (a, b) {
-		return a - b;
+		return Number(b.job_number) - Number(a.job_number);
 	});
 
+	console.log(sorted);
 	return sorted[0].job_number;
 }
 

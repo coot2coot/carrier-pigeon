@@ -1,6 +1,6 @@
 var parseData 	 = require('../lib/get-form-data.js');
 var validateUser = require('../lib/validate-user.js');
-var db 			 = require("../db-sql-config.js");
+var db 			 = require("../db-config.js");
 
 function create (req, res) {
 	parseData(req, function (data) {

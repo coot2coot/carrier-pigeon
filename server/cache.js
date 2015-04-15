@@ -1,6 +1,6 @@
 (function () {
 	"use strict";
-	var db 			  = require("./db-sql-config.js");
+	var db 			  = require("./db-config.js");
 	var NodeCache 	  = require("node-cache");
 	var myCache 	  = new NodeCache();
 

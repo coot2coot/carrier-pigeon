@@ -1,6 +1,6 @@
 
 var validateUser = require('../lib/validate-user.js');
-var db 			 = require("../db-sql-config.js");
+var db 			 = require("../db-config.js");
 var cache 		 = require("../cache.js");
 var readOptions  = {};
 

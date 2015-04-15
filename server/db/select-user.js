@@ -1,31 +1,44 @@
-var pg       = require("pg");
-var dataBase = process.env.POSTGRES_URI || require('../../credentials.json').postgres;
-var client   = new pg.Client("postgres://"+ dataBase + "/carrier-pigeon-dev");
+// pg.connect(conString, function(err, client, done) {
+//     var handleError = function(err) {
 
+//         if(!err) return false;
 
-module.exports = function (username, password, remember, done) {
+//         done(client);
+//     };
+//     client.query('INSERT INTO visit (date) VALUES ($1)', [new Date()], function(err, result) {
 
-    client.on('drain', client.end.bind(client));
+//         if(handleError(err)) return;
+        
+//         done();
+//     });
+// });
 
-    client.connect(function(err) {
-        if (err) {
-            return console.error('could not connect to postgres', err);
-        }
-        client.query('SELECT * FROM users WHERE user_name = $1', [username],function(err, user) {
+module.exports = function(pg, conString) {
+    return function (username, password, remember, cb) {
+        pg.connect(conString, function(err, client, done) {
 
-            if (err) {
-                client.end();
-                return done(err);
-            }
-            if (user.rows[0] && user.rows[0].password === password) {
-                client.end();
-                done(null, user.rows[0], remember);
-            } 
-            else {
-                client.end();
-                done(null, false, null,'Incorrect username or password combo');
-            }
-            client.end();
+            var handleError = function(err) {
+                if(!err) return false;
+
+                done(client);
+                res.writeHead(500, {'content-type': 'text/plain'});
+                res.end('An error occurred');
+                return true;
+            };
+
+            client.query('SELECT * FROM users WHERE user_name = $1', [username], function(err, user) {
+  
+                if(handleError(err)) return;
+
+                done();
+
+                if (user.rows[0] && user.rows[0].password === password) {
+                    cb(null, user.rows[0], remember);
+                } 
+                else {
+                    cb(null, false, null,'Incorrect username or password combo');
+                }
+            });
         });
-    });
-}
+    };
+};
