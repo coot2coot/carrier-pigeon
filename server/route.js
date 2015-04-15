@@ -16,7 +16,7 @@ var serverRoutes =  function (router) {
  *	   Authentication Routes
  * -------------------------------*/
 
-	router.addRoute('/login', function (req, res, match){
+	router.addRoute('/login/user', function (req, res, match){
 	  	require('./handlers/login.js')(req, res);
 	});
 

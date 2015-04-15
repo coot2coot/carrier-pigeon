@@ -12,7 +12,7 @@ function create (req, res) {
 					res.end();
 				} else {
 					res.writeHead(201, {
-						"Location": "/#/orders"
+						"Location": "/#/orders/true"
 					});
 					res.end();
 				}
