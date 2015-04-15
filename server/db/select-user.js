@@ -1,18 +1,3 @@
-// pg.connect(conString, function(err, client, done) {
-//     var handleError = function(err) {
-
-//         if(!err) return false;
-
-//         done(client);
-//     };
-//     client.query('INSERT INTO visit (date) VALUES ($1)', [new Date()], function(err, result) {
-
-//         if(handleError(err)) return;
-        
-//         done();
-//     });
-// });
-
 module.exports = function(pg, conString) {
     return function (username, password, remember, cb) {
         pg.connect(conString, function(err, client, done) {
