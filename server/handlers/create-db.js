@@ -7,11 +7,12 @@ function create (req, res) {
 		validateUser(req, res, function() {
 			db.post('orders', data, function (err) {
 				if (err) {
+					console.log(err)
 					res.writeHead(500);
 					res.write(err);
 					res.end();
 				} else {
-					res.writeHead(201, {
+					res.writeHead(303, {
 						"Location": "/#/orders/true"
 					});
 					res.end();

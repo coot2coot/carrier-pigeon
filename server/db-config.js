@@ -60,26 +60,23 @@ dataBase.get = function (table, cb){
 dataBase.post = function (table, doc, cb){
 	var data = stringifyData(doc);
 
-	console.log(data.unit_quatity, typeof data.unit_quatity)
-
 	pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
 
     	if (err) {
     		console.log(err)
             return
     	}
-        var handleError = function(err) {
-        	console.log('err >>>', err)
-            if(!err) return false;
-
-            done(clt);
-        };
 
         clt.query("INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')", function(err, result) {
-		    if(handleError(err)) return;
+		    if (err) {
+		    	console.log('err >>>', err)
+	            if(!err) return false;
+
+	            done(clt);
+		    	return;
+		    }
 
             done();
-
 		    cb();
 		});
     });
