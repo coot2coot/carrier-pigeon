@@ -25,7 +25,7 @@ var getJobNumber = function (id) {
     console.log(id, year);
   
     if (id.slice(0, 2) === year) {
-      newId = Number(id) + 2 + '';
+      newId = Number(id) + 1 + '';
       console.log('year!' )
     } else {
       newId = year + "0000";
