@@ -1,27 +1,25 @@
-var currentDate = function () {
-	var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1;
 
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd
-    } 
-    if(mm<10){
-        mm='0'+mm
+var getJobNumber = function (id) {
+    var getYear = new Date().getFullYear() + ''; 
+    year = getYear.slice(-2);
+    
+    var newId;
+  
+    if (id.slice(0, 2) === year) {
+      newId = Number(id) + 1 + '';
+    } else {
+      newId = year + "0000";
     }
-
-    var todayDate = yyyy + "-" + mm + "-" + dd;
-
-    return todayDate;
-}
+  console.log(newId);
+};
 
 module.exports = function(React, Link, ordersUrl) {
 
 	return React.createClass({
 		getInitialState: function() {
 		    return {
-		    	dateValue: currentDate()
+		    	dateValue: currentDate(), 
+		    	jobNo: getJobNumber(this.props.jobNo)
 		    };
 		 },
 		onDateChange: function(event) {
@@ -47,7 +45,7 @@ module.exports = function(React, Link, ordersUrl) {
 										<input type="date" name="date" value={this.state.dateValue} onChange={this.onDateChange}/>
 
 										<p>Job No.</p>
-										<input type="text" name="job_number" />
+										<input type="text" name="job_number" value={this.state.jobNo}/>
 
 										<div className="row">
 											<div className="column-10">

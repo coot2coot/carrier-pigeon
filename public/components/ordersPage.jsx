@@ -1,3 +1,18 @@
+function compare(a,b) {
+  	if (a.job_number < b.job_number)
+     	return -1;
+  	if (a.job_number > b.job_number)
+    	return 1;
+  	return 0;
+}
+
+function sortJobIds (nums) {
+	var sorted = nums.sort(compare);
+
+	console.log(sorted[0].job_number);
+	return sorted[0].job_number;
+}
+
 
 module.exports = function(React, Link, ordersUrl) {
 	var Header = require("./header.jsx")(React, Link);
@@ -23,13 +38,9 @@ module.exports = function(React, Link, ordersUrl) {
 		componentDidMount: function() {
 			var getOrderUrl = "/orders/get";
 
-			console.log(this.props.getCurrentParams().update);
-
 			if (this.props.getCurrentParams().update) {
 				getOrderUrl = "/orders/get/nocache";
 			}
-
-			console.log(getOrderUrl);
 			
 		    $.get(getOrderUrl, function(result) {
 		    	if(result !== ""){
@@ -37,7 +48,8 @@ module.exports = function(React, Link, ordersUrl) {
 
 			      	if (this.isMounted()) {
 			        	this.setState({
-			          		orders : order
+			          		orders : order,
+			          		lastJobNo : sortJobIds(order)
 			        	});
 			      	}
 			    }
@@ -138,7 +150,7 @@ module.exports = function(React, Link, ordersUrl) {
 					{(this.state.selectedOrder
                         ? <ViewOrder order={this.state.selectedOrder} closeView={this.onCloseComponent}/>
                         : this.state.creatingOrder
-                        ? <CreateOrder closeView={this.onCloseComponent}/>
+                        ? <CreateOrder jobNo={this.state.lastJobNo} closeView={this.onCloseComponent}/>
                         : <p></p>
                     )}
 				</div>

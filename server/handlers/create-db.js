@@ -4,7 +4,6 @@ var db 			 = require("../db-sql-config.js");
 
 function create (req, res) {
 	parseData(req, function (data) {
-		console.log(data);
 		validateUser(req, res, function() {
 			db.post('orders', data, function (err) {
 				if (err) {
