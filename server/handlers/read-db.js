@@ -8,7 +8,7 @@ var readOptions  = {};
 
 readOptions.cached = function (req, res) {
 	validateUser(req, res, function () {
-		myCache.get(req,res);
+		cache.get(req,res);
 	});
 }
 readOptions.noCache = function (req, res) {
