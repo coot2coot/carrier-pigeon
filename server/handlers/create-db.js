@@ -1,9 +1,10 @@
-var parseData 	 = require('./lib/get-form-data.js');
-var validateUser = require('./lib/validate-user.js');
-var db 			 = require("./db-sql-config.js");
+var parseData 	 = require('../lib/get-form-data.js');
+var validateUser = require('../lib/validate-user.js');
+var db 			 = require("../db-sql-config.js");
 
 function create (req, res) {
-	(req, function (data) {
+	parseData(req, function (data) {
+		console.log(data);
 		validateUser(req, res, function() {
 			db.post('orders', data, function (err) {
 				if (err) {
@@ -20,3 +21,5 @@ function create (req, res) {
 		});
 	});
 };
+
+module.exports = create;

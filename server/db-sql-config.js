@@ -5,6 +5,10 @@ var stringifyData = require("./lib/stringify-data-sql.js");
 var dataBase 	  = {};
 
 
+//TODO: change datatype for date to date, not text
+//http://www.postgresql.org/docs/9.3/static/datatype.html
+//Then order by date will work
+
 var connect = function (query,table,cb,doc) {
 	client.connect(function(err) {
 	  	if(err) {
@@ -15,19 +19,8 @@ var connect = function (query,table,cb,doc) {
 }
 
 function get(table, cb) {
-	client.query("SELECT * FROM "+ table +";", function(err, result) {
+	client.query("SELECT * FROM "+ table +" ORDER by date", function(err, result) {
 		client.end();
-
-	    if(err) {
-	      return console.error("error running query", err);
-	    }
-	    cb(result.rows);
-	});
-}
-
-function getOne(table, cb, doc) {
-	client.query("SELECT * FROM " + table + " WHERE " +doc.columns +"=" + doc.values, function(err, result) {
-		 client.end();
 
 	    if(err) {
 	      return console.error("error running query", err);

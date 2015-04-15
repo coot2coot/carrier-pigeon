@@ -21,7 +21,7 @@ var serverRoutes =  function (router) {
 	});
 
 	router.addRoute('/login/verify', function (req, res, match){
-	  	require('./handlers/verify-token.js')(req, res);
+	  	require('./lib/verify-token.js')(req, res);
 	});
 
 	router.addRoute('/logout', function (req, res, match){
