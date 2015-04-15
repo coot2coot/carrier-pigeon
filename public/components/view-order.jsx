@@ -18,7 +18,7 @@ module.exports = function(React, Link, ordersUrl) {
 							<button className="button blue">Make a booking note</button>
 							<a className="close" onClick={this.props.closeView}>x</a>
 						</div>
-						<div className="panel-body">
+						<div className="panel-body scroll">
 							<div className="row">
 								<div className="column-4">
 									<h6>Date:</h6>

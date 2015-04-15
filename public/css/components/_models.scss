@@ -33,12 +33,17 @@
   	}
 }
 
+.scroll {
+  overflow: scroll;
+}
+
+
 .model-top {
 	top: 15%;
   	position: absolute;
   	div.panel-body {
   		padding: 0 1em 2em 1em;
-        max-height: 27em;
+      max-height: 27em;
   	}
 }
 
