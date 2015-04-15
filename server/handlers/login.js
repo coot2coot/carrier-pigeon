@@ -6,7 +6,7 @@ var Cookies  	= require('cookies');
 
 var authFailed  = require('../lib/auth-failed.js');
 var getFormData = require('../lib/get-form-data.js');
-var getUser     = require('../db/select-user.js');
+var getUser     = require('../db-config.js').selectUser;
 
 // TODO: generate a more secure one. Nelson recommends crypto
 function generateGUID() {

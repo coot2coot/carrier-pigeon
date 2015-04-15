@@ -1,6 +1,6 @@
 function sortJobIds (nums) {
 	var sorted = nums.sort(function (a, b) {
-		return a - b;
+		return Number(b.job_number) - Number(a.job_number);
 	});
 
 	return sorted[0].job_number;
@@ -31,6 +31,12 @@ module.exports = function(React, Link, ordersUrl) {
 		componentDidMount: function() {
 			var getOrderUrl = "/orders/get";
 			
+			console.log(window.location.href);
+
+			if (window.location.href.indexOf('true') > -1 ) {
+				getOrderUrl = "/orders/get/nocache"
+			}
+
 		    $.get(getOrderUrl, function(result) {
 		    	if(result !== ""){
 			    	var order = JSON.parse(result);

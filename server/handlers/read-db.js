@@ -1,12 +1,14 @@
 
 var validateUser = require('../lib/validate-user.js');
-var db 			 = require("../db-sql-config.js");
+var db 			 = require("../db-config.js");
+var NodeCache 	 = require("node-cache");
 var cache 		 = require("../cache.js");
+var myCache 	 = new NodeCache();
 var readOptions  = {};
 
 readOptions.cached = function (req, res) {
 	validateUser(req, res, function () {
-		cache.get(req,res);
+		myCache.get(req,res);
 	});
 }
 readOptions.noCache = function (req, res) {
