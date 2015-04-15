@@ -21,7 +21,17 @@ var serverRoutes =  function (router) {
 	});
 
 	router.addRoute('/login/verify', function (req, res, match){
-	  	require('./lib/verify-token.js')(req, res);
+	  	require('./lib/validate-user.js')(req, res, function(user) {
+			res.writeHead(200, {
+                'Content-Type': 'application/json'
+            });
+
+            var response = JSON.stringify({
+                username: user.user_name
+            });
+
+            res.end(response);
+        });
 	});
 
 	router.addRoute('/logout', function (req, res, match){

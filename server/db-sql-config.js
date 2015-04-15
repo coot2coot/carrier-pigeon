@@ -4,12 +4,14 @@ var client   	  = new pg.Client("postgres://"+ dataBase + "/carrier-pigeon-dev")
 var stringifyData = require("./lib/stringify-data-sql.js");
 var dataBase 	  = {};
 
+client.on('drain', client.end.bind(client));
 
 //TODO: change datatype for date to date, not text
 //http://www.postgresql.org/docs/9.3/static/datatype.html
 //Then order by date will work
 
 var connect = function (query,table,cb,doc) {
+
 	client.connect(function(err) {
 	  	if(err) {
 	    	return console.error("could not connect to postgres", err);
@@ -60,7 +62,28 @@ dataBase.get = function (table, cb){
 dataBase.post = function (table, doc, cb){
 	var data = stringifyData(doc);
 
- 	connect(post,table,cb,doc);
+ 	// connect(post,table,cb,doc);
+
+ 	client.connect(function(err) {
+        if (err) {
+            return console.error('could not connect to postgres', err);
+        }
+        client.query("SELECT * FROM orders ORDER by date", function(err, result) {
+			client.end();
+
+		    if(err) {
+		     	console.error("error running query", err);
+		     	res.writeHead(500);
+				res.write(err);
+				res.end();
+				return;
+		    }
+		    res.writeHead(201, {
+				"Location": "/#/orders/true"
+			});
+			res.end();
+		});
+    })
 };
 
 dataBase.remove = function (table, doc, cb){

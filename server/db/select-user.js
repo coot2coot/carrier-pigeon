@@ -5,7 +5,8 @@ var client   = new pg.Client("postgres://"+ dataBase + "/carrier-pigeon-dev");
 
 module.exports = function (username, password, remember, done) {
 
-    console.log(dataBase, username, password, remember);
+    client.on('drain', client.end.bind(client));
+
     client.connect(function(err) {
         if (err) {
             return console.error('could not connect to postgres', err);
@@ -16,7 +17,7 @@ module.exports = function (username, password, remember, done) {
                 client.end();
                 return done(err);
             }
-            if (user.rows[0].password === password) {
+            if (user.rows[0] && user.rows[0].password === password) {
                 client.end();
                 done(null, user.rows[0], remember);
             } 
@@ -24,6 +25,7 @@ module.exports = function (username, password, remember, done) {
                 client.end();
                 done(null, false, null,'Incorrect username or password combo');
             }
+            client.end();
         });
     });
 }

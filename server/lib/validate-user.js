@@ -3,7 +3,8 @@
 var authFailed  = require('./auth-failed.js');
 var verify 		= require('./verify-token.js');
 
-function validate (req, res) {
+function validate (req, res, cb) {
+
 
 	if (req.headers.cookie) {
         var cookie = req.headers.cookie.split("=");

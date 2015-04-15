@@ -1,15 +1,8 @@
-function compare(a,b) {
-  	if (a.job_number < b.job_number)
-     	return -1;
-  	if (a.job_number > b.job_number)
-    	return 1;
-  	return 0;
-}
-
 function sortJobIds (nums) {
-	var sorted = nums.sort(compare);
+	var sorted = nums.sort(function (a, b) {
+		return a - b;
+	});
 
-	console.log(sorted[0].job_number);
 	return sorted[0].job_number;
 }
 
@@ -37,10 +30,6 @@ module.exports = function(React, Link, ordersUrl) {
 
 		componentDidMount: function() {
 			var getOrderUrl = "/orders/get";
-
-			if (this.props.getCurrentParams().update) {
-				getOrderUrl = "/orders/get/nocache";
-			}
 			
 		    $.get(getOrderUrl, function(result) {
 		    	if(result !== ""){
@@ -80,8 +69,6 @@ module.exports = function(React, Link, ordersUrl) {
 
 		render: function() {
 			var Handler = this.orderHandler;
-			var oldUrl = document.referrer;
-			console.log(oldUrl);
 			return (
 				<div>
 					<Header />

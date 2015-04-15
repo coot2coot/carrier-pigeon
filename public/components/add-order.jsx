@@ -1,3 +1,20 @@
+var currentDate = function () {
+    var today = new Date();
+
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+
+    if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+    var todayDate = yyyy + "-" + mm + "-" + dd;
+    return todayDate;
+}
 
 var getJobNumber = function (id) {
     var getYear = new Date().getFullYear() + ''; 
@@ -10,7 +27,7 @@ var getJobNumber = function (id) {
     } else {
       newId = year + "0000";
     }
-  console.log(newId);
+  	return newId;
 };
 
 module.exports = function(React, Link, ordersUrl) {
@@ -45,7 +62,7 @@ module.exports = function(React, Link, ordersUrl) {
 										<input type="date" name="date" value={this.state.dateValue} onChange={this.onDateChange}/>
 
 										<p>Job No.</p>
-										<input type="text" name="job_number" value={this.state.jobNo}/>
+										<input type="text" name="job_number" value={this.state.jobNo} readOnly/>
 
 										<div className="row">
 											<div className="column-10">
@@ -98,13 +115,13 @@ module.exports = function(React, Link, ordersUrl) {
 										<input type="text" className="big" name="collect_from" />
 
 										<div className="row">
-											<div className="column-8">
+											<div className="column-10">
 												<p>Date</p>
 												<input type="date" name="collection_date" />
 											</div>
-											<div className="column-8">
+											<div className="column-6">
 												<p>Time</p>
-												<input type="text" name="collection_time" />
+												<input type="time" name="collection_time" />
 											</div>
 										</div>
 
