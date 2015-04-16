@@ -41,6 +41,7 @@ readOptions.noCache = function (req, res) {
 					console.error(err);
 				}
 			});
+			console.log('orders',orders);
 			var order = JSON.stringify(orders);
 			res.writeHead(200, {"Content-Type" : "text/plain"});
 			res.end(order);
@@ -49,3 +50,5 @@ readOptions.noCache = function (req, res) {
 }
 
 module.exports = readOptions;
+
+

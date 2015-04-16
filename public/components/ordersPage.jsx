@@ -71,8 +71,19 @@ module.exports = function(React, Link, ordersUrl) {
 			})
 		},
 
+		addInvoice: function (order) {
+			var getUpdateUrl = "/orders/updates";
+			$.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: getUpdateUrl,
+				data: order
+			})
+		},
+
 		render: function() {
-			var Handler = this.orderHandler;
+			var orderHandler = this.orderHandler;
+			var addInvoiceHandler = this.addInvoice;
 			return (
 				<div>
 					<Header />
@@ -104,33 +115,33 @@ module.exports = function(React, Link, ordersUrl) {
 							  		{ this.state.orders.map(function (order, i) {
 								        return <tr>
 								            		<td key={i + "first"}>
-								            			<a onClick={Handler.bind(null, order)}>
+								            			<a onClick={orderHandler.bind(null, order)}>
 								            				<p>{order.job_number}</p>
 								            			</a>
 								            		</td>
 													<td key={i + "second"}>
-														<a onClick={Handler.bind(null, order)}>
+														<a onClick={orderHandler.bind(null, order)}>
 															<p>{order.client}</p>
 														</a>
 													</td>
 													<td key={i + "third"}>
-														<a onClick={Handler.bind(null, order)}>
+														<a onClick={orderHandler.bind(null, order)}>
 															<p>{order.unit_type}</p>
 														</a>
 													</td>
 													<td key={i + "fourth"}>
-														<a onClick={Handler.bind(null, order)}>
+														<a onClick={orderHandler.bind(null, order)}>
 															<p>{order.unit_number}</p>
 														</a>
 													</td>
 													<td key={i + "fith"}>
-														<a onClick={Handler.bind(null, order)}>
+														<a onClick={orderHandler.bind(null, order)}>
 															<p>{order.shipper}</p>
 														</a>
 													</td>
 													<td key={i + "sixth"}>
-														<a onClick={Handler.bind(null, order)}>
-															<input type="checkbox"/>
+														<a onClick={addInvoiceHandler.bind(null,order)}>
+															<input type="checkbox" defaultChecked={order.invoice} />
 														</a>
 													</td>
 												</tr>
