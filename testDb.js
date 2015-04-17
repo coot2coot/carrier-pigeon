@@ -23,6 +23,6 @@ sqlFixtures.create(dbConfig, dataSpec, function(err, result) {
 		console.error(err)
 	}
 	if(result){
-		console.log(result.users[0].username);
+		console.log(result);
 	}
 });
