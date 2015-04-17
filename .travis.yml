@@ -23,13 +23,13 @@ before_script:
 addons:
   sauce_connect: true
 script:
+- psql -c 'create database test.db;' -h localhost -p 15432 -U postgres
+- node testDb.js
 - gulp deploy
 before_deploy:
 - git status
 - git add -A
 - git commit -m "carrier-pigeon-beta"
-- psql -c 'create database test.db;' -h localhost -p 15432 -U postgres
-- node testDb.js
 deploy:
   provider: elasticbeanstalk
   access_key_id:
