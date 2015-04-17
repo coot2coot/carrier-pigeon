@@ -1,4 +1,9 @@
-var sqlFixtures = require("sql-fixtures");
+var sqlFixtures   = require("sql-fixtures");
+var pg 		 	  = require("pg");
+var client   	  = "postgres://@localhost:5432/testdb";
+
+client.on('drain', client.end.bind(client));
+
 
 var dbConfig = {
   client: 'pg',
@@ -18,11 +23,38 @@ var dataSpec = {
   }
 };
 
-sqlFixtures.create(dbConfig, dataSpec, function(err, result) {
-	if(err){
-		console.error(err)
-	}
-	if(result){
-		console.log(result);
-	}
-});
+var create = function () {
+	sqlFixtures.create(dbConfig, dataSpec, function(err, result) {
+		if(err){
+			console.error(err)
+		}
+		if(result){
+			console.log(result);
+		}
+	});
+};
+
+var createTable = function (cb){
+	pg.connect(client, function(err, clt, done) {
+
+    	if (err) {
+    		console.log(err)
+            return
+    	}
+
+        clt.query("CREATE TABLE USERS (username text, email text)", function(err, result) {
+		    if (err) {
+		    	console.log('err >>>', err)
+	            if(!err) return false;
+
+	            done(clt);
+		    	return;
+		    }
+
+            done();
+		    cb();
+		});
+    });
+};
+
+createTable(create);
