@@ -17,7 +17,7 @@ var dataSpec = {
   users: {
     username: 'Bob',
     email: 'bob@example.com',
-    job: '1'
+    job: 1
   }
 };
 
@@ -40,7 +40,7 @@ var createTable = function (cb){
             return
     	}
 
-        clt.query("CREATE TABLE USERS (job text NOT NULL PRIMARY KEY,username text, email text)", function(err, result) {
+        clt.query("CREATE TABLE USERS (job int NOT NULL PRIMARY KEY,username text, email text)", function(err, result) {
 		    if (err) {
 		    	console.log('err >>>', err)
 	            if(!err) return false;
