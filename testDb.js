@@ -2,9 +2,6 @@ var sqlFixtures   = require("sql-fixtures");
 var pg 		 	  = require("pg");
 var client   	  = "postgres://@localhost:5432/testdb";
 
-
-
-
 var dbConfig = {
   client: 'pg',
   connection: {
@@ -42,7 +39,7 @@ var createTable = function (cb){
             return
     	}
 
-        clt.query("CREATE TABLE USERS (username text, email text)", function(err, result) {
+        clt.query("CREATE TABLE USERS (job text NOT NULL PRIMARY KEY,username text, email text)", function(err, result) {
 		    if (err) {
 		    	console.log('err >>>', err)
 	            if(!err) return false;
