@@ -23,7 +23,7 @@ before_script:
 addons:
   sauce_connect: true
 script:
-- psql -c 'create database test.db;' -U postgres
+- psql -c 'create database testdb;' -U postgres
 - gulp deploy
 before_deploy:
 - git status
