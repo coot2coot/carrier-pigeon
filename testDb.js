@@ -16,7 +16,8 @@ var dbConfig = {
 var dataSpec = {
   users: {
     username: 'Bob',
-    email: 'bob@example.com'
+    email: 'bob@example.com',
+    job: '1'
   }
 };
 
