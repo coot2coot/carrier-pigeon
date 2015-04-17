@@ -99,6 +99,30 @@ dataBase.post = function (table, doc, cb){
     });
 };
 
+dataBase.update = function (table, doc, cb){
+	var data = stringifyData(doc);
+
+	pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
+
+    	if (err) {
+    		console.log(err)
+            return
+    	}
+
+        clt.query("UPDATE " + table + " SET invoice = " + doc.invoice +" WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
+		    if (err) {
+		    	console.log('err >>>', err)
+
+	            done(clt);
+		    	return;
+		    }
+
+            done();
+		    cb();
+		});
+    });
+};
+
 dataBase.selectUser = function (username, password, remember, cb) {
     pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
 
