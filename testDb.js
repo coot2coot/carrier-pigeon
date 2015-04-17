@@ -6,8 +6,8 @@ var dbConfig = {
     host: 'localhost',
     user: '',
     password: '',
-    database: 'test.db',
-    port: 15432
+    database: 'testdb',
+    port: 5432
   }
 };
 
