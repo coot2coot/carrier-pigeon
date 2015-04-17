@@ -19,5 +19,10 @@ var dataSpec = {
 };
 
 sqlFixtures.create(dbConfig, dataSpec, function(err, result) {
-  console.log(result.users[0].username);
+	if(err){
+		console.error(err)
+	}
+	if(result){
+		console.log(result.users[0].username);
+	}
 });
