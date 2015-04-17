@@ -2,7 +2,7 @@ var sqlFixtures   = require("sql-fixtures");
 var pg 		 	  = require("pg");
 var client   	  = "postgres://@localhost:5432/testdb";
 
-client.on('drain', client.end.bind(client));
+
 
 
 var dbConfig = {
