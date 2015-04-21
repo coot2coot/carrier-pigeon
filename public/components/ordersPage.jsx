@@ -107,7 +107,7 @@ module.exports = function(React, Link, ordersUrl) {
 									<h5>Unit Number</h5>
 								</th>
 								<th>
-									<h5>Shipper</h5>
+									<h5>Vendor</h5>
 								</th>
 								<th>
 									<h5>Invoice</h5>
@@ -136,7 +136,7 @@ module.exports = function(React, Link, ordersUrl) {
 													</td>
 													<td key={i + "fith"}>
 														<a onClick={orderHandler.bind(null, order)}>
-															<p>{order.shipper}</p>
+															<p>{order.vendor}</p>
 														</a>
 													</td>
 													<td key={i + "sixth"}>
