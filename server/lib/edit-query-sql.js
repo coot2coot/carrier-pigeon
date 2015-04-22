@@ -5,7 +5,6 @@ module.exports = function (result) {
 	for(var k in result) {
 		query = query + k +  "="  + "'" + result[k] + "'" +  ",";
 	}
-	// .substring(0, query.length - 1) is used to get rid of the last coma
-
-	return query.substring(0, query.length - 1);
+	var newQuery = query.substring(0, query.length - 1);
+	return newQuery;
 }

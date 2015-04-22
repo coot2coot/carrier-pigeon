@@ -12,21 +12,27 @@ module.exports = function(React, Link, ordersUrl) {
 			})
 		},
 		edit: function () {
-			var readOnly = document.getElementsByClassName('viewInput');
+			var disabled = document.getElementsByClassName('view_input');
 			if(this.state.editing === true){
-				for (var prop in readOnly){
-					readOnly[prop].readOnly = false;
-					this.setState({
+				for (var prop in disabled){
+					disabled[prop].disabled = false;
+					disabled[prop].className += " edit"
+				}
+				this.setState({
 						editing: false
-					})
-				}
+				});
 			} else {
-				for (var prop in readOnly){
-					readOnly[prop].readOnly = true;
-					this.setState({
-						editing: true
-					})
+				for (var prop in disabled){
+					disabled[prop].disabled = true;
+
+					if(disabled[prop].className){
+						disabled[prop].className = disabled[prop].className.replace('edit', '');
+					}
+
 				}
+				this.setState({
+						editing: true
+				});
 			}
 		},
 
@@ -48,15 +54,15 @@ module.exports = function(React, Link, ordersUrl) {
 								<div className="row gutters">
 									<div className="column-5">
 										<p>Date</p>
-										<input className="viewInput" type="date" name="date" defaultValue={ this.props.order.date.substring(0, 10)} readOnly />
+										<input className="view_input" type="date" name="date" defaultValue={ this.props.order.date.substring(0, 10)} disabled />
 
 										<p>Job No.</p>
-										<input type="text"  name="job_number" defaultValue={this.props.order.job_number} readOnly/>
+										<input type="text"  name="job_number" defaultValue={this.props.order.job_number} disabled/>
 
 										<div className="row">
 											<div className="column-10">
 												<p>Unit Type</p>
-												<select name="unit_type">
+												<select className="view_input" name="unit_type" disabled>
 												  	<option>40dc</option>
 													<option>40hc</option>
 													<option>40pw</option>
@@ -82,65 +88,65 @@ module.exports = function(React, Link, ordersUrl) {
 											</div>
 											<div className="column-6">
 												<p>Qty</p>
-												<input className="viewInput" type="number"    defaultValue={this.props.order.unit_quatity} name="unit_quatity" readOnly />
+												<input className="view_input" type="number"    defaultValue={this.props.order.unit_quatity} name="unit_quatity" disabled />
 											</div>
 										</div>
 
 										<p>Client</p>
-										<input className="viewInput" type="text" defaultValue= {this.props.order.client} name="client" readOnly />
+										<input className="view_input" type="text" defaultValue= {this.props.order.client} name="client" disabled />
 
 										<p>Vendor</p>
-										<input className="viewInput" type="text"  defaultValue={this.props.order.vendor} name="vendor" readOnly />
+										<input className="view_input" type="text"  defaultValue={this.props.order.vendor} name="vendor" disabled />
 
 										<p>Loading reference</p>
-										<input className="viewInput"  type="text"   defaultValue= {this.props.order.loading_reference} name="loading_reference" readOnly/>
+										<input className="view_input"  type="text"   defaultValue= {this.props.order.loading_reference} name="loading_reference" disabled/>
 
 										<p>Unit Number</p>
-										<input className="viewInput" type="text"    defaultValue={this.props.order.unit_number} name="unit_number" readOnly />
+										<input className="view_input" type="text"    defaultValue={this.props.order.unit_number} name="unit_number" disabled />
 									</div>
 
 									<div className="column-6">
 										<p>Collection From</p>
-										<input className="viewInput big" type="text"  big defaultValue={this.props.order.collect_from} name="collect_from" readOnly />
+										<input className="view_input big" type="text"  big defaultValue={this.props.order.collect_from} name="collect_from" disabled />
 
 										<div className="row">
 											<div className="column-10">
 												<p>Date</p>
-												<input className="viewInput" type="date"  defaultValue={this.props.order.collection_date} name="collection_date" readOnly/>
+												<input className="view_input" type="date"  defaultValue={this.props.order.collection_date} name="collection_date" disabled/>
 											</div>
 											<div className="column-6">
 												<p>Time</p>
-												<input className="viewInput" type="time"  defaultValue={this.props.order.collection_time} name="collection_time" readOnly />
+												<input className="view_input" type="time"  defaultValue={this.props.order.collection_time} name="collection_time" disabled />
 											</div>
 										</div>
 
 										<p>Contact details</p>
-										<input className="viewInput" type="text" defaultValue={this.props.order.contact_details} name="contact_details" readOnly />
+										<input className="view_input" type="text" defaultValue={this.props.order.contact_details} name="contact_details" disabled />
 
 										<p>Deliver to</p>
-										<input className="viewInput big" type="text" defaultValue={this.props.order.deliver_to} name="deliver_to" readOnly />
+										<input className="view_input big" type="text" defaultValue={this.props.order.deliver_to} name="deliver_to" disabled />
 
 										<p>Commodity details</p>
-										<input className="viewInput" type="text"  defaultValue={this.props.order.commodity_details} name="commodity_details" readOnly/>
+										<input className="view_input" type="text"  defaultValue={this.props.order.commodity_details} name="commodity_details" disabled/>
 
 										<p>Special Instructions</p>
-										<input className="viewInput" type="text"  defaultValue={this.props.order.special_instructions} name="special_instructions" readOnly />
+										<input className="view_input" type="text"  defaultValue={this.props.order.special_instructions} name="special_instructions" disabled />
 									</div>
 
 									<div className="column-5">
 										<p>Shipper</p>
-										<input className="viewInput big" type="text"   defaultValue={this.props.order.shipper} name="shipper" readOnly />
+										<input className="view_input big" type="text"   defaultValue={this.props.order.shipper} name="shipper" disabled />
 
 										<p>Consignee</p>
-										<input className="viewInput big" type="text"   defaultValue={this.props.order.consignee} name="consignee" readOnly />
+										<input className="view_input big" type="text"   defaultValue={this.props.order.consignee} name="consignee" disabled />
 
 										<p>Notify</p>
-										<input className="viewInput big" type="text"  defaultValue={this.props.order.notify} name="notify" readOnly />
+										<input className="view_input big" type="text"  defaultValue={this.props.order.notify} name="notify" disabled />
 
 										<p>Remarks</p>
-										<input className="viewInput big" type="text"   defaultValue={this.props.order.remarks} name="remarks"  readOnly/>
+										<input className="view_input big" type="text"   defaultValue={this.props.order.remarks} name="remarks"  disabled/>
 
-										<input className="viewInput" type="submit"   className="button charcoal" defaultValue="Update"  readOnly/>
+										<input className="button charcoal" type="submit" defaultValue="Update"  />
 									</div>
 								</div>
 							</form>
