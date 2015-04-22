@@ -36,12 +36,12 @@ function loginUser (req, res) {
 
             var GUID    = generateGUID();
             var token   = generateToken(user, GUID);
-            var cookies = new Cookies(req, res);
+            var cookies = new Cookies(req, res, ['token']);
 
             if (remember === "on") {
-                var current = new Date();
                 cookies.set( "token", token, {
-                    expires: current.setMonth(current.getMonth()+1) // expired one month from now
+                    maxAge: 1000 * 60 * 60 * 24 * 31,
+                    signed: true
                 });
             } else {
                 cookies.set( "token", token);
