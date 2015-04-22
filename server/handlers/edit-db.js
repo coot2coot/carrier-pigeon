@@ -2,18 +2,9 @@ var parseData 	 	= require('../lib/get-form-data.js');
 var validateUser 	= require('../lib/validate-user.js');
 var db 				= require("../db-config.js");
 
-function check (data) {
-	if(data.invoice === ''|| data.invoice === 'false'){
-		data.invoice = true
-	}else{
-		data.invoice = false
-	}
-	return data
-}
 
-function update (req, res, cb) {
+function edit (req, res, cb		) {
 	parseData(req, function (data) {
-		check(data);
 		validateUser(req, res, function() {
 			db.edit('orders', data, function (err) {
 				if (err) {
@@ -24,7 +15,7 @@ function update (req, res, cb) {
 				} else {
 					cb(req, res);
 					res.writeHead(303, {
-						"Location": "/#/orders/update"
+						"Location": "/#/orders"
 					});
 					res.end();
 				}
@@ -33,4 +24,4 @@ function update (req, res, cb) {
 	});
 };
 
-module.exports = update;
+module.exports = edit;
