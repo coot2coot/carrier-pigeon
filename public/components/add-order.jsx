@@ -39,7 +39,8 @@ module.exports = function(React, Link, ordersUrl) {
 		getInitialState: function() {
 		    return {
 		    	dateValue: currentDate(), 
-		    	jobNo: getJobNumber(this.props.jobNo)
+		    	jobNo: getJobNumber(this.props.jobNo),
+		    	valid: false
 		    };
 		 },
 		onDateChange: function(event) {
@@ -62,7 +63,7 @@ module.exports = function(React, Link, ordersUrl) {
 								<div className="row gutters">
 									<div className="column-5">
 										<p>Date</p>
-										<input type="date" name="date" value={this.state.dateValue} onChange={this.onDateChange}/>
+										<input type="date" name="date" min={this.state.dateValue} value={this.state.dateValue} onChange={this.onDateChange} required/>
 
 										<p>Job No.</p>
 										<input type="text" name="job_number" value={this.state.jobNo} readOnly/>
@@ -70,7 +71,7 @@ module.exports = function(React, Link, ordersUrl) {
 										<div className="row">
 											<div className="column-10">
 												<p>Unit Type</p>
-												<select name="unit_type">
+												<select name="unit_type" required>
 												  	<option>40dc</option>
 													<option>40hc</option>
 													<option>40pw</option>
@@ -96,12 +97,12 @@ module.exports = function(React, Link, ordersUrl) {
 											</div>
 											<div className="column-6">
 												<p>Qty</p>
-												<input type="number" name="unit_quatity" />
+												<input type="number" name="unit_quatity" min="0" required/>
 											</div>
 										</div>
 
 										<p>Client</p>
-										<input type="text" name="client" />
+										<input type="text" name="client"  required/>
 
 										<p>Vendor</p>
 										<input type="text" name="vendor" />
