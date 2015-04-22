@@ -6,6 +6,20 @@ input, select {
   	background: white;
 }
 
+input.view_input {
+  	background: $light-grey;
+  	&.edit {
+  		background: white;
+  	}
+ }
+
+ select.view_input {
+  	background: $light-grey;
+  	&.edit {
+  		background: white;
+  	}
+ }
+
 input.big {
 	height: 4.5em;
 }

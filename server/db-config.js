@@ -2,82 +2,12 @@ var pg 		 	  = require("pg");
 var str      = process.env.POSTGRES_URI || require("../credentials.json").postgres;
 var client   	  = new pg.Client("postgres://"+ str + "/carrier-pigeon-dev");
 var stringifyData = require("./lib/stringify-data-sql.js");
+var editQuery = require("./lib/edit-query-sql.js");
 var dataBase 	  = {};
 
 client.on('drain', client.end.bind(client));
 
-
-
-var connect = function (query,table,cb,doc) {
-
-	client.connect(function(err) {
-	  	if(err) {
-	    	return console.error("could not connect to postgres", err);
-	  	}
-	  	query(table, cb, doc);
-	});
-}
-
-function get(table, cb) {
-	client.query("SELECT * FROM "+ table +" ORDER by date", function(err, result) {
-		client.end();
-
-	    if(err) {
-	      return console.error("error running query", err);
-	    }
-	    cb(result.rows);
-	});
-}
-
-function post(table, cb, doc) {
-
-	var data = stringifyData(doc);
-
-	client.query("INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')", function(err, result) {
-	    if(err) {
-	      return console.error("error running query", err);
-	    }
-	    client.end();
-	    cb();
-	});
-}
-
-function remove(table, cb, doc) {
-	client.query("DELETE FROM " + table + " WHERE " + doc.columns +"=" + doc.values, function(err, result) {
-	    if(err) {
-	    	console.error("error running query", err);
-	      	return cb(err);
-	    }
-	    client.end();
-	    cb();
-	});
-}
-
-dataBase.get = function (table, cb){
- 	pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
-
-    	if (err) {
-    		console.log(err)
-            return
-    	}
-
-        clt.query("SELECT * FROM "+ table +" ORDER by date", function(err, result) {
-		    if (err) {
-		    	console.log('err >>>', err)
-
-	            done(clt);
-		    	return;
-		    }
-
-            done();
-		    cb(result.rows);
-		});
-    });
-};
-
-dataBase.post = function (table, doc, cb){
-	var data = stringifyData(doc);
-
+function connect (query, table, cb, var1, var2, var3) {
 	pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
 
     	if (err) {
@@ -85,89 +15,60 @@ dataBase.post = function (table, doc, cb){
             return
     	}
 
-        clt.query("INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')", function(err, result) {
-		    if (err) {
-		    	console.log('err >>>', err)
-
-	            done(clt);
-		    	return;
-		    }
-
-            done();
-		    cb();
-		});
+        query(table, clt, done, cb, var1, var2, var3)
     });
-};
+}
 
-dataBase.update = function (table, doc, cb){
+function get (table, clt, done, cb) {
+	clt.query("SELECT * FROM "+ table +" ORDER by date", function(err, result) {
+		if (err) {
+		    console.log('err >>>', err)
+
+	        done(clt);
+		    return;
+		 }
+
+        done();
+		cb(result.rows);
+	});
+}
+
+function post (table, clt, done, cb, doc) {
 	var data = stringifyData(doc);
+	clt.query("INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')", function(err, result) {
+		if (err) {
+		   	console.log('err >>>', err)
 
-	pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
+	        done(clt);
+		   	return;
+		}
 
-    	if (err) {
-    		console.log(err)
-            return
-    	}
+        done();
+		cb();
+	});
+}
 
-        clt.query("UPDATE " + table + " SET invoice = " + doc.invoice +" WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
-		    if (err) {
-		    	console.log('err >>>', err)
+function edit (table, clt, done, cb, doc) {
+	var query = editQuery(doc);
 
-	            done(clt);
-		    	return;
-		    }
+	clt.query("UPDATE " + table + " SET " + query + " WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
+		if (err) {
+		 	console.log('err >>>', err)
 
-            done();
-		    cb();
-		});
-    });
-};
+	        done(clt);
+		 	return;
+		}
 
-dataBase.selectUser = function (username, password, remember, cb) {
-    pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
+        done();
+		cb();
+	});
+}
 
-    	if (err) {
-    		console.log(err)
-            return
-    	}
-        var handleError = function(err) {
-            if(!err) return false;
+function remove (table, clt, done, cb, doc) {
+	clt.query("DELETE FROM " + table + "  WHERE job_number = $1", [doc], function(err, user) {
 
-            done(clt);
-            res.writeHead(500, {'content-type': 'text/plain'});
-            res.end('An error occurred');
-            return true;
-        };
-
-        clt.query('SELECT * FROM users WHERE user_name = $1', [username], function(err, user) {
-
-            if(handleError(err)) return;
-
-            done();
-
-            if (user.rows[0] && user.rows[0].password === password) {
-                cb(null, user.rows[0], remember);
-            } 
-            else {
-                cb(null, false, null,'Incorrect username or password combo');
-            }
-        });
-    });
-};
-
-dataBase.remove = function (table, doc, cb){
-	console.log(doc, doc.job_number);
- 	pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
-
-    	if (err) {
-    		console.log(err)
-            return
-    	}
-
-        clt.query('DELETE FROM orders WHERE job_number = $1', [doc], function(err, user) {
-
-            if (err) {
-		    	console.log('err >>>', err)
+        if (err) {
+		    console.log('err >>>', err)
 	            if(!err) return false;
 
 	            done(clt);
@@ -177,12 +78,57 @@ dataBase.remove = function (table, doc, cb){
             done();
             cb()
         });
+
+}
+
+function selectUser (table, clt, done, cb, username, password, remember) {
+	var handleError = function(err) {
+        if(!err) return false;
+
+        done(clt);
+        res.writeHead(500, {'content-type': 'text/plain'});
+        res.end('An error occurred');
+        return true;
+    };
+
+    clt.query("SELECT * FROM " + table + " WHERE user_name = $1", [username], function(err, user) {
+
+        if(handleError(err)) return;
+
+        done();
+
+        if (user.rows[0] && user.rows[0].password === password) {
+            cb(null, user.rows[0], remember);
+        } 
+        else {
+            cb(null, false, null,'Incorrect username or password combo');
+        }
     });
+}
+
+
+
+dataBase.get = function (table, cb){
+ 	connect(get, table, cb)
 };
 
-dataBase.getOne = function (table, doc, cb){
- 	connect(getOne,table,cb,doc);
+dataBase.post = function (table, doc, cb){
+	connect(post, table, cb, doc)
 };
+
+dataBase.edit = function (table, doc, cb){
+	connect(edit, table, cb, doc);
+};
+dataBase.remove = function (table, doc, cb){
+	connect(remove,table,cb, doc)
+};
+
+dataBase.selectUser = function (username, password, remember, cb) {
+   connect(selectUser,"users",cb, username, password, remember)
+};
+
+
+
 
 
 module.exports = dataBase;

@@ -55,7 +55,7 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/create-db.js')(req, res);
 	});
 
-		router.addRoute('/orders/updates', function (req, res, match){
+	router.addRoute('/orders/updates', function (req, res, match){
 	  	require('./handlers/update-db.js')(req, res, cache.noCache);
 	});
 
@@ -64,7 +64,7 @@ var serverRoutes =  function (router) {
 	});
 
 	router.addRoute('/order/edit', function (req, res, match){
-	  	require('./handlers/update-db.js')(req, res);
+	  	require('./handlers/edit-db.js')(req, res, cache.noCache);
 	});
 };
 
