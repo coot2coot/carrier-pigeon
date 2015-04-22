@@ -19,6 +19,10 @@ input.view_input {
   		background: white;
   	}
  }
+ input.invalid {
+ 	border-color: red;
+ 	box-shadow: 0 0 10px red;
+ }
 
 input.big {
 	height: 4.5em;
