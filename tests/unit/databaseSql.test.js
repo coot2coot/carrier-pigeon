@@ -1,26 +1,28 @@
 var test = require('tape');
-var db = require('../../server/db-sql-config.js');
+var db = require('../../server/db-config.js');
+// var testDb = require('../createDb.js');
+var tests = [];
 
 // DB.GET
-test("DB Config contains a `get` function", function(t) {
+function beforeAndAfter(table, tests) {
+	var i;
+	for(i = 0; i < tests.length; tests ++){
+		testDb.createTable('orders', tests[i]);
+	}
+}
 
-    t.equals(typeof db.get, "function", "db.get is a function");
-    t.end();
+tests[0] = function (table) {
+	test("DB Config contains a `get` function", function(t) {
 
-});
+		t.plan(2)
 
-// DB.PUT
-test("DB Config contains a `put` function", function(t) {
+	    t.equals(typeof db.get, "function", "db.get is a function");
 
-    t.equals(typeof db.put, "function", "db.put is a function");
-    t.end();
+	    t.equals(db.get.length, 2, "db.get takes for arguments");
 
-});
 
-// DB.REMOVE
-test("DB Config contains a `remove` function", function(t) {
-
-    t.equals(typeof db.remove, "function", "db.remove is a function");
-    t.end();
-
-});
+	    t.end(function () {
+	    	testDb.deleteTable(table)
+	    });
+	});
+}
