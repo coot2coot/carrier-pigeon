@@ -31,12 +31,13 @@ module.exports = function(React, Link, ordersUrl) {
 		componentDidMount: function() {
 			var getOrderUrl = "/orders/get";
 
-			if (window.location.href.indexOf('true') > -1 ) {
-				getOrderUrl = "/orders/get/nocache"
-			}
+			// if (window.location.href.indexOf('true') > -1 ) {
+			// 	getOrderUrl = "/orders/get/nocache"
+			// }
 
 		    $.get(getOrderUrl, function(result) {
 		    	if(result !== ""){
+		    		console.log("result",result);
 			    	var order = JSON.parse(result);
 
 			      	if (this.isMounted()) {
