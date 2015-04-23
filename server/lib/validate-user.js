@@ -6,7 +6,6 @@ var Cookies     = require('cookies');
 
 function validate (req, res, cb) {
 
-
 	if (req.headers.cookie) {
         var cookies = new Cookies(req, res, ['token']);
         var token   = cookies.get('token', {
@@ -16,12 +15,12 @@ function validate (req, res, cb) {
         var decoded = verify(token);
 
         if(!decoded || !decoded.user) {
-            authFailed(req, res);
+            authFailed(req, res, 'Sorry, you must login before you can proceed');
         } else {
             cb(decoded.user);
         }
     } else {
-        authFailed(req, res);
+        authFailed(req, res, 'Sorry, you must login before you can proceed');
     }
 }
 

@@ -1,6 +1,6 @@
 "use strict";
 
-var jwt      	= require('jsonwebtoken');
+var JWT      	= require('jsonwebtoken');
 var secret   	= process.env.JWT_SECRET || require("../../credentials.json").secret;
 var Cookies  	= require('cookies');
 
@@ -8,9 +8,11 @@ var authFailed  = require('../lib/auth-failed.js');
 var getFormData = require('../lib/get-form-data.js');
 var getUser     = require('../db-config.js').selectUser;
 
-// TODO: generate a more secure one. Nelson recommends crypto
-function generateGUID() {
-    return new Date().getTime();
+
+function checkUserLogins(req, res, cb) {
+    getFormData(req, function(logins) {
+        getUser(logins.username, logins.password, logins.remember, cb);
+    })
 }
 
 function generateToken(payload, GUID) {
@@ -20,22 +22,22 @@ function generateToken(payload, GUID) {
     return token;
 }
 
-function checkUserLogins(req, res, cb) {
-    getFormData(req, function(logins) {
-        getUser(logins.username, logins.password, logins.remember, cb);
-    })
+function createSession (details, callback) {
+    var payload = {
+        user: details.user_name
+    };
+
+    var token = JWT.sign(payload, secret);
+
+    callback(token);
 }
 
 function loginUser (req, res) {
 	checkUserLogins(req, res, function(err, user, remember, message) {
         if (err || message) {
-            console.log(err, message);
-            authFailed(req, res);
+            return authFailed(req, res);
         }
-        if (user) {
-
-            var GUID    = generateGUID();
-            var token   = generateToken(user, GUID);
+        createSession(user, function(token) {
             var cookies = new Cookies(req, res, ['token']);
 
             if (remember === "on") {
@@ -44,7 +46,9 @@ function loginUser (req, res) {
                     signed: true
                 });
             } else {
-                cookies.set( "token", token);
+                cookies.set( "token", token, {
+                    signed: true
+                });
             }
 
             res.writeHead(303, {
@@ -52,7 +56,7 @@ function loginUser (req, res) {
             });
 
             res.end();
-        }
+        })
     });
 }
 
@@ -61,7 +65,7 @@ function loginHandler (req, res) {
  	if (req.method === "POST") {
 		loginUser(req, res);
 	} else {
-		require('../lib/auth-failed.js')(req, res);
+		authFailed(req, res);
 	}
 }
 

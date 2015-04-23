@@ -21,7 +21,6 @@ var getOrders = function (req, res) {
 
 readOptions.cached = function (req, res) {
 	validateUser(req, res, function () {
-		console.log('hi');
 		myCache.get("orders",function (err, value){
 			if(!err && value.hasOwnProperty('orders')){
 				var values = JSON.stringify(value.orders);
