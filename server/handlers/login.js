@@ -65,7 +65,7 @@ function loginHandler (req, res) {
  	if (req.method === "POST") {
 		loginUser(req, res);
 	} else {
-		require('../lib/auth-failed.js')(req, res);
+		authFailed(req, res);
 	}
 }
 

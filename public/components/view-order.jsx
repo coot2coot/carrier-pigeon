@@ -11,6 +11,7 @@ module.exports = function(React, Link, ordersUrl) {
 				deleteOrder: item
 			})
 		},
+
 		edit: function () {
 			var disabled = document.getElementsByClassName('view_input');
 			if(this.state.editing === true){
@@ -54,15 +55,15 @@ module.exports = function(React, Link, ordersUrl) {
 								<div className="row gutters">
 									<div className="column-5">
 										<p>Date</p>
-										<input className="view_input" type="date" name="date" defaultValue={ this.props.order.date.substring(0, 10)} disabled />
+										<input className="view_input" type="date" name="date" defaultValue={ this.props.order.date.substring(0, 10)} disabled required/>
 
 										<p>Job No.</p>
-										<input type="text"  name="job_number" defaultValue={this.props.order.job_number} disabled/>
+										<input type="text"  name="job_number" defaultValue={this.props.order.job_number} disabled />
 
 										<div className="row">
 											<div className="column-10">
 												<p>Unit Type</p>
-												<select className="view_input" name="unit_type" disabled>
+												<select className="view_input" name="unit_type" disabled required>
 												  	<option>40dc</option>
 													<option>40hc</option>
 													<option>40pw</option>
@@ -88,12 +89,12 @@ module.exports = function(React, Link, ordersUrl) {
 											</div>
 											<div className="column-6">
 												<p>Qty</p>
-												<input className="view_input" type="number"    defaultValue={this.props.order.unit_quatity} name="unit_quatity" disabled />
+												<input className="view_input" type="number" min="1" defaultValue={this.props.order.unit_quatity} name="unit_quatity" disabled required/>
 											</div>
 										</div>
 
 										<p>Client</p>
-										<input className="view_input" type="text" defaultValue= {this.props.order.client} name="client" disabled />
+										<input className="view_input" type="text" defaultValue= {this.props.order.client} name="client" disabled required/>
 
 										<p>Vendor</p>
 										<input className="view_input" type="text"  defaultValue={this.props.order.vendor} name="vendor" disabled />
