@@ -1,5 +1,6 @@
 var pg 		 	  = require("pg");
 var str      = process.env.POSTGRES_URI || require("../credentials.json").postgres;
+var url 	= "postgres://"+ str + "/carrier-pigeon-dev"
 var client   	  = new pg.Client("postgres://"+ str + "/carrier-pigeon-dev");
 var stringifyData = require("./lib/stringify-data-sql.js");
 var editQuery = require("./lib/edit-query-sql.js");
@@ -7,12 +8,20 @@ var dataBase 	  = {};
 
 client.on('drain', client.end.bind(client));
 
-function connect (query, table, cb, var1, var2, var3) {
-	pg.connect("postgres://"+ str + "/carrier-pigeon-dev", function(err, clt, done) {
+function tests (test){
+	if(test){
+		return test;
+	}else{
+		return str;
+	}
+}
+
+function connect (query, table, cb, test, var1, var2, var3) {
+	pg.connect(tests(test), function(err, clt, done) {
 
     	if (err) {
     		console.log(err)
-            return
+            returns
     	}
 
         query(table, clt, done, cb, var1, var2, var3)
@@ -108,11 +117,11 @@ function selectUser (table, clt, done, cb, username, password, remember) {
 
 
 
-dataBase.get = function (table, cb){
- 	connect(get, table, cb)
+dataBase.get = function (table, cb, test){
+ 	connect(get, table, cb, test)
 };
 
-dataBase.post = function (table, doc, cb){
+dataBase.post = function (table, doc, cb, test){
 	connect(post, table, cb, doc)
 };
 
