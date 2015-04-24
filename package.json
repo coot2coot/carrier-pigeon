@@ -19,10 +19,8 @@
   "homepage": "https://github.com/foundersandcoders/carrier-pigeon",
   "dependencies": {
     "cookies": "^0.5.0",
-    "fs": "0.0.2",
     "jsonwebtoken": "^4.2.2",
     "node-static": "^0.7.6",
-    "querystring": "^0.2.0",
     "react": "^0.13.1",
     "pg": "^4.3.0",
     "react-router": "^0.13.2",
@@ -31,11 +29,15 @@
     "node-cache": "^1.1.0"
   },
   "devDependencies": {
+    "aguid": "^1.0.3",
+    "bcrypt": "^0.8.2",
     "browserify": "^9.0.7",
     "chai": "^2.2.0",
     "chai-as-promised": "^4.3.0",
     "colors": "^1.0.3",
     "connect": "^3.3.5",
+    "connect-redis": "^2.2.0",
+    "esta": "^4.0.2",
     "gulp": "^3.8.11",
     "gulp-mocha": "^2.0.1",
     "gulp-nodemon": "^1.0.5",
