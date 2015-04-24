@@ -12,13 +12,13 @@ function logout (req, res) {
 	})
     var decoded = verify(token);
 
-    if(!decoded || !decoded.user) {
-        authFailed(req, res);
-    } else {
-
-        authFailed(req, res, token);
-    }
-  
+    cookies.set( "token", token, {
+        overwrite: true,
+        expires: new Date(),
+        signed: true
+    });
+    
+    authFailed(req, res, token);
 }
 
 module.exports = logout;
