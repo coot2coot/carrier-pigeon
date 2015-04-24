@@ -3,7 +3,7 @@ var client   	  = "postgres://qzdwpgfrviqmcu:1hJBjZXlz_8pjTb9qjPUTHiQao@ec2-107-
 var testDb 		  = {};
 
 
-testDb.createTable = function (table, test){
+testDb.createOrder = function (table, test){
 	pg.connect(client, function(err, clt, done) {
 
     	if (err) {
@@ -11,7 +11,7 @@ testDb.createTable = function (table, test){
             return
     	}
 
-        clt.query("INSERT INTO " + table + " (job_number,unit_type, client, date , vendor , loading_reference )" + " VALUES " + "(123,'44d', 'jeff', '10-10-2010' , 'new' , '123new' )", function(err, result) {
+        clt.query("INSERT INTO " + table + " (job_number,unit_type, client, date , vendor , loading_reference )" + " VALUES " + "('$12567','44d', 'jeff', '10-10-2010' , 'new' , '123new' )", function(err, result) {
 		    if (err) {
 		    	console.log('err >>>', err)
 	            if(!err) return false;
@@ -48,4 +48,21 @@ testDb.clearTable = function (table){
 };
 
 
+testDb.fakeOrder = {
+	job_number: '$1234',
+	unit_type: 'play',
+	client : 'fake',
+	date : '10-10-2010',
+}
+
+testDb.fakeOrder2 = {
+	job_number: '$12567',
+	unit_type: 'edited',
+	client : 'fake',
+	date : '10-10-2010',
+}
+
+
 module.exports = testDb;
+
+
