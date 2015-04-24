@@ -3,8 +3,9 @@ var validateUser 	= require('../lib/validate-user.js');
 var db 				= require("../db-config.js");
 
 
-function edit (req, res, cb		) {
+function edit (req, res, cb) {
 	parseData(req, function (data) {
+			console.log('edit',data)
 		validateUser(req, res, function() {
 			db.edit('orders', data, function (err) {
 				if (err) {

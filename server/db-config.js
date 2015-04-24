@@ -58,6 +58,7 @@ function post (table, clt, done, cb, doc) {
 
 function edit (table, clt, done, cb, doc) {
     var query = editQuery(doc);
+    console.log(doc)
 
     clt.query("UPDATE " + table + " SET " + query + " WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
         if (err) {

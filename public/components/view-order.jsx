@@ -58,7 +58,7 @@ module.exports = function(React, Link, ordersUrl) {
 										<input className="view_input" type="date" name="date" defaultValue={ this.props.order.date.substring(0, 10)} disabled required/>
 
 										<p>Job No.</p>
-										<input type="text"  name="job_number" defaultValue={this.props.order.job_number} disabled />
+										<input type="text"  name="job_number" value={this.props.order.job_number} readOnly />
 
 										<div className="row">
 											<div className="column-10">
