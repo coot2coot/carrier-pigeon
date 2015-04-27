@@ -16,6 +16,7 @@ function tests (test){
 }
 
 function connect (query, table, cb, test, var1, var2, var3) {
+
 	pg.connect(tests(test), function(err, clt, done) {
 
     	if (err) {
@@ -132,8 +133,8 @@ dataBase.remove = function (table, doc, cb, test){
     connect(remove,table,cb,test, doc)
 };
 
-dataBase.selectUser = function (username, password, remember, cb) {
-   connect(selectUser,"users",cb, username, password, remember)
+dataBase.selectUser = function (username, password, remember, cb, test) {
+   connect(selectUser,"users",cb, test, username, password, remember)
 };
 
 

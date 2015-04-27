@@ -48,14 +48,14 @@ testDb.clearTable = function (table){
 };
 
 
-testDb.fakeOrder = {
+testDb.mockObject = {
 	job_number: '$1234',
 	unit_type: 'play',
 	client : 'fake',
 	date : '10-10-2010',
 }
 
-testDb.fakeOrder2 = {
+testDb.mockObject2 = {
 	job_number: '$12567',
 	unit_type: 'edited',
 	client : 'fake',
