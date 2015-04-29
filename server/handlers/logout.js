@@ -2,20 +2,23 @@
 
 var authFailed  = require('../lib/auth-failed.js');
 var verify 		= require('../lib/verify-token.js');
+var Cookies  	= require('cookies');
 
 function logout (req, res) {
 
-	var cookie = req.headers.cookie.split("=");
-    var token = cookie[1];
+	var cookies = new Cookies(req, res, ['token']);
+	var token 	= cookies.get('token', {
+		signed: true
+	})
     var decoded = verify(token);
 
-    if(!decoded || !decoded.user) {
-        authFailed(req, res);
-    } else {
-
-        authFailed(req, res, token);
-    }
-  
+    cookies.set( "token", token, {
+        overwrite: true,
+        expires: new Date(),
+        signed: true
+    });
+    
+    authFailed(req, res, token);
 }
 
 module.exports = logout;

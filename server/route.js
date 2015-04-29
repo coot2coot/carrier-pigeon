@@ -23,12 +23,13 @@ var serverRoutes =  function (router) {
 
 	router.addRoute('/login/verify', function (req, res, match){
 	  	require('./lib/validate-user.js')(req, res, function(user) {
+
 			res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
 
             var response = JSON.stringify({
-                username: user.user_name
+                username: user
             });
 
             res.end(response);
@@ -55,7 +56,7 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/create-db.js')(req, res);
 	});
 
-		router.addRoute('/orders/updates', function (req, res, match){
+	router.addRoute('/orders/updates', function (req, res, match){
 	  	require('./handlers/update-db.js')(req, res, cache.noCache);
 	});
 
@@ -64,7 +65,7 @@ var serverRoutes =  function (router) {
 	});
 
 	router.addRoute('/order/edit', function (req, res, match){
-	  	require('./handlers/update-db.js')(req, res);
+	  	require('./handlers/edit-db.js')(req, res, cache.noCache);
 	});
 };
 
