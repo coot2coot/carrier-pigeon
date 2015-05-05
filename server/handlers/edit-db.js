@@ -1,7 +1,7 @@
 var parseData 	 	= require('../lib/get-form-data.js');
-var validateOrder = require('../lib/validate-order.js');
-var validateUser = require('../lib/validate-user.js');
-var db 				= require("../db-config.js");
+var validateOrder 	= require('../lib/validate-order.js');
+var validateUser 	= require('../lib/validate-user.js');
+var db 			= require("../db-config.js");
 
 function edit (req, res, cb) {
 	parseData(req, function (data) {
