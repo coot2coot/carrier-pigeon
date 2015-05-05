@@ -14,10 +14,13 @@ function validate (req, res, cb) {
 
         var decoded = verify(token);
 
+        console.log(decoded);
+
         if(!decoded || !decoded.user) {
             authFailed(req, res, 'Sorry, you must login before you can proceed');
         } else {
             cb(decoded.user);
+            console.log(decoded.user);
         }
     } else {
         authFailed(req, res, 'Sorry, you must login before you can proceed');

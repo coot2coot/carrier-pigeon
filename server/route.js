@@ -23,7 +23,6 @@ var serverRoutes =  function (router) {
 
 	router.addRoute('/login/verify', function (req, res, match){
 	  	require('./lib/validate-user.js')(req, res, function(user) {
-
 			res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
@@ -67,6 +66,34 @@ var serverRoutes =  function (router) {
 	router.addRoute('/order/edit', function (req, res, match){
 	  	require('./handlers/edit-db.js')(req, res, cache.noCache);
 	});
+
+/* -------------------------------*
+ *	   Admin Panel Routes
+ * -------------------------------*/
+
+	router.addRoute('/users/get', function (req, res, match){
+	  	require('./handlers/read-db.js').cached(req, res);
+	});
+
+	router.addRoute('/users/get/nocache', function (req, res, match){
+	  	require('./handlers/read-db.js').noCache(req, res);
+	});
+
+	// router.addRoute('/order/post', function (req, res, match){
+	//   	require('./handlers/create-db.js')(req, res);
+	// });
+
+	// router.addRoute('/orders/updates', function (req, res, match){
+	//   	require('./handlers/update-db.js')(req, res, cache.noCache);
+	// });
+
+	// router.addRoute('/order/delete/:id?', function (req, res, match){
+	//   	require('./handlers/delete-db.js')(req, res);
+	// });
+
+	// router.addRoute('/order/edit', function (req, res, match){
+	//   	require('./handlers/edit-db.js')(req, res, cache.noCache);
+	// });
 };
 
 module.exports = serverRoutes;

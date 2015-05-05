@@ -51,6 +51,7 @@ testDb.clearTable = function (table){
 testDb.mockObject = {
 	job_number: '$1234',
 	unit_type: 'play',
+	unit_quantity: '4',
 	client : 'fake',
 	date : '10-10-2010',
 }

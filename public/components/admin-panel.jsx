@@ -13,31 +13,36 @@ module.exports = function(React, Link, ordersUrl) {
 		            	date_joined: "",
 		            	email_sent: ""
 		            }
-	            ]
+	            ],
+	            InviteUser: false
           	};
         },
 		componentDidMount: function() {
-			// var getOrderUrl = "/orders/get";
+			var getUsersUrl = "/users/get";
 
-			// if (window.location.href.indexOf('true') > -1 ) {
-			// 	getOrderUrl = "/orders/get/nocache"
-			// }
+			if (window.location.href.indexOf('true') > -1 ) {
+				getUsersUrl = "/users/get/nocache"
+			}
 
-		 //    $.get(getOrderUrl, function(result) {
-		 //    	if(result !== ""){
-			//     	var order = JSON.parse(result);
+		    $.get(getUsersUrl, function(result) {
+		    	if(result !== ""){
+			    	var userList = JSON.parse(result);
 
-			//       	if (this.isMounted()) {
-			//         	this.setState({
-			//           		orders : order,
-			//           		lastJobNo : sortJobIds(order)
-			//         	});
-			//       	}
-			//     }
-		 //    }.bind(this))
-		 //    .fail(function () {
-		 //    	"get request failed"
-		 //    });
+			      	if (this.isMounted()) {
+			        	this.setState({
+			          		users : userList
+			        	});
+			      	}
+			    }
+		    }.bind(this))
+		    .fail(function () {
+		    	"get request failed"
+		    });
+		},
+		addUser: function () {
+			this.setState({
+				InviteUser: true
+			})
 		},
 		render: function() {
 			var orderHandler = this.orderHandler;
@@ -48,6 +53,10 @@ module.exports = function(React, Link, ordersUrl) {
 					<div className="column-12 push-2 model-generic">
 						<div className="panel-header">
 							<h3>Users</h3>
+							{( this.state.InviteUser
+								? <form className="email-invite" action="/user/new" method="POST"><input type="text" placeholder="example@mail.com"/><input type="submit" className="button blue" value="Invite User"/></form>
+								: <button data-tooltip="Invite new user" className="button blue add" onClick={this.addUser}>+</button>
+							)}
 						</div>
 						<div className="panel-body table-responsive model-overflow">
 							<table className="table table-full">

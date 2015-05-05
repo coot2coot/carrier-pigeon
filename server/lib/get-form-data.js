@@ -1,3 +1,4 @@
+"use strict";
 var qs = require('querystring');
 
 module.exports = function (req, cb) {
