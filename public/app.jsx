@@ -1,14 +1,15 @@
-var React = require('react');
-var Router = require('react-router');
+var React       = require('react');
+var Router      = require('react-router');
 
-var DefaultRoute = Router.DefaultRoute;
-var Link = Router.Link;
-var Route = Router.Route;
-var RouteHandler = Router.RouteHandler;
+var DefaultRoute= Router.DefaultRoute;
+var Link        = Router.Link;
+var Route       = Router.Route;
+var RouteHandler= Router.RouteHandler;
 
-var Login = require("./components/login-panel.jsx")(React, Link);
-var Header = require("./components/header.jsx")(React, Link);
-var Orders = require("./components/ordersPage.jsx")(React, Link);
+var Login       = require("./components/login-panel.jsx")(React, Link);
+var Header      = require("./components/header.jsx")(React, Link);
+var Orders      = require("./components/ordersPage.jsx")(React, Link);
+var AdminPanel  = require("./components/admin-panel.jsx")(React, Link);
 
 
 var Test = React.createClass({
@@ -30,6 +31,7 @@ var routes = (
         <Route name="login" path="/login" handler={Login} />
         <Route name="reports" path="/reports" handler={Test} />
         <Route name="contacts" path="/contacts" handler={Test} />
+        <Route name="admin" path="/admin" handler={AdminPanel} />
         <DefaultRoute handler={Login}/>  
     </Route>
 );
