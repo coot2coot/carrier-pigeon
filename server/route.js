@@ -22,13 +22,13 @@ var serverRoutes =  function (router) {
 	});
 
 	router.addRoute('/login/verify', function (req, res, match){
-	  	require('./lib/validate-user.js')(req, res, function(user) {
+	  	require('./lib/validate-user.js')(req, res, function(userDetails) {
 			res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
 
             var response = JSON.stringify({
-                username: user
+                user: userDetails
             });
 
             res.end(response);

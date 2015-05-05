@@ -114,7 +114,6 @@ function selectUser (table, clt, done, cb, username, password, remember) {
 
 
 dataBase.get = function (table, cb, test){
-    console.log(table);
  	connect(get, table, cb, test)
 };
 

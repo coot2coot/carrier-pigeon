@@ -36,41 +36,46 @@ var getUserList = function (req, res) {
 
 readOptions.cached = function (req, res) {
 	validateUser(req, res, function () {
+		var table;
+
 		if (req.url.indexOf('users') > -1) {
-			myCache.get("users",function (err, value){
-				if(!err && value.hasOwnProperty('users')){
-					var values = JSON.stringify(value.orders);
-					res.writeHead(200, {"Content-Type" : "text/plain"});
-					res.end(values)
-				}else {
-					getUserList(req, res);
-				}
-			})
+			table = "users";
 		} else {
-			myCache.get("orders",function (err, value){
-				if(!err && value.hasOwnProperty('orders')){
-					var values = JSON.stringify(value.orders);
-					res.writeHead(200, {"Content-Type" : "text/plain"});
-					res.end(values)
-				}else {
+			table = "orders";
+		}
+
+		
+		myCache.get(table,function (err, value){
+			if(!err && value.hasOwnProperty(table)){
+				var values = JSON.stringify(value[table]);
+				res.writeHead(200, {"Content-Type" : "text/plain"});
+				res.end(values)
+			}else {
+				if (table === "users") {
+					getUserList(req, res);
+				} else {
 					getOrders(req, res);
 				}
-			})
-		}
+				
+			}
+		})
 	});
 }
 readOptions.noCache = function (req, res) {
 	validateUser(req, res, function () {
-		db.get('orders',function (orders) {		
-			myCache.set("orders", orders, secondsToSave, function(err,success){
-				if(err){
-					console.error(err);
-				}
-			});
-			var order = JSON.stringify(orders);
-			res.writeHead(200, {"Content-Type" : "text/plain"});
-			res.end(order);
-		});
+		var table;
+
+		if (req.url.indexOf('users') > -1) {
+			table = "users";
+		} else {
+			table = "orders";
+		}
+
+		if (table === "users") {
+			getUserList(req, res);
+		} else {
+			getOrders(req, res);
+		}
 	});
 }
 

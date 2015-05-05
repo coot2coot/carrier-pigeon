@@ -1,16 +1,16 @@
 /** @jsx React.DOM */
 
-//TODO: 
-var isAdmin = false;
-
 module.exports = function(React, Link) {
 
     var Navbar = require("./nav.jsx")(React, Link);
-    var HeaderLinks = require("./header-links.jsx")(React, Link, isAdmin);
+    var HeaderLinks = require("./header-links.jsx")(React, Link);
 
     return React.createClass({
         getInitialState: function() {
-            return {username: 'test'};
+            return {
+                username: "",
+                admin: false
+            };
         },
         componentWillMount: function() {
             var url = "/login/verify";
@@ -22,7 +22,8 @@ module.exports = function(React, Link) {
                     success: function(data) {
                         this.setState({
                             loggedIn: true,
-                            username: data.username
+                            username: data.user.username,
+                            admin: data.user.admin
                         });
                     }.bind(this),
                     error: function(xhr, status, err){
@@ -40,7 +41,7 @@ module.exports = function(React, Link) {
                         </div>
                         <div>
                         {(this.state.loggedIn
-                            ? <HeaderLinks name={this.state.username} /> 
+                            ? <HeaderLinks name={this.state.username} admin={this.state.admin}/> 
                             : <p></p>
                         )}
                         </div>
