@@ -40,7 +40,7 @@ module.exports = function(React, Link, ordersUrl) {
 		    return {
 		    	dateValue: currentDate(), 
 		    	jobNo: getJobNumber(this.props.jobNo),
-		    	valid: false
+		    	valid: false,
 		    };
 		 },
 		onDateChange: function(event) {
@@ -97,14 +97,14 @@ module.exports = function(React, Link, ordersUrl) {
 											</div>
 											<div className="column-6">
 												<p>Qty</p>
-												<input type="number" name="unit_quatity" min="0" required/>
+												<input type="number" name="unit_quatity" min="1" required/>
 											</div>
 										</div>
 
 										<p>Client</p>
 										<input type="text" name="client"  required/>
 
-										<p>Vendor</p>
+										<p>Vendors </p>
 										<input type="text" name="vendor" />
 
 										<p>Loading reference</p>
