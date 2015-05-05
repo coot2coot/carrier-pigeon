@@ -97,7 +97,7 @@ module.exports = function(React, Link, ordersUrl) {
 											</div>
 											<div className="column-6">
 												<p>Qty</p>
-												<input type="number" name="unit_quatity" min="0" required/>
+												<input type="number" name="unit_quatity" min="1" required/>
 											</div>
 										</div>
 
