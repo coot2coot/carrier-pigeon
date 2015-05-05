@@ -1,7 +1,7 @@
 "use strict";
 
 function validate (data, res, cb) {
-	if (data["job_number"]=== "" || data["unit_type"] === "" || data["client"] === "" || data["unit_quantity"] === ""){
+	if (jobNumberIsValid(data["job_number"])=== null || dateIsValid(data["date"]) === null || data["unit_type"] === "" || data["client"] === "" || data["unit_quantity"] === ""){
 		res.writeHead(500);
 		res.write("The jobnumber, date and client are all required fields");
 		res.end();
@@ -11,4 +11,14 @@ function validate (data, res, cb) {
 	}
 }
 
+function jobNumberIsValid(job) {
+	var regex = /^[0-9]{6}$/
+	return job.match(regex);
+}
+function dateIsValid(date) {
+	var regex = /^[2][0-9]{3}[-][0-9]{2}[-][0-9]{2}$/
+	return date.match(regex);
+}
+
 module.exports = validate;
+
