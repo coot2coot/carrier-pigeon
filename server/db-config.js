@@ -92,19 +92,14 @@ function remove (table, clt, done, cb, doc) {
 }
 
 function selectUser (table, clt, done, cb, username, password, remember) {
-    var handleError = function(err) {
-        if(!err) return false;
 
-        done(clt);
-        res.writeHead(500, {'content-type': 'text/plain'});
-        res.end('An error occurred');
-        return true;
-    };
+    clt.query("SELECT * FROM " + table + " WHERE username = $1", [username], function(err, user) {
 
-    clt.query("SELECT * FROM " + table + " WHERE user_name = $1", [username], function(err, user) {
-
-        if(handleError(err)) return;
-
+        if(err) {
+            console.log(err);
+            done();
+            return;
+        }
         done();
 
         if (user.rows[0] && user.rows[0].password === password) {

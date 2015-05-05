@@ -27,3 +27,11 @@ input.view_input {
 input.big {
 	height: 4.5em;
 }
+
+form.email-invite {
+  display: inline-block;
+  input {
+    width: auto;
+    padding: 0.2em 1em;
+  }
+}

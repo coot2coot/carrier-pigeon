@@ -15,16 +15,11 @@ function checkUserLogins(req, res, cb) {
     })
 }
 
-function generateToken(payload, GUID) {
-    var token = jwt.sign({
-        user: payload
-    }, secret);
-    return token;
-}
-
 function createSession (details, callback) {
     var payload = {
-        user: details.user_name
+        username: details.username,
+        admin: details.admin,
+        first_name: details.first_name
     };
 
     var token = JWT.sign(payload, secret);

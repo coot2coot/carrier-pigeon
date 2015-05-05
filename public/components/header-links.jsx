@@ -1,11 +1,11 @@
 /** @jsx React.DOM */
 
-module.exports = function(React, Link, admin) {
+module.exports = function(React, Link) {
 
     var AdminLink = React.createClass({
         render: function() {
             return (
-                <Link to = "login">
+                <Link to = "admin">
                     <p>Admin Panel</p>
                 </Link>
             )
@@ -13,7 +13,6 @@ module.exports = function(React, Link, admin) {
     });
 
     return  React.createClass({
-
         render: function() {
             return (
                 <div>
@@ -21,7 +20,7 @@ module.exports = function(React, Link, admin) {
                         <p>Logout</p>
                     </a>
                     <div>
-                        {(admin
+                        {(this.props.admin
                             ? <AdminLink /> 
                             : <p></p>
                         )}
