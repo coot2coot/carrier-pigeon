@@ -8,6 +8,4 @@ module.exports = function (req, res, message) {
 	!!message
 	? res.end(message)
 	: res.end()
-
-	console.log(res);
 }

@@ -1,6 +1,5 @@
 var test = require('tape');
 var shot = require('shot');
-var handler = require('../../server/handler.js');
 
 
 // test('home handler redirects to login page', function (t) {
