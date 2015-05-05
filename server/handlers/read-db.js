@@ -20,7 +20,6 @@ var getOrders = function (req, res) {
 };
 
 readOptions.cached = function (req, res) {
-	console.log('hi');
 	validateUser(req, res, function () {
 		myCache.get("orders",function (err, value){
 			if(!err && value.hasOwnProperty('orders')){
