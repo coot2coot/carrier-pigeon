@@ -29,7 +29,7 @@ function connect (query, table, cb, test, var1, var2, var3) {
 }
 
 function get (table, clt, done, cb) {
-    clt.query("SELECT * FROM "+ table +" ORDER by date", function(err, result) {
+    clt.query("SELECT * FROM "+ table +" JOIN units ON orders.job_number = units.job_number ORDER by date", function(err, result) {
         if (err) {
             console.log('err >>>', err)
 
@@ -42,9 +42,11 @@ function get (table, clt, done, cb) {
     });
 }
 
-function post (table, clt, done, cb, doc) {
-    var data = stringifyData(doc);
-    clt.query("INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')", function(err, result) {
+
+ function post (table, clt, done, cb, doc) {
+    var orders = stringifyData(doc.orders);
+    var units = stringifyData(doc.units);
+    clt.query("INSERT into orders ($1) VALUES ($2); INSERT into users ($3) VALUES ($4); ",[orders.columns],[orders.values],[units.columns],[units.values], function(err, result) {
         if (err) {
             console.log('err >>>', err)
 
