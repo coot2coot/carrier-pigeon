@@ -2,11 +2,18 @@ var parseData 	 = require('../lib/get-form-data.js');
 var validateUser = require('../lib/validate-user.js');
 var db 			 = require("../db-config.js");
 
-function delete (req, res) {
+function remove (req, res) {
 	validateUser(req, res, function() {
-		var param = req.url.split('/').pop()
+		var param = req.url.split('/').pop();
+		var table;
 
-		db.remove('orders', param, function (err) {
+		if (req.url.indexOf('user') > -1) {
+			table = "users";
+		} else {
+			table = "orders";
+		}
+
+		db.remove(table, param, function (err) {
 			if (err) {
 				console.log(err)
 				res.writeHead(500);
@@ -14,7 +21,7 @@ function delete (req, res) {
 				res.end();
 			} else {
 				res.writeHead(303, {
-					"Location": "/#/orders/true"
+					"Location": "/#/" + table +"/true"
 				});
 				res.end();
 			}
@@ -22,4 +29,4 @@ function delete (req, res) {
 	});
 };
 
-module.exports = delete;
+module.exports = remove;

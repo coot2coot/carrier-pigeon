@@ -2,13 +2,13 @@
 var validateUser = require('../lib/validate-user.js');
 var db 			 = require("../db-config.js");
 var NodeCache 	 = require("node-cache");
-var myCache 	 = new NodeCache();
+var secondsToSave= 60 * 60 * 24 * 7;
+var myCache 	 = new NodeCache({ stdTTL: secondsToSave });
 var readOptions  = {};
-var secondsToSave = 60 * 60 * 24 * 7;
 
 var getOrders = function (req, res) {
 	db.get('orders',function (orders) {		
-		myCache.set("orders", orders, secondsToSave, function(err, success){
+		myCache.set("orders", orders, function(err, success){
 			if(err){
 				console.error(err)
 			}
@@ -22,7 +22,7 @@ var getOrders = function (req, res) {
 
 var getUserList = function (req, res) {
 	db.get('users',function (users) {
-		myCache.set("users", users, secondsToSave, function(err, success){
+		myCache.set("users", users, function(err, success){
 			if(err){
 				console.error(err)
 			}
@@ -44,13 +44,14 @@ readOptions.cached = function (req, res) {
 			table = "orders";
 		}
 
-		
-		myCache.get(table,function (err, value){
+		myCache.get(table, function (err, value){
 			if(!err && value.hasOwnProperty(table)){
+				console.log('cached');
 				var values = JSON.stringify(value[table]);
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end(values)
 			}else {
+				console.log('still not cached');
 				if (table === "users") {
 					getUserList(req, res);
 				} else {
