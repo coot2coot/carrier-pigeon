@@ -85,8 +85,7 @@ module.exports = function(React, Link, ordersUrl) {
 								<th>
 								</th>
 						  		{ this.state.users.map(function (user, i) {
-						  			return user.admin !== 'true'
-							        	? (<tr>
+						  			return <tr>
 							            		<td key={i + "first"}>
 							            			<p>{user.username}</p>
 							            		</td>
@@ -102,8 +101,7 @@ module.exports = function(React, Link, ordersUrl) {
 												<td key={i + "sixth"}>
 													<a className="delete" onClick={deleteHandler.bind(null, user)}>Delete</a>
 												</td>
-											</tr>)
-							        	: <p></p>
+											</tr>
 							    })}
 							</table>
 						</div>

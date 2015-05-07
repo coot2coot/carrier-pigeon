@@ -7,7 +7,7 @@ var myCache 	 = new NodeCache({ stdTTL: secondsToSave });
 var readOptions  = {};
 
 var getOrders = function (req, res) {
-	db.get('orders',function (orders) {		
+	db.get('orders',function (orders) {	
 		myCache.set("orders", orders, function(err, success){
 			if(err){
 				console.error(err)
@@ -21,13 +21,22 @@ var getOrders = function (req, res) {
 };
 
 var getUserList = function (req, res) {
-	db.get('users',function (users) {
+	db.get('users',function (usrs) {
+		var users = [];
+
+		usrs.forEach(function(user) {
+			if (user.admin === false) {
+				users.push(user);
+			}
+		})
+
 		myCache.set("users", users, function(err, success){
 			if(err){
 				console.error(err)
 			}
 		});
-		var userList = JSON.stringify(users);
+		
+		var userList = JSON.stringify(users)
 
 		res.writeHead(200, {"Content-Type" : "text/plain"});
 		res.end(userList);
@@ -46,12 +55,10 @@ readOptions.cached = function (req, res) {
 
 		myCache.get(table, function (err, value){
 			if(!err && value.hasOwnProperty(table)){
-				console.log('cached');
 				var values = JSON.stringify(value[table]);
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end(values)
 			}else {
-				console.log('still not cached');
 				if (table === "users") {
 					getUserList(req, res);
 				} else {
