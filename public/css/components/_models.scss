@@ -88,3 +88,17 @@ p.small {
         border-bottom: 0.1em $light-grey solid;
     }
 }
+
+.warning {
+  .button {
+    margin-top: 0;
+    position: relative;
+    bottom: 1em;
+  }
+  table {
+    border-bottom: 0.1em $light-grey solid;
+    p {
+      margin-top: 0;
+    }
+  }
+}
