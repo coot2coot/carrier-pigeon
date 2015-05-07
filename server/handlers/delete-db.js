@@ -4,9 +4,16 @@ var db 			 = require("../db-config.js");
 
 function delete (req, res) {
 	validateUser(req, res, function() {
-		var param = req.url.split('/').pop()
+		var param = req.url.split('/').pop();
+		var table;
 
-		db.remove('orders', param, function (err) {
+		if (req.url.indexOf('users') > -1) {
+			table = "users";
+		} else {
+			table = "orders";
+		}
+
+		db.remove(table, param, function (err) {
 			if (err) {
 				console.log(err)
 				res.writeHead(500);

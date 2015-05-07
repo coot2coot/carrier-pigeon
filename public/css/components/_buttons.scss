@@ -47,3 +47,14 @@
     	color: $light-grey;
     }
 }
+
+.delete {
+	border: none;
+ 	color: #3C719D;
+ 	font-size: 0.9em;
+ 	padding: 0;
+ 	text-align: center;
+ 	&:hover {
+ 		color: #5293CA;
+ 	}
+}

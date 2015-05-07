@@ -1,7 +1,7 @@
 
 var pg 		 	  = require("pg");
-var str      = process.env.POSTGRES_URI || require("../credentials.json").postgres;
-var url 	= "postgres://"+ str + "/carrier-pigeon-dev"
+var str           = process.env.POSTGRES_URI || require("../credentials.json").postgres;
+var url 	      = "postgres://"+ str + "/carrier-pigeon-dev"
 var stringifyData = require("./lib/stringify-data-sql.js");
 var editQuery     = require("./lib/edit-query-sql.js");
 var dataBase      = {};
@@ -59,7 +59,6 @@ function post (table, clt, done, cb, doc) {
 
 function edit (table, clt, done, cb, doc) {
     var query = editQuery(doc);
-    console.log(doc)
 
     clt.query("UPDATE " + table + " SET " + query + " WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
         if (err) {
@@ -112,7 +111,6 @@ function selectUser (table, clt, done, cb, username, password, remember) {
 }
 
 
-
 dataBase.get = function (table, cb, test){
  	connect(get, table, cb, test)
 };
@@ -131,9 +129,5 @@ dataBase.remove = function (table, doc, cb, test){
 dataBase.selectUser = function (username, password, remember, cb, test) {
    connect(selectUser,"users",cb, test, username, password, remember)
 };
-
-
-
-
 
 module.exports = dataBase;

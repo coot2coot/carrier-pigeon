@@ -79,21 +79,9 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/read-db.js').noCache(req, res);
 	});
 
-	// router.addRoute('/order/post', function (req, res, match){
-	//   	require('./handlers/create-db.js')(req, res);
-	// });
-
-	// router.addRoute('/orders/updates', function (req, res, match){
-	//   	require('./handlers/update-db.js')(req, res, cache.noCache);
-	// });
-
-	// router.addRoute('/order/delete/:id?', function (req, res, match){
-	//   	require('./handlers/delete-db.js')(req, res);
-	// });
-
-	// router.addRoute('/order/edit', function (req, res, match){
-	//   	require('./handlers/edit-db.js')(req, res, cache.noCache);
-	// });
+	router.addRoute('/users/delete/:id?', function (req, res, match){
+	  	require('./handlers/delete-db.js')(req, res);
+	});
 };
 
 module.exports = serverRoutes;

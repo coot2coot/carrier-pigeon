@@ -73,7 +73,6 @@ module.exports = function(React, Link, ordersUrl) {
 									<h5>Invitation</h5>
 								</th>
 								<th>
-									<h5>Delete</h5>
 								</th>
 						  		{ this.state.users.map(function (user, i) {
 							        return <tr>
@@ -90,7 +89,9 @@ module.exports = function(React, Link, ordersUrl) {
 													<p>{user.invitation}</p> {/* Accepted or pending */}
 												</td>
 												<td key={i + "sixth"}>
-													<input type="submit" className="button charcoal full" value="Delete"/>
+													<form action="/user/delete" method="POST">
+														<input type="submit" className="delete" value="Delete"/>
+													</form>
 												</td>
 											</tr>
 							    })}
