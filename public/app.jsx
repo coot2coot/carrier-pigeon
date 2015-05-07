@@ -26,12 +26,14 @@ var Test = React.createClass({
 var routes = (
     <Route>  
         <Route name="orders" path="/orders" handler={Orders}>
-            <Route name= "orderUpdate" path=":update" handler={Orders} />
+            <Route name="orderUpdate" path=":update" handler={Orders} />
         </Route>
         <Route name="login" path="/login" handler={Login} />
         <Route name="reports" path="/reports" handler={Test} />
         <Route name="contacts" path="/contacts" handler={Test} />
-        <Route name="admin" path="/admin" handler={AdminPanel} />
+        <Route name="admin" path="/users" handler={AdminPanel}>
+            <Route name="userUpdate" path=":update" handler={AdminPanel} />
+        </Route>
         <DefaultRoute handler={Login}/>  
     </Route>
 );

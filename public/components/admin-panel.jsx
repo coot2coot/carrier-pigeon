@@ -39,6 +39,13 @@ module.exports = function(React, Link, ordersUrl) {
 		    	"get request failed"
 		    });
 		},
+
+		deleteUser: function (item) {
+			this.setState({
+				removeUser: item
+			})
+		},
+
 		addUser: function () {
 			this.setState({
 				InviteUser: true
@@ -89,9 +96,7 @@ module.exports = function(React, Link, ordersUrl) {
 													<p>{user.invitation}</p> {/* Accepted or pending */}
 												</td>
 												<td key={i + "sixth"}>
-													<form action="/user/delete" method="POST">
-														<input type="submit" className="delete" value="Delete"/>
-													</form>
+													<a className="delete" href={"/user/delete/" + user.username}>Delete</a>
 												</td>
 											</tr>
 							    })}

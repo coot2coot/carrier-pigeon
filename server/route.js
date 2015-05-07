@@ -79,7 +79,7 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/read-db.js').noCache(req, res);
 	});
 
-	router.addRoute('/users/delete/:id?', function (req, res, match){
+	router.addRoute('/user/delete/:id?', function (req, res, match){
 	  	require('./handlers/delete-db.js')(req, res);
 	});
 };
