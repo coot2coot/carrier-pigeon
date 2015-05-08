@@ -2,7 +2,7 @@ var parseData 	 = require('../lib/get-form-data.js');
 var validateUser = require('../lib/validate-user.js');
 var db 			 = require("../db-config.js");
 
-function delete (req, res) {
+function deletes (req, res) {
 	validateUser(req, res, function() {
 		var param = req.url.split('/').pop()
 
@@ -22,4 +22,4 @@ function delete (req, res) {
 	});
 };
 
-module.exports = delete;
+module.exports = deletes;

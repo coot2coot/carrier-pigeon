@@ -43,10 +43,10 @@ function get (table, clt, done, cb) {
 }
 
 
- function post (table, clt, done, cb, doc) {
-    var orders = stringifyData(doc.orders);
-    var units = stringifyData(doc.units);
-    clt.query("INSERT into orders ($1) VALUES ($2); INSERT into users ($3) VALUES ($4); ",[orders.columns],[orders.values],[units.columns],[units.values], function(err, result) {
+function post (table, clt, done, cb, doc) {
+    var orders = stringifyData(doc.order);
+    var units = stringifyData(doc.unit);
+    clt.query("INSERT into orders (" + orders.columns + ") VALUES ("+orders.values+"); INSERT into units ("+ units.columns + ") VALUES (" + units.values + ");", function(err, result) {
         if (err) {
             console.log('err >>>', err)
 
@@ -60,10 +60,10 @@ function get (table, clt, done, cb) {
 }
 
 function edit (table, clt, done, cb, doc) {
-    var query = editQuery(doc);
-    console.log(doc)
+    var ordersQuery = editQuery(doc.order);
+    var unitsQuery = editQuery(doc.unit);
 
-    clt.query("UPDATE " + table + " SET " + query + " WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
+    clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= " +"'" + doc.order.job_number + "'; UPDATE units SET " + unitsQuery + " WHERE " + " job_number= " +"'" + doc.unit.job_number + "'", function(err, result) {
         if (err) {
             console.log('err >>>', err)
 
@@ -77,7 +77,7 @@ function edit (table, clt, done, cb, doc) {
 }
 
 function remove (table, clt, done, cb, doc) {
-    clt.query("DELETE FROM " + table + "  WHERE job_number = $1", [doc], function(err, user) {
+    clt.query("DELETE FROM " + table + "  WHERE job_number = $1;", [doc], function(err, user) {
 
         if (err) {
             console.log('err >>>', err)

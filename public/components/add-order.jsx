@@ -34,6 +34,7 @@ var getJobNumber = function (id) {
 };
 
 module.exports = function(React, Link, ordersUrl) {
+	var Units = require("./units.jsx")(React, Link);
 
 	return React.createClass({
 		getInitialState: function() {
@@ -41,6 +42,7 @@ module.exports = function(React, Link, ordersUrl) {
 		    	dateValue: currentDate(), 
 		    	jobNo: getJobNumber(this.props.jobNo),
 		    	valid: false,
+		    	unitsArr: [0],
 		    };
 		 },
 		onDateChange: function(event) {
@@ -49,7 +51,28 @@ module.exports = function(React, Link, ordersUrl) {
 	    	});
 	  	},
 
+	  	addUnit: function() {
+			this.state.unitsArr.push(1)
+			var newState = this.state.unitsArr
+
+	  		this.setState({
+	    		unitsArr: newState
+	    	});
+	  	},
+	  	removeUnit: function() {
+	  		if(this.state.unitsArr.length > 1){
+				this.state.unitsArr.splice(-1,1)
+				var newState = this.state.unitsArr
+
+		  		this.setState({
+		    		unitsArr: newState
+		    	});
+		    }
+	  	},
+
 		render: function() {
+			var addUnit = this.addUnit;
+			var removeUnit = this.removeUnit
 			var today = currentDate();
 			return (
 				<div className="overlay">
@@ -58,103 +81,110 @@ module.exports = function(React, Link, ordersUrl) {
 							<h3>New Entry</h3>
 							<a className="close" onClick={this.props.closeView}>x</a>
 						</div>
-						<div className="panel-body">
+						<div className="panel-body scroll">
 							<form action="/order/post" method="POST">
 								<div className="row gutters">
-									<div className="column-5">
-										<p>Date</p>
-										<input type="date" name="date" min={this.state.dateValue} value={this.state.dateValue} onChange={this.onDateChange} required/>
-
-										<p>Job No.</p>
-										<input type="text" name="job_number" value={this.state.jobNo} readOnly/>
-
+									<div>
 										<div className="row">
-											<div className="column-10">
-												<p>Unit Type</p>
-												<select name="unit_type" required>
-												  	<option>40dc</option>
-													<option>40hc</option>
-													<option>40pw</option>
-													<option>40fr</option>
-													<option>40rc</option>
-													<option>40ot</option>
-													<option>20dc</option>
-													<option>20tc</option>
-													<option>20fr</option>
-													<option>20rc</option>
-													<option>20ot</option>
-													<option>45pwhc</option>
-													<option>45hc</option>
-													<option>45rc</option>
-													<option>40 mafi</option>
-													<option>20 mafi</option>
-													<option>Box trailer</option>
-													<option>Taut liner</option>
-													<option>Flat bed</option>
-													<option>Groupage</option>
-													<option>Airfreight</option>
-												</select>
-											</div>
-											<div className="column-6">
-												<p>Qty</p>
-												<input type="number" name="unit_quatity" min="1" required/>
-											</div>
-										</div>
-
-										<p>Client</p>
-										<input type="text" name="client"  required/>
-
-										<p>Vendors </p>
-										<input type="text" name="vendor" />
-
-										<p>Loading reference</p>
-										<input type="text" name="loading_reference" />
-
-										<p>Unit Number</p>
-										<input type="text" name="unit_number" />
-									</div>
-
-									<div className="column-6">
-										<p>Collection From</p>
-										<input type="text" className="big" name="collect_from" />
-
-										<div className="row">
-											<div className="column-10">
+											<div className="column-8" >
 												<p>Date</p>
-												<input type="date" name="collection_date" />
+												<input type="date" name="date" min={this.state.dateValue} value={this.state.dateValue} onChange={this.onDateChange} required/>
 											</div>
-											<div className="column-6">
-												<p>Time</p>
-												<input type="time" name="collection_time" />
+											<div className="column-8" >
+												<p>Job No.</p>
+												<input type="text" name="job_number" value={this.state.jobNo} readOnly/>
 											</div>
 										</div>
+										<div className="row">
+											{
+												this.state.unitsArr.map(function(num, i){
+											        return <Units key={i} />;
+											   })
+											}
+											<div className="column-2">
+												<button  className="button_units" onClick = {addUnit}>+</button>
+												<button className="button_units" onClick = {removeUnit}>-</button>
+											</div>
 
-										<p>Contact details</p>
-										<input type="text" name="contact_details" />
+										</div>
 
-										<p>Deliver to</p>
-										<input type="text" className="big" name="deliver_to" />
+										<div className="row">
+											<div className="column-8">
+												<p>Client</p>
+												<input type="text" name="client" className="big"  required/>
+											</div>
+											<div className="column-8">
+												<p>Carrier </p>
+												<input type="text" name="carrier" />
+											</div>	
+											<div className="column-8">
+												<p>Loading reference</p>
+												<input type="text" name="loading_reference" />
+											</div>									
+										</div>
+								
+										<div className="row">
+											<div className="column-8">
+												<p>Collection From</p>
+												<input type="text" className="big" name="collect_from" />
+											</div>
+											<div className="column-8">
+												<p>City</p>
+												<input type="text" name="city" />
+											</div>
 
-										<p>Commodity details</p>
-										<input type="text" name="commodity_details" />
-
-										<p>Special Instructions</p>
-										<input type="text" name="special_instructions" />
-									</div>
-
-									<div className="column-5">
-										<p>Shipper</p>
-										<input type="text" className="big" name="shipper" />
-
-										<p>Consignee</p>
-										<input type="text" className="big" name="consignee" />
-
-										<p>Notify</p>
-										<input type="text" className="big" name="notify" />
-
-										<p>Remarks</p>
-										<input type="text" className="big" name="remarks" />
-
+											<div className="row column-8">
+												<div className="column-8">
+													<p>Date</p>
+													<input type="date" name="collection_date" />
+												</div>
+												<div className="column-8">
+													<p>Time</p>
+													<input type="time" name="collection_time" />
+												</div>
+											</div>
+										</div>
+										<div className="row">
+											<div className="column-8">
+												<p>Contact details</p>
+												<textarea className="big"name="contact_details"  max = '500' />
+											</div>
+											<div className="column-8">
+												<p>Deliver to</p>
+												<textarea className="big" name="deliver_to"  max = '500'/>
+											</div>
+										</div>
+										<div className="row">
+											<div className="column-8">
+												<p>Commodity details</p>
+												<textarea  name="commodity_details"  max = '500'/>
+											</div>
+											<div className="column-8">
+												<p>Special Instructions</p>
+												<textarea  name="special_instructions"  max = '500'/>
+											</div>
+										</div>
+										
+										<div className="row">
+											<div className="column-8">
+												<p>Shipper</p>
+												<textarea  className="big" name="shipper" max = '500'/>
+											</div>
+											<div className="column-8">
+												<p>Consignee</p>
+												<textarea className="big" name="consignee" max = '500'/>
+											</div>
+										</div>
+										<div className="row">
+											<div className="column-8">
+												<p>Notify</p>
+												<textarea  className="big" name="notify" max = '500'/>
+											</div>
+											<div className="column-8">
+												<p>Remarks</p>
+												<textarea   className="big" name="remarks" max = '500' />
+											</div>
+										</div>
 										<input type="submit" className="button charcoal" value="Done" />
 									</div>
 								</div>
