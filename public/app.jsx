@@ -29,7 +29,9 @@ var routes = (
         <Route name="orders" path="/orders" handler={Orders}>
             <Route name="orderUpdate" path=":update" handler={Orders} />
         </Route>
-        <Route name="login" path="/login" handler={Login} />
+        <Route name="login" path="/login" handler={Login}>
+            <Route name="ErrorLogin" path=":error" handler={Login} />
+        </Route>
         <Route name="reports" path="/reports" handler={Test} />
         <Route name="contacts" path="/contacts" handler={Test} />
         <Route name="admin" path="/users" handler={AdminPanel}>
