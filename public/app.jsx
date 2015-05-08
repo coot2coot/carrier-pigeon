@@ -10,6 +10,7 @@ var Login       = require("./components/login-panel.jsx")(React, Link);
 var Header      = require("./components/header.jsx")(React, Link);
 var Orders      = require("./components/ordersPage.jsx")(React, Link);
 var AdminPanel  = require("./components/admin-panel.jsx")(React, Link);
+var Settings    = require("./components/settings.jsx")(React, Link);
 
 
 var Test = React.createClass({
@@ -34,6 +35,7 @@ var routes = (
         <Route name="admin" path="/users" handler={AdminPanel}>
             <Route name="userUpdate" path=":update" handler={AdminPanel} />
         </Route>
+        <Route name="settings" path="/settings/:username" handler={Settings} />
         <DefaultRoute handler={Login}/>  
     </Route>
 );

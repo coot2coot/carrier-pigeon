@@ -35,3 +35,13 @@ form.email-invite {
     padding: 0.2em 1em;
   }
 }
+
+form.account {
+  padding: 1.5em 3em 4.5em;
+  border-left: 0.1em $light-grey solid;
+}
+
+.display-none {
+  display: none;
+  visibility: hidden;
+}

@@ -82,6 +82,21 @@ var serverRoutes =  function (router) {
 	router.addRoute('/user/delete/:id?', function (req, res, match){
 	  	require('./handlers/delete-db.js')(req, res);
 	});
+
+	router.addRoute('/user/invite', function (req, res, match){
+	  	require('./handlers/email-invite.js')(req, res);
+	});
+/* -------------------------------*
+ *	   User Settings Routes
+ * -------------------------------*/
+
+ 	router.addRoute('/user/get/:username?', function (req, res, match){
+	  	require('./handlers/read-db.js').getUser(req, res);
+	});
+
+	router.addRoute('/user/update', function (req, res, match){
+	  	require('./handlers/update-db.js')(req, res);
+	});
 };
 
 module.exports = serverRoutes;

@@ -64,7 +64,7 @@ module.exports = function(React, Link, ordersUrl) {
 						<div className="panel-header">
 							<h3>Users</h3>
 							{( this.state.InviteUser
-								? <form className="email-invite" action="/user/new" method="POST"><input type="text" placeholder="example@mail.com"/><input type="submit" className="button blue" value="Invite User"/></form>
+								? <form className="email-invite" action="/user/invite" method="POST"><input type="text" placeholder="example@mail.com" name="email" /><input type="submit" className="button blue" value="Invite User"/></form>
 								: <button data-tooltip="Invite new user" className="button blue add" onClick={this.addUser}>+</button>
 							)}
 						</div>

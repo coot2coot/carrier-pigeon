@@ -13,9 +13,25 @@ function check (data) {
 
 function update (req, res, cb) {
 	parseData(req, function (data) {
-		check(data);
-		validateUser(req, res, function() {
-			db.edit('orders', data, function (err) {
+		var table;
+
+		if (req.url.indexOf('user') > -1) {
+			if (data.new_password === data.confirm_passwprd) {
+				table = 'users';
+			} else {
+				// need to respond with an error message saying that the passwords didn't match
+			}
+		} else {
+			table = "orders";
+			check(data);
+		}
+		
+		validateUser(req, res, function(user) {
+			if (table === 'users') {
+				data.username = user.username;
+			}
+
+			db.edit(table, data, function (err) {
 				if (err) {
 					console.log(err)
 					res.writeHead(500);

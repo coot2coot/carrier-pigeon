@@ -47,7 +47,7 @@ readOptions.cached = function (req, res) {
 	validateUser(req, res, function () {
 		var table;
 
-		if (req.url.indexOf('users') > -1) {
+		if (req.url.indexOf('user') > -1) {
 			table = "users";
 		} else {
 			table = "orders";
@@ -69,6 +69,7 @@ readOptions.cached = function (req, res) {
 		})
 	});
 }
+
 readOptions.noCache = function (req, res) {
 	validateUser(req, res, function () {
 		var table;
@@ -85,6 +86,19 @@ readOptions.noCache = function (req, res) {
 			getOrders(req, res);
 		}
 	});
+}
+
+readOptions.getUser = function (req, res) {
+	var username = req.url.split('/').pop();
+	validateUser(req, res, function () {
+		db.getUser(username, function (err, usr) {
+			
+			var user = JSON.stringify(usr)
+
+			res.writeHead(200, {"Content-Type" : "text/plain"});
+			res.end(user);
+		});
+	})
 }
 
 module.exports = readOptions;
