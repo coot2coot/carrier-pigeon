@@ -16,7 +16,7 @@ function edit (req, res, cb) {
 					} else {
 						cb(req, res);
 						res.writeHead(303, {
-							"Location": "/#/orders"
+							"Location": "/#/orders/true"
 						});
 						res.end();
 					}

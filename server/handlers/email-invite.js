@@ -15,7 +15,8 @@ function generateLogins (mail) {
         username: name,
         password: "changeme",
         email: mail,
-        admin: false
+        admin: false,
+        invitation: false
     }
     return newUser;
 }
@@ -34,20 +35,13 @@ function sendInvite (userLogins) {
     });
 }
 
-function updateDb (userLogins) {
-    userLogins.invitation = false;
-    db.edit('users', userLogins, function (err) {
+// DO THIS NEXT
+function updateDb (userLogins, cb) {
+    db.post('users', userLogins, function (err) {
         if (err) {
-            console.log(err)
-            res.writeHead(500);
-            res.write(err);
-            res.end();
+            cb(err)
         } else {
-            cb(req, res);
-            res.writeHead(303, {
-                "Location": "/#/orders/update"
-            });
-            res.end();
+            cb(null, true);
         }
     });
 }
@@ -56,8 +50,17 @@ function update (req, res, cb) {
     parseData(req, function (data) {
         validateUser(req, res, function() {
             var logins = generateLogins(data.email);
-            updateDb(logins);
-            sendInvite(logins);
+            updateDb(logins, function(err, success) {
+                sendInvite(logins);
+                if (err) {
+                    // TODO: Handle err by sending err message
+                    return console.log(err)
+                }
+                res.writeHead(303, {
+                    "Location": "/#/users/true"
+                });
+                res.end();
+            });
         });
     });
 };

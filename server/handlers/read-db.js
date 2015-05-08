@@ -92,6 +92,7 @@ readOptions.getUser = function (req, res) {
 	var username = req.url.split('/').pop();
 	validateUser(req, res, function () {
 		db.getUser(username, function (err, usr) {
+			usr.password = null;
 			
 			var user = JSON.stringify(usr)
 

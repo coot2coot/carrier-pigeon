@@ -96,7 +96,10 @@ module.exports = function(React, Link, ordersUrl) {
 													<p>{user.last_name}</p>
 												</td>
 												<td key={i + "fourth"}>
-													<p>{user.invitation}</p> {/* Accepted or pending */}
+													{( user.invitation
+														? <p>Accepted</p>
+														: <p><i>Pending</i></p>
+													)}
 												</td>
 												<td key={i + "sixth"}>
 													<a className="delete" onClick={deleteHandler.bind(null, user)}>Delete</a>

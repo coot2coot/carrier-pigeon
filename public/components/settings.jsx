@@ -26,7 +26,6 @@ module.exports = function(React, Link, ordersUrl) {
 			          		user : usr
 			        	});
 			      	}
-			      	console.log(this.state.user);
 			    }
 		    }.bind(this))
 		    .fail(function () {
@@ -43,10 +42,14 @@ module.exports = function(React, Link, ordersUrl) {
 						</div>
 						<div className="panel-body table-responsive model-overflow">
 							<div className="column-6 setting-nav">
-								<p>Change your password</p>
+								<p>Update your details</p>
 							</div>
 							<div className="column-10">
 								<form className="account" action="/user/update" method="POST">
+									<p className="name">First name</p><p className="name">Last name</p>
+									<input type="text" name="first_name" value={this.state.user.first_name} required />
+									<input type="text" name="last_name" value={this.state.user.last_name} required />
+									<br/>
 									<p>Enter your current password</p><input type="password" name="current_password" required/>
 									<p>Enter your new password</p><input type="password" name="new_password" required/>
 									<p>Confirm your new password</p><input type="password" name="confirm_password" required/>

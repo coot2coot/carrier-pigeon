@@ -11,21 +11,21 @@ function check (data) {
 	return data
 }
 
-function update (req, res, cb) {
+function update (req, res) {
 	parseData(req, function (data) {
 		var table;
-
+		
 		if (req.url.indexOf('user') > -1) {
-			if (data.new_password === data.confirm_passwprd) {
+			if (data.new_password === data.confirm_password) {
 				table = 'users';
 			} else {
+				console.log('passwords are not the same');
 				// need to respond with an error message saying that the passwords didn't match
 			}
 		} else {
 			table = "orders";
 			check(data);
 		}
-		
 		validateUser(req, res, function(user) {
 			if (table === 'users') {
 				data.username = user.username;
@@ -38,9 +38,8 @@ function update (req, res, cb) {
 					res.write(err);
 					res.end();
 				} else {
-					cb(req, res);
 					res.writeHead(303, {
-						"Location": "/#/orders/update"
+						"Location": "/#/orders/true"
 					});
 					res.end();
 				}

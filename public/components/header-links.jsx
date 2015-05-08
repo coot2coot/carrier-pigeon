@@ -25,7 +25,7 @@ module.exports = function(React, Link) {
                     <div>
                         {(this.props.user.admin
                             ? <AdminLink /> 
-                            : <p></p>
+                            : <p className="display-none"></p>
                         )}
                     </div>
                     <p className="hide-extra-small">Welcome {this.props.user.username}</p>

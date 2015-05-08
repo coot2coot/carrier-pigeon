@@ -59,18 +59,32 @@ function post (table, clt, done, cb, doc) {
 
 function edit (table, clt, done, cb, doc) {
     if (table === 'users') {
-        var query = editQuery(doc);
+        var updateUser = {
+            first_name: doc.first_name,
+            last_name: doc.last_name,
+            password: doc.new_password,
+            invitation: true
+        }
 
-        clt.query("UPDATE " + table + " SET " + query + " WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
+        var query = editQuery(updateUser);
+
+        clt.query("SELECT * FROM " + table + " WHERE username = $1", [doc.username], function(err, user) {
             if (err) {
-                console.log(err)
-
-                done(clt);
-                return;
+                console.log(err);
+                return done(clt);
             }
+            if (doc.current_password === user.rows[0].password) {
+                clt.query("UPDATE " + table + " SET " + query + " WHERE " + " username='" + doc.username+ "'", function(err, result) {
+                    if (err) {
+                        console.log(err)
 
-            done();
-            cb();
+                        done(clt);
+                        return;
+                    }
+                    done();
+                    cb();
+                });
+            }
         });
     } else {
         var query = editQuery(doc);
@@ -161,6 +175,7 @@ dataBase.post = function (table, doc, cb, test){
 };
 
 dataBase.edit = function (table, doc, cb, test){
+    console.log(table, doc);
     connect(edit, table, cb, test, doc);
 };
 dataBase.remove = function (table, doc, cb, test){
