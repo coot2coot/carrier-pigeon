@@ -22,8 +22,7 @@ module.exports = function(React, Link) {
                     success: function(data) {
                         this.setState({
                             loggedIn: true,
-                            username: data.user.username,
-                            admin: data.user.admin
+                            user: data.user
                         });
                     }.bind(this),
                     error: function(xhr, status, err){
@@ -41,7 +40,7 @@ module.exports = function(React, Link) {
                         </div>
                         <div>
                         {(this.state.loggedIn
-                            ? <HeaderLinks name={this.state.username} admin={this.state.admin}/> 
+                            ? <HeaderLinks user={this.state.user}/> 
                             : <p></p>
                         )}
                         </div>

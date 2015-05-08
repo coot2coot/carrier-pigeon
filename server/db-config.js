@@ -58,19 +58,49 @@ function post (table, clt, done, cb, doc) {
 }
 
 function edit (table, clt, done, cb, doc) {
-    var query = editQuery(doc);
-
-    clt.query("UPDATE " + table + " SET " + query + " WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
-        if (err) {
-            console.log(err)
-
-            done(clt);
-            return;
+    if (table === 'users') {
+        var updateUser = {
+            first_name: doc.first_name,
+            last_name: doc.last_name,
+            password: doc.new_password,
+            invitation: true
         }
 
-        done();
-        cb();
-    });
+        var query = editQuery(updateUser);
+
+        clt.query("SELECT * FROM " + table + " WHERE username = $1", [doc.username], function(err, user) {
+            if (err) {
+                console.log(err);
+                return done(clt);
+            }
+            if (doc.current_password === user.rows[0].password) {
+                clt.query("UPDATE " + table + " SET " + query + " WHERE " + " username='" + doc.username+ "'", function(err, result) {
+                    if (err) {
+                        console.log(err)
+
+                        done(clt);
+                        return;
+                    }
+                    done();
+                    cb();
+                });
+            }
+        });
+    } else {
+        var query = editQuery(doc);
+
+        clt.query("UPDATE " + table + " SET " + query + " WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
+            if (err) {
+                console.log(err)
+
+                done(clt);
+                return;
+            }
+
+            done();
+            cb();
+        });
+    }
 }
 
 function remove (table, clt, done, cb, doc) {
@@ -96,8 +126,27 @@ function remove (table, clt, done, cb, doc) {
 
 }
 
-function selectUser (table, clt, done, cb, username, password, remember) {
+function getUser (table, clt, done, cb, username) {
 
+    clt.query("SELECT * FROM " + table + " WHERE username = $1", [username], function(err, user) {
+
+        if(err) {
+            console.log(err);
+            done();
+            return;
+        }
+        done();
+        
+        if (user.rows[0]) {
+            cb(null, user.rows[0]);
+        } 
+        else {
+            cb(null, false,'Sorry, no usernames match that query');
+        }
+    });
+}
+
+function loginUser (table, clt, done, cb, username, password, remember) {
     clt.query("SELECT * FROM " + table + " WHERE username = $1", [username], function(err, user) {
 
         if(err) {
@@ -126,14 +175,19 @@ dataBase.post = function (table, doc, cb, test){
 };
 
 dataBase.edit = function (table, doc, cb, test){
+    console.log(table, doc);
     connect(edit, table, cb, test, doc);
 };
 dataBase.remove = function (table, doc, cb, test){
     connect(remove,table,cb,test, doc)
 };
 
+dataBase.getUser = function (username, cb, test) {
+   connect(getUser,"users",cb, test, username)
+};
+
 dataBase.selectUser = function (username, password, remember, cb, test) {
-   connect(selectUser,"users",cb, test, username, password, remember)
+   connect(loginUser,"users",cb, test, username, password, remember)
 };
 
 module.exports = dataBase;

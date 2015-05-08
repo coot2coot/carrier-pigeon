@@ -7,7 +7,7 @@ var myCache 	 = new NodeCache({ stdTTL: secondsToSave });
 var readOptions  = {};
 
 var getOrders = function (req, res) {
-	db.get('orders',function (orders) {		
+	db.get('orders',function (orders) {	
 		myCache.set("orders", orders, function(err, success){
 			if(err){
 				console.error(err)
@@ -21,13 +21,22 @@ var getOrders = function (req, res) {
 };
 
 var getUserList = function (req, res) {
-	db.get('users',function (users) {
+	db.get('users',function (usrs) {
+		var users = [];
+
+		usrs.forEach(function(user) {
+			if (user.admin === false) {
+				users.push(user);
+			}
+		})
+
 		myCache.set("users", users, function(err, success){
 			if(err){
 				console.error(err)
 			}
 		});
-		var userList = JSON.stringify(users);
+		
+		var userList = JSON.stringify(users)
 
 		res.writeHead(200, {"Content-Type" : "text/plain"});
 		res.end(userList);
@@ -38,7 +47,7 @@ readOptions.cached = function (req, res) {
 	validateUser(req, res, function () {
 		var table;
 
-		if (req.url.indexOf('users') > -1) {
+		if (req.url.indexOf('user') > -1) {
 			table = "users";
 		} else {
 			table = "orders";
@@ -46,12 +55,10 @@ readOptions.cached = function (req, res) {
 
 		myCache.get(table, function (err, value){
 			if(!err && value.hasOwnProperty(table)){
-				console.log('cached');
 				var values = JSON.stringify(value[table]);
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end(values)
 			}else {
-				console.log('still not cached');
 				if (table === "users") {
 					getUserList(req, res);
 				} else {
@@ -62,6 +69,7 @@ readOptions.cached = function (req, res) {
 		})
 	});
 }
+
 readOptions.noCache = function (req, res) {
 	validateUser(req, res, function () {
 		var table;
@@ -78,6 +86,20 @@ readOptions.noCache = function (req, res) {
 			getOrders(req, res);
 		}
 	});
+}
+
+readOptions.getUser = function (req, res) {
+	var username = req.url.split('/').pop();
+	validateUser(req, res, function () {
+		db.getUser(username, function (err, usr) {
+			usr.password = null;
+			
+			var user = JSON.stringify(usr)
+
+			res.writeHead(200, {"Content-Type" : "text/plain"});
+			res.end(user);
+		});
+	})
 }
 
 module.exports = readOptions;

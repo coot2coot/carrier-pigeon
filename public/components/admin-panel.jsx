@@ -1,5 +1,6 @@
 module.exports = function(React, Link, ordersUrl) {
-	var Header = require("./header.jsx")(React, Link);
+	var Header 	= require("./header.jsx")(React, Link);
+	var Warning = require("./warning.jsx")(React, Link);
 
 	return React.createClass({
 		getInitialState: function() {
@@ -39,21 +40,23 @@ module.exports = function(React, Link, ordersUrl) {
 		    	"get request failed"
 		    });
 		},
-
-		deleteUser: function (item) {
+		onCloseComponent: function () {
 			this.setState({
-				removeUser: item
+				deleteUser: null
 			})
 		},
-
+		deleteHandler: function (item) {
+			this.setState({
+				deleteUser: item
+			})
+		},
 		addUser: function () {
 			this.setState({
 				InviteUser: true
 			})
 		},
 		render: function() {
-			var orderHandler = this.orderHandler;
-			var addInvoiceHandler = this.addInvoice;
+			var deleteHandler = this.deleteHandler;
 			return (
 				<div>
 					<Header />
@@ -61,7 +64,7 @@ module.exports = function(React, Link, ordersUrl) {
 						<div className="panel-header">
 							<h3>Users</h3>
 							{( this.state.InviteUser
-								? <form className="email-invite" action="/user/new" method="POST"><input type="text" placeholder="example@mail.com"/><input type="submit" className="button blue" value="Invite User"/></form>
+								? <form className="email-invite" action="/user/invite" method="POST"><input type="text" placeholder="example@mail.com" name="email" /><input type="submit" className="button blue" value="Invite User"/></form>
 								: <button data-tooltip="Invite new user" className="button blue add" onClick={this.addUser}>+</button>
 							)}
 						</div>
@@ -82,7 +85,7 @@ module.exports = function(React, Link, ordersUrl) {
 								<th>
 								</th>
 						  		{ this.state.users.map(function (user, i) {
-							        return <tr>
+						  			return <tr>
 							            		<td key={i + "first"}>
 							            			<p>{user.username}</p>
 							            		</td>
@@ -93,16 +96,23 @@ module.exports = function(React, Link, ordersUrl) {
 													<p>{user.last_name}</p>
 												</td>
 												<td key={i + "fourth"}>
-													<p>{user.invitation}</p> {/* Accepted or pending */}
+													{( user.invitation
+														? <p>Accepted</p>
+														: <p><i>Pending</i></p>
+													)}
 												</td>
 												<td key={i + "sixth"}>
-													<a className="delete" href={"/user/delete/" + user.username}>Delete</a>
+													<a className="delete" onClick={deleteHandler.bind(null, user)}>Delete</a>
 												</td>
 											</tr>
 							    })}
 							</table>
 						</div>
 					</div>
+					{(this.state.deleteUser
+                        ? <Warning message="Delete this user?" user={this.state.deleteUser} closeView={this.onCloseComponent}/>
+                        : <p></p>
+                    )}
 				</div>
 			);
 		}
