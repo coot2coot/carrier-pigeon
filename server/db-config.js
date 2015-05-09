@@ -77,14 +77,7 @@ function post (table, clt, done, cb, doc) {
 }
 
 function edit (table, clt, done, cb, doc) {
-<<<<<<< HEAD
-    var ordersQuery = editQuery(doc.order);
-    var unitsQuery = editQuery(doc.unit);
 
-    clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= " +"'" + doc.order.job_number + "'; UPDATE units SET " + unitsQuery + " WHERE " + " job_number= " +"'" + doc.unit.job_number + "'", function(err, result) {
-        if (err) {
-            console.log('err >>>', err)
-=======
     if (table === 'users') {
         var updateUser = {
             first_name: doc.first_name,
@@ -94,7 +87,6 @@ function edit (table, clt, done, cb, doc) {
         }
 
         var query = editQuery(updateUser);
->>>>>>> master
 
         clt.query("SELECT * FROM " + table + " WHERE username = $1", [doc.username], function(err, user) {
             if (err) {
@@ -115,11 +107,12 @@ function edit (table, clt, done, cb, doc) {
             }
         });
     } else {
-        var query = editQuery(doc);
+        var ordersQuery = editQuery(doc.order);
+        var unitsQuery = editQuery(doc.unit);
 
-        clt.query("UPDATE " + table + " SET " + query + " WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
-            if (err) {
-                console.log(err)
+        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= " +"'" + doc.order.job_number + "'; UPDATE units SET " + unitsQuery + " WHERE " + " job_number= " +"'" + doc.unit.job_number + "'", function(err, result) {
+         if (err) {
+            console.log('err >>>', err)
 
                 done(clt);
                 return;
@@ -132,9 +125,6 @@ function edit (table, clt, done, cb, doc) {
 }
 
 function remove (table, clt, done, cb, doc) {
-<<<<<<< HEAD
-    clt.query("DELETE FROM " + table + "  WHERE job_number = $1;", [doc], function(err, user) {
-=======
     var column;
 
     column = table === "users" ? "username" : "job_number"
@@ -142,7 +132,6 @@ function remove (table, clt, done, cb, doc) {
     console.log(table, column);
 
     clt.query("DELETE FROM " + table + "  WHERE " + column + " = $1", [doc], function(err, user) {
->>>>>>> master
 
         if (err) {
             console.log(err)
@@ -158,7 +147,6 @@ function remove (table, clt, done, cb, doc) {
 
 }
 
-<<<<<<< HEAD
 function selectUnits (table, clt, done, cb, job_number) {
 
     clt.query("SELECT * FROM units WHERE job_number = '" + job_number +"'", function(err, units) {
@@ -175,11 +163,7 @@ function selectUnits (table, clt, done, cb, job_number) {
 }
 
 
-
-function selectUser (table, clt, done, cb, username, password, remember) {
-=======
 function getUser (table, clt, done, cb, username) {
->>>>>>> master
 
     clt.query("SELECT * FROM " + table + " WHERE username = $1", [username], function(err, user) {
 
@@ -238,17 +222,13 @@ dataBase.remove = function (table, doc, cb, test){
     connect(remove,table,cb,test, doc)
 };
 
-<<<<<<< HEAD
+
 dataBase.selectUnits = function (table, job_number, cb , test){
     connect(selectUnits, table,cb, test, job_number)
 };
 
-dataBase.selectUser = function (username, password, remember, cb, test) {
-   connect(selectUser,"users",cb, test, username, password, remember)
-=======
 dataBase.getUser = function (username, cb, test) {
    connect(getUser,"users",cb, test, username)
->>>>>>> master
 };
 
 dataBase.selectUser = function (username, password, remember, cb, test) {
