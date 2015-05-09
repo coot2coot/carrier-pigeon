@@ -110,7 +110,7 @@ module.exports = function(React, Link, ordersUrl) {
 						</div>
 					</div>
 					{(this.state.deleteUser
-                        ? <Warning message="Delete this user?" user={this.state.deleteUser} closeView={this.onCloseComponent}/>
+                        ? <Warning message="Delete this user?" user={this.state.deleteUser} url={"/user/delete/" + this.props.user.username} closeView={this.onCloseComponent}/>
                         : <p></p>
                     )}
 				</div>
