@@ -49,11 +49,11 @@ function post (table, clt, done, cb, doc) {
             console.log(err)
 
             done(clt);
-            return;
+            return cb(err);
         }
 
         done();
-        cb();
+        cb(null);
     });
 }
 

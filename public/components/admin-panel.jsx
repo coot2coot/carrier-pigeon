@@ -1,6 +1,9 @@
+// TODO: check if email/username has already been sent. If so, can't send again/ 
+
 module.exports = function(React, Link, ordersUrl) {
 	var Header 	= require("./header.jsx")(React, Link);
 	var Warning = require("./warning.jsx")(React, Link);
+	var Error = require("./error-message.jsx")(React);
 
 	return React.createClass({
 		getInitialState: function() {
@@ -61,6 +64,12 @@ module.exports = function(React, Link, ordersUrl) {
 				<div>
 					<Header />
 					<div className="column-12 push-2 model-generic">
+						<div>
+							{(this.props.params.error
+                                ? <Error message="Sorry, a user has already been sent that email. Please try another one." />
+                                : <p className="display-none"></p>
+                            )}
+                        </div>
 						<div className="panel-header">
 							<h3>Users</h3>
 							{( this.state.InviteUser
