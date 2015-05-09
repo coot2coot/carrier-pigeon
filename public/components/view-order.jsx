@@ -1,11 +1,11 @@
 module.exports = function(React, Link, ordersUrl) {
-	var Units = require("./units.jsx")(React, Link);
+	var Units = require("./view_units.jsx")(React, Link);
 
 	return React.createClass({
 		getInitialState: function() {
           return {
             editing: true,
-            units: {}
+            units: []
           };
         },
 		deleteMe: function (item) {
@@ -14,9 +14,10 @@ module.exports = function(React, Link, ordersUrl) {
 			})
 		},
 		componentDidMount: function() {
-			var getOrderUrl = "/orders/get_units";
+			var getOrderUrl = "/units";
+			var job_number = this.props.order.job_number;
 
-		    $.get(getOrderUrl, function(result) {
+		    $.get(getOrderUrl, job_number, function(result) {
 		    	if(result !== ""){
 			    	var unit = JSON.parse(result);
 
@@ -65,7 +66,7 @@ module.exports = function(React, Link, ordersUrl) {
 						<div className="panel-header">
 							<h3>{this.props.order.job_number}</h3>
 							<a className="button blue" href={"/order/delete/" + this.props.order.job_number}>Delete</a>
-							<button className="button blue" onClick = {this.edit} >Edit</button>
+							<button className="button blue" onClick = {this.edit}  >Edit</button>
 							<button className="button blue">Copy</button>
 							<button className="button blue">Make a booking note</button>
 							<a className="close" onClick={this.props.closeView}>x</a>
@@ -83,6 +84,14 @@ module.exports = function(React, Link, ordersUrl) {
 												<p>Job No.</p>
 												<input type="text" className = "job_no"  name="job_number" value={this.props.order.job_number} readOnly />
 											</div>
+										</div>
+
+										<div className="row">
+											{
+												this.state.units.map(function(unit, i){
+											        return <Units unit={unit} key={i} />;
+											   })
+											}
 										</div>
 				
 										<div className="row">

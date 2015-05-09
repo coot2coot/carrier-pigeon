@@ -29,8 +29,9 @@ function connect (query, table, cb, test, var1, var2, var3) {
     });
 }
 
+
 function get (table, clt, done, cb) {
-    clt.query("SELECT orders.*, number_of_units FROM orders LEFT JOIN (SELECT units.job_number AS unit_order_id,COUNT(units.job_number) AS number_of_units FROM Units GROUP BY units.job_number) AS units_count ON orders.job_number = unit_order_id;", function(err, result) {
+    clt.query("SELECT * FROM " + table, function(err, result) {
         if (err) {
             console.log('err >>>', err)
 
@@ -40,6 +41,20 @@ function get (table, clt, done, cb) {
 
         done();
         console.log(result.rows)
+        cb(result.rows);
+    });
+}
+
+function getOrders (table, clt, done, cb) {
+    clt.query("SELECT orders.*, number_of_units FROM orders LEFT JOIN (SELECT units.job_number AS unit_order_id,COUNT(units.job_number) AS number_of_units FROM Units GROUP BY units.job_number) AS units_count ON orders.job_number = unit_order_id;", function(err, result) {
+        if (err) {
+            console.log('err >>>', err)
+
+            done(clt);
+            return;
+         }
+
+        done();
         cb(result.rows);
     });
 }
@@ -95,6 +110,23 @@ function remove (table, clt, done, cb, doc) {
 
 }
 
+function selectUnits (table, clt, done, cb, job_number) {
+
+    clt.query("SELECT * FROM units WHERE job_number = '" + job_number +"'", function(err, units) {
+
+        if(err) {
+            console.log(err);
+            done();
+            return;
+        }
+        console.log(units.rows);
+        done();
+        cb(units.rows);
+    });
+}
+
+
+
 function selectUser (table, clt, done, cb, username, password, remember) {
 
     clt.query("SELECT * FROM " + table + " WHERE username = $1", [username], function(err, user) {
@@ -121,6 +153,9 @@ dataBase.get = function (table, cb, test){
  	connect(get, table, cb, test)
 };
 
+dataBase.getOrders = function (table, cb, test){
+    connect(getOrders, table, cb, test)
+};
 dataBase.post = function (table, doc, cb, test){
 	connect(post, table, cb, test, doc)
 };
@@ -130,6 +165,10 @@ dataBase.edit = function (table, doc, cb, test){
 };
 dataBase.remove = function (table, doc, cb, test){
     connect(remove,table,cb,test, doc)
+};
+
+dataBase.selectUnits = function (table, job_number, cb , test){
+    connect(selectUnits, table,cb, test, job_number)
 };
 
 dataBase.selectUser = function (username, password, remember, cb, test) {

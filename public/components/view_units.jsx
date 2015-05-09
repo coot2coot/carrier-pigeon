@@ -6,7 +6,7 @@ module.exports = function(React, Link) {
 					<div className="row">
 						<div className="column-4">
 							<p>Unit Type</p>
-							<select className="view_input" name="unit_type" defaultValue={this.props.unit.unit_type} disabled required>
+							<select  name="unit_type" defaultValue={this.props.unit.unit_type} disabled required>
 							  	<option>40dc</option>
 								<option>40hc</option>
 								<option>40pw</option>
@@ -32,11 +32,11 @@ module.exports = function(React, Link) {
 						</div>
 						<div className="column-4">
 							<p>Unit Weight</p>
-							<input className="view_input" type="text" min="1" defaultValue={this.props.unit.unit_weight} name="unit_weight" disabled/>
+							<input  type="text" min="1" defaultValue={this.props.unit.unit_weight} name="unit_weight" disabled/>
 						</div>
 						<div className="column-8">
 							<p>Unit Number</p>
-							<input className="view_input" type="text"  defaultValue= {this.props.unit.unit_number} name="unit_number"   disabled required/>
+							<input  type="text"  defaultValue= {this.props.unit.unit_number} name="unit_number"   disabled required/>
 						</div>
 					</div>
 				</units>

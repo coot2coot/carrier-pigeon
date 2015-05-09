@@ -7,7 +7,7 @@ var readOptions  = {};
 var secondsToSave = 60 * 60 * 24 * 7;
 
 var getOrders = function (req, res) {
-	db.get('orders',function (orders) {		
+	db.getOrders('orders',function (orders) {		
 		myCache.set("orders", orders, secondsToSave, function(err, success){
 			if(err){
 				console.error(err)

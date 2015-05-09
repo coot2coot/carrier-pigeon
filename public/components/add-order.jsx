@@ -44,7 +44,7 @@ module.exports = function(React, Link, ordersUrl) {
 		    	valid: false,
 		    	unitsArr: [0],
 		    };
-		 },
+		},
 		onDateChange: function(event) {
 	    	this.setState({
 	    		dateValue: event.target.value
@@ -69,7 +69,6 @@ module.exports = function(React, Link, ordersUrl) {
 		    	});
 		    }
 	  	},
-
 		render: function() {
 			var addUnit = this.addUnit;
 			var removeUnit = this.removeUnit
