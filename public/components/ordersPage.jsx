@@ -101,13 +101,10 @@ module.exports = function(React, Link, ordersUrl) {
 									<h5>Client</h5>
 								</th>
 								<th>
-									<h5>Unit Type</h5>
+									<h5>carrier</h5>
 								</th>
 								<th>
-									<h5>Unit Number</h5>
-								</th>
-								<th>
-									<h5>Vendor</h5>
+									<h5>units</h5>
 								</th>
 								<th>
 									<h5>Invoice</h5>
@@ -131,15 +128,10 @@ module.exports = function(React, Link, ordersUrl) {
 													</td>
 													<td key={i + "fourth"}>
 														<a onClick={orderHandler.bind(null, order)}>
-															<p>{order.unit_number}</p>
+															<p>{order.number_of_units}</p>
 														</a>
 													</td>
 													<td key={i + "fith"}>
-														<a onClick={orderHandler.bind(null, order)}>
-															<p>{order.vendor}</p>
-														</a>
-													</td>
-													<td key={i + "sixth"}>
 														<a onClick={addInvoiceHandler.bind(null,order)}>
 															<input type="checkbox" defaultChecked={order.invoice} />
 														</a>

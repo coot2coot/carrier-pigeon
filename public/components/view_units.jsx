@@ -3,11 +3,11 @@ module.exports = function(React, Link) {
 		render: function () {
 			return (
 				<units>
-					<div className="row column-14">
+					<div className="row">
 						<div className="column-4">
 							<p>Unit Type</p>
-							<select name="unit_type"required>
-								<option>40dc</option>
+							<select className="view_input" name="unit_type" defaultValue={this.props.unit.unit_type} disabled required>
+							  	<option>40dc</option>
 								<option>40hc</option>
 								<option>40pw</option>
 								<option>40fr</option>
@@ -32,11 +32,11 @@ module.exports = function(React, Link) {
 						</div>
 						<div className="column-4">
 							<p>Unit Weight</p>
-							<input type="number" name="unit_weight"/>
+							<input className="view_input" type="text" min="1" defaultValue={this.props.unit.unit_weight} name="unit_weight" disabled/>
 						</div>
 						<div className="column-8">
 							<p>Unit Number</p>
-							<input type="text" name="unit_number"required/>
+							<input className="view_input" type="text"  defaultValue= {this.props.unit.unit_number} name="unit_number"   disabled required/>
 						</div>
 					</div>
 				</units>

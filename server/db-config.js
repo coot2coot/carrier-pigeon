@@ -3,6 +3,7 @@ var pg 		 	  = require("pg");
 var str      = process.env.POSTGRES_URI || require("../credentials.json").postgres;
 var url 	= "postgres://"+ str + "/carrier-pigeon-dev"
 var stringifyData = require("./lib/stringify-data-sql.js");
+var stringifyUnits = require("./lib/stringify-units-sql.js");
 var editQuery     = require("./lib/edit-query-sql.js");
 var dataBase      = {};
 
@@ -29,7 +30,7 @@ function connect (query, table, cb, test, var1, var2, var3) {
 }
 
 function get (table, clt, done, cb) {
-    clt.query("SELECT * FROM "+ table +" JOIN units ON orders.job_number = units.job_number ORDER by date", function(err, result) {
+    clt.query("SELECT orders.*, number_of_units FROM orders LEFT JOIN (SELECT units.job_number AS unit_order_id,COUNT(units.job_number) AS number_of_units FROM Units GROUP BY units.job_number) AS units_count ON orders.job_number = unit_order_id;", function(err, result) {
         if (err) {
             console.log('err >>>', err)
 
@@ -38,6 +39,7 @@ function get (table, clt, done, cb) {
          }
 
         done();
+        console.log(result.rows)
         cb(result.rows);
     });
 }
@@ -45,8 +47,8 @@ function get (table, clt, done, cb) {
 
 function post (table, clt, done, cb, doc) {
     var orders = stringifyData(doc.order);
-    var units = stringifyData(doc.unit);
-    clt.query("INSERT into orders (" + orders.columns + ") VALUES ("+orders.values+"); INSERT into units ("+ units.columns + ") VALUES (" + units.values + ");", function(err, result) {
+    var units = stringifyUnits(doc.unit);
+    clt.query("INSERT into orders (" + orders.columns + ") VALUES ('"+orders.values+"'); INSERT into units ("+ units.columns + ") VALUES ('" + units.values + "');", function(err, result) {
         if (err) {
             console.log('err >>>', err)
 

@@ -1,15 +1,35 @@
 module.exports = function(React, Link, ordersUrl) {
+	var Units = require("./units.jsx")(React, Link);
 
 	return React.createClass({
 		getInitialState: function() {
           return {
-            editing: true
+            editing: true,
+            units: {}
           };
         },
 		deleteMe: function (item) {
 			this.setState({
 				deleteOrder: item
 			})
+		},
+		componentDidMount: function() {
+			var getOrderUrl = "/orders/get_units";
+
+		    $.get(getOrderUrl, function(result) {
+		    	if(result !== ""){
+			    	var unit = JSON.parse(result);
+
+			      	if (this.isMounted()) {
+			        	this.setState({
+			          		units : unit,
+			        	});
+			      	}
+			    }
+		    }.bind(this))
+		    .fail(function () {
+		    	"get units request failed"
+		    });
 		},
 
 		edit: function () {
@@ -45,7 +65,7 @@ module.exports = function(React, Link, ordersUrl) {
 						<div className="panel-header">
 							<h3>{this.props.order.job_number}</h3>
 							<a className="button blue" href={"/order/delete/" + this.props.order.job_number}>Delete</a>
-							<button className="button blue" onClick = {this.edit}  >Edit</button>
+							<button className="button blue" onClick = {this.edit} >Edit</button>
 							<button className="button blue">Copy</button>
 							<button className="button blue">Make a booking note</button>
 							<a className="close" onClick={this.props.closeView}>x</a>
@@ -64,42 +84,7 @@ module.exports = function(React, Link, ordersUrl) {
 												<input type="text" className = "job_no"  name="job_number" value={this.props.order.job_number} readOnly />
 											</div>
 										</div>
-										<div className="row">
-											<div className="column-4">
-												<p>Unit Type</p>
-												<select className="view_input" name="unit_type" disabled required>
-												  	<option>40dc</option>
-													<option>40hc</option>
-													<option>40pw</option>
-													<option>40fr</option>
-													<option>40rc</option>
-													<option>40ot</option>
-													<option>20dc</option>
-													<option>20tc</option>
-													<option>20fr</option>
-													<option>20rc</option>
-													<option>20ot</option>
-													<option>45pwhc</option>
-													<option>45hc</option>
-													<option>45rc</option>
-													<option>40 mafi</option>
-													<option>20 mafi</option>
-													<option>Box trailer</option>
-													<option>Taut liner</option>
-													<option>Flat bed</option>
-													<option>Groupage</option>
-													<option>Airfreight</option>
-												</select>
-											</div>
-											<div className="column-4">
-												<p>Unit Weight</p>
-												<input className="view_input" type="text" min="1" defaultValue={this.props.order.unit_weight} name="unit_weight" disabled/>
-											</div>
-											<div className="column-8">
-												<p>Unit Number</p>
-												<input className="view_input" type="text"  defaultValue= {this.props.order.unit_number} name="unit_number"   disabled required/>
-											</div>
-										</div>
+				
 										<div className="row">
 											<div className="column-8">
 												<p>Client</p>
