@@ -1,11 +1,9 @@
 "use strict";
 
-module.exports = function (req, res, message) {
+module.exports = function (req, res) {
 	res.writeHead(303, {
-        'Location': '/#/login'
+        'Location': '/#/login/error'
     });
 
-	!!message
-	? res.end(message)
-	: res.end()
+    res.end();
 }

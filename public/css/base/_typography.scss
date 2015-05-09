@@ -8,3 +8,10 @@
 
 $font: 'Open Sans', Arial, Helvetica Neue, Helvetica, sans-serif;
 
+.error {
+	text-align: center;
+	p {
+		color: #f37735;
+		font-weight: 600;
+	}
+}
