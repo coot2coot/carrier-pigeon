@@ -1,6 +1,7 @@
 module.exports = function(React, Link, ordersUrl) {
 	var Header 	= require("./header.jsx")(React, Link);
 	var Warning = require("./warning.jsx")(React, Link);
+	var Error = require("./error-message.jsx")(React);
 
 	return React.createClass({
 		getInitialState: function() {
@@ -45,7 +46,13 @@ module.exports = function(React, Link, ordersUrl) {
 								<p>Update your details</p>
 							</div>
 							<div className="column-10">
-								<form className="account" action="/user/update" method="POST">
+								<form className="account" action={"/user/update/" + this.props.params.username} method="POST">
+									<div>
+										{(this.props.params.error
+			                                ? <Error message="Sorry, your password isn't correct. Please try again." />
+			                                : <p className="display-none"></p>
+			                            )}
+		                            </div>
 									<p className="name">First name</p><p className="name">Last name</p>
 									<input type="text" name="first_name" value={this.state.user.first_name} required />
 									<input type="text" name="last_name" value={this.state.user.last_name} required />

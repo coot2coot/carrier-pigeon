@@ -147,7 +147,6 @@ function loginUser (table, clt, done, cb, username, password, remember) {
         done();
 
         if (user.rows[0]) {
-            console.log(user.rows[0]);
             cb(null, user.rows[0], remember);
         } 
         else {
@@ -166,7 +165,6 @@ dataBase.post = function (table, doc, cb, test){
 };
 
 dataBase.edit = function (table, doc, cb, test){
-    console.log(table, doc);
     connect(edit, table, cb, test, doc);
 };
 dataBase.remove = function (table, doc, cb, test){
