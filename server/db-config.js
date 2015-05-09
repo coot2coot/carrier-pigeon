@@ -68,23 +68,15 @@ function edit (table, clt, done, cb, doc) {
 
         var query = editQuery(updateUser);
 
-        clt.query("SELECT * FROM " + table + " WHERE username = $1", [doc.username], function(err, user) {
+        clt.query("UPDATE " + table + " SET " + query + " WHERE username = $1 AND password = crypt($2, password)", [doc.username, doc.current_password], function(err, result) {
             if (err) {
-                console.log(err);
-                return done(clt);
-            }
-            if (doc.current_password === user.rows[0].password) {
-                clt.query("UPDATE " + table + " SET " + query + " WHERE " + " username='" + doc.username+ "'", function(err, result) {
-                    if (err) {
-                        console.log(err)
+                console.log(err)
 
-                        done(clt);
-                        return;
-                    }
-                    done();
-                    cb();
-                });
+                done(clt);
+                return;
             }
+            done();
+            cb();
         });
     } else {
         var query = editQuery(doc);
@@ -107,8 +99,6 @@ function remove (table, clt, done, cb, doc) {
     var column;
 
     column = table === "users" ? "username" : "job_number"
-
-    console.log(table, column);
 
     clt.query("DELETE FROM " + table + "  WHERE " + column + " = $1", [doc], function(err, user) {
 
@@ -147,7 +137,7 @@ function getUser (table, clt, done, cb, username) {
 }
 
 function loginUser (table, clt, done, cb, username, password, remember) {
-    clt.query("SELECT * FROM " + table + " WHERE username = $1", [username], function(err, user) {
+    clt.query("SELECT * FROM " + table + " WHERE username = $1 AND password = crypt($2, password)", [username, password], function(err, user) {
 
         if(err) {
             console.log(err);
@@ -156,7 +146,8 @@ function loginUser (table, clt, done, cb, username, password, remember) {
         }
         done();
 
-        if (user.rows[0] && user.rows[0].password === password) {
+        if (user.rows[0]) {
+            console.log(user.rows[0]);
             cb(null, user.rows[0], remember);
         } 
         else {
