@@ -40,7 +40,6 @@ function get (table, clt, done, cb) {
          }
 
         done();
-        console.log(result.rows)
         cb(result.rows);
     });
 }
@@ -159,7 +158,6 @@ function selectUnits (table, clt, done, cb, job_number) {
             done();
             return;
         }
-        console.log(units.rows);
         done();
         cb(units.rows);
     });
