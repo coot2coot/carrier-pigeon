@@ -55,7 +55,7 @@
             ignore: ["node_modules"]
         })
         .on("start", function(){
-            return gulp.src("./tests/acceptance/test-local.js")
+            return gulp.src("./tests/acceptance/local.config.js")
             .pipe(mocha({
                 reporter: 'nyan'
             }))
@@ -82,7 +82,7 @@
                 ignore: ["node_modules"]
             })
             .on("start", function(){
-                gulp.src("./tests/acceptance/test.js")
+                gulp.src("./tests/acceptance/remote.config.js")
                     .pipe(mocha({
                         reporter: 'nyan'
                     }))
@@ -204,7 +204,7 @@
                 ignore: ["node_modules"]
             })
             .on("start", function(){
-                gulp.src("./tests/acceptance/test.js")
+                gulp.src("./tests/acceptance/remote.config.js")
                     .pipe(mocha({
                         reporter: 'nyan'
                     }))

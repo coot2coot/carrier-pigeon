@@ -14,13 +14,16 @@ function check (data) {
 function update (req, res) {
 	parseData(req, function (data) {
 		var table;
+		var username = req.url.split('/').pop();
 		
 		if (req.url.indexOf('user') > -1) {
 			if (data.new_password === data.confirm_password) {
 				table = 'users';
 			} else {
-				console.log('passwords are not the same');
-				// need to respond with an error message saying that the passwords didn't match
+				res.writeHead(303, {
+					"Location": "/#/settings/"+ username +"/error"
+				});
+				res.end();
 			}
 		} else {
 			table = "orders";
@@ -34,6 +37,12 @@ function update (req, res) {
 			db.edit(table, data, function (err) {
 				if (err) {
 					console.log(err)
+					if (table === "users") {
+						res.writeHead(303, {
+							"Location": "/#/settings/"+ username +"/error"
+						});
+						return res.end();
+					} 
 					res.writeHead(500);
 					res.write(err);
 					res.end();

@@ -19,12 +19,14 @@ module.exports = function(React, Link) {
                         <div className="panel-body">
                             <p>Please note that this action cannot be undone</p>
                             <table className="table table-full">
-                                <tr>
-                                    <td><p>username:</p></td>
-                                    <td><p>{this.props.user.username}</p></td>
-                                </tr>
+                                
+                                    {(this.props.user
+                                        ?   <tr><td><p>username:</p></td><td><p>{this.props.user.username}</p></td> </tr>
+                                        :   <tr><td><p>Job No:</p></td><td><p>{this.props.order.job_number}</p></td> </tr>
+                                    )}
+                               
                             </table>
-                            <a className="button charcoal" href={"/user/delete/" + this.props.user.username}>Delete</a>
+                            <a className="button charcoal" href={this.props.url}>Delete</a>
                         </div>
                     </div>
                 </div>

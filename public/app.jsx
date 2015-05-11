@@ -30,14 +30,20 @@ var routes = (
             <Route name="orderUpdate" path=":update" handler={Orders} />
         </Route>
         <Route name="login" path="/login" handler={Login}>
-            <Route name="ErrorLogin" path=":error" handler={Login} />
+            <Route name="errorLogin" path=":error" handler={Login} />
         </Route>
         <Route name="reports" path="/reports" handler={Test} />
         <Route name="contacts" path="/contacts" handler={Test} />
+
         <Route name="admin" path="/users" handler={AdminPanel}>
             <Route name="userUpdate" path=":update" handler={AdminPanel} />
+            <Route name="errorAdmin" path="show/:error" handler={AdminPanel} />
         </Route>
-        <Route name="settings" path="/settings/:username" handler={Settings} />
+
+         <Route name="settings" path="/settings/:username" handler={Settings}>
+            <Route name="errorSettings" path=":error" handler={Settings} />
+        </Route>
+
         <DefaultRoute handler={Login}/>  
     </Route>
 );

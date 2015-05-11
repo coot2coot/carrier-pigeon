@@ -1,7 +1,5 @@
 var sauceUsername = process.env.SAUCE_USERNAME || require("../../../credentials.json").username,
-    sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("../../../credentials.json").accesskey,
-    username = process.env.TEST_USERNAME || require("../../../credentials.json").testUsername,
-    password = process.env.TEST_PASSWORD || require("../../../credentials.json").testPassword;
+    sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("../../../credentials.json").accesskey;
 
 function landingTests (wd, capability, remote) {
   	describe("When landing on the website", function() {
@@ -37,6 +35,7 @@ function landingTests (wd, capability, remote) {
                 if (err) {
                     return console.log(err);
                 }
+                console.log(url);
                 expect(url).to.have.string("login");
             })
             .nodeify(done);
@@ -47,28 +46,6 @@ function landingTests (wd, capability, remote) {
                 .title()
                 .then(function(title) {
                     title.should.equal("Coot Freight Ltd");
-                })
-                .nodeify(done);
-        });
-        it("Should be able to Login", function(done) {
-            browser
-                .elementByCssSelector("input[name='username']")
-                .sendKeys(username, function (err) {
-                    if (err) console.log(err);
-                })
-                .elementByCssSelector("input[name='password']")
-                .sendKeys(password, function (err) {
-                    if (err) console.log(err);
-                })
-                .elementByTagName("form")
-                .submit(function (err) {
-                    if (err) console.log(err);
-                })
-                .url(function(err, url) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    expect(url).to.have.string("ordrs");
                 })
                 .nodeify(done);
         });

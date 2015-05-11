@@ -1,5 +1,8 @@
 module.exports = function(React, Link, ordersUrl) {
+
 	var Units = require("./view_units.jsx")(React, Link);
+	var Warning = require("./warning.jsx")(React, Link);
+
 
 	return React.createClass({
 		getInitialState: function() {
@@ -8,11 +11,17 @@ module.exports = function(React, Link, ordersUrl) {
             units: []
           };
         },
-		deleteMe: function (item) {
+		deleteHandler: function (item) {
 			this.setState({
-				deleteOrder: item
+				deleteUser: item
 			})
 		},
+		onCloseComponent: function () {
+			this.setState({
+				deleteUser: null
+			})
+		},
+
 		componentDidMount: function() {
 			var getOrderUrl = "/units";
 			var job_number = this.props.order.job_number;
@@ -32,6 +41,7 @@ module.exports = function(React, Link, ordersUrl) {
 		    	"get units request failed"
 		    });
 		},
+
 
 		edit: function () {
 			var disabled = document.getElementsByClassName('view_input');
@@ -62,10 +72,16 @@ module.exports = function(React, Link, ordersUrl) {
 			return (
 
 				<div className="overlay">
+					<div>
+					{(this.state.deleteUser
+                        ? <Warning message="Delete this order?" order={this.props.order} url={"/order/delete/" + this.props.order.job_number} closeView={this.onCloseComponent}/>
+                        : <p></p>
+                    )}
+                    </div>
 					<div className="column-10 push-3 model-generic model-top view-order">
 						<div className="panel-header">
 							<h3>{this.props.order.job_number}</h3>
-							<a className="button blue" href={"/order/delete/" + this.props.order.job_number}>Delete</a>
+							<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.order)}>Delete</a>
 							<button className="button blue" onClick = {this.edit}  >Edit</button>
 							<button className="button blue">Copy</button>
 							<button className="button blue">Make a booking note</button>

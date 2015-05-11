@@ -98,7 +98,7 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/read-db.js').getUser(req, res);
 	});
 
-	router.addRoute('/user/update', function (req, res, match){
+	router.addRoute('/user/update/:username', function (req, res, match){
 	  	require('./handlers/update-db.js')(req, res);
 	});
 };

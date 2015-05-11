@@ -13,7 +13,6 @@ function generateLogins (mail) {
 
     var newUser = {
         username: name,
-        password: "changeme",
         email: mail,
         admin: false,
         invitation: false
@@ -35,7 +34,6 @@ function sendInvite (userLogins) {
     });
 }
 
-// DO THIS NEXT
 function updateDb (userLogins, cb) {
     db.post('users', userLogins, function (err) {
         if (err) {
@@ -50,12 +48,16 @@ function update (req, res, cb) {
     parseData(req, function (data) {
         validateUser(req, res, function() {
             var logins = generateLogins(data.email);
+
             updateDb(logins, function(err, success) {
-                sendInvite(logins);
                 if (err) {
-                    // TODO: Handle err by sending err message
-                    return console.log(err)
+                    res.writeHead(303, {
+                        "Location": "/#/users/show/error"
+                    });
+                    return res.end();
                 }
+
+                sendInvite(logins);
                 res.writeHead(303, {
                     "Location": "/#/users/true"
                 });

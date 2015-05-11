@@ -1,6 +1,9 @@
+// TODO: check if email/username has already been sent. If so, can't send again/ 
+
 module.exports = function(React, Link, ordersUrl) {
 	var Header 	= require("./header.jsx")(React, Link);
 	var Warning = require("./warning.jsx")(React, Link);
+	var Error = require("./error-message.jsx")(React);
 
 	return React.createClass({
 		getInitialState: function() {
@@ -61,6 +64,12 @@ module.exports = function(React, Link, ordersUrl) {
 				<div>
 					<Header />
 					<div className="column-12 push-2 model-generic">
+						<div>
+							{(this.props.params.error
+                                ? <Error message="Sorry, a user has already been sent that email. Please try another one." />
+                                : <p className="display-none"></p>
+                            )}
+                        </div>
 						<div className="panel-header">
 							<h3>Users</h3>
 							{( this.state.InviteUser
@@ -71,7 +80,7 @@ module.exports = function(React, Link, ordersUrl) {
 						<div className="panel-body table-responsive model-overflow">
 							<table className="table table-full">
 								<th>
-									<h5>Username</h5>
+									<h5 className="username">Username</h5>
 								</th>
 								<th>
 									<h5>First name</h5>
@@ -87,7 +96,10 @@ module.exports = function(React, Link, ordersUrl) {
 						  		{ this.state.users.map(function (user, i) {
 						  			return <tr>
 							            		<td key={i + "first"}>
-							            			<p>{user.username}</p>
+							            			{( user.username === "test"
+														? <p className="test-username">{user.username}</p>
+														: <p>{user.username}</p>
+													)}
 							            		</td>
 												<td key={i + "second"}>
 													<p>{user.first_name}</p>
@@ -102,7 +114,10 @@ module.exports = function(React, Link, ordersUrl) {
 													)}
 												</td>
 												<td key={i + "sixth"}>
-													<a className="delete" onClick={deleteHandler.bind(null, user)}>Delete</a>
+													{( user.username === "test"
+														? <a className="delete test" onClick={deleteHandler.bind(null, user)}>Delete</a>
+														: <a className="delete" onClick={deleteHandler.bind(null, user)}>Delete</a>
+													)}
 												</td>
 											</tr>
 							    })}
@@ -110,7 +125,7 @@ module.exports = function(React, Link, ordersUrl) {
 						</div>
 					</div>
 					{(this.state.deleteUser
-                        ? <Warning message="Delete this user?" user={this.state.deleteUser} closeView={this.onCloseComponent}/>
+                        ? <Warning message="Delete this user?" user={this.state.deleteUser} url={"/user/delete/" + this.state.deleteUser.username} closeView={this.onCloseComponent}/>
                         : <p></p>
                     )}
 				</div>
