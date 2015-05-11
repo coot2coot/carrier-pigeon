@@ -26,6 +26,17 @@
   		@include blue-hover;
   	}
 }
+.button_units {
+	@include blue-background;
+	border-radius: 0.4em;
+	border: none;
+	color: white;
+	width: 30%;
+  	padding: 0 0.4em;
+	font-weight: 900;
+	margin: 1.6em 0.2em 0.2em;
+	font-size: 1em;
+}
 
 .button.full {
 	width: 100%;
@@ -35,7 +46,7 @@
 .add {
 	padding: 0 0.4em;
 	font-weight: 900;
-	margin: 0 0.2em 0.2em;
+	margin: 0em 0.2em 0.2em;
 	font-size: 1em;
 }
 

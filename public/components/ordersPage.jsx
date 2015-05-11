@@ -71,15 +71,6 @@ module.exports = function(React, Link, ordersUrl) {
 			})
 		},
 
-		addInvoice: function (order) {
-			var getUpdateUrl = "/orders/updates";
-			$.ajax({
-				type: 'POST',
-				dataType: 'json',
-				url: getUpdateUrl,
-				data: order
-			})
-		},
 
 		render: function() {
 			var orderHandler = this.orderHandler;
@@ -101,16 +92,10 @@ module.exports = function(React, Link, ordersUrl) {
 									<h5>Client</h5>
 								</th>
 								<th>
-									<h5>Unit Type</h5>
+									<h5>carrier</h5>
 								</th>
 								<th>
-									<h5>Unit Number</h5>
-								</th>
-								<th>
-									<h5>Vendor</h5>
-								</th>
-								<th>
-									<h5>Invoice</h5>
+									<h5>units</h5>
 								</th>
 							  		{ this.state.orders.map(function (order, i) {
 								        return <tr>
@@ -126,22 +111,12 @@ module.exports = function(React, Link, ordersUrl) {
 													</td>
 													<td key={i + "third"}>
 														<a onClick={orderHandler.bind(null, order)}>
-															<p>{order.unit_type}</p>
+															<p>{order.carrier}</p>
 														</a>
 													</td>
 													<td key={i + "fourth"}>
 														<a onClick={orderHandler.bind(null, order)}>
-															<p>{order.unit_number}</p>
-														</a>
-													</td>
-													<td key={i + "fith"}>
-														<a onClick={orderHandler.bind(null, order)}>
-															<p>{order.vendor}</p>
-														</a>
-													</td>
-													<td key={i + "sixth"}>
-														<a onClick={addInvoiceHandler.bind(null,order)}>
-															<input type="checkbox" defaultChecked={order.invoice} />
+															<p>{order.number_of_units}</p>
 														</a>
 													</td>
 												</tr>

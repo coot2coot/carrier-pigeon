@@ -1,10 +1,13 @@
 module.exports = function(React, Link, ordersUrl) {
+
+	var Units = require("./view_units.jsx")(React, Link);
 	var Warning = require("./warning.jsx")(React, Link);
 
 	return React.createClass({
 		getInitialState: function() {
           return {
-            editing: true
+            editing: true,
+            units: []
           };
         },
 		deleteHandler: function (item) {
@@ -17,6 +20,27 @@ module.exports = function(React, Link, ordersUrl) {
 				deleteUser: null
 			})
 		},
+
+		componentDidMount: function() {
+			var getOrderUrl = "/units";
+			var job_number = this.props.order.job_number;
+
+		    $.get(getOrderUrl, job_number, function(result) {
+		    	if(result !== ""){
+			    	var unit = JSON.parse(result);
+
+			      	if (this.isMounted()) {
+			        	this.setState({
+			          		units : unit,
+			        	});
+			      	}
+			    }
+		    }.bind(this))
+		    .fail(function () {
+		    	"get units request failed"
+		    });
+		},
+
 		edit: function () {
 			var disabled = document.getElementsByClassName('view_input');
 			if(this.state.editing === true){
@@ -64,107 +88,110 @@ module.exports = function(React, Link, ordersUrl) {
 						<div className="panel-body scroll">
 							<form action="/order/edit" method="POST">
 								<div className="row gutters">
-									<div className="column-5">
-										<p>Date</p>
-										<input className="view_input" type="date" name="date" defaultValue={ this.props.order.date.substring(0, 10)} disabled required/>
-
-										<p>Job No.</p>
-										<input type="text"  name="job_number" value={this.props.order.job_number} readOnly />
-
+									<div>
 										<div className="row">
-											<div className="column-10">
-												<p>Unit Type</p>
-												<select className="view_input" name="unit_type" disabled required>
-												  	<option>40dc</option>
-													<option>40hc</option>
-													<option>40pw</option>
-													<option>40fr</option>
-													<option>40rc</option>
-													<option>40ot</option>
-													<option>20dc</option>
-													<option>20tc</option>
-													<option>20fr</option>
-													<option>20rc</option>
-													<option>20ot</option>
-													<option>45pwhc</option>
-													<option>45hc</option>
-													<option>45rc</option>
-													<option>40 mafi</option>
-													<option>20 mafi</option>
-													<option>Box trailer</option>
-													<option>Taut liner</option>
-													<option>Flat bed</option>
-													<option>Groupage</option>
-													<option>Airfreight</option>
-												</select>
-											</div>
-											<div className="column-6">
-												<p>Qty</p>
-												<input className="view_input" type="number" min="1" defaultValue={this.props.order.unit_quatity} name="unit_quatity" disabled required/>
-											</div>
-										</div>
-
-										<p>Client</p>
-										<input className="view_input" type="text" defaultValue= {this.props.order.client} name="client" disabled required/>
-
-										<p>Vendor</p>
-										<input className="view_input" type="text"  defaultValue={this.props.order.vendor} name="vendor" disabled />
-
-										<p>Loading reference</p>
-										<input className="view_input"  type="text"   defaultValue= {this.props.order.loading_reference} name="loading_reference" disabled/>
-
-										<p>Unit Number</p>
-										<input className="view_input" type="text"    defaultValue={this.props.order.unit_number} name="unit_number" disabled />
-									</div>
-
-									<div className="column-6">
-										<p>Collection From</p>
-										<input className="view_input big" type="text"  big defaultValue={this.props.order.collect_from} name="collect_from" disabled />
-
-										<div className="row">
-											<div className="column-10">
+											<div className="column-8" >
 												<p>Date</p>
-												<input className="view_input" type="date"  defaultValue={this.props.order.collection_date} name="collection_date" disabled/>
+												<input className="view_input" type="date" name="date" defaultValue={ this.props.order.date.substring(0, 10)} disabled required/>
 											</div>
-											<div className="column-6">
-												<p>Time</p>
-												<input className="view_input" type="time"  defaultValue={this.props.order.collection_time} name="collection_time" disabled />
+											<div className="column-8" >
+												<p>Job No.</p>
+												<input type="text" className = "job_no"  name="job_number" value={this.props.order.job_number} readOnly />
 											</div>
 										</div>
 
-										<p>Contact details</p>
-										<input className="view_input" type="text" defaultValue={this.props.order.contact_details} name="contact_details" disabled />
+										<div className="row">
+											{
+												this.state.units.map(function(unit, i){
+											        return <Units unit={unit} key={i} />;
+											   })
+											}
+										</div>
+				
+										<div className="row">
+											<div className="column-8">
+												<p>Client</p>
+												<input className="view_input big" type="text"  defaultValue= {this.props.order.client}  name="client" disabled required/>
+											</div>
+											<div className="column-8">
+												<p>Carrier </p>
+												<input className="view_input" type="text"  defaultValue={this.props.order.carrier} name="carrier" disabled />
+											</div>
+											<div className="column-8">
+												<p>Loading reference</p>
+												<input className="view_input"  type="text"   defaultValue= {this.props.order.loading_reference} name="loading_reference" disabled/>
+											</div>	
+										</div>
 
-										<p>Deliver to</p>
-										<input className="view_input big" type="text" defaultValue={this.props.order.deliver_to} name="deliver_to" disabled />
+										<div className="row">
+											<div className="column-8">
+												<p>Collection From</p>
+												<input className="view_input big" type="text"  big defaultValue={this.props.order.collect_from} name="collect_from" disabled />
+											</div>
+											<div className="column-8">
+												<p>City</p>
+												<input className="view_input" type="text"  big defaultValue={this.props.order.city} name="city" disabled />
+											</div>
 
-										<p>Commodity details</p>
-										<input className="view_input" type="text"  defaultValue={this.props.order.commodity_details} name="commodity_details" disabled/>
+											<div className="row column-8">
+												<div className="column-8">
+													<p>Date</p>
+													<input className="view_input" type="date"  defaultValue={this.props.order.collection_date} name="collection_date" disabled/>
+												</div>
+												<div className="column-8">
+													<p>Time</p>
+													<input className="view_input" type="time"  defaultValue={this.props.order.collection_time} name="collection_time" disabled />
+												</div>
+											</div>
+										</div>
+										<div className="row">
+											<div className="column-8">
+												<p>Contact details</p>
+												<textarea className="view_input big" type="text" defaultValue={this.props.order.contact_details} name="contact_details" max='500' disabled />
+											</div>
+											<div className="column-8">
+												<p>Deliver to</p>
+												<textarea className="view_input big" type="text" defaultValue={this.props.order.deliver_to} name="deliver_to" disabled max='500' />
+											</div>
+										</div>
+										<div className="row">
+											<div className="column-8">
+												<p>Commodity details</p>
+												<textarea className="view_input" type="text"  defaultValue={this.props.order.commodity_details} name="commodity_details" disabled max ='500'/>
+											</div>
+											<div className="column-8">
+												<p>Special Instructions</p>
+												<textarea className="view_input" type="text"  defaultValue={this.props.order.special_instructions} name="special_instructions" disabled max='500'/>
+											</div>
+										</div>
 
-										<p>Special Instructions</p>
-										<input className="view_input" type="text"  defaultValue={this.props.order.special_instructions} name="special_instructions" disabled />
-									</div>
 
-									<div className="column-5">
-										<p>Shipper</p>
-										<input className="view_input big" type="text"   defaultValue={this.props.order.shipper} name="shipper" disabled />
-
-										<p>Consignee</p>
-										<input className="view_input big" type="text"   defaultValue={this.props.order.consignee} name="consignee" disabled />
-
-										<p>Notify</p>
-										<input className="view_input big" type="text"  defaultValue={this.props.order.notify} name="notify" disabled />
-
-										<p>Remarks</p>
-										<input className="view_input big" type="text"   defaultValue={this.props.order.remarks} name="remarks"  disabled/>
-
+										<div className="row">
+											<div className="column-8">
+												<p>Shipper</p>
+												<textarea className="view_input big" type="text"   defaultValue={this.props.order.shipper} name="shipper" disabled  max ='500'/>
+											</div>
+											<div className="column-8">
+												<p>Consignee</p>
+												<textarea className="view_input big" type="text"   defaultValue={this.props.order.consignee} name="consignee" disabled  max ='500'/>
+											</div>
+										</div>
+										<div className="row">
+											<div className="column-8">
+												<p>Notify</p>
+												<textarea className="view_input big" type="text"  defaultValue={this.props.order.notify} name="notify" disabled  max ='500'/>
+											</div>
+											<div className="column-8">
+												<p>Remarks</p>
+												<textarea className="view_input big" type="text"   defaultValue={this.props.order.remarks} name="remarks"  disabled max ='500'/>
+											</div>
+										</div>
 										<input className="button charcoal" type="submit" defaultValue="Update"  />
 									</div>
 								</div>
 							</form>
 						</div>
-					</div>
-				
+					</div>				
 				</div>
 			);
 		}
