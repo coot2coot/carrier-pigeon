@@ -3,7 +3,7 @@ module.exports = function(React, Link) {
 		render: function () {
 			return (
 				<units>
-				<input  name="unit_id" defaultValue= {this.props.unit.unit_id} style={{display: 'none'}} />
+				<input className="unit_id" name="unit_id" defaultValue= {this.props.unit.unit_id} />
 					<div className="row">
 						<div className="column-4">
 							<p>Unit Type</p>
