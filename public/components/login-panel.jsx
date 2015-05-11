@@ -9,7 +9,7 @@ module.exports = function (React, Link) {
             return (
                 <div>
                     <Header loggedOut="true" />
-                    <div className="column-6 push-5 model-generic model-middle">
+                    <div className="column-4 push-6 model-generic model-middle">
                         <div className="panel-header">
                             <h2>Login</h2>
                         </div>
