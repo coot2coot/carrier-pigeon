@@ -18,7 +18,11 @@ function logout (req, res) {
         signed: true
     });
     
-    authFailed(req, res, token);
+    res.writeHead(303, {
+        'Location': '/#/login'
+    });
+
+    res.end();
 }
 
 module.exports = logout;

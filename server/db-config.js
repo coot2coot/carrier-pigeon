@@ -1,7 +1,7 @@
 
 var pg 		 	  = require("pg");
-var str      = process.env.POSTGRES_URI || require("../credentials.json").postgres;
-var url 	= "postgres://"+ str + "/carrier-pigeon-dev"
+var str           = process.env.POSTGRES_URI || require("../credentials.json").postgres;
+var url 	      = "postgres://"+ str + "/carrier-pigeon-dev"
 var stringifyData = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js");
 var editQuery     = require("./lib/edit-query-sql.js");
@@ -33,7 +33,7 @@ function connect (query, table, cb, test, var1, var2, var3) {
 function get (table, clt, done, cb) {
     clt.query("SELECT * FROM " + table, function(err, result) {
         if (err) {
-            console.log('err >>>', err)
+            console.log(err)
 
             done(clt);
             return;
@@ -61,43 +61,84 @@ function getOrders (table, clt, done, cb) {
 
 
 function post (table, clt, done, cb, doc) {
+<<<<<<< HEAD
     var orders = stringifyData(doc.order);
     var units = stringifyUnits(doc.unit);
     clt.query("INSERT into orders (" + orders.columns + ") VALUES ('"+orders.values+"'); INSERT into units ("+ units.columns + ") VALUES ('" + units.values + "');", function(err, result) {
+=======
+
+    var data = stringifyData(doc);
+
+    var query;
+
+    table === "users"
+        ? query = "INSERT into " + table + " (" + data.columns +", password) VALUES ('" + data.values +"', crypt('changeme', gen_salt('md5')))"
+        : query = "INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')"
+
+    console.log(query);
+
+    clt.query(query, function(err, result) {
+>>>>>>> master
         if (err) {
-            console.log('err >>>', err)
+            console.log(err)
 
             done(clt);
-            return;
+            return cb(err);
         }
 
         done();
-        cb();
+        cb(null);
     });
 }
 
 function edit (table, clt, done, cb, doc) {
-    var ordersQuery = editQuery(doc.order);
-    var unitsQuery = editQuery(doc.unit);
 
-    clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= " +"'" + doc.order.job_number + "'; UPDATE units SET " + unitsQuery + " WHERE " + " job_number= " +"'" + doc.unit.job_number + "'", function(err, result) {
-        if (err) {
-            console.log('err >>>', err)
-
-            done(clt);
-            return;
+    if (table === 'users') {
+        var updateUser = {
+            first_name: doc.first_name,
+            last_name: doc.last_name,
+            invitation: true
         }
 
-        done();
-        cb();
-    });
+        var query = editQuery(updateUser);
+
+        clt.query("UPDATE " + table + " SET " + query + ",password = crypt($3, gen_salt('md5')) WHERE username = $1 AND password = crypt($2, password)", [doc.username, doc.current_password, doc.new_password], function(err, result) {
+            if (err) {
+                console.log(err)
+
+                done(clt);
+                return;
+            }
+            done();
+            cb();
+        });
+    } else {
+        var ordersQuery = editQuery(doc.order);
+        var unitsQuery = editQuery(doc.unit);
+
+        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= " +"'" + doc.order.job_number + "'; UPDATE units SET " + unitsQuery + " WHERE " + " job_number= " +"'" + doc.unit.job_number + "'", function(err, result) {
+                console.log(err)
+
+                done(clt);
+                return;
+            }
+
+            done();
+            cb();
+        });
+    }
 }
 
 function remove (table, clt, done, cb, doc) {
-    clt.query("DELETE FROM " + table + "  WHERE job_number = $1;", [doc], function(err, user) {
+
+    var column;
+
+    column = table === "users" ? "username" : "job_number"
+
+    clt.query("DELETE FROM " + table + "  WHERE " + column + " = $1", [doc], function(err, user) {
 
         if (err) {
-            console.log('err >>>', err)
+            console.log(err)
                 if(!err) return false;
 
                 done(clt);
@@ -109,6 +150,7 @@ function remove (table, clt, done, cb, doc) {
         });
 
 }
+
 
 function selectUnits (table, clt, done, cb, job_number) {
 
@@ -127,7 +169,8 @@ function selectUnits (table, clt, done, cb, job_number) {
 
 
 
-function selectUser (table, clt, done, cb, username, password, remember) {
+
+function getUser (table, clt, done, cb, username) {
 
     clt.query("SELECT * FROM " + table + " WHERE username = $1", [username], function(err, user) {
 
@@ -137,8 +180,27 @@ function selectUser (table, clt, done, cb, username, password, remember) {
             return;
         }
         done();
+        
+        if (user.rows[0]) {
+            cb(null, user.rows[0]);
+        } 
+        else {
+            cb(null, false,'Sorry, no usernames match that query');
+        }
+    });
+}
 
-        if (user.rows[0] && user.rows[0].password === password) {
+function loginUser (table, clt, done, cb, username, password, remember) {
+    clt.query("SELECT * FROM " + table + " WHERE username = $1 AND password = crypt($2, password)", [username, password], function(err, user) {
+
+        if(err) {
+            console.log(err);
+            done();
+            return;
+        }
+        done();
+
+        if (user.rows[0]) {
             cb(null, user.rows[0], remember);
         } 
         else {
@@ -146,7 +208,6 @@ function selectUser (table, clt, done, cb, username, password, remember) {
         }
     });
 }
-
 
 
 dataBase.get = function (table, cb, test){
@@ -167,16 +228,18 @@ dataBase.remove = function (table, doc, cb, test){
     connect(remove,table,cb,test, doc)
 };
 
+
 dataBase.selectUnits = function (table, job_number, cb , test){
     connect(selectUnits, table,cb, test, job_number)
 };
 
-dataBase.selectUser = function (username, password, remember, cb, test) {
-   connect(selectUser,"users",cb, test, username, password, remember)
+
+dataBase.getUser = function (username, cb, test) {
+   connect(getUser,"users",cb, test, username)
 };
 
-
-
-
+dataBase.selectUser = function (username, password, remember, cb, test) {
+   connect(loginUser,"users",cb, test, username, password, remember)
+};
 
 module.exports = dataBase;

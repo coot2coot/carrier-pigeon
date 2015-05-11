@@ -1,5 +1,9 @@
+// TODO: check if email/username has already been sent. If so, can't send again/ 
+
 module.exports = function(React, Link, ordersUrl) {
-	var Header = require("./header.jsx")(React, Link);
+	var Header 	= require("./header.jsx")(React, Link);
+	var Warning = require("./warning.jsx")(React, Link);
+	var Error = require("./error-message.jsx")(React);
 
 	return React.createClass({
 		getInitialState: function() {
@@ -39,22 +43,37 @@ module.exports = function(React, Link, ordersUrl) {
 		    	"get request failed"
 		    });
 		},
+		onCloseComponent: function () {
+			this.setState({
+				deleteUser: null
+			})
+		},
+		deleteHandler: function (item) {
+			this.setState({
+				deleteUser: item
+			})
+		},
 		addUser: function () {
 			this.setState({
 				InviteUser: true
 			})
 		},
 		render: function() {
-			var orderHandler = this.orderHandler;
-			var addInvoiceHandler = this.addInvoice;
+			var deleteHandler = this.deleteHandler;
 			return (
 				<div>
 					<Header />
 					<div className="column-12 push-2 model-generic">
+						<div>
+							{(this.props.params.error
+                                ? <Error message="Sorry, a user has already been sent that email. Please try another one." />
+                                : <p className="display-none"></p>
+                            )}
+                        </div>
 						<div className="panel-header">
 							<h3>Users</h3>
 							{( this.state.InviteUser
-								? <form className="email-invite" action="/user/new" method="POST"><input type="text" placeholder="example@mail.com"/><input type="submit" className="button blue" value="Invite User"/></form>
+								? <form className="email-invite" action="/user/invite" method="POST"><input type="text" placeholder="example@mail.com" name="email" /><input type="submit" className="button blue" value="Invite User"/></form>
 								: <button data-tooltip="Invite new user" className="button blue add" onClick={this.addUser}>+</button>
 							)}
 						</div>
@@ -73,10 +92,9 @@ module.exports = function(React, Link, ordersUrl) {
 									<h5>Invitation</h5>
 								</th>
 								<th>
-									<h5>Delete</h5>
 								</th>
 						  		{ this.state.users.map(function (user, i) {
-							        return <tr>
+						  			return <tr>
 							            		<td key={i + "first"}>
 							            			<p>{user.username}</p>
 							            		</td>
@@ -87,16 +105,23 @@ module.exports = function(React, Link, ordersUrl) {
 													<p>{user.last_name}</p>
 												</td>
 												<td key={i + "fourth"}>
-													<p>{user.invitation}</p> {/* Accepted or pending */}
+													{( user.invitation
+														? <p>Accepted</p>
+														: <p><i>Pending</i></p>
+													)}
 												</td>
 												<td key={i + "sixth"}>
-													<input type="submit" className="button charcoal full" value="Delete"/>
+													<a className="delete" onClick={deleteHandler.bind(null, user)}>Delete</a>
 												</td>
 											</tr>
 							    })}
 							</table>
 						</div>
 					</div>
+					{(this.state.deleteUser
+                        ? <Warning message="Delete this user?" user={this.state.deleteUser} url={"/user/delete/" + this.state.deleteUser.username} closeView={this.onCloseComponent}/>
+                        : <p></p>
+                    )}
 				</div>
 			);
 		}

@@ -60,7 +60,7 @@ function loginHandler (req, res) {
  	if (req.method === "POST") {
 		loginUser(req, res);
 	} else {
-		authFailed(req, res);
+		authFailed(req, res, 'Sorry, those logins are not correct');
 	}
 }
 

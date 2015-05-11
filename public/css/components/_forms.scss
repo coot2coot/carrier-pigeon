@@ -40,3 +40,20 @@ form.email-invite {
     padding: 0.2em 1em;
   }
 }
+
+form.account {
+  padding: 1.5em 3em 4.5em;
+  border-left: 0.1em $light-grey solid;
+  .name {
+    width: 50%;
+    display: inline-block;
+  }
+  input[name="first_name"], input[name="last_name"] {
+    width: 50%;
+  }
+}
+
+.display-none {
+  display: none;
+  visibility: hidden;
+}
