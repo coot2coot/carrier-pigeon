@@ -96,7 +96,7 @@ module.exports = function(React, Link, ordersUrl) {
 						  		{ this.state.users.map(function (user, i) {
 						  			return <tr>
 							            		<td key={i + "first"}>
-							            			{( user.username === "test"
+							            			{( user.username.toLowerCase() === "test"
 														? <p className="test-username">{user.username}</p>
 														: <p>{user.username}</p>
 													)}
@@ -114,7 +114,7 @@ module.exports = function(React, Link, ordersUrl) {
 													)}
 												</td>
 												<td key={i + "sixth"}>
-													{( user.username === "test"
+													{( user.username.toLowerCase() === "test"
 														? <a className="delete test" onClick={deleteHandler.bind(null, user)}>Delete</a>
 														: <a className="delete" onClick={deleteHandler.bind(null, user)}>Delete</a>
 													)}

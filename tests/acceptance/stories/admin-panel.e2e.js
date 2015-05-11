@@ -23,12 +23,11 @@ function landingTests (wd, capability, remote) {
             browser
                 .get("http://localhost:8000")
                 .elementByCssSelector("input[name='username']")
-                .sendKeys("facAdmin", function (err) {
+                .sendKeys(username, function (err) {
                     if (err) console.log(err);
                 })
                 .elementByCssSelector("input[name='password']")
-                // TODO: keep in cred + env variable travis
-                .sendKeys("code", function (err) {
+                .sendKeys(password, function (err) {
                     if (err) console.log(err);
                 })
                 .elementByTagName("form")
@@ -104,6 +103,7 @@ function landingTests (wd, capability, remote) {
                 .submit(function (err) {
                     if (err) console.log(err);
                 })
+                .waitForElementByClassName("test-username", 2000)
                 .elementByClassName("test-username", function (err, element) {
                     if (err) console.log(err);
                 })
