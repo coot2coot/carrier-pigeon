@@ -67,13 +67,14 @@ function post (table, clt, done, cb, doc) {
         units;
 
 
-    table === "users"
-        ?   query = "INSERT into " + table + " (" + stringifyData(doc).columns +", password) VALUES ('" + stringifyData(doc).values +"', crypt('changeme', gen_salt('md5')))"
-
-        :   orders = stringifyData(doc.order)
-            units = stringifyUnits(doc.unit)
-            query = "INSERT into orders (" + orders.columns + ") VALUES ('"+orders.values+"'); INSERT into units ("+ units.columns + ") VALUES ('" + units.values + "');"
-
+    if (table === "users") {
+        query = "INSERT into " + table + " (" + stringifyData(doc).columns +", password) VALUES ('" + stringifyData(doc).values +"', crypt('changeme', gen_salt('md5')))"
+    } else {
+        orders = stringifyData(doc.order)
+        units = stringifyUnits(doc.unit)
+        query = "INSERT into orders (" + orders.columns + ") VALUES ('"+orders.values+"'); INSERT into units ("+ units.columns + ") VALUES ('" + units.values + "');"
+    }
+    
     clt.query(query, function(err, result) {
         if (err) {
             console.log(err)
