@@ -1,9 +1,7 @@
 module.exports = function(React, Link, ordersUrl) {
-<<<<<<< HEAD
+
 	var Units = require("./view_units.jsx")(React, Link);
-=======
 	var Warning = require("./warning.jsx")(React, Link);
->>>>>>> master
 
 	return React.createClass({
 		getInitialState: function() {

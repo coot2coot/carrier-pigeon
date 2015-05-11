@@ -61,24 +61,20 @@ function getOrders (table, clt, done, cb) {
 
 
 function post (table, clt, done, cb, doc) {
-<<<<<<< HEAD
-    var orders = stringifyData(doc.order);
-    var units = stringifyUnits(doc.unit);
-    clt.query("INSERT into orders (" + orders.columns + ") VALUES ('"+orders.values+"'); INSERT into units ("+ units.columns + ") VALUES ('" + units.values + "');", function(err, result) {
-=======
+    var data,
+        orders,
+        query,
+        units;
 
-    var data = stringifyData(doc);
-
-    var query;
 
     table === "users"
-        ? query = "INSERT into " + table + " (" + data.columns +", password) VALUES ('" + data.values +"', crypt('changeme', gen_salt('md5')))"
-        : query = "INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')"
+        ?   query = "INSERT into " + table + " (" + stringifyData(doc).columns +", password) VALUES ('" + stringifyData(doc).values +"', crypt('changeme', gen_salt('md5')))"
 
-    console.log(query);
+        :   orders = stringifyData(doc.order)
+            units = stringifyUnits(doc.unit)
+            query = "INSERT into orders (" + orders.columns + ") VALUES ('"+orders.values+"'); INSERT into units ("+ units.columns + ") VALUES ('" + units.values + "');"
 
     clt.query(query, function(err, result) {
->>>>>>> master
         if (err) {
             console.log(err)
 
@@ -100,7 +96,7 @@ function edit (table, clt, done, cb, doc) {
             invitation: true
         }
 
-        var query = editQuery(updateUser);
+        var query = editQuery.standard(updateUser);
 
         clt.query("UPDATE " + table + " SET " + query + ",password = crypt($3, gen_salt('md5')) WHERE username = $1 AND password = crypt($2, password)", [doc.username, doc.current_password, doc.new_password], function(err, result) {
             if (err) {
@@ -113,10 +109,11 @@ function edit (table, clt, done, cb, doc) {
             cb();
         });
     } else {
-        var ordersQuery = editQuery(doc.order);
-        var unitsQuery = editQuery(doc.unit);
+        var ordersQuery = editQuery.standard(doc.order);
+        var unitsQuery = editQuery.units(doc.unit);
 
-        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= " +"'" + doc.order.job_number + "'; UPDATE units SET " + unitsQuery + " WHERE " + " job_number= " +"'" + doc.unit.job_number + "'", function(err, result) {
+        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= '" +doc.order.job_number +"'; " + unitsQuery , function(err, result) {
+            if (err) {
                 console.log(err)
 
                 done(clt);
@@ -145,7 +142,7 @@ function remove (table, clt, done, cb, doc) {
                 return;
             }
 
-            done();
+            done()
             cb()
         });
 

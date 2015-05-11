@@ -3,7 +3,7 @@ var stringify = require('./stringify-data-sql.js');
 
 module.exports = function (units){
 	var data = {};
-	console.log(typeof units["unit_type"])
+
 	if(typeof units["unit_type"] === "object"){
 		var i;
 		var arr = [];

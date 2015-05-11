@@ -15,7 +15,7 @@ module.exports = function (React, Link) {
                         </div>
                         <div className="panel-body">
                              <div>
-                            {(this.props.params.error
+                            {(false
                                 ? <Error message="Sorry, those logins are not correct" />
                                 : <p className="display-none"></p>
                             )}
