@@ -4,16 +4,19 @@
 }
 
 .panel-header {
+    min-height: 2.5em;
     @include blue-background;
     h2, h3, h4 {
         display: inline-block;
     }
     h3 {
         padding: 0.2em 0.7em;
+        padding-top: 0.5em;
     }
 }
 
 .panel-body {
+    width:100%;
     background: $lightest-grey;
     border: 0.1em $light-grey solid;
     p {

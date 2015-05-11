@@ -65,7 +65,7 @@ module.exports = function(React, Link, ordersUrl) {
 					<Header />
 					<div className="column-12 push-2 model-generic">
 						<div>
-							{(this.props.params.error
+							{(false
                                 ? <Error message="Sorry, a user has already been sent that email. Please try another one." />
                                 : <p className="display-none"></p>
                             )}

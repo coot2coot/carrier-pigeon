@@ -3,6 +3,7 @@ var pg 		 	  = require("pg");
 var str           = process.env.POSTGRES_URI || require("../credentials.json").postgres;
 var url 	      = "postgres://"+ str + "/carrier-pigeon-dev"
 var stringifyData = require("./lib/stringify-data-sql.js");
+var stringifyUnits = require("./lib/stringify-units-sql.js");
 var editQuery     = require("./lib/edit-query-sql.js");
 var dataBase      = {};
 
@@ -28,10 +29,26 @@ function connect (query, table, cb, test, var1, var2, var3) {
     });
 }
 
+
 function get (table, clt, done, cb) {
-    clt.query("SELECT * FROM "+ table +" ORDER by date", function(err, result) {
+    clt.query("SELECT * FROM " + table, function(err, result) {
         if (err) {
             console.log(err)
+
+            done(clt);
+            return;
+         }
+
+        done();
+        console.log(result.rows)
+        cb(result.rows);
+    });
+}
+
+function getOrders (table, clt, done, cb) {
+    clt.query("SELECT orders.*, number_of_units FROM orders LEFT JOIN (SELECT units.job_number AS unit_order_id,COUNT(units.job_number) AS number_of_units FROM Units GROUP BY units.job_number) AS units_count ON orders.job_number = unit_order_id;", function(err, result) {
+        if (err) {
+            console.log('err >>>', err)
 
             done(clt);
             return;
@@ -42,17 +59,22 @@ function get (table, clt, done, cb) {
     });
 }
 
+
 function post (table, clt, done, cb, doc) {
 
-    var data = stringifyData(doc);
+    var orders,
+        units,
+        data;
+        query;
 
-    var query;
-
-    table === "users"
-        ? query = "INSERT into " + table + " (" + data.columns +", password) VALUES ('" + data.values +"', crypt('changeme', gen_salt('md5')))"
-        : query = "INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')"
-
-    console.log(query);
+    if(table === "users"){
+        data = stringifyData(doc) 
+        query = "INSERT into " + table + " (" + data.columns +", password) VALUES ('" + data.values +"', crypt('changeme', gen_salt('md5')))"
+    } else{
+       orders = stringifyData(doc.order)
+        units = stringifyUnits(doc.unit) 
+        query = "INSERT into orders (" + orders.columns + ") VALUES ('"+orders.values+"'); INSERT into units ("+ units.columns + ") VALUES ('" + units.values + "');"
+    }
 
     clt.query(query, function(err, result) {
         if (err) {
@@ -68,6 +90,7 @@ function post (table, clt, done, cb, doc) {
 }
 
 function edit (table, clt, done, cb, doc) {
+
     if (table === 'users') {
         var updateUser = {
             first_name: doc.first_name,
@@ -88,11 +111,12 @@ function edit (table, clt, done, cb, doc) {
             cb();
         });
     } else {
-        var query = editQuery(doc);
+        var ordersQuery = editQuery(doc.order);
+        var unitsQuery = editQuery(doc.unit);
 
-        clt.query("UPDATE " + table + " SET " + query + " WHERE " + " job_number= " +"'" + doc.job_number + "'", function(err, result) {
-            if (err) {
-                console.log(err)
+        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= " +"'" + doc.order.job_number + "'; UPDATE units SET " + unitsQuery + " WHERE " + " job_number= " +"'" + doc.unit.job_number + "'", function(err, result) {
+         if (err) {
+            console.log('err >>>', err)
 
                 done(clt);
                 return;
@@ -124,6 +148,22 @@ function remove (table, clt, done, cb, doc) {
         });
 
 }
+
+function selectUnits (table, clt, done, cb, job_number) {
+
+    clt.query("SELECT * FROM units WHERE job_number = '" + job_number +"'", function(err, units) {
+
+        if(err) {
+            console.log(err);
+            done();
+            return;
+        }
+        console.log(units.rows);
+        done();
+        cb(units.rows);
+    });
+}
+
 
 function getUser (table, clt, done, cb, username) {
 
@@ -169,6 +209,9 @@ dataBase.get = function (table, cb, test){
  	connect(get, table, cb, test)
 };
 
+dataBase.getOrders = function (table, cb, test){
+    connect(getOrders, table, cb, test)
+};
 dataBase.post = function (table, doc, cb, test){
 	connect(post, table, cb, test, doc)
 };
@@ -178,6 +221,11 @@ dataBase.edit = function (table, doc, cb, test){
 };
 dataBase.remove = function (table, doc, cb, test){
     connect(remove,table,cb,test, doc)
+};
+
+
+dataBase.selectUnits = function (table, job_number, cb , test){
+    connect(selectUnits, table,cb, test, job_number)
 };
 
 dataBase.getUser = function (username, cb, test) {

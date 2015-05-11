@@ -1,7 +1,7 @@
 "use strict";
 
 function validate (data, res, cb) {
-	if (jobNumberIsValid(data["job_number"])=== null || dateIsValid(data["date"]) === null || data["unit_type"] === "" || data["client"] === "" || data["unit_quantity"] === ""){
+	if (jobNumberIsValid(data["job_number"])=== null || dateIsValid(data["date"]) === null || data["unit_type"] === "" ){
 		res.writeHead(500);
 		res.write("The jobnumber, date and client are all required fields");
 		res.end();

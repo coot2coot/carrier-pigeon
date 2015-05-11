@@ -7,8 +7,8 @@ var myCache 	 = new NodeCache({ stdTTL: secondsToSave });
 var readOptions  = {};
 
 var getOrders = function (req, res) {
-	db.get('orders',function (orders) {	
-		myCache.set("orders", orders, function(err, success){
+	db.getOrders('orders',function (orders) {		
+		myCache.set("orders", orders, secondsToSave, function(err, success){
 			if(err){
 				console.error(err)
 			}
