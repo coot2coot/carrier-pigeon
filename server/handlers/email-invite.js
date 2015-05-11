@@ -13,7 +13,6 @@ function generateLogins (mail) {
 
     var newUser = {
         username: name,
-        password: "changeme",
         email: mail,
         admin: false,
         invitation: false

@@ -43,8 +43,18 @@ function get (table, clt, done, cb) {
 }
 
 function post (table, clt, done, cb, doc) {
+
     var data = stringifyData(doc);
-    clt.query("INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')", function(err, result) {
+
+    var query;
+
+    table === "users"
+        ? query = "INSERT into " + table + " (" + data.columns +", password) VALUES ('" + data.values +"', crypt('changeme', gen_salt('md5')))"
+        : query = "INSERT into " + table + " (" + data.columns +") VALUES ('" + data.values +"')"
+
+    console.log(query);
+
+    clt.query(query, function(err, result) {
         if (err) {
             console.log(err)
 
@@ -62,13 +72,12 @@ function edit (table, clt, done, cb, doc) {
         var updateUser = {
             first_name: doc.first_name,
             last_name: doc.last_name,
-            password: doc.new_password,
             invitation: true
         }
 
         var query = editQuery(updateUser);
 
-        clt.query("UPDATE " + table + " SET " + query + " WHERE username = $1 AND password = crypt($2, password)", [doc.username, doc.current_password], function(err, result) {
+        clt.query("UPDATE " + table + " SET " + query + ",password = crypt($3, gen_salt('md5')) WHERE username = $1 AND password = crypt($2, password)", [doc.username, doc.current_password, doc.new_password], function(err, result) {
             if (err) {
                 console.log(err)
 
