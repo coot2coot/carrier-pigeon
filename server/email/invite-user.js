@@ -46,7 +46,7 @@ function invitationString (logins) {
 			'</header>' +
 			'<div>' +
 				'<h2>Hello new user!</h2>' +
-				'<p>Here are your temperary logins: </p>' +
+				'<p>Here are your temporary logins: </p>' +
 				'<table>' +
 					'<tr>' +
 						'<td>Username:</td>' +

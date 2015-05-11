@@ -8,8 +8,14 @@ var api_key = 'key-c675f88a6e54632efaed14a61a431cf9';
 var domain = 'sandbox7b603196f4c643979486b6cce726860a.mailgun.org';
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 function generateLogins (mail) {
-    var name = mail.split("@").shift()
+    var name = mail.split("@").shift().capitalize();
+
+    console.log(name);
 
     var newUser = {
         username: name,

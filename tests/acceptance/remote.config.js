@@ -1,8 +1,8 @@
-require('colors');
 var chai = require("chai"),
     chaiAsPromised = require("chai-as-promised"),
     webdriver = require('wd'),
     landingTests = require("./stories/landing.e2e.js"),
+    adminTests = require("./stories/admin-panel.e2e.js"),
     capabilites;
    
 
@@ -13,15 +13,21 @@ chaiAsPromised.transferPromiseness = webdriver.transferPromiseness;
 capabilites = [
 	{
 		name: "Chrome Carrier-Pigeon",
-		browserName: "chrome"
+		browserName: "chrome",
+		version: "41.0",
+		platform: "OS X 10.9"
 	},
 	{
 		name: "Firefox Carrier-Pigeon",
-		browserName: "firefox"
+		browserName: "firefox",
+		version: "35.0",
+		platform: "OS X 10.9"
 	},
 	{
 		name: "Safari Carrier-Pigeon",
-		browserName: "safari"
+		browserName: "safari",
+		version: "8.0",
+		platform: "OS X 10.10"
 	}
 ];
 
@@ -31,6 +37,7 @@ describe('', function() {
     	length = capabilites.length;
 
     for (i = length - 1; i >= 0; i--) {
-    	landingTests(webdriver, capabilites[i]);
+    	landingTests(webdriver, capabilites[i], true);
+    	adminTests(webdriver, capabilites[i], true);
     };
 });
