@@ -6,28 +6,23 @@ input, select, textarea {
   	background: white;
 }
 
-input,textarea {
-  &.view_input {
-    background: $light-grey;
-    &.edit {
-    	background: white;
-    }
+input, select, textarea {
+  &[disabled] {
+    border: none;
+    background: $lightest-grey;
   }
 }
-input.job_no {
-    background: $light-grey;
- }
 
-select.view_input {
-  	background: $light-grey;
-  	&.edit {
-  		background: white;
-  	}
- }
+
+input.job_no {
+  border: none;
+  background: $lightest-grey;
+}
+
 input.invalid {
  	border-color: red;
  	box-shadow: 0 0 10px red;
- }
+}
 
 input.big {
 	height: 5.5em;

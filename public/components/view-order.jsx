@@ -71,7 +71,6 @@ module.exports = function(React, Link, ordersUrl) {
 			if(this.state.editing === true){
 				for (var prop in disabled){
 					disabled[prop].disabled = false;
-					disabled[prop].className += " edit"
 				}
 				this.setState({
 						editing: false
@@ -79,11 +78,6 @@ module.exports = function(React, Link, ordersUrl) {
 			} else {
 				for (var prop in disabled){
 					disabled[prop].disabled = true;
-
-					if(disabled[prop].className){
-						disabled[prop].className = disabled[prop].className.replace('edit', '');
-					}
-
 				}
 				this.setState({
 						editing: true
@@ -94,6 +88,7 @@ module.exports = function(React, Link, ordersUrl) {
 		render: function() {
 			var addUnit = this.addUnit;
 			var removeUnit = this.removeUnit;
+			var editing = this.state.editing;
 			return (
 
 				<div className="overlay">
@@ -130,12 +125,12 @@ module.exports = function(React, Link, ordersUrl) {
 										<div className="row">
 											{
 												this.state.units.map(function(unit, i){
-											        return <Units unit={unit} key={i} />;
+											        return <Units unit={unit} key={i} editing = {editing} />;
 											   })
 											}
 											<div className="column-2">
-												<button type="button"  className="button_units" onClick = {addUnit}>+</button>
-												<button type="button" className="button_units" onClick = {removeUnit}>-</button>
+												<button type="button" className="view_input button	units" onClick = {addUnit} disabled={editing ? true : false}>+</button>
+												<button type="button" className="view_input button	units" onClick = {removeUnit} disabled={editing ? true : false}>-</button>
 											</div>
 										</div>
 				

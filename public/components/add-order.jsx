@@ -101,8 +101,8 @@ module.exports = function(React, Link, ordersUrl) {
 											   })
 											}
 											<div className="column-2">
-												<button type="button"  className="button_units" onClick = {addUnit}>+</button>
-												<button type="button" className="button_units" onClick = {removeUnit}>-</button>
+												<button type="button"  className="button units" onClick = {addUnit}>+</button>
+												<button type="button" className="button units" onClick = {removeUnit}>-</button>
 											</div>
 
 										</div>
