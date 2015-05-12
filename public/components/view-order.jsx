@@ -57,10 +57,9 @@ module.exports = function(React, Link, ordersUrl) {
 	  	},
 
 		componentWillMount: function() {
-			var getOrderUrl = "/units";
-			var job_number = this.props.order.job_number;
+			var getOrderUrl = "/units/" + this.props.order.job_number;
 
-		    $.get(getOrderUrl, job_number, function(result) {
+		    $.get(getOrderUrl, function(result) {
 		    	if(result !== ""){
 			    	var unit = JSON.parse(result);
 
@@ -110,7 +109,7 @@ module.exports = function(React, Link, ordersUrl) {
                     </div>
 					<div className="column-10 push-3 model-generic model-top view-order">
 						<div className="panel-header">
-							<h3>{this.props.order.job_number}</h3>
+							<h3>{getJobNumber(this.props.order.job_number)}</h3>
 							<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.order)}>Delete</a>
 							<button className="button blue" onClick = {this.edit}  >Edit</button>
 							<button className="button blue">Copy</button>

@@ -47,7 +47,7 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/read-db.js').cached(req, res);
 	});
 
-	router.addRoute('/units:name', function (req, res, match){
+	router.addRoute('/units/:jobNo', function (req, res, match){
 	  	require('./handlers/read-units-db.js')(req,res);
 	});
 
