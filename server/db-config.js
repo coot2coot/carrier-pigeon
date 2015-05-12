@@ -130,7 +130,7 @@ function remove (table, clt, done, cb, doc) {
 
     var column;
 
-    column = table === "users" ? "username" : "job_number"
+    column = table === "users" ? "username" :table === "units" ? "unit_id" : "job_number"
 
     clt.query("DELETE FROM " + table + "  WHERE " + column + " = $1", [doc], function(err, user) {
 

@@ -7,7 +7,8 @@ module.exports = function(React, Link, ordersUrl) {
 		getInitialState: function() {
           return {
             editing: true,
-            units: []
+            units: [],
+            deletedUnits: []
           };
         },
 		deleteHandler: function (item) {
@@ -20,8 +21,38 @@ module.exports = function(React, Link, ordersUrl) {
 				deleteUser: null
 			})
 		},
+		addUnit: function() {
+			this.state.units.push(1)
+			var newState = this.state.units
 
-		componentDidMount: function() {
+	  		this.setState({
+	    		units: newState
+	    	});
+	  	},
+	  	removeUnit: function() {
+	  		if(this.state.units.length > 1){
+	  			var deleteUnit = this.state.units.splice(-1,1);
+	  			console.log(deleteUnit)
+	  			if(deleteUnit.unit_id){
+	  				this.setState({
+		    			units: this.state.units
+		    		});
+					this.state.deletedUnits.push(deleteUnit.unit_id);
+				}
+		    }
+	  	},
+	  	removeUnit: function() {
+	  		if(this.state.units.length > 1){
+				this.state.units.splice(-1,1)
+				var newState = this.state.units
+
+		  		this.setState({
+		    		units: newState
+		    	});
+		    }
+	  	},
+
+		componentWillMount: function() {
 			var getOrderUrl = "/units";
 			var job_number = this.props.order.job_number;
 
@@ -67,6 +98,8 @@ module.exports = function(React, Link, ordersUrl) {
 		},
 
 		render: function() {
+			var addUnit = this.addUnit;
+			var removeUnit = this.removeUnit;
 			return (
 
 				<div className="overlay">
@@ -86,7 +119,7 @@ module.exports = function(React, Link, ordersUrl) {
 							<a className="close" onClick={this.props.closeView}>x</a>
 						</div>
 						<div className="panel-body scroll">
-							<form action="/order/edit" method="POST">
+							<form action={"/order/edit/" + this.state.deletedUnits.join()} method="POST">
 								<div className="row gutters">
 									<div>
 										<div className="row">
@@ -106,6 +139,10 @@ module.exports = function(React, Link, ordersUrl) {
 											        return <Units unit={unit} key={i} />;
 											   })
 											}
+											<div className="column-2">
+												<button type="button"  className="button_units" onClick = {addUnit}>+</button>
+												<button type="button" className="button_units" onClick = {removeUnit}>-</button>
+											</div>
 										</div>
 				
 										<div className="row">
@@ -186,7 +223,7 @@ module.exports = function(React, Link, ordersUrl) {
 												<textarea className="view_input big" type="text"   defaultValue={this.props.order.remarks} name="remarks"  disabled max ='500'/>
 											</div>
 										</div>
-										<input className="button charcoal" type="submit" defaultValue="Update"  />
+										<input className="button charcoal" type="submit" value="Update" />
 									</div>
 								</div>
 							</form>

@@ -51,6 +51,10 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/read-units-db.js')(req,res);
 	});
 
+	router.addRoute('/units/delete/:id', function (req, res, match){
+	  	require('./handlers/delete-db.js')(req, res);
+	});
+
 	router.addRoute('/orders/get/nocache', function (req, res, match){
 	  	require('./handlers/read-db.js').noCache(req, res);
 	});

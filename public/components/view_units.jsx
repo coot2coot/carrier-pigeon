@@ -4,7 +4,7 @@ module.exports = function(React, Link) {
 			return (
 				<units>
 				<input className="unit_id" name="unit_id" defaultValue= {this.props.unit.unit_id} />
-					<div className="row">
+					<div className="row column-14">
 						<div className="column-4">
 							<p>Unit Type</p>
 							<select className="view_input"  name="unit_type" defaultValue={this.props.unit.unit_type} disabled required>

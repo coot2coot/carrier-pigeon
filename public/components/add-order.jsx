@@ -71,7 +71,7 @@ module.exports = function(React, Link, ordersUrl) {
 	  	},
 		render: function() {
 			var addUnit = this.addUnit;
-			var removeUnit = this.removeUnit
+			var removeUnit = this.removeUnit;
 			var today = currentDate();
 			return (
 				<div className="overlay">
@@ -101,8 +101,8 @@ module.exports = function(React, Link, ordersUrl) {
 											   })
 											}
 											<div className="column-2">
-												<button  className="button_units" onClick = {addUnit}>+</button>
-												<button className="button_units" onClick = {removeUnit}>-</button>
+												<button type="button"  className="button_units" onClick = {addUnit}>+</button>
+												<button type="button" className="button_units" onClick = {removeUnit}>-</button>
 											</div>
 
 										</div>
