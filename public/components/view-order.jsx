@@ -8,7 +8,7 @@ module.exports = function(React, Link, ordersUrl) {
           return {
             editing: true,
             units: [],
-            deletedUnits: []
+            deletedUnits: ""
           };
         },
 		deleteHandler: function (item) {
@@ -32,23 +32,17 @@ module.exports = function(React, Link, ordersUrl) {
 	  	removeUnit: function() {
 	  		if(this.state.units.length > 1){
 	  			var deleteUnit = this.state.units.splice(-1,1);
-	  			console.log(deleteUnit)
-	  			if(deleteUnit.unit_id){
-	  				this.setState({
-		    			units: this.state.units
+	  			var newState = this.state.units;
+	  			this.setState({
+		    			units: newState,
 		    		});
-					this.state.deletedUnits.push(deleteUnit.unit_id);
+	  			if(deleteUnit[0].unit_id){
+	  				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
+	  				this.setState({
+		    			deletedUnits: newDeletedStrng
+		    		});
+		
 				}
-		    }
-	  	},
-	  	removeUnit: function() {
-	  		if(this.state.units.length > 1){
-				this.state.units.splice(-1,1)
-				var newState = this.state.units
-
-		  		this.setState({
-		    		units: newState
-		    	});
 		    }
 	  	},
 
@@ -119,7 +113,7 @@ module.exports = function(React, Link, ordersUrl) {
 							<a className="close" onClick={this.props.closeView}>x</a>
 						</div>
 						<div className="panel-body scroll">
-							<form action={"/order/edit/" + this.state.deletedUnits.join()} method="POST">
+							<form action={"/order/edit/" + this.state.deletedUnits.slice(1)} method="POST">
 								<div className="row gutters">
 									<div>
 										<div className="row">

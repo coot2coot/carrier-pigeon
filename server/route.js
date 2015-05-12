@@ -71,7 +71,7 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/delete-db.js')(req, res);
 	});
 
-	router.addRoute('/order/edit', function (req, res, match){
+	router.addRoute('/order/edit/:unit?', function (req, res, match){
 	  	require('./handlers/edit-db.js')(req, res, cache.noCache);
 	});
 

@@ -111,8 +111,17 @@ function edit (table, clt, done, cb, doc) {
     } else {
         var ordersQuery = editQuery.standard(doc.order);
         var unitsQuery = editQuery.units(doc.unit);
+        var arr = doc.unit_delete.split(",")
+        var strng = "";
+        var i;
 
-        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= '" +doc.order.job_number +"'; " + unitsQuery , function(err, result) {
+        for(i = 0; i < arr.length; i++){
+            strng += "DELETE FROM units WHERE unit_id IN ("+arr[i]+");"
+        }
+        console.log("strng",strng)
+
+        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= '" + doc.order.job_number + "'; " + 
+            unitsQuery + strng, function(err, result) {
             if (err) {
                 console.log(err)
 
