@@ -127,7 +127,8 @@ module.exports = function(React, Link, ordersUrl) {
 											</div>
 											<div className="column-8" >
 												<p>Job No.</p>
-												<input type="text" className = "job_no"  name="job_number" value={getJobNumber(this.props.order.job_number)} readOnly />
+												<input type="text" className="job_no" value={getJobNumber(this.props.order.job_number)} readOnly />
+												<input type="text" className="display-none"  name="job_number" value={this.props.order.job_number}/>
 											</div>
 										</div>
 
