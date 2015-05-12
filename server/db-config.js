@@ -113,9 +113,6 @@ function edit (table, clt, done, cb, doc) {
         var unitsUpdateQuery = editQuery.units(doc.unit).update;
         var unitsCreateQuery = editQuery.units(doc.unit).create;
         var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
-        console.log(unitsUpdateQuery);
-        console.log(unitsCreateQuery);
-        console.log(unitsDeleteQuery);
 
         clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= '" + doc.order.job_number + "'; " + 
             unitsUpdateQuery  +unitsDeleteQuery + unitsCreateQuery , function(err, result) {
