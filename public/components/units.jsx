@@ -1,5 +1,34 @@
 module.exports = function(React, Link) {
 	return React.createClass({
+		getInitialState: function() {
+          return {
+            
+          };
+        },
+
+		componentDidMount: function() {
+			var getOrderUrl = "/unit_types/get";
+
+			if (window.location.href.indexOf('true') > -1 ) {
+				getOrderUrl = "/unit_types/get/nocache"
+			}
+
+		    $.get(getOrderUrl, function(result) {
+		    	if(result !== ""){
+			    	var options = JSON.parse(result);
+
+			    	console.log(options);
+			      	if (this.isMounted()) {
+			        	this.setState({
+			          		types : options
+			        	});
+			      	}
+			    }
+		    }.bind(this))
+		    .fail(function () {
+		    	"get request failed"
+		    });
+		},
 		render: function () {
 			return (
 				<units>
