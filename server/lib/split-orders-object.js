@@ -10,6 +10,7 @@ function splitObject (data){
 			obj.order[prop] = data[prop]
 		}
 	}
+	obj.unit.job_number = obj.order.job_number;
 	return obj;
 }
 
