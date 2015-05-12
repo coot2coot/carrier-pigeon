@@ -17,7 +17,6 @@ query.units = function (units){
 		create: ""
 	};
 	for(i = 0; i < units["unit_type"].length; i ++){
-		console.log(units["job_number"])
 		if(units["unit_id"][i]!== ""){
 			query.update += "UPDATE units SET unit_type = '" + units["unit_type"][i] + "',unit_number = " + units["unit_number"][i] + ",unit_weight = " + units["unit_weight"][i] + " WHERE unit_id = " + units["unit_id"][i] +"; ";
 		}else{
