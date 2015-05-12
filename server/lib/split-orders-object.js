@@ -3,7 +3,6 @@ function splitObject (data){
 	    unit: {},
 	    order: {}
 	};
-	obj.unit.job_number = data.job_number;
 	for (var prop in data){
 		if(prop.substring(0,4) === "unit"){
 			obj.unit[prop] = data[prop]
