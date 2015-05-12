@@ -16,31 +16,13 @@ var currentDate = function () {
     return todayDate;
 }
 
-var getJobNumber = function (id) {
-    var getYear = new Date().getFullYear() + ''; 
-    year = getYear.slice(-2);
-    
-    var newId;
-
-    console.log(id, year);
-  
-    if (id.slice(0, 2) === year) {
-      newId = Number(id) + 1 + '';
-      console.log('year!' )
-    } else {
-      newId = year + "0000";
-    }
-  	return newId;
-};
-
 module.exports = function(React, Link, ordersUrl) {
 	var Units = require("./units.jsx")(React, Link);
 
 	return React.createClass({
 		getInitialState: function() {
 		    return {
-		    	dateValue: currentDate(), 
-		    	jobNo: getJobNumber(this.props.jobNo),
+		    	dateValue: currentDate(),
 		    	valid: false,
 		    	unitsArr: [0],
 		    };
@@ -85,13 +67,9 @@ module.exports = function(React, Link, ordersUrl) {
 								<div className="row gutters">
 									<div>
 										<div className="row">
-											<div className="column-8" >
+											<div className="column-16" >
 												<p>Date</p>
 												<input type="date" name="date" min={this.state.dateValue} value={this.state.dateValue} onChange={this.onDateChange} required/>
-											</div>
-											<div className="column-8" >
-												<p>Job No.</p>
-												<input type="text" name="job_number" value={this.state.jobNo} readOnly/>
 											</div>
 										</div>
 										<div className="row">

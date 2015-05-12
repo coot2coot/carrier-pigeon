@@ -6,6 +6,15 @@ function sortJobIds (nums) {
 	return sorted[0].job_number;
 }
 
+var getJobNumber = function (dbId) {
+    var today = new Date();
+  
+	var id = ("0000" + dbId).slice(-4);
+    var mm = ("0" + (today.getMonth()+1)).slice(-2);
+    var yy = today.getFullYear().toString().slice(-2);
+  
+    return yy + mm + id;
+}
 
 module.exports = function(React, Link, ordersUrl) {
 	var Header = require("./header.jsx")(React, Link);
@@ -101,7 +110,7 @@ module.exports = function(React, Link, ordersUrl) {
 								        return <tr>
 								            		<td key={i + "first"}>
 								            			<a onClick={orderHandler.bind(null, order)}>
-								            				<p>{order.job_number}</p>
+								            				<p>{getJobNumber(order.job_number)}</p>
 								            			</a>
 								            		</td>
 													<td key={i + "second"}>

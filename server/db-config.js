@@ -71,7 +71,9 @@ function post (table, clt, done, cb, doc) {
     } else {
         orders = stringifyData(doc.order)
         units = stringifyUnits(doc.unit)
-        query = "INSERT into orders (" + orders.columns + ") VALUES ('"+orders.values+"'); INSERT into units ("+ units.columns + ") VALUES ('" + units.values + "');"
+        query = "INSERT into orders (" + orders.columns + ") VALUES ('" + orders.values+ "'); INSERT into units (unit_type,unit_weight,unit_number,job_number) VALUES " + units.values + ";"
+
+        console.log(query);
     }
     
     clt.query(query, function(err, result) {

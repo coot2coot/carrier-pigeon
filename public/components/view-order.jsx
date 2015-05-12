@@ -1,3 +1,13 @@
+var getJobNumber = function (dbId) {
+    var today = new Date();
+  
+	var id = ("0000" + dbId).slice(-4);
+    var mm = ("0" + (today.getMonth()+1)).slice(-2);
+    var yy = today.getFullYear().toString().slice(-2);
+  
+    return yy + mm + id;
+}
+
 module.exports = function(React, Link, ordersUrl) {
 
 	var Units = require("./view_units.jsx")(React, Link);
@@ -118,7 +128,7 @@ module.exports = function(React, Link, ordersUrl) {
 											</div>
 											<div className="column-8" >
 												<p>Job No.</p>
-												<input type="text" className = "job_no"  name="job_number" value={this.props.order.job_number} readOnly />
+												<input type="text" className = "job_no"  name="job_number" value={getJobNumber(this.props.order.job_number)} readOnly />
 											</div>
 										</div>
 
