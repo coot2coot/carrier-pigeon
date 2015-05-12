@@ -110,18 +110,15 @@ function edit (table, clt, done, cb, doc) {
         });
     } else {
         var ordersQuery = editQuery.standard(doc.order);
-        var unitsQuery = editQuery.units(doc.unit);
-        var arr = doc.unit_delete.split(",")
-        var strng = "";
-        var i;
-
-        for(i = 0; i < arr.length; i++){
-            strng += "DELETE FROM units WHERE unit_id IN ("+arr[i]+");"
-        }
-        console.log("strng",strng)
+        var unitsUpdateQuery = editQuery.units(doc.unit).update;
+        var unitsCreateQuery = editQuery.units(doc.unit).create;
+        var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
+        console.log(unitsUpdateQuery);
+        console.log(unitsCreateQuery);
+        console.log(unitsDeleteQuery);
 
         clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= '" + doc.order.job_number + "'; " + 
-            unitsQuery + strng, function(err, result) {
+            unitsUpdateQuery  +unitsDeleteQuery + unitsCreateQuery , function(err, result) {
             if (err) {
                 console.log(err)
 
