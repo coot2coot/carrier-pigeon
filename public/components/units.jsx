@@ -2,25 +2,24 @@ module.exports = function(React, Link) {
 	return React.createClass({
 		getInitialState: function() {
           return {
-            
+            options: [
+            	{
+            		types: ""
+            	}
+            ]
           };
         },
 
 		componentDidMount: function() {
 			var getOrderUrl = "/unit_types/get";
 
-			if (window.location.href.indexOf('true') > -1 ) {
-				getOrderUrl = "/unit_types/get/nocache"
-			}
-
 		    $.get(getOrderUrl, function(result) {
 		    	if(result !== ""){
-			    	var options = JSON.parse(result);
+			    	var opts = JSON.parse(result);
 
-			    	console.log(options);
 			      	if (this.isMounted()) {
 			        	this.setState({
-			          		types : options
+			          		options : opts
 			        	});
 			      	}
 			    }
@@ -29,6 +28,7 @@ module.exports = function(React, Link) {
 		    	"get request failed"
 		    });
 		},
+
 		render: function () {
 			return (
 				<units>
@@ -36,28 +36,11 @@ module.exports = function(React, Link) {
 						<div className="column-4">
 							<p>Unit Type</p>
 							<select name="unit_type"required>
-								<option>40dc</option>
-								<option>40hc</option>
-								<option>40pw</option>
-								<option>40fr</option>
-								<option>40rc</option>
-								<option>40ot</option>
-								<option>20dc</option>
-								<option>20tc</option>
-								<option>20fr</option>
-								<option>20rc</option>
-								<option>20ot</option>
-								<option>45pwhc</option>
-								<option>45hc</option>
-								<option>45rc</option>
-								<option>40 mafi</option>
-								<option>20 mafi</option>
-								<option>Box trailer</option>
-								<option>Taut liner</option>
-								<option>Flat bed</option>
-								<option>Groupage</option>
-								<option>Airfreight</option>
-								<option>Other</option>
+								{ this.state.options.map(function (unit, i) {
+							        return (
+							        	<option>{unit.types}</option>
+							        )
+							    })}
 							</select>
 						</div>
 						<div className="column-4">

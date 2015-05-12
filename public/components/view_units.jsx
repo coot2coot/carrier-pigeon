@@ -1,5 +1,34 @@
 module.exports = function(React, Link) {
 	return React.createClass({
+		getInitialState: function() {
+          return {
+            options: [
+            	{
+            		types: ""
+            	}
+            ]
+          };
+        },
+
+		componentDidMount: function() {
+			var getOrderUrl = "/unit_types/get";
+
+		    $.get(getOrderUrl, function(result) {
+		    	if(result !== ""){
+			    	var opts = JSON.parse(result);
+
+			      	if (this.isMounted()) {
+			        	this.setState({
+			          		options: opts
+			        	});
+			      	}
+			    }
+		    }.bind(this))
+		    .fail(function () {
+		    	"get request failed"
+		    });
+		},
+
 		render: function () {
 			return (
 				<units>
@@ -8,28 +37,11 @@ module.exports = function(React, Link) {
 						<div className="column-4">
 							<p>Unit Type</p>
 							<select className="view_input"  name="unit_type" defaultValue={this.props.unit.unit_type} disabled={this.props.editing ? true : false} required>
-							  	<option>40dc</option>
-								<option>40hc</option>
-								<option>40pw</option>
-								<option>40fr</option>
-								<option>40rc</option>
-								<option>40ot</option>
-								<option>20dc</option>
-								<option>20tc</option>
-								<option>20fr</option>
-								<option>20rc</option>
-								<option>20ot</option>
-								<option>45pwhc</option>
-								<option>45hc</option>
-								<option>45rc</option>
-								<option>40 mafi</option>
-								<option>20 mafi</option>
-								<option>Box trailer</option>
-								<option>Taut liner</option>
-								<option>Flat bed</option>
-								<option>Groupage</option>
-								<option>Airfreight</option>
-								<option>Other</option>
+								{ this.state.options.map(function (unit, i) {
+							        return (
+							        	<option>{unit.types}</option>
+							        )
+							    })}
 							</select>
 						</div>
 						<div className="column-4">

@@ -100,7 +100,7 @@ function edit (table, clt, done, cb, doc) {
 
         var query = editQuery.standard(updateUser);
 
-        clt.query("UPDATE " + table + " SET " + query + ",password = crypt($3, gen_salt('md5')) WHERE username = $1 AND password = crypt($2, password)", [doc.username, doc.current_password, doc.new_password], function(err, result) {
+        clt.query("UPDATE users SET " + query + ",password = crypt($3, gen_salt('md5')) WHERE username = $1 AND password = crypt($2, password)", [doc.username, doc.current_password, doc.new_password], function(err, result) {
             if (err) {
                 console.log(err)
 

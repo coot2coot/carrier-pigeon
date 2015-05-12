@@ -47,12 +47,12 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/read-db.js').cached(req, res);
 	});
 
-	router.addRoute('/units:name', function (req, res, match){
+	router.addRoute('/units/:jobNo', function (req, res, match){
 	  	require('./handlers/read-units-db.js')(req,res);
 	});
 
 	router.addRoute('/unit_types/get', function (req, res, match){
-	  	require('./handlers/read-unit-types-db.js').cached(req, res);
+	  	require('./handlers/read-unit-types-db.js')(req, res);
 	});
 
 	router.addRoute('/units/delete/:id', function (req, res, match){

@@ -2,10 +2,9 @@ var validateUser = require('../lib/validate-user.js');
 var db 			 = require("../db-config.js");
 
 var selectUnits = function (req, res) {
-	var data = req.url;
-	strng = data.replace(/\/units\?/g, "")
+	var data = req.url.split("/").pop()
 
-	db.selectUnits('units',strng,function (units) {
+	db.selectUnits('units',data,function (units) {
 
 		var unit = JSON.stringify(units);
 
