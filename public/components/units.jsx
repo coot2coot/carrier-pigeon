@@ -28,6 +28,7 @@ module.exports = function(React, Link) {
 								<option>Flat bed</option>
 								<option>Groupage</option>
 								<option>Airfreight</option>
+								<option>Other</option>
 							</select>
 						</div>
 						<div className="column-4">

@@ -5,6 +5,7 @@ var splitObject = require('../lib/split-orders-object.js');
 var db 			 = require("../db-config.js");
 
 function create (req, res) {
+	
 	parseData(req, function (data) {
 		validateOrder(data, res, function () {
 			validateUser(req, res, function() {

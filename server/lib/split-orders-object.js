@@ -1,5 +1,4 @@
 function splitObject (data){
-	console.log(data);
 	var obj = {
 	    unit: {},
 	    order: {}

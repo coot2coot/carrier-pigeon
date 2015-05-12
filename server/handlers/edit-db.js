@@ -5,10 +5,13 @@ var splitObject = require('../lib/split-orders-object.js');
 var db 				= require("../db-config.js");
 
 function edit (req, res, cb) {
+	var data = req.url;
+	strng = data.replace(/\/order\/edit\//g, "");
 	parseData(req, function (data) {
 		validateOrder(data, res, function () {
 			validateUser(req, res, function() {
 				var splitData = splitObject(data);
+				splitData.unit_delete = strng;
 				db.edit('orders', splitData, function (err) {
 					if (err) {
 						console.log(err)

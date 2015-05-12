@@ -7,7 +7,8 @@ module.exports = function(React, Link, ordersUrl) {
 		getInitialState: function() {
           return {
             editing: true,
-            units: []
+            units: [],
+            deletedUnits: ""
           };
         },
 		deleteHandler: function (item) {
@@ -20,8 +21,32 @@ module.exports = function(React, Link, ordersUrl) {
 				deleteUser: null
 			})
 		},
+		addUnit: function() {
+			this.state.units.push(1)
+			var newState = this.state.units
 
-		componentDidMount: function() {
+	  		this.setState({
+	    		units: newState
+	    	});
+	  	},
+	  	removeUnit: function() {
+	  		if(this.state.units.length > 1){
+	  			var deleteUnit = this.state.units.splice(-1,1);
+	  			var newState = this.state.units;
+	  			this.setState({
+		    			units: newState,
+		    		});
+	  			if(deleteUnit[0].unit_id){
+	  				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
+	  				this.setState({
+		    			deletedUnits: newDeletedStrng
+		    		});
+		
+				}
+		    }
+	  	},
+
+		componentWillMount: function() {
 			var getOrderUrl = "/units";
 			var job_number = this.props.order.job_number;
 
@@ -46,7 +71,6 @@ module.exports = function(React, Link, ordersUrl) {
 			if(this.state.editing === true){
 				for (var prop in disabled){
 					disabled[prop].disabled = false;
-					disabled[prop].className += " edit"
 				}
 				this.setState({
 						editing: false
@@ -54,11 +78,6 @@ module.exports = function(React, Link, ordersUrl) {
 			} else {
 				for (var prop in disabled){
 					disabled[prop].disabled = true;
-
-					if(disabled[prop].className){
-						disabled[prop].className = disabled[prop].className.replace('edit', '');
-					}
-
 				}
 				this.setState({
 						editing: true
@@ -67,6 +86,9 @@ module.exports = function(React, Link, ordersUrl) {
 		},
 
 		render: function() {
+			var addUnit = this.addUnit;
+			var removeUnit = this.removeUnit;
+			var editing = this.state.editing;
 			return (
 
 				<div className="overlay">
@@ -86,7 +108,7 @@ module.exports = function(React, Link, ordersUrl) {
 							<a className="close" onClick={this.props.closeView}>x</a>
 						</div>
 						<div className="panel-body scroll">
-							<form action="/order/edit" method="POST">
+							<form action={"/order/edit/" + this.state.deletedUnits.slice(1)} method="POST">
 								<div className="row gutters">
 									<div>
 										<div className="row">
@@ -103,9 +125,13 @@ module.exports = function(React, Link, ordersUrl) {
 										<div className="row">
 											{
 												this.state.units.map(function(unit, i){
-											        return <Units unit={unit} key={i} />;
+											        return <Units unit={unit} key={i} editing = {editing} />;
 											   })
 											}
+											<div className="column-2">
+												<button type="button" className="view_input button	units" onClick = {addUnit} disabled={editing ? true : false}>+</button>
+												<button type="button" className="view_input button	units" onClick = {removeUnit} disabled={editing ? true : false}>-</button>
+											</div>
 										</div>
 				
 										<div className="row">
@@ -186,7 +212,7 @@ module.exports = function(React, Link, ordersUrl) {
 												<textarea className="view_input big" type="text"   defaultValue={this.props.order.remarks} name="remarks"  disabled max ='500'/>
 											</div>
 										</div>
-										<input className="button charcoal" type="submit" defaultValue="Update"  />
+										<input className="button charcoal" type="submit" value="Update" />
 									</div>
 								</div>
 							</form>

@@ -4,10 +4,10 @@ module.exports = function(React, Link) {
 			return (
 				<units>
 				<input className="unit_id" name="unit_id" defaultValue= {this.props.unit.unit_id} />
-					<div className="row">
+					<div className="row column-14 no-gutter">
 						<div className="column-4">
 							<p>Unit Type</p>
-							<select className="view_input"  name="unit_type" defaultValue={this.props.unit.unit_type} disabled required>
+							<select className="view_input"  name="unit_type" defaultValue={this.props.unit.unit_type} disabled={this.props.editing ? true : false} required>
 							  	<option>40dc</option>
 								<option>40hc</option>
 								<option>40pw</option>
@@ -29,15 +29,16 @@ module.exports = function(React, Link) {
 								<option>Flat bed</option>
 								<option>Groupage</option>
 								<option>Airfreight</option>
+								<option>Other</option>
 							</select>
 						</div>
 						<div className="column-4">
 							<p>Unit Weight</p>
-							<input className="view_input"  type="text" min="1" defaultValue={this.props.unit.unit_weight} name="unit_weight" disabled/>
+							<input className="view_input"  type="text" min="1" defaultValue={this.props.unit.unit_weight} name="unit_weight" disabled={this.props.editing ? true : false}/>
 						</div>
 						<div className="column-8">
 							<p>Unit Number</p>
-							<input className="view_input"  type="text"  defaultValue= {this.props.unit.unit_number} name="unit_number"   disabled required/>
+							<input className="view_input"  type="text"  defaultValue= {this.props.unit.unit_number} name="unit_number"  disabled={this.props.editing ? true : false} required/>
 						</div>
 					</div>
 				</units>

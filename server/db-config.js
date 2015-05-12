@@ -110,9 +110,12 @@ function edit (table, clt, done, cb, doc) {
         });
     } else {
         var ordersQuery = editQuery.standard(doc.order);
-        var unitsQuery = editQuery.units(doc.unit);
+        var unitsUpdateQuery = editQuery.units(doc.unit).update;
+        var unitsCreateQuery = editQuery.units(doc.unit).create;
+        var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
 
-        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= '" +doc.order.job_number +"'; " + unitsQuery , function(err, result) {
+        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= '" + doc.order.job_number + "'; " + 
+            unitsUpdateQuery  +unitsDeleteQuery + unitsCreateQuery , function(err, result) {
             if (err) {
                 console.log(err)
 
@@ -130,7 +133,7 @@ function remove (table, clt, done, cb, doc) {
 
     var column;
 
-    column = table === "users" ? "username" : "job_number"
+    column = table === "users" ? "username" :table === "units" ? "unit_id" : "job_number"
 
     clt.query("DELETE FROM " + table + "  WHERE " + column + " = $1", [doc], function(err, user) {
 
