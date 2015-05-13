@@ -20,6 +20,7 @@ module.exports = function(React, Link, ordersUrl) {
 	var Header = require("./header.jsx")(React, Link);
 	var ViewOrder = require("./view-order.jsx")(React, Link);
 	var CreateOrder = require("./add-order.jsx")(React, Link);
+	var SearchBox = require("./search-box.jsx")(React, Link);
 
 	return React.createClass({
 		getInitialState: function() {
@@ -31,9 +32,11 @@ module.exports = function(React, Link, ordersUrl) {
 	            	carrier: "",
 	            	collect_from: "",
 	            	deliver_to: "",
-	            	handler: ""
+	            	handler: "",
 	            }
-            ]
+            ],
+            searchValue: ""
+
           };
         },
 
@@ -61,6 +64,7 @@ module.exports = function(React, Link, ordersUrl) {
 		    });
 		},
 
+
 		onCloseComponent: function () {
 			this.setState({
 				selectedOrder: null,
@@ -79,6 +83,22 @@ module.exports = function(React, Link, ordersUrl) {
 				creatingOrder: true
 			})
 		},
+		getSearchedOrders: function (value) {
+
+			var getUrl = "/search/orders/" + value;
+			$.get(getUrl,function (result) {
+				var order = JSON.parse(result);
+				console.log(order)
+
+				this.setState({
+			          	orders : order
+			    });
+				
+			}.bind(this))
+			.fail(function(){
+				"get searchfailed"
+			});
+		},
 
 
 		render: function() {
@@ -91,6 +111,7 @@ module.exports = function(React, Link, ordersUrl) {
 						<div className="panel-header">
 							<h3>Orders</h3>
 							<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
+							<SearchBox getorders= {this.getSearchedOrders} />
 						</div>
 						<div className="panel-body table-responsive model-overflow">
 							<table className="table table-full">
@@ -106,6 +127,7 @@ module.exports = function(React, Link, ordersUrl) {
 								<th>
 									<h5>units</h5>
 								</th>
+								<tbody>
 							  		{ this.state.orders.map(function (order, i) {
 								        return <tr>
 								            		<td key={i + "first"}>
@@ -130,6 +152,7 @@ module.exports = function(React, Link, ordersUrl) {
 													</td>
 												</tr>
 								    })}
+								</tbody>
 							</table>
 						</div>
 					</div>
