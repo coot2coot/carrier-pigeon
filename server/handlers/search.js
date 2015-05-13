@@ -7,10 +7,8 @@ function search (req, res) {
 	validateUser(req,res, function (){
 		db.searcher('orders',data, function (err,orders) {
 			if(err){
-				res.writeHead(303, {
-					"Location": "/#/orders/show/error"
-				});
-				return res.end();
+				res.writeHead(200, {"Content-Type" : "text/plain"});
+				res.end('error');
 			}else{
 				var order = JSON.stringify(orders);
 

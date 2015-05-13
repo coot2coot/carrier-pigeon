@@ -36,7 +36,8 @@ module.exports = function(React, Link, ordersUrl) {
 	            	handler: "",
 	            }
             ],
-            searchValue: ""
+            searchValue: "",
+            error:false
 
           };
         },
@@ -87,13 +88,18 @@ module.exports = function(React, Link, ordersUrl) {
 		getSearchedOrders: function (value) {
 
 			var getUrl = "/search/orders/" + value;
-			$.get(getUrl,function (result) {
-				var order = JSON.parse(result);
+			$.get(getUrl,function (result) {	
+				if(result === "error"){
+					this.setState({
+						error: true
+					})
+				}else{		
+					var order = JSON.parse(result);
 
-				this.setState({
-			          	orders : order
-			    });
-				
+					this.setState({
+					    orders : order
+					});
+				}				
 			}.bind(this))
 			.fail(function(){
 				"get searchfailed"
@@ -104,13 +110,12 @@ module.exports = function(React, Link, ordersUrl) {
 		render: function() {
 			var orderHandler = this.orderHandler;
 			var addInvoiceHandler = this.addInvoice;
-			console.log(this.props.params);
 			return (
 				<div>
 					<Header/>
 					<div className="column-14 push-1 model-generic">
 						<div>
-							{(this.props.params && this.props.params.error
+							{(this.state.error
                                 ? <Error message="Sorry, that search returned no results. Try another search." />
                                 : <p className="display-none"></p>
                             )}

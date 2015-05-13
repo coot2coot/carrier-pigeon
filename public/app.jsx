@@ -28,7 +28,6 @@ var routes = (
     <Route>  
         <Route name="orders" path="/orders" handler={Orders}>
             <Route name="orderUpdate" path=":update" handler={Orders} />
-            <Route name="errorOrders" path="show/:error" handler={Orders} />
         </Route>
         <Route name="login" path="/login" handler={Login}>
             <Route name="errorLogin" path=":error" handler={Login} />
