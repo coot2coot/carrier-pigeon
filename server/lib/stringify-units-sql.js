@@ -12,15 +12,15 @@ module.exports = function (units){
 			str += "('" + units["unit_type"][i] + "', '" + units["unit_weight"][i] +  "', '" + units["unit_number"][i] + "',(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1)),";
 		}
 
-		console.log(str);
-
 		data.values= str.slice(0, -1);
 		data.columns = "unit_type,unit_weight,unit_number,job_number";
 		return data;
 	}else{
 
+		console.log(data.values);
 		data = stringify(units);
-		var str = "('" + data.values + "',(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1))";
+		data.values= data.values.slice(0, -1);
+		var str = "('" + data.values + "(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1))";
 
 		data.values = str;
 		return data;
