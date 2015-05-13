@@ -210,6 +210,9 @@ function loginUser (table, clt, done, cb, username, password, remember) {
     });
 }
 
+function search (table, clt, done, cb, value){
+
+}
 
 dataBase.get = function (table, cb, test){
  	connect(get, table, cb, test)
@@ -229,11 +232,9 @@ dataBase.remove = function (table, doc, cb, test){
     connect(remove,table,cb,test, doc)
 };
 
-
 dataBase.selectUnits = function (table, job_number, cb , test){
     connect(selectUnits, table,cb, test, job_number)
 };
-
 
 dataBase.getUser = function (username, cb, test) {
    connect(getUser,"users",cb, test, username)
@@ -241,6 +242,10 @@ dataBase.getUser = function (username, cb, test) {
 
 dataBase.selectUser = function (username, password, remember, cb, test) {
    connect(loginUser,"users",cb, test, username, password, remember)
+};
+
+dataBase.search = function (table, data, cb, test) {
+    connect(search, table,cb,test,data)
 };
 
 module.exports = dataBase;

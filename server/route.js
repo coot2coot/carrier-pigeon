@@ -74,6 +74,12 @@ var serverRoutes =  function (router) {
 	router.addRoute('/order/edit/:unit?', function (req, res, match){
 	  	require('./handlers/edit-db.js')(req, res, cache.noCache);
 	});
+/* -------------------------------*
+ *	   Search Routes
+ * -------------------------------*/
+ 	router.addRoute('search/orders/:searchTerms?', function (req, res, match){
+ 		require('.handlers/search.js')(req, res);
+ 	});
 
 /* -------------------------------*
  *	   Admin Panel Routes

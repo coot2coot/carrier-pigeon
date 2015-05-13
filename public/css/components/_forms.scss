@@ -55,3 +55,12 @@ form.account {
   display: none;
   visibility: hidden;
 }
+
+searchbox{
+  input[type="text"]{
+    width: 67%;  
+  }
+  input[type="submit"]{
+    width: 30%;
+  }
+}
