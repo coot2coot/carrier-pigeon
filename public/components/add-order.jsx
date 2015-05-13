@@ -88,7 +88,7 @@ module.exports = function(React, Link, ordersUrl) {
 										<div className="row">
 											<div className="column-8">
 												<p>Client</p>
-												<input type="text" name="client" className="big"  required/>
+												<textarea type="text" name="client" className="big"  required max='500'/>
 											</div>
 											<div className="column-8">
 												<p>Carrier </p>
@@ -103,7 +103,7 @@ module.exports = function(React, Link, ordersUrl) {
 										<div className="row">
 											<div className="column-8">
 												<p>Collection From</p>
-												<input type="text" className="big" name="collect_from" />
+												<textarea type="text" className="big" name="collect_from" max='500'/>
 											</div>
 											<div className="column-8">
 												<p>City</p>
