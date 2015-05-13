@@ -21,6 +21,7 @@ module.exports = function(React, Link, ordersUrl) {
 	var ViewOrder = require("./view-order.jsx")(React, Link);
 	var CreateOrder = require("./add-order.jsx")(React, Link);
 	var SearchBox = require("./search-box.jsx")(React, Link);
+	var Error = require("./error-message.jsx")(React);
 
 	return React.createClass({
 		getInitialState: function() {
@@ -88,7 +89,6 @@ module.exports = function(React, Link, ordersUrl) {
 			var getUrl = "/search/orders/" + value;
 			$.get(getUrl,function (result) {
 				var order = JSON.parse(result);
-				console.log(order)
 
 				this.setState({
 			          	orders : order
@@ -104,10 +104,17 @@ module.exports = function(React, Link, ordersUrl) {
 		render: function() {
 			var orderHandler = this.orderHandler;
 			var addInvoiceHandler = this.addInvoice;
+			console.log(this.props.params);
 			return (
 				<div>
-					<Header />
+					<Header/>
 					<div className="column-14 push-1 model-generic">
+						<div>
+							{(this.props.params && this.props.params.error
+                                ? <Error message="Sorry, that search returned no results. Try another search." />
+                                : <p className="display-none"></p>
+                            )}
+                        </div>
 						<div className="panel-header">
 							<h3>Orders</h3>
 							<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
@@ -122,10 +129,10 @@ module.exports = function(React, Link, ordersUrl) {
 									<h5>Client</h5>
 								</th>
 								<th>
-									<h5>carrier</h5>
+									<h5>Carrier</h5>
 								</th>
 								<th>
-									<h5>units</h5>
+									<h5>Ledger</h5>
 								</th>
 								<tbody>
 							  		{ this.state.orders.map(function (order, i) {
@@ -147,7 +154,7 @@ module.exports = function(React, Link, ordersUrl) {
 													</td>
 													<td key={i + "fourth"}>
 														<a onClick={orderHandler.bind(null, order)}>
-															<p>{order.number_of_units}</p>
+															<p></p>
 														</a>
 													</td>
 												</tr>

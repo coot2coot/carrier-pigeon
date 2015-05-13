@@ -147,7 +147,7 @@ module.exports = function(React, Link, ordersUrl) {
 										<div className="row">
 											<div className="column-8">
 												<p>Client</p>
-												<input className="view_input big" type="text"  defaultValue= {this.props.order.client}  name="client" disabled required/>
+												<textarea className="view_input big" type="text"  defaultValue= {this.props.order.client}  name="client" disabled max='500' required/>
 											</div>
 											<div className="column-8">
 												<p>Carrier </p>
@@ -162,7 +162,7 @@ module.exports = function(React, Link, ordersUrl) {
 										<div className="row">
 											<div className="column-8">
 												<p>Collection From</p>
-												<input className="view_input big" type="text"  big defaultValue={this.props.order.collect_from} name="collect_from" disabled />
+												<textarea className="view_input big" type="text"  big defaultValue={this.props.order.collect_from} name="collect_from" max="500" disabled />
 											</div>
 											<div className="column-8">
 												<p>City</p>
