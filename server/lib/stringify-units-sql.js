@@ -3,7 +3,6 @@ var stringify = require('./stringify-data-sql.js');
 
 module.exports = function (units){
 	var data = {};
-
 	if(typeof units["unit_type"] === "object"){
 		var i;
 		var arr = [];
@@ -16,8 +15,6 @@ module.exports = function (units){
 		data.columns = "unit_type,unit_weight,unit_number,job_number";
 		return data;
 	}else{
-
-		console.log(data.values);
 		data = stringify(units);
 		data.values= data.values.slice(0, -1);
 		var str = "('" + data.values + "(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1))";

@@ -53,7 +53,6 @@ function getOrders (table, clt, done, cb) {
             done(clt);
             return;
          }
-         console.log(result.rows)
         done();
         cb(result.rows);
     });
