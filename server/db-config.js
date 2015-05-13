@@ -5,6 +5,7 @@ var url 	      = "postgres://"+ str + "/carrier-pigeon-dev"
 var stringifyData = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js");
 var editQuery     = require("./lib/edit-query-sql.js");
+var queryStrings = require("./lib/querys.js");
 var dataBase      = {};
 
 
@@ -52,7 +53,7 @@ function getOrders (table, clt, done, cb) {
             done(clt);
             return;
          }
-
+         console.log(result.rows)
         done();
         cb(result.rows);
     });
@@ -211,6 +212,19 @@ function loginUser (table, clt, done, cb, username, password, remember) {
 }
 
 function search (table, clt, done, cb, value){
+    var query = queryStrings.searchOrders(value);
+    console.log("query",query)
+    clt.query(query, function (err,result){
+        if(err) {
+            console.log(err);
+            done();
+            return;
+        }
+        done();
+
+        cb(result.rows);
+
+    })
 
 }
 
@@ -244,7 +258,7 @@ dataBase.selectUser = function (username, password, remember, cb, test) {
    connect(loginUser,"users",cb, test, username, password, remember)
 };
 
-dataBase.search = function (table, data, cb, test) {
+dataBase.searcher = function (table, data, cb, test) {
     connect(search, table,cb,test,data)
 };
 

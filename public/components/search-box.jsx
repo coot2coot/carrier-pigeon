@@ -9,16 +9,19 @@ module.exports = function(React, Link){
 				searchValue: ""
 			}
 		},
-		setSearchValue: function (event) {
+		setSearchValue: function (event){		
 			this.setState({
 				searchValue: event.target.value
 			})
+		},
+		getOrders: function() {
+			return this.props.getorders(this.state.searchValue)
 		},
 		render: function (){
 			return(
 				<searchbox className="column-4 float-right">
 					<input placeholder="Search ..." type="text" name="search" onChange={this.setSearchValue} />
-					<input className="button blue" type="submit" onClick={this.props.getorders(this.state.searchValue)} />
+					<input className="button blue" type="submit" onClick={this.getOrders} />
 				</searchbox>
 			)
 		}
