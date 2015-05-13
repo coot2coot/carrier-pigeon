@@ -46,7 +46,7 @@ function get (table, clt, done, cb) {
 }
 
 function getOrders (table, clt, done, cb) {
-    clt.query("SELECT orders.*, number_of_units FROM orders LEFT JOIN (SELECT units.job_number AS unit_order_id,COUNT(units.job_number) AS number_of_units FROM Units GROUP BY units.job_number) AS units_count ON orders.job_number = unit_order_id;", function(err, result) {
+    clt.query("SELECT * FROM orders", function(err, result) {
         if (err) {
             console.log('err >>>', err)
 
@@ -212,16 +212,16 @@ function loginUser (table, clt, done, cb, username, password, remember) {
 
 function search (table, clt, done, cb, value){
     var query = queryStrings.searchOrders(value);
-    console.log("query",query)
     clt.query(query, function (err,result){
-        if(err) {
+        if(err || result.rows.length ===0) {
             console.log(err);
             done();
-            return;
+
+            return cb(true);
         }
         done();
 
-        cb(result.rows);
+        cb(null,result.rows);
 
     })
 
