@@ -11,9 +11,12 @@ var settingsLinks = React.createClass({
                 <Link to="settings" query={{}}>
                     <p>Update your details</p>
                 </Link>
-                <Link to="AddUnitType" query={{}}>
-                    <p>Add Unit Type</p>
-                </Link>
+
+                {( this.props.admin
+                    ? <Link to="AddUnitType" query={{}}><p>Add Unit Type</p></Link>
+                    : <p></p>
+                )}
+                
             </links>
         )
     }
