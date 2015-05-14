@@ -1,3 +1,5 @@
+/** @jsx React.DOM */
+
 var React       = require('react');
 var Router      = require('react-router');
 
@@ -6,11 +8,10 @@ var Link        = Router.Link;
 var Route       = Router.Route;
 var RouteHandler= Router.RouteHandler;
 
-var Login       = require("./components/login-panel.jsx")(React, Link);
-var Header      = require("./components/header.jsx")(React, Link);
-var Orders      = require("./components/ordersPage.jsx")(React, Link);
-var AdminPanel  = require("./components/admin-panel.jsx")(React, Link);
-var Settings    = require("./components/settings.jsx")(React, Link);
+var Login       = require("./components/login-panel.jsx");
+var Orders      = require("./components/ordersPage.jsx");
+var AdminPanel  = require("./components/admin-panel.jsx");
+var Settings    = require("./components/settings.jsx");
 
 
 var Test = React.createClass({
