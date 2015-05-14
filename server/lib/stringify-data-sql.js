@@ -10,7 +10,7 @@ module.exports = function (result) {
 	    value.push(result[k]);
 	}
 	data.columns = keys.join(", ");
-	data.values = value.join("','");
+	data.values = "'" + value.join("','") + "'";
 	
 	return data;
 }
