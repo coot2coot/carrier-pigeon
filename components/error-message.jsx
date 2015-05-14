@@ -1,14 +1,15 @@
 /** @jsx React.DOM */
 
-module.exports = function(React, Link) {
+var React 	= require('react');
 
-    return  React.createClass({
-        render: function() {
-            return (
-                <div className="error">
-                    <p> * {this.props.message}</p>
-                </div>
-            )
-        }
-    })
-}
+var error = React.createClass({
+    render: function() {
+        return (
+            <div className="error">
+                <p> * {this.props.message}</p>
+            </div>
+        )
+    }
+})
+
+module.exports = error;
