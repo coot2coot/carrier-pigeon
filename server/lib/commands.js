@@ -25,11 +25,11 @@ var commands ={
 		return	this
 	},
 	columns: function (columns) {
-		this.string += "(" + columns +")"
+		this.string += " (" + columns +")"
 		return this
 	},
 	values: function (values) {
-		this.string += "(" + values +")"
+		this.string += " VALUES (" + values +")"
 		return this
 	},
 
@@ -51,4 +51,7 @@ var commands ={
 	}
 }
 
-module.exports = commands;
+module.exports = function () {
+	commands.string = "";
+	return commands
+};

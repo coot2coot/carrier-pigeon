@@ -33,7 +33,7 @@ function connect (query, table, cb, test, var1, var2, var3) {
 
 
 function get (table, clt, done, cb) {
-    clt.query(command
+    clt.query(command()
                 .select("*")
                 .from(table)
                 .end(), function(err, result) {
@@ -60,23 +60,25 @@ function post (table, clt, done, cb, doc) {
     if (table === "users") {
         var columns = stringifyData(doc).columns +", password";
         var values = "'" +stringifyData(doc).values + "', crypt('changeme', gen_salt('md5')"
-        query = command.
-                    insertInto(table).
-                    columns(columns).
-                    values(values).
-                    end()
+        console.log(values);
+        query = command()
+                    .insertInto(table)
+                    .columns(columns)
+                    .values(values)
+                    .end()
     } else {
         orders = stringifyData(doc.order)
         units = stringifyUnits(doc.unit)
-        query = command
+        query = command()
                     .insertInto(table)
                     .columns(orders.columns)
                     .values(orders.values)
                     .next()
-                    .insertInto(table)
+                    .insertInto('units')
                     .columns("unit_type,unit_weight,unit_number,job_number")
                     .values(units.values)
                     .end() 
+        console.log(query);
     }
     
     clt.query(query, function(err, result) {
@@ -103,7 +105,7 @@ function edit (table, clt, done, cb, doc) {
 
         var query = editQuery.standard(updateUser);
 
-        clt.query(command
+        clt.query(command()
                     .update(users)
                     .set(query+ ",password = crypt($3, gen_salt('md5'))")
                     .where("username = $1 AND password = crypt($2, password)")
@@ -123,7 +125,7 @@ function edit (table, clt, done, cb, doc) {
         var unitsCreateQuery = editQuery.units(doc.unit).create;
         var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
 
-        clt.query(command
+        clt.query(command()
                     .update("orders")
                     .set(ordersQuery)
                     .where()
@@ -205,7 +207,7 @@ function getUser (table, clt, done, cb, username) {
 }
 
 function loginUser (table, clt, done, cb, username, password, remember) {
-    clt.query(command
+    clt.query(command()
                 .select("*")
                 .from(table)
                 .where("username = $1 AND password = crypt($2, password)"), [username, password], function(err, user) {

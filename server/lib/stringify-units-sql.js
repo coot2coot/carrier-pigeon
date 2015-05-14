@@ -17,7 +17,7 @@ module.exports = function (units){
 	}else{
 		data = stringify(units);
 		data.values= data.values.slice(0, -1);
-		var str = "('" + data.values + "(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1))";
+		var str = data.values.slice(0, -1) + "(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1)";
 
 		data.values = str;
 		return data;
