@@ -21,6 +21,11 @@ var header = React.createClass({
                 url: url,
                 dataType: 'json',
                 success: function(data) {
+
+                    if (this.props.isAdmin) {
+                        this.props.isAdmin(data.user);
+                    }
+                    
                     this.setState({
                         loggedIn: true,
                         user: data.user

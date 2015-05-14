@@ -21,7 +21,7 @@ var headerLinks = React.createClass({
                 <a href="/logout">
                     <p>Logout</p>
                 </a>
-                <Link to="settings" params={{username: this.props.user.username}}>
+                <Link to="settings" query={{}}>
                     <p>Settings</p>
                 </Link>
                 <div>

@@ -10,19 +10,19 @@ var nav = React.createClass({
         	<nav className="nav">
 			  	<ul>
 			    	<li>
-			    		<Link to = "orders">
+			    		<Link to="orders">
                             <img src="../img/nav/shipping.png" />
 							<h5>Orders</h5>
                         </Link>
 					</li>
 					<li>
-						<Link to = "contacts">
+						<Link to="contacts">
                             <img src="../img/nav/list.png" />
 							<h5>Contacts</h5>
                         </Link>
 					</li>
 					<li>
-						<Link to = "reports">
+						<Link to="reports">
                             <img src="../img/nav/booking.png" />
 							<h5>Reports</h5>
                         </Link>

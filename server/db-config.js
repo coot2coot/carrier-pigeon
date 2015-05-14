@@ -1,3 +1,4 @@
+"use strict"
 
 var pg 		 	  = require("pg");
 var str           = process.env.POSTGRES_URI || require("../credentials.json").postgres;
@@ -56,14 +57,22 @@ function post (table, clt, done, cb, doc) {
         query,
         units;
 
-
     if (table === "users") {
         var columns = stringifyData(doc).columns +", password";
-        var values = "'" +stringifyData(doc).values + "', crypt('changeme', gen_salt('md5')"
-        console.log(values);
+        var values = stringifyData(doc).values + ", crypt('changeme', gen_salt('md5'))";
+
         query = command()
                     .insertInto(table)
                     .columns(columns)
+                    .values(values)
+                    .end()
+        console.log(query);
+    } else if (table === "unit_types") {
+        var values = "" +stringifyData(doc).values
+
+        query = command()
+                    .insertInto(table)
+                    .columns("types")
                     .values(values)
                     .end()
     } else {
@@ -190,33 +199,6 @@ function selectUnits (table, clt, done, cb, job_number) {
     });
 }
 
-
-
-
-function getUser (table, clt, done, cb, username) {
-
-    clt.query(command()
-                .select("*")
-                .from(table)
-                .where("username = $1")
-                .end(), [username], function(err, user) {
-
-        if(err) {
-            console.log(err);
-            done();
-            return;
-        }
-        done();
-        
-        if (user.rows[0]) {
-            cb(null, user.rows[0]);
-        } 
-        else {
-            cb(null, false,'Sorry, no usernames match that query');
-        }
-    });
-}
-
 function loginUser (table, clt, done, cb, username, password, remember) {
     clt.query(command()
                 .select("*")
@@ -274,10 +256,6 @@ dataBase.remove = function (table, doc, cb, test){
 
 dataBase.selectUnits = function (table, job_number, cb , test){
     connect(selectUnits, table,cb, test, job_number)
-};
-
-dataBase.getUser = function (username, cb, test) {
-   connect(getUser,"users",cb, test, username)
 };
 
 dataBase.selectUser = function (username, password, remember, cb, test) {
