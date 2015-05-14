@@ -47,4 +47,12 @@ query.searchOrders = function (value) {
 	return string;
 }
 
+query.remove = function (table, column) {
+	return "DELETE FROM " + table + "  WHERE " + column + " = $1"
+}
+
+query.getUser = "SELECT * FROM users WHERE username = $1";
+query.getUnits = "SELECT * FROM units WHERE job_number = $1";
+
+
 module.exports = query;
