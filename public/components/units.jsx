@@ -33,7 +33,7 @@ module.exports = function(React, Link) {
 						</div>
 						<div className="column-4">
 							<p>Unit Weight</p>
-							<input type="number" name="unit_weight"/>
+							<input type="number" defaultValue = "0" name="unit_weight"/>
 						</div>
 						<div className="column-8">
 							<p>Unit Number</p>
