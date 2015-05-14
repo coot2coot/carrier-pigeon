@@ -32,7 +32,7 @@ module.exports = function(React, Link) {
 		render: function () {
 			return (
 				<units>
-				<input className="unit_id" name="unit_id" defaultValue= {this.props.unit.unit_id} />
+				<input className="unit_id" name="unit_id" defaultValue= {this.props.unit.unit_id}/>
 					<div className="row column-14 no-gutter">
 						<div className="column-4">
 							<p>Unit Type</p>
@@ -46,7 +46,7 @@ module.exports = function(React, Link) {
 						</div>
 						<div className="column-4">
 							<p>Unit Weight</p>
-							<input className="view_input"  type="text" min="1" defaultValue={this.props.unit.unit_weight} name="unit_weight" disabled={this.props.editing ? true : false}/>
+							<input className="view_input"  type="number" min="0" defaultValue={this.props.unit.unit_weight ? this.props.unit.unit_weight : 0} name="unit_weight" disabled={this.props.editing ? true : false}/>
 						</div>
 						<div className="column-8">
 							<p>Unit Number</p>

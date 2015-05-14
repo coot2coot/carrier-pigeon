@@ -20,6 +20,8 @@ module.exports = function(React, Link, ordersUrl) {
 	var Header = require("./header.jsx")(React, Link);
 	var ViewOrder = require("./view-order.jsx")(React, Link);
 	var CreateOrder = require("./add-order.jsx")(React, Link);
+	var SearchBox = require("./search-box.jsx")(React, Link);
+	var Error = require("./error-message.jsx")(React);
 
 	return React.createClass({
 		getInitialState: function() {
@@ -31,9 +33,12 @@ module.exports = function(React, Link, ordersUrl) {
 	            	carrier: "",
 	            	collect_from: "",
 	            	deliver_to: "",
-	            	handler: ""
+	            	handler: "",
 	            }
-            ]
+            ],
+            searchValue: "",
+            error:false
+
           };
         },
 
@@ -61,6 +66,7 @@ module.exports = function(React, Link, ordersUrl) {
 		    });
 		},
 
+
 		onCloseComponent: function () {
 			this.setState({
 				selectedOrder: null,
@@ -79,6 +85,26 @@ module.exports = function(React, Link, ordersUrl) {
 				creatingOrder: true
 			})
 		},
+		getSearchedOrders: function (value) {
+
+			var getUrl = "/search/orders/" + value;
+			$.get(getUrl,function (result) {	
+				if(result === "error"){
+					this.setState({
+						error: true
+					})
+				}else{		
+					var order = JSON.parse(result);
+
+					this.setState({
+					    orders : order
+					});
+				}				
+			}.bind(this))
+			.fail(function(){
+				"get searchfailed"
+			});
+		},
 
 
 		render: function() {
@@ -86,11 +112,18 @@ module.exports = function(React, Link, ordersUrl) {
 			var addInvoiceHandler = this.addInvoice;
 			return (
 				<div>
-					<Header />
+					<Header/>
 					<div className="column-14 push-1 model-generic">
+						<div>
+							{(this.state.error
+                                ? <Error message="Sorry, that search returned no results. Try another search." />
+                                : <p className="display-none"></p>
+                            )}
+                        </div>
 						<div className="panel-header">
 							<h3>Orders</h3>
 							<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
+							<SearchBox getorders= {this.getSearchedOrders} />
 						</div>
 						<div className="panel-body table-responsive model-overflow">
 							<table className="table table-full">
@@ -101,11 +134,12 @@ module.exports = function(React, Link, ordersUrl) {
 									<h5>Client</h5>
 								</th>
 								<th>
-									<h5>carrier</h5>
+									<h5>Carrier</h5>
 								</th>
 								<th>
-									<h5>units</h5>
+									<h5>Ledger</h5>
 								</th>
+								<tbody>
 							  		{ this.state.orders.map(function (order, i) {
 								        return <tr>
 								            		<td key={i + "first"}>
@@ -125,11 +159,12 @@ module.exports = function(React, Link, ordersUrl) {
 													</td>
 													<td key={i + "fourth"}>
 														<a onClick={orderHandler.bind(null, order)}>
-															<p>{order.number_of_units}</p>
+															<p></p>
 														</a>
 													</td>
 												</tr>
 								    })}
+								</tbody>
 							</table>
 						</div>
 					</div>
