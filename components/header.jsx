@@ -16,26 +16,30 @@ var header = React.createClass({
     componentWillMount: function() {
         var url = "/login/verify";
 
-        if (!this.props.loggedOut) {
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                success: function(data) {
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            success: function(data) {
+                var router = this._reactInternalInstance._context.router;
+                var loginRoute = router.getCurrentRoutes()[1].name;
+                var defaultRoute = router.getCurrentRoutes()[1].path;
 
-                    if (this.props.isAdmin) {
-                        this.props.isAdmin(data.user);
-                    }
-                    
-                    this.setState({
-                        loggedIn: true,
-                        user: data.user
-                    });
-                }.bind(this),
-                error: function(xhr, status, err){
-                    this._reactInternalInstance._context.router.transitionTo("login");
-                }.bind(this)
-            });
-        }
+                if (defaultRoute === "/" || loginRoute === "login") {
+                    this._reactInternalInstance._context.router.transitionTo("orders");
+                }
+                if (this.props.isAdmin) {
+                    this.props.isAdmin(data.user);
+                }
+                
+                this.setState({
+                    loggedIn: true,
+                    user: data.user
+                });
+            }.bind(this),
+            error: function(xhr, status, err){
+                this._reactInternalInstance._context.router.transitionTo("login");
+            }.bind(this)
+        });
     },
 
     // console.log();
