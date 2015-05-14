@@ -8,8 +8,8 @@ var commands ={
 		this.string += " FROM " + table
 		return this
 	},
-	remove : function (table) {
-		this.string += " DELETE FROM " + table
+	deletes : function (table) {
+		this.string += " DELETE " 
 		return this
 	},
 	where : function (string) {

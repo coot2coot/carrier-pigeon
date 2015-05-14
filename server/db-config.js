@@ -6,7 +6,7 @@ var stringifyData = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js");
 var editQuery     = require("./lib/edit-query-sql.js");
 var queryStrings = require("./lib/querys.js");
-var command = require("./lib/commands")
+var command = require("./lib/commands");
 var dataBase      = {};
 
 
@@ -78,7 +78,6 @@ function post (table, clt, done, cb, doc) {
                     .columns("unit_type,unit_weight,unit_number,job_number")
                     .values(units.values)
                     .end() 
-        console.log(query);
     }
     
     clt.query(query, function(err, result) {
@@ -152,7 +151,11 @@ function remove (table, clt, done, cb, doc) {
 
     column = table === "users" ? "username" :table === "units" ? "unit_id" : "job_number"
 
-    clt.query(queryStrings.remove(table,column), [doc], function(err, user) {
+    clt.query(command()
+                .deletes()
+                .from(table)
+                .where(column + " = $1")
+                .end(), [doc], function(err, user) {
 
         if (err) {
             console.log(err)
@@ -171,7 +174,11 @@ function remove (table, clt, done, cb, doc) {
 
 function selectUnits (table, clt, done, cb, job_number) {
 
-    clt.query(queryStrings.getUnits, [job_number], function(err, units) {
+    clt.query(command()
+                .select("*")
+                .from("units")
+                .where("job_number = $1")
+                .end(), [job_number], function(err, units) {
 
         if(err) {
             console.log(err);
@@ -188,7 +195,11 @@ function selectUnits (table, clt, done, cb, job_number) {
 
 function getUser (table, clt, done, cb, username) {
 
-    clt.query(queryStrings.getUser, [username], function(err, user) {
+    clt.query(command()
+                .select("*")
+                .from(table)
+                .where("username = $1")
+                .end(), [username], function(err, user) {
 
         if(err) {
             console.log(err);
@@ -210,7 +221,8 @@ function loginUser (table, clt, done, cb, username, password, remember) {
     clt.query(command()
                 .select("*")
                 .from(table)
-                .where("username = $1 AND password = crypt($2, password)"), [username, password], function(err, user) {
+                .where("username = $1 AND password = crypt($2, password)")
+                .end(), [username, password], function(err, user) {
 
         if(err) {
             console.log(err);
