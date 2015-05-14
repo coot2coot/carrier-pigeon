@@ -7,6 +7,7 @@ var ViewOrder 	= require("./view-order.jsx");
 var CreateOrder = require("./add-order.jsx");
 var SearchBox 	= require("./search-box.jsx");
 var Error 		= require("./error-message.jsx");
+var Datepicker 	= require("./date-picker.jsx");
 
 function sortJobIds (nums) {
 	var sorted = nums.sort(function (a, b) {
@@ -108,6 +109,27 @@ var ordersPage = React.createClass({
 			"get searchfailed"
 		});
 	},
+	getDateOrders: function (value) {
+		console.log(value)
+
+		var getUrl = "/search/dates/" + value;
+		$.get(getUrl,function (result) {	
+			if(result === "error"){
+				this.setState({
+					error: true
+				})
+			}else{		
+				var order = JSON.parse(result);
+
+				this.setState({
+				    orders : order
+				});
+			}				
+		}.bind(this))
+		.fail(function(){
+			"get searchfailed"
+		});
+	},
 
 	render: function() {
 		var orderHandler = this.orderHandler;
@@ -126,6 +148,7 @@ var ordersPage = React.createClass({
 						<h3>Orders</h3>
 						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
+						<Datepicker getorders= {this.getDateOrders}/>
 					</div>
 					<div className="panel-body table-responsive model-overflow">
 						<table className="table table-full">

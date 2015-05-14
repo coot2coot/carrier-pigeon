@@ -92,6 +92,9 @@ var serverRoutes =  function (router) {
  	router.addRoute('/search/orders/:searchTerms?', function (req, res, match){
  		require('./handlers/search.js')(req, res);
  	});
+ 	router.addRoute('/search/dates/:searchDates?', function (req, res, match){
+ 		require('./handlers/search-dates.js')(req, res);
+ 	});
 
 /* -------------------------------*
  *	   Admin Panel Routes
