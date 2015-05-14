@@ -8,16 +8,16 @@ module.exports = function (units){
 		var arr = [];
 		var str = "";
 		for(i = 0; i < units["unit_type"].length; i ++ ){
-			str += "('" + units["unit_type"][i] + "', '" + units["unit_weight"][i] +  "', '" + units["unit_number"][i] + "',(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1)),";
+			str += "'" + units["unit_type"][i] + "', '" + units["unit_weight"][i] +  "', '" + units["unit_number"][i] + "',(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1)),(";
 		}
 
-		data.values= str.slice(0, -1);
+		data.values= str.slice(0, -3);
 		data.columns = "unit_type,unit_weight,unit_number,job_number";
 		return data;
 	}else{
 		data = stringify(units);
 		data.values= data.values.slice(0, -1);
-		var str = "('" + data.values + "(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1))";
+		var str = data.values.slice(0, -1) + "(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1)";
 
 		data.values = str;
 		return data;

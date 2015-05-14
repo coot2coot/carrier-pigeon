@@ -7,6 +7,7 @@ var stringifyData = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js");
 var editQuery     = require("./lib/edit-query-sql.js");
 var queryStrings = require("./lib/querys.js");
+var command = require("./lib/commands");
 var dataBase      = {};
 
 
@@ -33,7 +34,10 @@ function connect (query, table, cb, test, var1, var2, var3) {
 
 
 function get (table, clt, done, cb) {
-    clt.query("SELECT * FROM " + table, function(err, result) {
+    clt.query(command()
+                .select("*")
+                .from(table)
+                .end(), function(err, result) {
         if (err) {
             console.log(err)
 
@@ -46,19 +50,6 @@ function get (table, clt, done, cb) {
     });
 }
 
-function getOrders (table, clt, done, cb) {
-    clt.query("SELECT * FROM orders", function(err, result) {
-        if (err) {
-            console.log('err >>>', err)
-
-            done(clt);
-            return;
-         }
-        done();
-        cb(result.rows);
-    });
-}
-
 
 function post (table, clt, done, cb, doc) {
     var data,
@@ -66,15 +57,36 @@ function post (table, clt, done, cb, doc) {
         query,
         units;
 
-
     if (table === "users") {
-        query = "INSERT into users (" + stringifyData(doc).columns +", password) VALUES ('" + stringifyData(doc).values +"', crypt('changeme', gen_salt('md5')))"
+        var columns = stringifyData(doc).columns +", password";
+        var values = stringifyData(doc).values + ", crypt('changeme', gen_salt('md5'))";
+
+        query = command()
+                    .insertInto(table)
+                    .columns(columns)
+                    .values(values)
+                    .end()
+        console.log(query);
     } else if (table === "unit_types") {
-        query = "INSERT into unit_types (types) VALUES ('" + stringifyData(doc).values +"');"
+        var values = "" +stringifyData(doc).values
+
+        query = command()
+                    .insertInto(table)
+                    .columns("types")
+                    .values(values)
+                    .end()
     } else {
         orders = stringifyData(doc.order)
         units = stringifyUnits(doc.unit)
-        query = "INSERT into orders (" + orders.columns + ") VALUES ('" + orders.values+ "'); INSERT into units (unit_type,unit_weight,unit_number,job_number) VALUES " + units.values + ";"
+        query = command()
+                    .insertInto(table)
+                    .columns(orders.columns)
+                    .values(orders.values)
+                    .next()
+                    .insertInto('units')
+                    .columns("unit_type,unit_weight,unit_number,job_number")
+                    .values(units.values)
+                    .end() 
     }
     
     clt.query(query, function(err, result) {
@@ -101,7 +113,11 @@ function edit (table, clt, done, cb, doc) {
 
         var query = editQuery.standard(updateUser);
 
-        clt.query("UPDATE users SET " + query + ",password = crypt($3, gen_salt('md5')) WHERE username = $1 AND password = crypt($2, password)", [doc.username, doc.current_password, doc.new_password], function(err, result) {
+        clt.query(command()
+                    .update(users)
+                    .set(query+ ",password = crypt($3, gen_salt('md5'))")
+                    .where("username = $1 AND password = crypt($2, password)")
+                    .end() , [doc.username, doc.current_password, doc.new_password], function(err, result) {
             if (err) {
                 console.log(err)
 
@@ -117,8 +133,14 @@ function edit (table, clt, done, cb, doc) {
         var unitsCreateQuery = editQuery.units(doc.unit).create;
         var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
 
-        clt.query("UPDATE orders SET " + ordersQuery + " WHERE " + " job_number= '" + doc.order.job_number + "'; " + 
-            unitsUpdateQuery  +unitsDeleteQuery + unitsCreateQuery , function(err, result) {
+        clt.query(command()
+                    .update("orders")
+                    .set(ordersQuery)
+                    .where()
+                    .next()
+                    .query(unitsUpdateQuery)
+                    .query(unitsDeleteQuery)
+                    .query(unitsCreateQuery), function(err, result) {
             if (err) {
                 console.log(err)
 
@@ -138,7 +160,11 @@ function remove (table, clt, done, cb, doc) {
 
     column = table === "users" ? "username" :table === "units" ? "unit_id" : "job_number"
 
-    clt.query("DELETE FROM " + table + "  WHERE " + column + " = $1", [doc], function(err, user) {
+    clt.query(command()
+                .deletes()
+                .from(table)
+                .where(column + " = $1")
+                .end(), [doc], function(err, user) {
 
         if (err) {
             console.log(err)
@@ -157,7 +183,11 @@ function remove (table, clt, done, cb, doc) {
 
 function selectUnits (table, clt, done, cb, job_number) {
 
-    clt.query("SELECT * FROM units WHERE job_number = '" + job_number +"'", function(err, units) {
+    clt.query(command()
+                .select("*")
+                .from("units")
+                .where("job_number = $1")
+                .end(), [job_number], function(err, units) {
 
         if(err) {
             console.log(err);
@@ -170,7 +200,11 @@ function selectUnits (table, clt, done, cb, job_number) {
 }
 
 function loginUser (table, clt, done, cb, username, password, remember) {
-    clt.query("SELECT * FROM " + table + " WHERE username = $1 AND password = crypt($2, password)", [username, password], function(err, user) {
+    clt.query(command()
+                .select("*")
+                .from(table)
+                .where("username = $1 AND password = crypt($2, password)")
+                .end(), [username, password], function(err, user) {
 
         if(err) {
             console.log(err);
@@ -209,9 +243,6 @@ dataBase.get = function (table, cb, test){
  	connect(get, table, cb, test)
 };
 
-dataBase.getOrders = function (table, cb, test){
-    connect(getOrders, table, cb, test)
-};
 dataBase.post = function (table, doc, cb, test){
 	connect(post, table, cb, test, doc)
 };
