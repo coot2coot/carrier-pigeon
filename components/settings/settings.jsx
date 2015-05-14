@@ -23,6 +23,7 @@ var settings = React.createClass({
 	        	last_name: "",
 	        	username: "",
 	        	password: "",
+	        	admin: "",
 	        	email: ""
 	        },
 	        currentPath: ""
@@ -35,30 +36,31 @@ var settings = React.createClass({
     		user: user
     	})
     },
-
+ 
 	componentDidMount: function() {
 		var router = this._reactInternalInstance._context.router;
+		var routeName = router.getCurrentRoutes()[1].name
+
+		routeName = router.getCurrentRoutes().length === 3
+					? router.getCurrentRoutes()[2].name
+					: router.getCurrentRoutes()[1].name
 
 		this.setState({
-    		currentPath: router.getCurrentRoutes()[1].name
+    		currentPath: routeName
     	})
+	},
 
-		// var url = "/user/get/" + this.props.params.username;
+	componentWillReceiveProps: function() {
+		var router = this._reactInternalInstance._context.router;
+		var routeName = router.getCurrentRoutes()[1].name
 
-	 //    $.get(url, function(result) {
-	 //    	if(result !== ""){
-		//     	var usr = JSON.parse(result);
+		routeName = router.getCurrentRoutes().length === 3
+					? router.getCurrentRoutes()[2].name
+					: router.getCurrentRoutes()[1].name
 
-		//       	if (this.isMounted()) {
-		//         	this.setState({
-		//           		user : usr
-		//         	});
-		//       	}
-		//     }
-	 //    }.bind(this))
-	 //    .fail(function () {
-	 //    	"get request failed"
-	 //    });
+		this.setState({
+    		currentPath: routeName
+    	})
 	},
 
 	render: function() {
@@ -69,13 +71,15 @@ var settings = React.createClass({
 					<div className="panel-header">
 						<h3>Account</h3>
 					</div>
-					<div className="panel-body table-responsive model-overflow">
+					<div className="panel-body settings">
 						<div className="column-6 setting-nav">
-							<SettingsLinks admin={this.props.admin} />
+							<SettingsLinks admin={this.props.admin} changeUrl={this.urlChange}/>
 						</div>
 						<div className="column-10">
 							{( this.state.currentPath === "settings"
 								? <ChangeDetails user={this.state.user}/>
+								: this.state.currentPath === "AddUnitType" && this.state.user.admin
+								? <AddUnitType/>
 								: <p></p>
 							)}
 						</div>

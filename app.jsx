@@ -40,9 +40,9 @@ var routes = (
             <Route name="userUpdate" path=":update" handler={AdminPanel} />
             <Route name="errorAdmin" path="show/:error" handler={AdminPanel} />
         </Route>
-                                        // take username param out.
-         <Route name="settings" path="/settings/:username" props="settings" handler={Settings}>
-            <Route name="errorSettings" path=":error" handler={Settings} />
+
+         <Route name="settings" path="/settings" props="settings" handler={Settings}>
+            <Route name="errorSettings" path="show/:error" handler={Settings} />
             <Route name="AddUnitType" path="units" props="units" handler={Settings} />
         </Route>
 

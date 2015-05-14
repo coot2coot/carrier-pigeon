@@ -7,24 +7,41 @@ var db 			 = require("../db-config.js");
 function create (req, res) {
 	
 	parseData(req, function (data) {
-		validateOrder(data, res, function () {
-			validateUser(req, res, function() {
-				var splitData = splitObject(data);
-				db.post('orders', splitData, function (err) {
-					if (err) {
-						console.log(err)
-						res.writeHead(500);
-						res.write(err);
-						res.end();
-					}
-					else {
-						res.writeHead(303, {
-							"Location": "/#/orders/true"
-						});
-						res.end();
-					}
+		validateUser(req, res, function() {
+			if (data.new_unit) {
+				db.post('unit_types', data, function (err) {
+						if (err) {
+							console.log(err)
+							res.writeHead(500);
+							res.write(err);
+							res.end();
+						}
+						else {
+							res.writeHead(303, {
+								"Location": "/#/settings/units"
+							});
+							res.end();
+						}
+					});
+			} else {
+				validateOrder(data, res, function () {
+					var splitData = splitObject(data);
+					db.post('orders', splitData, function (err) {
+						if (err) {
+							console.log(err)
+							res.writeHead(500);
+							res.write(err);
+							res.end();
+						}
+						else {
+							res.writeHead(303, {
+								"Location": "/#/orders/true"
+							});
+							res.end();
+						}
+					});
 				});
-			});
+			}
 		});
 	});
 };

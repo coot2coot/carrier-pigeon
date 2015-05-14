@@ -4,20 +4,20 @@ var React  = require('react');
 var Router = require('react-router');
 var Link   = Router.Link;
 
-var headerLinks = React.createClass({
+var settingsLinks = React.createClass({
     render: function() {
         return (
-            <div>
-                {/*<Link>
+            <links>
+                <Link to="settings" query={{}}>
                     <p>Update your details</p>
                 </Link>
-                <Link>
+                <Link to="AddUnitType" query={{}}>
                     <p>Add Unit Type</p>
-                </Link>*/}
-            </div>
+                </Link>
+            </links>
         )
     }
 });
 
 
-module.exports = headerLinks;
+module.exports = settingsLinks;

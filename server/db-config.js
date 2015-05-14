@@ -68,13 +68,13 @@ function post (table, clt, done, cb, doc) {
 
 
     if (table === "users") {
-        query = "INSERT into " + table + " (" + stringifyData(doc).columns +", password) VALUES ('" + stringifyData(doc).values +"', crypt('changeme', gen_salt('md5')))"
+        query = "INSERT into users (" + stringifyData(doc).columns +", password) VALUES ('" + stringifyData(doc).values +"', crypt('changeme', gen_salt('md5')))"
+    } else if (table === "unit_types") {
+        query = "INSERT into unit_types (types) VALUES ('" + stringifyData(doc).values +"');"
     } else {
         orders = stringifyData(doc.order)
         units = stringifyUnits(doc.unit)
         query = "INSERT into orders (" + orders.columns + ") VALUES ('" + orders.values+ "'); INSERT into units (unit_type,unit_weight,unit_number,job_number) VALUES " + units.values + ";"
-
-        console.log(query);
     }
     
     clt.query(query, function(err, result) {
