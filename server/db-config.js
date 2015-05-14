@@ -240,22 +240,27 @@ function search (table, clt, done, cb, value){
 }
 
 function searchDates (table, clt, done, cb, dates){
-    clt.query(command()
-                .select("*")
-                .from(table)
-                .where("date >='" + dates[0] + "' AND date <='"+dates[1] + "'")
-                .end(), function (err,result){
-                    if(err || result.rows.length ===0) {
-                        console.log(err);
+    if(dates === "" ||dates[0] === "" || dates[1] === ""){
+        cb([]);
+    }
+    else{
+        clt.query(command()
+                    .select("*")
+                    .from(table)
+                    .where("date >='" + dates[0] + "' AND date <='"+dates[1] + "'")
+                    .end(), function (err,result){
+                        if(err || result.rows.length ===0) {
+                            console.log(err);
+                            done();
+
+                            return cb(true);
+                        }
                         done();
 
-                        return cb(true);
-                    }
-                    done();
+                        cb(null,result.rows);
 
-                    cb(null,result.rows);
-
-    })
+        })
+    }
 }
 
 
