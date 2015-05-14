@@ -8,6 +8,7 @@ var Link        = Router.Link;
 var Route       = Router.Route;
 var RouteHandler= Router.RouteHandler;
 
+var Header      = require("./components/header.jsx");
 var Login       = require("./components/login-panel.jsx");
 var Orders      = require("./components/ordersPage.jsx");
 var AdminPanel  = require("./components/admin-panel.jsx");
@@ -46,7 +47,7 @@ var routes = (
             <Route name="AddUnitType" path="units" props="units" handler={Settings} />
         </Route>
 
-        <DefaultRoute handler={Login}/>  
+        <DefaultRoute handler={Header}/>  
     </Route>
 );
 

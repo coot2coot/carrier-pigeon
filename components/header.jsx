@@ -32,12 +32,13 @@ var header = React.createClass({
                     });
                 }.bind(this),
                 error: function(xhr, status, err){
-                    console.log(xhr, status, err);
+                    this._reactInternalInstance._context.router.transitionTo("login");
                 }.bind(this)
             });
         }
     },
-    
+
+    // console.log();
     render: function() {
         return (
             <header className="container-fluid">
