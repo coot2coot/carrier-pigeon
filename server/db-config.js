@@ -1,3 +1,4 @@
+"use strict"
 
 var pg 		 	  = require("pg");
 var str           = process.env.POSTGRES_URI || require("../credentials.json").postgres;
@@ -168,29 +169,6 @@ function selectUnits (table, clt, done, cb, job_number) {
     });
 }
 
-
-
-
-function getUser (table, clt, done, cb, username) {
-
-    clt.query("SELECT * FROM " + table + " WHERE username = $1", [username], function(err, user) {
-
-        if(err) {
-            console.log(err);
-            done();
-            return;
-        }
-        done();
-        
-        if (user.rows[0]) {
-            cb(null, user.rows[0]);
-        } 
-        else {
-            cb(null, false,'Sorry, no usernames match that query');
-        }
-    });
-}
-
 function loginUser (table, clt, done, cb, username, password, remember) {
     clt.query("SELECT * FROM " + table + " WHERE username = $1 AND password = crypt($2, password)", [username, password], function(err, user) {
 
@@ -247,10 +225,6 @@ dataBase.remove = function (table, doc, cb, test){
 
 dataBase.selectUnits = function (table, job_number, cb , test){
     connect(selectUnits, table,cb, test, job_number)
-};
-
-dataBase.getUser = function (username, cb, test) {
-   connect(getUser,"users",cb, test, username)
 };
 
 dataBase.selectUser = function (username, password, remember, cb, test) {

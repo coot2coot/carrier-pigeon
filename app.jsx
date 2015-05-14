@@ -11,7 +11,7 @@ var RouteHandler= Router.RouteHandler;
 var Login       = require("./components/login-panel.jsx");
 var Orders      = require("./components/ordersPage.jsx");
 var AdminPanel  = require("./components/admin-panel.jsx");
-var Settings    = require("./components/settings.jsx");
+var Settings    = require("./components/settings/settings.jsx");
 
 
 var Test = React.createClass({
@@ -40,9 +40,10 @@ var routes = (
             <Route name="userUpdate" path=":update" handler={AdminPanel} />
             <Route name="errorAdmin" path="show/:error" handler={AdminPanel} />
         </Route>
-
-         <Route name="settings" path="/settings/:username" handler={Settings}>
+                                        // take username param out.
+         <Route name="settings" path="/settings/:username" props="settings" handler={Settings}>
             <Route name="errorSettings" path=":error" handler={Settings} />
+            <Route name="AddUnitType" path="units" props="units" handler={Settings} />
         </Route>
 
         <DefaultRoute handler={Login}/>  

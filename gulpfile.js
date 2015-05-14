@@ -190,39 +190,7 @@
     
     //TODO: Need to add tests task back in here once tests are updated
     gulp.task("deploy", ["build"], function() {
-        sauceConnectLauncher({
-            username: sauceUsername,
-            accessKey: sauceAccesskey
-        }, function (err, sauceConnectProcess) {
-            if (err) {
-              console.error(err.message);
-              return;
-            }
-             nodemon({
-                script: "server.js",
-                ext: "js html",
-                ignore: ["node_modules"]
-            })
-            .on("start", function(){
-                gulp.src("./tests/acceptance/remote.config.js")
-                    .pipe(mocha({
-                        reporter: 'nyan'
-                    }))
-                    .on("end", function() {
-                        sauceConnectProcess.close(function () {
-                            console.log("Closed Sauce Connect process");
-                            console.log("Tests finished");
-                            process.exit();
-                        });
-                    })
-                    .on("error", function(e) {
-                        console.log(e);
-                        sauceConnectProcess.close(function () {
-                            console.log("Closed Sauce Connect process");
-                        });
-                    });
-            })
-        });
+        console.log("Done building");
     });
 
 	gulp.task("default", ["build", "open"], function() {

@@ -108,10 +108,6 @@ var serverRoutes =  function (router) {
  *	   User Settings Routes
  * -------------------------------*/
 
- 	router.addRoute('/user/get/:username?', function (req, res, match){
-	  	require('./handlers/read-db.js').getUser(req, res);
-	});
-
 	router.addRoute('/user/update/:username', function (req, res, match){
 	  	require('./handlers/update-db.js')(req, res);
 	});
