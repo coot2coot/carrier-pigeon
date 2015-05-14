@@ -1,3 +1,4 @@
+"use strict"
 
 var validateUser = require('../lib/validate-user.js');
 var db 			 = require("../db-config.js");
@@ -88,20 +89,6 @@ readOptions.noCache = function (req, res) {
 			getOrders(req, res);
 		}
 	});
-}
-
-readOptions.getUser = function (req, res) {
-	var username = req.url.split('/').pop();
-	validateUser(req, res, function () {
-		db.getUser(username, function (err, usr) {
-			usr.password = null;
-			
-			var user = JSON.stringify(usr)
-
-			res.writeHead(200, {"Content-Type" : "text/plain"});
-			res.end(user);
-		});
-	})
 }
 
 module.exports = readOptions;

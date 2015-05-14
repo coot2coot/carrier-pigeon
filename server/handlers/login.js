@@ -19,7 +19,8 @@ function createSession (details, callback) {
     var payload = {
         username: details.username,
         admin: details.admin,
-        first_name: details.first_name
+        first_name: details.first_name,
+        last_name: details.last_name
     };
 
     var token = JWT.sign(payload, secret);

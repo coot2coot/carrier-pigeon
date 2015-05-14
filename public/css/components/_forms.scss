@@ -39,9 +39,10 @@ form.email-invite {
   }
 }
 
-form.account {
+.settings {
   padding: 1.5em 3em 4.5em;
   border-left: 0.1em $light-grey solid;
+  height: 20em;
   .name {
     width: 50%;
     display: inline-block;
