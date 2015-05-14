@@ -64,3 +64,15 @@ searchbox{
     width: 30%;
   }
 }
+
+datepicker{
+  div{
+    input[type="date"]{
+      margin-top:0.3em;
+
+    }
+  }
+  input[type="submit"]{
+      margin-top:0.3em;
+  }
+}

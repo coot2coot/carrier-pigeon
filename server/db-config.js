@@ -257,6 +257,26 @@ function search (table, clt, done, cb, value){
 
 }
 
+function searchDates (table, clt, done, cb, dates){
+    clt.query(command()
+                .select("*")
+                .from(table)
+                .where("date >='" + dates[0] + "' AND date <='"+dates[1] + "'")
+                .end(), function (err,result){
+                    if(err || result.rows.length ===0) {
+                        console.log(err);
+                        done();
+
+                        return cb(true);
+                    }
+                    done();
+
+                    cb(null,result.rows);
+
+    })
+}
+
+
 dataBase.get = function (table, cb, test){
  	connect(get, table, cb, test)
 };
@@ -286,6 +306,9 @@ dataBase.selectUser = function (username, password, remember, cb, test) {
 
 dataBase.searcher = function (table, data, cb, test) {
     connect(search, table,cb,test,data)
+};
+dataBase.searchDates = function (table, data, cb, test) {
+    connect(searchDates, table,cb,test,data)
 };
 
 module.exports = dataBase;
