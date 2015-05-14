@@ -145,7 +145,7 @@
 
         var b = browserify();
           b.transform(reactify);
-          b.add('./public/app.jsx');
+          b.add('./app.jsx');
           return b.bundle()
             .pipe(source('bundle.js'))
             .pipe(gulp.dest('./public/js/'));
@@ -154,7 +154,7 @@
     gulp.task("watchify", function () {
 
         var b = browserify({
-            entries: ['./public/app.jsx'], 
+            entries: ['./app.jsx'], 
             transform: [reactify],
             debug: true,
             cache: {}, packageCache: {}, fullPaths: true 
