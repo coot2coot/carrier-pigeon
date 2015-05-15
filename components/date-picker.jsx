@@ -27,16 +27,18 @@ var datePicker = React.createClass({
 	},
 	render: function () {
 		return (
-			<datepicker className="column-6 float-right">
-					<div className="column-6 "data-tooltip="Start date">
+			<datepicker className=" pop-up model-date">
+				<div className="row">
+					<div className="column-16 "data-tooltip="Start date">
 						<input  type="date" name = "start" onChange={this.setDate} />
 					</div>
-					<div className="column-6 " data-tooltip="End date" >
+					<div className="column-16 " data-tooltip="End date" >
 						<input type="date" name= "end" onChange={this.setDate}/>
 					</div>
-					<div className="column-3 " >
-						<input className= "button blue "  type="submit" value="Find" onClick={this.getOrders}/>
-					</div>
+					<div className="column-10 push-3" >
+						<input className= "button blue"  type="submit" value="Find" onClick={this.getOrders}/>
+					</div>				
+				</div>
 			</datepicker>	
 
 		)

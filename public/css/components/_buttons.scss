@@ -26,6 +26,12 @@
   		@include blue-hover;
   	}
 }
+.button.grey {
+	@include light-background;
+	color:black;
+	border: 0.1em $primary solid;
+}
+	
 .button {
 	&.units {
 		@include blue-background;
