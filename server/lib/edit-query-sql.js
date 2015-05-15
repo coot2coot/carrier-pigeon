@@ -16,14 +16,22 @@ query.units = function (units){
 		update: "",
 		create: ""
 	};
-	for(i = 0; i < units["unit_type"].length; i ++){
-		if(units["unit_id"][i]!== ""){
-			query.update += "UPDATE units SET unit_type = '" + units["unit_type"][i] + "',unit_number = " + units["unit_number"][i] + ",unit_weight = " + units["unit_weight"][i] + " WHERE unit_id = " + units["unit_id"][i] +"; ";
-		}else{
-			query.create += "INSERT INTO units (unit_type, unit_weight, unit_number, job_number) VALUES ('" + units["unit_type"][i]+ "'," + units["unit_weight"][i] + "," + units["unit_number"][i] +",'" + units["job_number"] + "');"
-		}
 
+	if(typeof units.unit_type ==="object"){
+		for(i = 0; i < units["unit_type"].length; i ++){
+			if(units["unit_id"][i] !== ""){
+				query.update += " UPDATE units SET unit_type = '" + units["unit_type"][i] + "',unit_number = '" + units["unit_number"][i] + "',unit_weight = " + units["unit_weight"][i] + " WHERE unit_id = " + units["unit_id"][i] +";";
+			}else{
+				query.create += "INSERT INTO units (unit_type, unit_weight, unit_number, job_number) VALUES ('" + units["unit_type"][i]+ "'," + units["unit_weight"][i] + ",'" + units["unit_number"][i] +"','" + units["job_number"] + "');"
+			}
+
+		}
+	}else{
+		query.update += " UPDATE units SET unit_type = '" + units["unit_type"] + "',unit_number = '" + units["unit_number"] + "',unit_weight = " + units["unit_weight"] + " WHERE unit_id = " + units["unit_id"] +";";
 	}
+
+
+
 	return query;
 }
 
@@ -36,7 +44,7 @@ query.unitDelete = function (units) {
         for(i = 0; i < arr.length; i++){
             deleteQuery += "DELETE FROM units WHERE unit_id = "+arr[i]+";"
         }
-        return deleteQuery;
+        return deleteQuery
     }else{
     	return "";
     }

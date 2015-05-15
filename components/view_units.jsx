@@ -35,7 +35,7 @@ var units = React.createClass({
 	render: function () {
 		return (
 			<units>
-			<input className="unit_id" name="unit_id" defaultValue= {this.props.unit.unit_id}/>
+			<input className="display-none" name="unit_id" defaultValue= {this.props.unit.unit_id}/>
 				<div className="row column-14 no-gutter">
 					<div className="column-4">
 						<p>Unit Type</p>
