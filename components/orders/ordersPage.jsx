@@ -2,11 +2,11 @@
 
 var React  		= require('react');
 
-var Header 		= require("./header.jsx");
+var Header 		= require("../header/header.jsx");
 var ViewOrder 	= require("./view-order.jsx");
 var CreateOrder = require("./add-order.jsx");
 var SearchBox 	= require("./search-box.jsx");
-var Error 		= require("./error-message.jsx");
+var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
 
 function sortJobIds (nums) {

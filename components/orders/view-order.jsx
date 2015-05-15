@@ -3,7 +3,7 @@
 var React  	= require('react');
 
 var Units 	= require("./view_units.jsx");
-var Warning = require("./warning.jsx");
+var Warning = require("../warning.jsx");
 
 var getJobNumber = function (dbId) {
     var today = new Date();
@@ -119,7 +119,7 @@ var viewOrder = React.createClass({
 						<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.order)}>Delete</a>
 						<button className="button blue" onClick = {this.edit}  >Edit</button>
 						<button className="button blue">Copy</button>
-						<button className="button blue">Make a booking note</button>
+						<Link className="button blue" to="booking-note" params={{job_no: this.props.order.job_number}}>Make a booking note</Link>
 						<a className="close" onClick={this.props.closeView}>x</a>
 					</div>
 					<div className="panel-body scroll">
