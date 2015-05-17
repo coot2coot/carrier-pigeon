@@ -7,7 +7,7 @@ var Header         = require("../header/header.jsx");
 // If save/print doesn't work... sorry, there has been an internal error. Try again at a late point.
 var Error          = require("../error-message.jsx");
 var BookingOptions = require("./booking-note-options.jsx");
-var BookingForm    = require("./booking-note-form.jsx");
+var BookingPage    = require("./booking-note-page.jsx");
 
 var getJobNumber = function (dbId) {
     var today = new Date();
@@ -50,32 +50,8 @@ var bookingNote = React.createClass({
         return (
             <div>
                 <Header/>
-                <div className="booking-note container">
-                    <div>
-                        <img src="../../img/logo-full.png" />
-                        <hr/> 
-                    </div>
-                    <h2>BOOKING NOTE</h2>
-                    <div className="float-right">
-                        <p>Job no: {getJobNumber(this.state.order.job_number)}</p>
-                        <p>date: { this.state.order.date.substring(0, 10)}</p>
-                    </div>
-                    <div>
-                        <BookingForm order={this.state.order} />
-                    </div>
-                    <br />
-                    <hr />
-                    <div className="half float-left">
-                        <p className="small">145-157 St John Street</p>
-                        <p className="small">London EC1V 4PW</p>
-                        <p className="small">England</p>
-                    </div>
-                    <div className="half float-right">
-                        <p className="small">Coot Freight Ltd.</p>
-                        <p className="small">Registered in England No.07880722</p>
-                        <p className="small">VAT No. GB 128 2159 22</p>
-                    </div>
-                </div>
+                <BookingOptions />
+                <BookingPage order={this.state.order} />
             </div>
         )
     }

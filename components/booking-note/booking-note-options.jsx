@@ -1,26 +1,58 @@
 /** @jsx React.DOM */
 
-
-// TODO: put the buttons:
-//  Print
-// Save/download
-// Email
+// var markup = React.renderComponentToString(
+//     Item({ initialCount: 7 })
+// );
+// res.render('template', {
+//     markup: markup
+// });
 
 var React  = require('react');
 
 var bookingNote = React.createClass({
+    emailBooking: function () {
+        var getOrderUrl = "/order/get/" + this.props.params.job_no;
+
+        $.post(getOrderUrl, data, function(result) {
+            if(result !== ""){
+                var order = JSON.parse(result);
+
+                this.setState({
+                    order : order,
+                });
+            }
+        }.bind(this))
+        .fail(function () {
+            "get units request failed"
+        });
+    },
+
+    downloadBooking: function () {
+
+    },
+
+    printBooking: function () {
+
+    },
+
     render: function() {
         return (
-            <links>
-                <Link to="settings" query={{}}>
-                    <p>Update your details</p>
-                </Link>
+            <links className="container">
+                <div className="row">
+                    <div className="column-14 push-1">
+                        <a className="button blue" onClick={this.printBooking}>
+                            Print
+                        </a>
 
-                {( this.props.admin
-                    ? <Link to="AddUnitType" query={{}}><p>Add Unit Type</p></Link>
-                    : <p></p>
-                )}
-                
+                        <a className="button blue" onClick={this.downloadBooking}>
+                            Download
+                        </a>
+                        
+                        <a className="button blue" onClick={this.emailBooking}>
+                            Email
+                        </a>
+                    </div>
+                </div>
             </links>
         )
     }

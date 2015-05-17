@@ -4,7 +4,6 @@ var React  = require('react');
 
 var bookingNoteFrom = React.createClass({
     render: function() {
-        console.log(this.props);
         return (
             <div>
                 <table>
