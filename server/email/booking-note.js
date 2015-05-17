@@ -45,19 +45,8 @@ function invitationString (logins) {
 				'<img src="' + url + '/img/logo-full.png">' +
 			'</header>' +
 			'<div>' +
-				'<h2>Hello new user!</h2>' +
-				'<p>Here are your temporary logins: </p>' +
-				'<table>' +
-					'<tr>' +
-						'<td>Username:</td>' +
-						'<td>' + logins.username + '</td>' +
-					'</tr>' +
-					'<tr>' +
-						'<td>Password:</td>' +
-						'<td>changeme</td>' +
-					'</tr>' +
-				'</table>' +
-				'<p>Please visit <a href="' + url + '#/login">here</a> to login. Navigate to your settings to change your password</p>' +
+				'<h2>Hello!</h2>' +
+				'<p>Attached is your booking note from Coot Freight</p>' +
 			'</div>' +
 		'</body>' +
 	'</html>';

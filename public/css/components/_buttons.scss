@@ -89,6 +89,13 @@
  	}
 }
 
+links {
+	.button {
+		display: inline-block;
+		color: white;
+	}
+}
+
 .warning {
   .button {
     margin-top: 0;
@@ -96,4 +103,3 @@
     bottom: 1em;
   }
 }
-
