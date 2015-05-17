@@ -80,3 +80,14 @@ datepicker{
   border: 0.1em $light-grey solid;
   @include box-shadow;
 }
+
+.email {
+  .panel-body {
+    height: 6em;
+    text-align: center;
+  }
+  input[name="email"] {
+    width: 80%;
+    margin-top: 1em;
+  }
+}

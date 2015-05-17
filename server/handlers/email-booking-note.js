@@ -27,12 +27,11 @@ function sendBookingNote (attachment, email) {
 function emailBookingNote (req, res, cb) {
     validateUser(req, res, function() {
         parseData(req, function(data) {
-            var options = { filename: 'booking-note.pdf'};
-            pdf.create(data.attachment, options).toBuffer(function(err, buffer) {
+            pdf.create(data.attachment).toBuffer(function(err, buffer) {
                 if (err) {
                     return console.log(err);
                 }
-                sendBookingNote(buffer, "natalialeebaltazar@gmail.com");
+                sendBookingNote(buffer, data.email);
                 res.writeHead(200);
                 res.end();
             });
