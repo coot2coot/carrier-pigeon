@@ -45,12 +45,40 @@ var bookingNote = React.createClass({
             "get units request failed"
         });
     },
+    convertPdf: function () {
+       var pdf = new jsPDF('p', 'pt', 'letter');
+       var source = document.getElementById('form');
+       console.log(source)
+       var handler = {
+            '#bypassme': function(element, renderer){
+                return true
+            }
+       };
+       var margins = {
+            top: 50,
+            left:60,
+            width: 545
+       };
+
+       pdf.fromHTML(
+            source,
+            margins.left,
+            margins.top,
+            {
+                'width' : margins.width,
+                'elementHandlers': handler
+            },
+            function(dispose){
+                pdf.save('forms')
+            }
+        )
+    },
 
     render: function() {
         return (
             <div>
                 <Header/>
-                <div className="booking-note container">
+                <div id = "form" className="booking-note container">
                     <div>
                         <img src="../../img/logo-full.png" />
                         <hr/> 
@@ -76,6 +104,7 @@ var bookingNote = React.createClass({
                         <p className="small">VAT No. GB 128 2159 22</p>
                     </div>
                 </div>
+                 <button className=" column-2 push-7 button grey" onClick={this.convertPdf}>download as pdf</button>
             </div>
         )
     }
