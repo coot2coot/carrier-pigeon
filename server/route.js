@@ -125,6 +125,14 @@ var serverRoutes =  function (router) {
 	router.addRoute('/user/update/:username', function (req, res, match){
 	  	require('./handlers/update-db.js')(req, res);
 	});
+
+/* -------------------------------*
+ *	   Booking Note Routes
+ * -------------------------------*/
+
+	router.addRoute('/booking-note/email', function (req, res, match){
+	  	require('./handlers/email-booking-note.js')(req, res);
+	});
 };
 
 module.exports = serverRoutes;

@@ -1,19 +1,18 @@
 /** @jsx React.DOM */
 
-// var markup = React.renderComponentToString(
-//     Item({ initialCount: 7 })
-// );
-// res.render('template', {
-//     markup: markup
-// });
-
 var React  = require('react');
+var BookingPage = require("./booking-note-page.jsx");
 
 var bookingNote = React.createClass({
     emailBooking: function () {
-        var getOrderUrl = "/order/get/" + this.props.params.job_no;
 
-        $.post(getOrderUrl, data, function(result) {
+        var getOrderUrl = "/booking-note/email";
+
+        var data = React.renderToString(
+            <BookingPage order={this.props.order} />
+        );
+
+        $.post(getOrderUrl, "attachment=" + data, function(result) {
             if(result !== ""){
                 var order = JSON.parse(result);
 
