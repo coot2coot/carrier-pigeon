@@ -13,8 +13,9 @@ function sendBookingNote (attachment, email) {
     var data = {
         from: 'Coot Freight Ltd <app@cootfreight.co.uk>',
         to: email,
-        subject: 'You have been invited to join the Coot Freight Inventory Management App',
-        html: require('../email/invite-user.js')(userLogins)
+        subject: 'Booking Note from Coot Freight',
+        html: require('../email/booking-note.js')(),
+        attachment: attachment
     }
     mailgun.messages().send(data, function (err, body) {
         err
@@ -26,12 +27,15 @@ function sendBookingNote (attachment, email) {
 function emailBookingNote (req, res, cb) {
     validateUser(req, res, function() {
         parseData(req, function(data) {
-            var options = { filename: './businesscard.pdf', format: 'A4' };
-            pdf.create(data.attachment, options).toFile(function(err, hi) {
-              if (err) return console.log(err);
-              console.log(hi);
+            var options = { filename: 'booking-note.pdf'};
+            pdf.create(data.attachment, options).toBuffer(function(err, buffer) {
+                if (err) {
+                    return console.log(err);
+                }
+                sendBookingNote(buffer, "natalialeebaltazar@gmail.com");
+                res.writeHead(200);
+                res.end();
             });
-            // sendBookingNote(data, "natalialeebaltazar@gmail.com");
         })
     });
 };

@@ -15,8 +15,6 @@ String.prototype.capitalize = function () {
 function generateLogins (mail) {
     var name = mail.split("@").shift().capitalize();
 
-    console.log(name);
-
     var newUser = {
         username: name,
         email: mail,

@@ -57,7 +57,7 @@ function invitationString (logins) {
 						'<td>changeme</td>' +
 					'</tr>' +
 				'</table>' +
-				'<p>Please visit <a href="http://carrierpigeonfac-se-env.elasticbeanstalk.com/#/login">here</a> to login. Navigate to your settings to change your password</p>' +
+				'<p>Please visit <a href="' + url + '#/login">here</a> to login. Navigate to your settings to change your password</p>' +
 			'</div>' +
 		'</body>' +
 	'</html>';

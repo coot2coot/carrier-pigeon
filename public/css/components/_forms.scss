@@ -74,3 +74,9 @@ datepicker{
     }
   }
 }
+
+.booking-note {
+  float: center;
+  border: 0.1em $light-grey solid;
+  @include box-shadow;
+}
