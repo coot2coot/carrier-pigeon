@@ -29,13 +29,15 @@ var datePicker = React.createClass({
 		return (
 			<datepicker className="pop-up container">
 				<div className="column-5 float-right">
+					
 					<div className="row">
 						<p className="column-4">From: </p>
-						<input className="column-12" type="date" name = "start" onChange={this.setDate} />
+						<input className="column-10" type="date" name = "start" onChange={this.setDate} />
+						<a  className="column-1 close-date" onClick={this.props.closeView}>x</a>
 					</div>
 					<div className="row">
 						<p className="column-4">To: </p>
-						<input className="column-12" type="date" name= "end" onChange={this.setDate}/>
+						<input className="column-10" type="date" name= "end" onChange={this.setDate}/>
 					</div>
 					<div className="submit">
 						<input className= "button blue"  type="submit" value="Find" onClick={this.getOrders}/>
