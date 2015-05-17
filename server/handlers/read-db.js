@@ -91,6 +91,44 @@ readOptions.noCache = function (req, res) {
 	});
 }
 
+readOptions.getOrder = function (req, res) {
+	var id = req.url.split("/").pop();
+
+	validateUser(req, res, function () {
+		myCache.get("orders", function (err, value) {
+			var order, foundOrder;
+
+			if(!err && value.hasOwnProperty("orders")) {
+
+				var jobNumbers = value.orders.map(function (result) {
+					return result.job_number;
+				});
+
+				var position = jobNumbers.indexOf(Number(id));
+
+				foundOrder = value.orders[position];
+
+				order = JSON.stringify(foundOrder);
+				res.writeHead(200, {"Content-Type" : "text/plain"});
+				res.end(order);
+
+			} else {
+				db.getOrder('orders', id, function (err, result) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					foundOrder = result[0];
+
+					order = JSON.stringify(foundOrder);
+					res.writeHead(200, {"Content-Type" : "text/plain"});
+					res.end(order);
+				})
+			}
+		});
+	});
+}
+
 module.exports = readOptions;
 
 
