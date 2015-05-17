@@ -28,3 +28,12 @@ th {
 		border-bottom: 0.1em $light-grey solid;
 	}
 }
+
+.warning {
+  table {
+    border-bottom: 0.1em $light-grey solid;
+    p {
+      margin-top: 0;
+    }
+  }
+}
