@@ -1,14 +1,8 @@
 /** @jsx React.DOM */
 
-// TODO
-// If an admin, then view add unit types page
-// There you can view add different unit types.
-// need to cache all unit types and update when above point happens
-// If logged in, go to /#/orders, in not go to login page
-
 var React  = require('react');
 
-var Header 		  = require("../header.jsx");
+var Header 		  = require("../header/header.jsx");
 var Warning 	  = require("../warning.jsx");
 var Error 		  = require("../error-message.jsx");
 var SettingsLinks = require("./settings-links.jsx");

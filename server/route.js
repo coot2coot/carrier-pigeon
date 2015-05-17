@@ -46,6 +46,9 @@ var serverRoutes =  function (router) {
 	router.addRoute('/orders/get', function (req, res, match){
 	  	require('./handlers/read-db.js').cached(req, res);
 	});
+	router.addRoute('/order/get/:id', function (req, res, match){
+	  	require('./handlers/read-db.js').getOrder(req, res);
+	});
 
 	router.addRoute('/orders/get/nocache', function (req, res, match){
 	  	require('./handlers/read-db.js').noCache(req, res);

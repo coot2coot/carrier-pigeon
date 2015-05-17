@@ -1,14 +1,14 @@
 "use strict"
 
-var pg 		 	  = require("pg");
-var str           = process.env.POSTGRES_URI || require("../credentials.json").postgres;
-var url 	      = "postgres://"+ str + "/carrier-pigeon-dev"
-var stringifyData = require("./lib/stringify-data-sql.js");
+var pg 		 	   = require("pg");
+var str            = process.env.POSTGRES_URI || require("../credentials.json").postgres;
+var url 	       = "postgres://"+ str + "/carrier-pigeon-dev"
+var stringifyData  = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js");
-var editQuery     = require("./lib/edit-query-sql.js");
-var queryStrings = require("./lib/querys.js");
-var command = require("./lib/commands");
-var dataBase      = {};
+var editQuery      = require("./lib/edit-query-sql.js");
+var queryStrings   = require("./lib/querys.js");
+var command        = require("./lib/commands");
+var dataBase       = {};
 
 
 function tests (test){
@@ -47,6 +47,23 @@ function get (table, clt, done, cb) {
 
         done();
         cb(result.rows);
+    });
+}
+
+function getOrder (table, clt, done, cb, job_number) {
+    clt.query(command()
+                .select("*")
+                .from(table)
+                .where("job_number = " + job_number)
+                .end(), function(err, result) {
+                    
+        if (err) {
+            done(clt);
+            return cb(err);
+         }
+
+        done();
+        cb(null, result.rows);
     });
 }
 
@@ -276,6 +293,10 @@ function searchDates (table, clt, done, cb, dates){
 
 dataBase.get = function (table, cb, test){
  	connect(get, table, cb, test)
+};
+
+dataBase.getOrder = function (table, id, cb, test){
+    connect(getOrder, table, cb, test, id)
 };
 
 dataBase.post = function (table, doc, cb, test){

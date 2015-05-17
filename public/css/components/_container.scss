@@ -1,0 +1,37 @@
+
+.container.booking-note {
+	width: 595px;
+	height: 842px;
+	float: center;
+	padding: 20px;
+	border: 0.1em $light-grey solid;
+	@include box-shadow;
+	hr {
+		background-color: $primary;
+		height: 3px;
+	}
+	.half {
+		width: 50%;
+		p {
+			display: block;
+		}
+		&.float-right {
+			text-align: right;
+		}
+	}
+	h2 {
+		color: black;
+		text-align: center;
+		font-weight: 700;
+    font-size: 20px;
+	}
+  h5, p {
+    font-size: 12px;
+    color: black;
+  }
+  img {
+      height: 54px;
+      float: right;
+      margin: 8px;
+  }
+}

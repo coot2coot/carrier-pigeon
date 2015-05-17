@@ -2,7 +2,7 @@
 
 var React  = require('react');
 
-var Header = require("./header.jsx");
+var Header = require("./header/header.jsx");
 var Error  = require("./error-message.jsx");
 
 var loginPanel = React.createClass({
