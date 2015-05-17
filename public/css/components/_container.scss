@@ -1,0 +1,12 @@
+
+.container.booking-note {
+	width: 595px;
+	height: 842px;
+	float: center;
+	padding: 20px;
+	border: 0.1em $light-grey solid;
+	@include box-shadow;
+	hr {
+		background-color: $primary;
+  		height: 5px;	}
+}

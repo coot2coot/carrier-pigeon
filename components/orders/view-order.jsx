@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
 var React  	= require('react');
+var Router  = require('react-router');
+var Link    = Router.Link;
 
 var Units 	= require("./view_units.jsx");
 var Warning = require("../warning.jsx");

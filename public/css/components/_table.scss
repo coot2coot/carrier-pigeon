@@ -20,3 +20,8 @@ th {
 	@include light-background;
 
 }
+
+.container.booking-note table {
+	border: 0.1em $light-grey solid;
+	width: 100%;
+}
