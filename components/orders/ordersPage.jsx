@@ -214,7 +214,7 @@ var ordersPage = React.createClass({
                     : this.state.creatingOrder
                     ? <CreateOrder jobNo={this.state.lastJobNo} closeView={this.onCloseComponent}/>
                     : this.state.datePicker
-                    ? <Datepicker getorders={this.getDateOrders}/>
+                    ? <Datepicker getorders={this.getDateOrders} closeView={this.onCloseComponent}/>
                     : <p></p>
                 )}
 

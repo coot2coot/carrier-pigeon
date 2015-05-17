@@ -66,6 +66,17 @@
     	color: $light-grey;
     }
 }
+.close-date {
+	font-size:1.5em;
+	margin-left: 0.4em;
+	color: black;
+	margin-top:-0.8em;
+	&:hover {
+    	color: $light-grey;
+    }
+}
+
+
 
 .delete {
 	border: none;
