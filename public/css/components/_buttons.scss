@@ -28,8 +28,10 @@
 }
 .button.grey {
 	@include light-background;
-	color:black;
-	border: 0.1em $primary solid;
+	color: $dark-grey;
+	border: 0.1em $light-grey solid;
+	font-weight: 400;
+	margin: 0.2em 0.2em 0 1em;
 }
 	
 .button {
@@ -64,6 +66,17 @@
     	color: $light-grey;
     }
 }
+.close-date {
+	font-size:1.5em;
+	margin-left: 0.4em;
+	color: black;
+	margin-top:-0.8em;
+	&:hover {
+    	color: $light-grey;
+    }
+}
+
+
 
 .delete {
 	border: none;
@@ -81,4 +94,12 @@ links {
 		display: inline-block;
 		color: white;
 	}
+}
+
+.warning {
+  .button {
+    margin-top: 0;
+    position: relative;
+    bottom: 1em;
+  }
 }

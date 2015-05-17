@@ -18,5 +18,21 @@ td {
 
 th {
 	@include light-background;
+}
 
+.container.booking-note table {
+	border: 0.1em $light-grey solid;
+	width: 100%;
+	tr {
+		border-bottom: 0.1em $light-grey solid;
+	}
+}
+
+.warning {
+  table {
+    border-bottom: 0.1em $light-grey solid;
+    p {
+      margin-top: 0;
+    }
+  }
 }
