@@ -24,4 +24,7 @@ th {
 .container.booking-note table {
 	border: 0.1em $light-grey solid;
 	width: 100%;
+	tr {
+		border-bottom: 0.1em $light-grey solid;
+	}
 }

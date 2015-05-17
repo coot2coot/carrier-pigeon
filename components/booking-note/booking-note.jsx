@@ -1,7 +1,5 @@
 /** @jsx React.DOM */
 
-// TODO: query cache for job no 
-
 var React  = require('react');
 
 var Header         = require("../header/header.jsx");
@@ -57,26 +55,26 @@ var bookingNote = React.createClass({
                         <img src="../../img/logo-full.png" />
                         <hr/> 
                     </div>
-                    <div>
-                        <h1>BOOKING NOTE</h1>
+                    <h2>BOOKING NOTE</h2>
+                    <div className="float-right">
                         <p>Job no: {getJobNumber(this.state.order.job_number)}</p>
                         <p>date: { this.state.order.date.substring(0, 10)}</p>
                     </div>
                     <div>
                         <BookingForm order={this.state.order} />
                     </div>
-                    {/*<br>
-                    <hr>
-                    <div className="column-6">
+                    <br />
+                    <hr />
+                    <div className="half float-left">
                         <p className="small">145-157 St John Street</p>
                         <p className="small">London EC1V 4PW</p>
                         <p className="small">England</p>
                     </div>
-                    <div className="column-6">
+                    <div className="half float-right">
                         <p className="small">Coot Freight Ltd.</p>
                         <p className="small">Registered in England No.07880722</p>
                         <p className="small">VAT No. GB 128 2159 22</p>
-                    </div>*/}
+                    </div>
                 </div>
             </div>
         )

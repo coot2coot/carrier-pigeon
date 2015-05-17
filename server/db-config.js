@@ -149,15 +149,25 @@ function edit (table, clt, done, cb, doc) {
         var unitsUpdateQuery = editQuery.units(doc.unit).update;
         var unitsCreateQuery = editQuery.units(doc.unit).create;
         var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
+        console.log(command()
+                    .update("orders")
+                    .set(ordersQuery)
+                    .where("job_number = '" + doc.order.job_number+"'" )
+                    .next()
+                    .query(unitsUpdateQuery)
+                    .query(unitsDeleteQuery)
+                    .query(unitsCreateQuery)
+                    .end())
 
         clt.query(command()
                     .update("orders")
                     .set(ordersQuery)
-                    .where()
+                    .where("job_number = '" + doc.order.job_number+"'" )
                     .next()
                     .query(unitsUpdateQuery)
                     .query(unitsDeleteQuery)
-                    .query(unitsCreateQuery), function(err, result) {
+                    .query(unitsCreateQuery)
+                    .end(), function(err, result) {
             if (err) {
                 console.log(err)
 

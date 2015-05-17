@@ -90,14 +90,14 @@ var viewOrder = React.createClass({
 				disabled[prop].disabled = false;
 			}
 			this.setState({
-					editing: false
+				editing: false
 			});
 		} else {
 			for (var prop in disabled){
 				disabled[prop].disabled = true;
 			}
 			this.setState({
-					editing: true
+				editing: true
 			});
 		}
 	},
@@ -143,6 +143,7 @@ var viewOrder = React.createClass({
 									<div className="row">
 
 										{ this.state.units.map(function(unit, i){
+											console.log(unit.unit_id)
 										    return <Units unit={unit} key={i} editing = {editing} />;
 										})}
 

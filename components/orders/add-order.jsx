@@ -85,7 +85,7 @@ var addOrder = React.createClass({
 										}
 										<div className="column-2">
 											<button type="button"  className="button units" onClick = {addUnit}>+</button>
-											<button type="button" className="button units" onClick = {removeUnit}>-</button>
+											<button type="button" className="button units float-right" onClick = {removeUnit}>-</button>
 										</div>
 
 									</div>

@@ -73,7 +73,8 @@ var ordersPage = React.createClass({
 	onCloseComponent: function () {
 		this.setState({
 			selectedOrder: null,
-			creatingOrder: null
+			creatingOrder: null,
+			datePicker: null
 		})
 	},
 
@@ -87,6 +88,15 @@ var ordersPage = React.createClass({
 		this.setState({
 			creatingOrder: true
 		})
+	},
+	pickDate: function () {
+		this.state.datePicker
+		?	this.setState({
+				datePicker: false
+			})
+		: 	this.setState({
+				datePicker: true
+			})
 	},
 
 	getSearchedOrders: function (value) {
@@ -116,13 +126,15 @@ var ordersPage = React.createClass({
 		$.get(getUrl,function (result) {	
 			if(result === "error"){
 				this.setState({
-					error: true
+					error: true,
+					datePicker: null
 				})
 			}else{		
 				var order = JSON.parse(result);
 
 				this.setState({
-				    orders : order
+				    orders : order,
+				    datePicker: null
 				});
 			}				
 		}.bind(this))
@@ -135,6 +147,7 @@ var ordersPage = React.createClass({
 		var orderHandler = this.orderHandler;
 		var addInvoiceHandler = this.addInvoice;
 		return (
+
 			<div>
 				<Header/>
 				<div className="column-14 push-1 model-generic">
@@ -146,9 +159,9 @@ var ordersPage = React.createClass({
                     </div>
 					<div className="panel-header">
 						<h3>Orders</h3>
-						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
+						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>						
+						<button data-tooltip="Pick Date Range" className="button grey column-1 float-right " onClick={this.pickDate}>Date Range</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
-						<Datepicker getorders= {this.getDateOrders}/>
 					</div>
 					<div className="panel-body table-responsive model-overflow">
 						<table className="table table-full">
@@ -200,6 +213,8 @@ var ordersPage = React.createClass({
                     ? <ViewOrder order={this.state.selectedOrder} closeView={this.onCloseComponent}/>
                     : this.state.creatingOrder
                     ? <CreateOrder jobNo={this.state.lastJobNo} closeView={this.onCloseComponent}/>
+                    : this.state.datePicker
+                    ? <Datepicker getorders={this.getDateOrders}/>
                     : <p></p>
                 )}
 
