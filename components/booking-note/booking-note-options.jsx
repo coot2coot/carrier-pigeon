@@ -33,9 +33,33 @@ var bookingNote = React.createClass({
     },
 
     downloadBooking: function () {
+       var pdf = new jsPDF('p', 'pt', 'letter');
+       var source = document.getElementById('form');
+       console.log(source)
+       var handler = {
+            '#bypassme': function(element, renderer){
+                return true
+            }
+       };
+       var margins = {
+            top: 50,
+            left:60,
+            width: 545
+       };
 
+       pdf.fromHTML(
+            source,
+            margins.left,
+            margins.top,
+            {
+                'width' : margins.width,
+                'elementHandlers': handler
+            },
+            function(dispose){
+                pdf.save('forms')
+            }
+        )
     },
-
     printBooking: function () {
 
     },
