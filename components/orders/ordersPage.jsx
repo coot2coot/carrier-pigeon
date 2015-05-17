@@ -159,8 +159,8 @@ var ordersPage = React.createClass({
                     </div>
 					<div className="panel-header">
 						<h3>Orders</h3>
-						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>						
-						<button data-tooltip="Pick Date Range" className="button grey column-1 float-right " onClick={this.pickDate}>Date Range</button>
+						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
+						<button data-tooltip="Pick Date Range" className="button grey column-2 float-right " onClick={this.pickDate}>Date Range</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
 					</div>
 					<div className="panel-body table-responsive model-overflow">

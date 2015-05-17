@@ -28,8 +28,10 @@
 }
 .button.grey {
 	@include light-background;
-	color:black;
-	border: 0.1em $primary solid;
+	color: $dark-grey;
+	border: 0.1em $light-grey solid;
+	font-weight: 400;
+	margin: 0.2em 0.2em 0 1em;
 }
 	
 .button {
@@ -75,3 +77,12 @@
  		color: #5293CA;
  	}
 }
+
+.warning {
+  .button {
+    margin-top: 0;
+    position: relative;
+    bottom: 1em;
+  }
+}
+

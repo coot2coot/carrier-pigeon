@@ -1,0 +1,19 @@
+.pop-up {
+  z-index: 2;
+  position: absolute;
+  top: 11%;
+  right: 2em;
+  .column-5 {
+    background-color: white;
+    @include box-shadow;
+    border: 0.1em $light-grey solid;
+    padding: 0.5em;
+  }
+  .row {
+    margin: 0;
+  }
+  .submit {
+    width: 6em;
+    margin: 0 auto;
+  }
+}
