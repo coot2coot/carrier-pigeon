@@ -35,7 +35,6 @@ var bookingNote = React.createClass({
     downloadBooking: function () {
        var pdf = new jsPDF('p', 'pt', 'letter');
        var source = document.getElementById('form');
-       console.log(source)
        var handler = {
             '#bypassme': function(element, renderer){
                 return true
@@ -61,7 +60,9 @@ var bookingNote = React.createClass({
         )
     },
     printBooking: function () {
-
+        var printcontent = document.getElementsByClassName("booking-note")[0].innerHTML;
+        document.body.innerHTML = printcontent;
+        window.print();
     },
 
     onCloseComponent: function () {
