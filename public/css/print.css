@@ -1,0 +1,37 @@
+/***********************************************
+*   PRINT STYLING
+*	
+************************************************/
+
+.booking-note {
+	font-family: arial;
+	padding: 5% 15%;
+	width: 21cm;
+    min-height: 29.7cm;
+}
+p {
+	font-size: 8pt;
+	font-family: arial;
+}
+h5 {
+	font-size: 8.5pt;
+	font-family: arial;
+}
+h2 {
+	font-size: 14.5pt;
+	font-family: arial;
+}
+td {
+	font-size: 8pt;
+	font-family: arial;
+}
+
+.booking-note table tr {
+	margin: 0;
+	padding: 0;
+}
+
+.booking-note hr {
+	background-color: #49A4A5;
+	font-family: arial;
+}
