@@ -60,9 +60,12 @@ var bookingNote = React.createClass({
         )
     },
     printBooking: function () {
+        var originalContents = document.body.innerHTML;
         var printcontent = document.getElementsByClassName("booking-note")[0].innerHTML;
         document.body.innerHTML = printcontent;
         window.print();
+        window.close();
+        document.body.innerHTML = originalContents;
     },
 
     onCloseComponent: function () {
