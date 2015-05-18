@@ -48,7 +48,7 @@ var bookingNote = React.createClass({
 
     render: function() {
         return (
-            <div>
+            <div >
                 <Header/>
                 <BookingOptions order={this.state.order} />
                 <BookingPage order={this.state.order} />

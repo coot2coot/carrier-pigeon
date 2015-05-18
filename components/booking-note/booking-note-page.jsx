@@ -69,7 +69,7 @@ var halfLeft = {
 var bookingNote = React.createClass({
     render: function() {
         return (
-            <div className="booking-note container" style={bookingStyle}>
+            <div id="form" className="booking-note container" style={bookingStyle}>
                 <div>
                     <img style={img} src="http://carrierpigeonfac-se-env.elasticbeanstalk.com/img/logo-full.png" />
                     <hr style={hr}/> 

@@ -22,7 +22,7 @@ function landingTests (wd, capability, remote) {
         beforeEach(function(done) {
             browser
                 .get("http://localhost:8000")
-                .elementByCssSelector("input[name='username']")
+                .waitForElementByCssSelector("input[name='username']")
                 .sendKeys(username, function (err) {
                     if (err) console.log(err);
                 })
@@ -34,7 +34,7 @@ function landingTests (wd, capability, remote) {
                 .submit(function (err) {
                     if (err) console.log(err);
                 })
-                .elementByLinkTextOrNull("Admin Panel", function (err, element) {
+                .waitForElementByLinkText("Admin Panel", function (err, element) {
                     if (err) console.log(err);
                 })
                 .click(function(err) {
@@ -45,7 +45,7 @@ function landingTests (wd, capability, remote) {
         
         afterEach(function(done) {
             browser
-                .elementByLinkTextOrNull("Logout", function (err, element) {
+                .waitForElementByLinkText("Logout", function (err, element) {
                     if (err) console.log(err);
                 })
                 .click(function(err) {
