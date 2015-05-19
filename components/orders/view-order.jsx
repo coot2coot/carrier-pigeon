@@ -2,6 +2,7 @@
 
 var React  	= require('react');
 var Router  = require('react-router');
+var Close = require("../close-warning.jsx");
 var Link    = Router.Link;
 
 var Units 	= require("./view_units.jsx");
@@ -22,9 +23,28 @@ var viewOrder = React.createClass({
       return {
         editing: true,
         units: [],
-        deletedUnits: ""
+        deletedUnits: "",
+        closeView: false
       };
     },
+    closeView: function() {
+		if(this.state.closeView){
+			this.props.closeView()
+			this.setState({
+	    		closeView: false
+	    	})
+	    }else{
+		    this.setState({
+	    		closeView: true
+	    	})
+		}
+	},
+
+	closeWarning: function () {
+		this.setState({
+	    	closeView: false
+	    })
+	},
 
 	deleteHandler: function (item) {
 		this.setState({
@@ -122,7 +142,7 @@ var viewOrder = React.createClass({
 						<button className="button blue" onClick = {this.edit}  >Edit</button>
 						<button className="button blue">Copy</button>
 						<Link className="button blue" to="booking-note" params={{job_no: this.props.order.job_number}}>Make a booking note</Link>
-						<a className="close" onClick={this.props.closeView}>x</a>
+						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body scroll">
 						<form action={"/order/edit/" + this.state.deletedUnits.slice(1)} method="POST">
@@ -236,7 +256,11 @@ var viewOrder = React.createClass({
 							</div>
 						</form>
 					</div>
-				</div>				
+				</div>	
+				{(this.state.closeView
+                    ? <Close message="If you close you will lose what you have done?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
+                    : <p></p>
+                )}			
 			</div>
 		);
 	}
