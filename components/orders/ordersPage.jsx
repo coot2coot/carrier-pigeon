@@ -163,7 +163,7 @@ var ordersPage = React.createClass({
 						<button data-tooltip="Pick Date Range" className="button grey column-2 float-right " onClick={this.pickDate}>Date Range</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
 					</div>
-					<div className="panel-body table-responsive model-overflow">
+					<div className="panel-body table-responsive scroll">
 						<table className="table table-full">
 							<th>
 								<h5>Job No.</h5>
