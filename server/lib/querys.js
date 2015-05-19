@@ -1,6 +1,77 @@
 "use strict";
 var command = require("./commands");
 
+var searchItem= [
+	{
+		table: "orders",
+		column: "client"
+	},
+	{
+		table: "orders",
+		column: "carrier"
+	},
+	{
+		table: "orders",
+		column: "collect_from"
+	},
+	{
+		table: "orders",
+		column: "deliver_to"
+	},
+	{
+		table: "orders",
+		column: "special_instructions"
+	},
+	{
+		table: "orders",
+		column: "shipper"
+	},
+	{
+		table: "orders",
+		column: "consignee"
+	},
+	{
+		table: "orders",
+		column: "notify"
+	},
+	{
+		table: "orders",
+		column: "remarks"
+	},
+	{
+		table: "orders",
+		column: "port_of_loading"
+	},
+	{
+		table: "orders",
+		column: "port_of_discharge"
+	},
+	{
+		table: "orders",
+		column: "vessel"
+	},
+	{
+		table: "units",
+		column: "unit_number"
+	},
+	{
+		table: "units",
+		column: "unit_commodity_description"
+	},
+	{
+		table: "units",
+		column: "unit_loading_reference"
+	},
+	{
+		table: "units",
+		column: "unit_type"
+	},
+	{
+		table: "units",
+		column: "unit_kind_of_packages"
+	}
+];
+
 function isJobNumber(job_number) {
 
 	var regex = /^[0-9]{8}$/
@@ -17,6 +88,7 @@ var query = {};
 
 query.searchOrders = function (value) {
 	var string = "";
+	var funct;
 	var job_value = {};
 
 	if(isPartialJobNumber(value)){
@@ -37,58 +109,23 @@ query.searchOrders = function (value) {
 					.end()
 	}
 
-	string += command()
-				.select("job_number")
-				.from("orders")
-				.where("client ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("carrier ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("collect_from ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("deliver_to ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("special_instructions ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("shipper ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("consignee ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("notify ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("remarks ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("loading_reference ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("collection_date ILIKE '%" + value +"%'")
-				.next()
-				.select("job_number")
-				.from("orders")
-				.where("contact_details ILIKE '%" + value +"%'")
-				.end()
+
+	searchItem.map(function (item, i) {
+		var newString = command()
+						.select("job_number")
+						.from(item.table)
+						.where(item.column+" ILIKE '%" + value +"%'")
+						.end().slice(0,-1)
+		string += command()
+					.select("*")
+					.from("orders")
+					.where("job_number in (" + newString + ")")
+					.end()
+	})
 
 	return string;
 }
+
 
 
 module.exports = query;
