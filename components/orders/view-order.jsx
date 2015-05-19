@@ -115,7 +115,7 @@ var viewOrder = React.createClass({
 	                    : <p></p>
 	                )}
                 </div>
-				<div className="column-10 push-3 model-generic model-top view-order">
+				<div className="column-12 push-2 model-generic model-top view-order">
 					<div className="panel-header">
 						<h3>{getJobNumber(this.props.order.job_number)}</h3>
 						<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.order)}>Delete</a>
@@ -141,6 +141,17 @@ var viewOrder = React.createClass({
 									</div>
 
 									<div className="row">
+										<div className="column-8">
+											<p>Client</p>
+											<textarea className="view_input big" type="text"  defaultValue= {this.props.order.client}  name="client" disabled max='500' required/>
+										</div>
+										<div className="column-8">
+											<p>Carrier </p>
+											<input className="view_input" type="text"  defaultValue={this.props.order.carrier} name="carrier" disabled />
+										</div>
+									</div>
+
+									<div className="row">
 
 										{ this.state.units.map(function(unit, i){
 											console.log(unit.unit_id)
@@ -152,21 +163,6 @@ var viewOrder = React.createClass({
 											<button type="button" className="view_input button	units" onClick = {removeUnit} disabled={editing ? true : false}>-</button>
 										</div>
 									</div>
-			
-									<div className="row">
-										<div className="column-8">
-											<p>Client</p>
-											<textarea className="view_input big" type="text"  defaultValue= {this.props.order.client}  name="client" disabled max='500' required/>
-										</div>
-										<div className="column-8">
-											<p>Carrier </p>
-											<input className="view_input" type="text"  defaultValue={this.props.order.carrier} name="carrier" disabled />
-										</div>
-										<div className="column-8">
-											<p>Loading reference</p>
-											<input className="view_input"  type="text"   defaultValue= {this.props.order.loading_reference} name="loading_reference" disabled/>
-										</div>	
-									</div>
 
 									<div className="row">
 										<div className="column-8">
@@ -174,61 +170,57 @@ var viewOrder = React.createClass({
 											<textarea className="view_input big" type="text"  big defaultValue={this.props.order.collect_from} name="collect_from" max="500" disabled />
 										</div>
 										<div className="column-8">
-											<p>City</p>
-											<input className="view_input" type="text"  big defaultValue={this.props.order.city} name="city" disabled />
-										</div>
-
-										<div className="row column-8">
-											<div className="column-8">
-												<p>Date</p>
-												<input className="view_input" type="date"  defaultValue={this.props.order.collection_date} name="collection_date" disabled/>
-											</div>
-											<div className="column-8">
-												<p>Time</p>
-												<input className="view_input" type="time"  defaultValue={this.props.order.collection_time} name="collection_time" disabled />
-											</div>
-										</div>
-									</div>
-									<div className="row">
-										<div className="column-8">
-											<p>Contact details</p>
-											<textarea className="view_input big" type="text" defaultValue={this.props.order.contact_details} name="contact_details" max='500' disabled />
-										</div>
-										<div className="column-8">
 											<p>Deliver to</p>
 											<textarea className="view_input big" type="text" defaultValue={this.props.order.deliver_to} name="deliver_to" disabled max='500' />
 										</div>
 									</div>
+
 									<div className="row">
-										<div className="column-8">
-											<p>Commodity details</p>
-											<textarea className="view_input" type="text"  defaultValue={this.props.order.commodity_details} name="commodity_details" disabled max ='500'/>
-										</div>
 										<div className="column-8">
 											<p>Special Instructions</p>
 											<textarea className="view_input" type="text"  defaultValue={this.props.order.special_instructions} name="special_instructions" disabled max='500'/>
 										</div>
-									</div>
-
-
-									<div className="row">
-										<div className="column-8">
-											<p>Shipper</p>
-											<textarea className="view_input big" type="text"   defaultValue={this.props.order.shipper} name="shipper" disabled  max ='500'/>
-										</div>
-										<div className="column-8">
-											<p>Consignee</p>
-											<textarea className="view_input big" type="text"   defaultValue={this.props.order.consignee} name="consignee" disabled  max ='500'/>
-										</div>
-									</div>
-									<div className="row">
-										<div className="column-8">
-											<p>Notify</p>
-											<textarea className="view_input big" type="text"  defaultValue={this.props.order.notify} name="notify" disabled  max ='500'/>
-										</div>
 										<div className="column-8">
 											<p>Remarks</p>
 											<textarea className="view_input big" type="text"   defaultValue={this.props.order.remarks} name="remarks"  disabled max ='500'/>
+										</div>
+									</div>
+
+									<div className="row">
+										<div className="column-3">
+											<p>Port of Loading</p>
+											<input className="view_input" type="text" name="port_of_loading" disabled/>
+										</div>
+										<div className="column-3">
+											<p>Port of Discharge</p>
+											<input className="view_input" type="text" name="port_of_discharge" disabled/>
+										</div>
+										<div className="column-4">
+											<p>Vessel</p>
+											<input className="view_input" type="text" name="vessel" disabled/>
+										</div>
+										<div className="column-3">
+											<p>ETS</p>
+											<input className="view_input" type="text" name="ets" disabled/>
+										</div>
+										<div className="column-3">
+											<p>ETA</p>
+											<input className="view_input" type="text" name="eta" disabled/>
+										</div>
+									</div>
+
+									<div className="row">
+										<div className="column-5">
+											<p>Shipper</p>
+											<textarea className="view_input big" type="text"   defaultValue={this.props.order.shipper} name="shipper" disabled  max ='500'/>
+										</div>
+										<div className="column-5">
+											<p>Consignee</p>
+											<textarea className="view_input big" type="text"   defaultValue={this.props.order.consignee} name="consignee" disabled  max ='500'/>
+										</div>
+										<div className="column-6">
+											<p>Notify</p>
+											<textarea className="view_input big" type="text"  defaultValue={this.props.order.notify} name="notify" disabled  max ='500'/>
 										</div>
 									</div>
 									<input className="button charcoal" type="submit" value="Update" />
