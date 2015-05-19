@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Units = require("./units.jsx");
+var Warning = require("../close-warning.jsx");
 
 var currentDate = function () {
     var today = new Date();
@@ -27,7 +28,27 @@ var addOrder = React.createClass({
 	    	dateValue: currentDate(),
 	    	valid: false,
 	    	unitsArr: [0],
+	    	closeView: false
 	    };
+	},
+
+	closeView: function() {
+		if(this.state.closeView){
+			this.props.closeView()
+			this.setState({
+	    		closeView: false
+	    	})
+	    }else{
+		    this.setState({
+	    		closeView: true
+	    	})
+		}
+	},
+
+	closeWarning: function () {
+		this.setState({
+	    	closeView: false
+	    })
 	},
 
 	onDateChange: function(event) {
@@ -65,7 +86,7 @@ var addOrder = React.createClass({
 				<div className="column-10 push-3 model-generic model-top create-order">
 					<div className="panel-header">
 						<h3>New Entry</h3>
-						<a className="close" onClick={this.props.closeView}>x</a>
+						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body scroll">
 						<form action="/order/post" method="POST">
@@ -74,7 +95,7 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-16" >
 											<p>Date</p>
-											<input type="date" name="date" min={this.state.dateValue} value={this.state.dateValue} onChange={this.onDateChange} required/>
+											<input type="date" name="date" min={today} value={this.state.dateValue} onChange={this.onDateChange} required/>
 										</div>
 									</div>
 									<div className="row">
@@ -173,6 +194,10 @@ var addOrder = React.createClass({
 						</form>
 					</div>
 				</div>
+				{(this.state.closeView
+                    ? <Warning message="If you close you will lose what you have done?" closeView={this.closeView} closeWarning={this.closeWarning}/>
+                    : <p></p>
+                )}
 			
 			</div>
 		);
