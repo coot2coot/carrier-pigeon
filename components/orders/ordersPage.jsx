@@ -109,7 +109,9 @@ var ordersPage = React.createClass({
 				})
 			}else{		
 				var order = JSON.parse(result);
-
+				this.setState({
+					error: false
+				})
 				this.setState({
 				    orders : order
 				});
