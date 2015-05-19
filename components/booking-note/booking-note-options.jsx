@@ -32,33 +32,6 @@ var bookingNote = React.createClass({
         });
     },
 
-    downloadBooking: function () {
-       var pdf = new jsPDF('p', 'pt', 'letter');
-       var source = document.getElementById('form');
-       var handler = {
-            '#bypassme': function(element, renderer){
-                return true
-            }
-       };
-       var margins = {
-            top: 50,
-            left:60,
-            width: 545
-       };
-
-       pdf.fromHTML(
-            source,
-            margins.left,
-            margins.top,
-            {
-                'width' : margins.width,
-                'elementHandlers': handler
-            },
-            function(dispose){
-                pdf.save('forms')
-            }
-        )
-    },
     printBooking: function () {
         var originalContents = document.body.innerHTML;
         var printcontent = document.getElementsByClassName("booking-note")[0].innerHTML;
@@ -87,10 +60,6 @@ var bookingNote = React.createClass({
                     <div className="column-14 push-1">
                         <a className="button blue" onClick={this.printBooking}>
                             Print
-                        </a>
-
-                        <a className="button blue" onClick={this.downloadBooking}>
-                            Download
                         </a>
                         
                         <a className="button blue" onClick={this.enterEmail}>
