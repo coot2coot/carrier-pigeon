@@ -36,25 +36,54 @@ var units = React.createClass({
 		return (
 			<units>
 				<div className="row column-14">
-					<div className="column-4">
-						<p>Unit Type</p>
-						<select name="unit_type"required>
-
-							{ this.state.options.map(function (unit, i) {
-						        return (
-						        	<option>{unit.types}</option>
-						        )
-						    })}
-						    
-						</select>
-					</div>
-					<div className="column-4">
-						<p>Unit Weight</p>
-						<input type="number" defaultValue = "0" name="unit_weight"/>
-					</div>
-					<div className="column-8">
-						<p>Unit Number</p>
+					<div className="column-3">
+						<p>Unit No.</p>
 						<input type="text" name="unit_number"required/>
+					</div>
+					<div className="column-3">
+						<p>Unit Type</p>
+						<input type="text" name="unit_type"required/>
+					</div>
+					<div className="column-4">
+						<p>Loading Reference</p>
+						<input type="text" name="unit_loading_reference"/>
+					</div>
+					<div className="column-3">
+						<p>loading Date</p>
+						<input type="date" name="lunit_oading_date"/>
+					</div>
+					<div className="column-3">
+						<p>loading Time</p>
+						<input type="time" name="unit_loading_time"/>
+					</div>
+				</div>
+
+				<div className="row column-14 no-gutter">
+					<div className="column-2">
+						<p>Nett Weight</p>
+						<input type="number" name="unit_nett_weight"/>
+					</div>
+					<div className="column-2">
+						<p>Gross Weight</p>
+						<input type="number" name="unit_gross_weight"/>
+					</div>
+					<div className="column-2">
+						<br/>
+						<p>Cube m3</p>
+						<input type="number" name="unit_volume"/>
+					</div>
+					<div className="column-6">
+						<br/>
+						<p>Commodity Description</p>
+						<input type="text" name="unit_commodity_description"/>
+					</div>
+					<div className="column-2">
+						<p>No of Packages</p>
+						<input type="number" name="unit_no_of_packages"/>
+					</div>
+					<div className="column-2">
+						<p>Kind of Packages</p>
+						<input type="text" name="unit_kind_of_packages"/>
 					</div>
 				</div>
 			</units>
