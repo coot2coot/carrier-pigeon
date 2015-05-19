@@ -94,11 +94,17 @@ query.searchOrders = function (value) {
 	if(isPartialJobNumber(value)){
 		job_value.year = "20" + value.slice(0,2);
 		job_value.month = value.slice(2,4);
+		job_value.job_number = value.replace(/^0+(?!\.|$)/, '')
 		string += command()
 					.select("*")
 					.from("orders")
 					.where("EXTRACT(YEAR FROM date) = " + job_value.year + " AND EXTRACT(MONTH FROM date) = " + job_value.month)
+					.next()
+					.select("*")
+					.from("orders")
+					.where("job_number = " + job_value.job_number)
 					.end()
+					console.log
 
 	}else if(isJobNumber(value)){
 		job_value.newValue = Number(value.slice(-4));
