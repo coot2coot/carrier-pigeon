@@ -5,7 +5,7 @@ var validateUser = require('../lib/validate-user.js');
 function search (req, res) {
 	var data = req.url.split("/").pop();
 	validateUser(req,res, function (){
-		db.searcher('orders',data, function (err,orders) {
+		db.searcher("orders",data, function (err,orders) {
 			if(err){
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end('error');
