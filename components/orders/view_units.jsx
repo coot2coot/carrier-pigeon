@@ -11,7 +11,10 @@ var units = React.createClass({
 					<div className="column-3">
 						<p>Unit No.</p>
 						<input className="view_input" type="text" name="unit_number" defaultValue={unit.unit_number} disabled={this.props.editing ? true : false} required/>
-						<input className="display-none" type="text" name="unit_id" defaultValue={unit.unit_id} disabled={this.props.editing ? true : false} required/>
+						{( unit.unit_id
+							? <input className="display-none" type="text" name="unit_id" defaultValue={unit.unit_id} disabled={this.props.editing ? true : false} required/>
+							: <p className="display-none"></p>
+						)}
 					</div>
 					<div className="column-3">
 						<p>Unit Type</p>
@@ -33,7 +36,7 @@ var units = React.createClass({
 
 				<div className="row column-14 no-gutter">
 					<div className="column-2">
-						<p>Nett Weight</p>
+						<p>Net Weight</p>
 						<input className="view_input" type="number" name="unit_net_weight" defaultValue={unit.unit_nett_weight} disabled={this.props.editing ? true : false}/>
 					</div>
 					<div className="column-2">

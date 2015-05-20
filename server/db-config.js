@@ -94,6 +94,7 @@ function post (table, clt, done, cb, doc) {
     } else {
         orders = stringifyData(doc.order)
         units = stringifyUnits(doc.unit)
+
         query = command()
                     .insertInto(table)
                     .columns(orders.columns)

@@ -11,6 +11,7 @@ function createJobNumString(num) {
 
 module.exports = function (units){
 	var data = {};
+	console.log(units);
 	if(typeof units["unit_type"] === "object"){
 		data.columns = "";
 		data.values = "";
@@ -38,7 +39,11 @@ module.exports = function (units){
 				  	arr.push(propValue);
 				}
 		  	}
-		  	str += "(" + arr.join() + ",(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1))";
+		  	var job_number = "(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1)";
+		  	if (units.job_number) {
+		  		job_number = units.job_number;
+		  	}
+		  	str += "(" + arr.join() + "," + job_number + ")";
 		  	values.push(str);
 		  	arr = [];
 		}
@@ -49,9 +54,15 @@ module.exports = function (units){
 		data.values = valueStr.substring(1, valueStr.length-1);
 		return data;
 	} else {
+		console.log(units.job_number);
+	  	var job_number = "(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1)";
+	  	if (units.job_number) {
+	  		job_number = units.job_number;
+	  	}
+
 		data = stringify(units);
 		data.values= data.values.slice(0, -1);
-		var str = data.values.slice(0, -1) + "(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1)";
+		var str = data.values.slice(0, -1) + job_number;
 
 		data.values = str;
 		return data;
