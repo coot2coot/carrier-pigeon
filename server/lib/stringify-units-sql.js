@@ -59,7 +59,9 @@ module.exports = function (units){
 	  	}
 
 		data = stringify(units);
-		var str = data.values.slice(0, -1) + job_number;
+
+		var str = data.values.slice(0, -2) + job_number;
+		console.log("str",str);
 
 		data.values = str;
 		return data;

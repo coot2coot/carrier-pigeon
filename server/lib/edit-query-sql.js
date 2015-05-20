@@ -54,11 +54,24 @@ query.units = function (units){
 								units.job_number + "); ";
 			}
 		}
-	}else{
-		//TODO:
-		query.update += " UPDATE units SET unit_type = '" + units["unit_type"] + "',unit_number = '" + units["unit_number"] + "',unit_weight = " + units["unit_weight"] + " WHERE unit_id = " + units["unit_id"] +";";
-	}
+	} else {
+		var updateArr = [],
+			updateStr = "";
 
+		for (props in units) {
+			if (props !== "unit_id" && props !== "job_number") {
+				var value = "'" + units[props] + "'";
+
+				if (units[props] === "") {
+					value = "null";
+				}
+				var updateStr = props + "=" + value;
+      			updateArr.push(updateStr);
+			}
+		}
+		query.update += "UPDATE units SET " + updateArr.join() + 
+            		" WHERE unit_id=" + units.unit_id + "; ";
+	}
 	return query;
 }
 

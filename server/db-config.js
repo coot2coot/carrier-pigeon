@@ -104,6 +104,7 @@ function post (table, clt, done, cb, doc) {
                     .columns(units.columns)
                     .values(units.values)
                     .end()
+        console.log(query);
     }
     
     clt.query(query, function(err, result) {
