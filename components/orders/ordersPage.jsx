@@ -121,10 +121,46 @@ var ordersPage = React.createClass({
 			"get searchfailed"
 		});
 	},
-	getDateOrders: function (value) {
-		console.log(value)
+	get90: function (dates) {
+		var date;
+		var currentDate = new Date();
+		var pastDate = new Date();
+		pastDate.setDate(currentDate.getDate() - 90);
 
-		var getUrl = "/search/dates/" + value;
+		currentDate = [
+			currentDate.getUTCFullYear(),
+			currentDate.getUTCMonth() + 1,
+			currentDate.getUTCDate()
+		];
+
+		pastDate = [
+			pastDate.getUTCFullYear(),
+			pastDate.getUTCMonth() + 1,
+			pastDate.getUTCDate()
+		];
+
+		date = pastDate.join("-")+ "," + currentDate.join("-")
+
+		this.getDateOrders(date);
+
+	},
+	getTodays: function (dates) {
+		var date;
+		var currentDate = new Date();
+
+		currentDate = [
+			currentDate.getUTCFullYear(),
+			currentDate.getUTCMonth() + 1,
+			currentDate.getUTCDate()
+		];
+
+		date = currentDate.join("-")+ "," + currentDate.join("-")
+
+		this.getDateOrders(date);
+
+	},
+	getDateOrders: function (dates) {
+		var getUrl = "/search/dates/" + dates;
 		$.get(getUrl,function (result) {	
 			if(result === "error"){
 				this.setState({
@@ -133,6 +169,9 @@ var ordersPage = React.createClass({
 				})
 			}else{		
 				var order = JSON.parse(result);
+				this.setState({
+					error: false
+				});
 
 				this.setState({
 				    orders : order,
@@ -162,6 +201,8 @@ var ordersPage = React.createClass({
 					<div className="panel-header">
 						<h3>Orders</h3>
 						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
+						<button data-tooltip="Get last 90 days of orders" className="button blue add" onClick={this.get90}>90</button>
+						<button data-tooltip="Get todays orders" className="button blue add" onClick={this.getTodays}>T</button>
 						<button data-tooltip="Pick Date Range" className="button grey column-2 float-right " onClick={this.pickDate}>Date Range</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
 					</div>

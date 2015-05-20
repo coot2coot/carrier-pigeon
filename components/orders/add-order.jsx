@@ -83,7 +83,7 @@ var addOrder = React.createClass({
 		var today = currentDate();
 		return (
 			<div className="overlay">
-				<div className="column-10 push-3 model-generic model-top create-order">
+				<div className="column-12 push-2 model-generic model-top create-order">
 					<div className="panel-header">
 						<h3>New Entry</h3>
 						<a className="close" onClick={this.closeView}>x</a>
@@ -93,12 +93,22 @@ var addOrder = React.createClass({
 							<div className="row gutters">
 								<div>
 									<div className="row">
-										<div className="column-16" >
+										<div className="column-16">
 											<p>Date</p>
 											<input type="date" name="date" min={today} value={this.state.dateValue} onChange={this.onDateChange} required/>
 										</div>
 									</div>
 									<div className="row">
+										<div className="column-8">
+											<p>Client</p>
+											<input type="text" name="client" required/>
+										</div>
+										<div className="column-8">
+											<p>Carrier </p>
+											<input type="text" name="carrier"/>
+										</div>
+									</div>
+									<div className="row units">
 										{
 											this.state.unitsArr.map(function(num, i){
 										        return <Units key={i} />;
@@ -113,79 +123,61 @@ var addOrder = React.createClass({
 
 									<div className="row">
 										<div className="column-8">
-											<p>Client</p>
-											<textarea type="text" name="client" className="big"  required max='500'/>
-										</div>
-										<div className="column-8">
-											<p>Carrier </p>
-											<input type="text" name="carrier" />
-										</div>	
-										<div className="column-8">
-											<p>Loading reference</p>
-											<input type="text" name="loading_reference" />
-										</div>									
-									</div>
-							
-									<div className="row">
-										<div className="column-8">
 											<p>Collection From</p>
 											<textarea type="text" className="big" name="collect_from" max='500'/>
-										</div>
+										</div>	
 										<div className="column-8">
-											<p>City</p>
-											<input type="text" name="city" />
-										</div>
-
-										<div className="row column-8">
-											<div className="column-8">
-												<p>Date</p>
-												<input type="date" name="collection_date" />
-											</div>
-											<div className="column-8">
-												<p>Time</p>
-												<input type="time" name="collection_time" />
-											</div>
-										</div>
-									</div>
-									<div className="row">
-										<div className="column-8">
-											<p>Contact details</p>
-											<textarea className="big"name="contact_details"  max = '500' />
-										</div>
-										<div className="column-8">
-											<p>Deliver to</p>
+											<p>Deliver To</p>
 											<textarea className="big" name="deliver_to"  max = '500'/>
-										</div>
-									</div>
-									<div className="row">
-										<div className="column-8">
-											<p>Commodity details</p>
-											<textarea  name="commodity_details"  max = '500'/>
-										</div>
-										<div className="column-8">
-											<p>Special Instructions</p>
-											<textarea  name="special_instructions"  max = '500'/>
-										</div>
+										</div>					
 									</div>
 									
 									<div className="row">
 										<div className="column-8">
-											<p>Shipper</p>
-											<textarea  className="big" name="shipper" max = '500'/>
-										</div>
-										<div className="column-8">
-											<p>Consignee</p>
-											<textarea className="big" name="consignee" max = '500'/>
-										</div>
-									</div>
-									<div className="row">
-										<div className="column-8">
-											<p>Notify</p>
-											<textarea  className="big" name="notify" max = '500'/>
+											<p>Special Instructions</p>
+											<textarea  name="special_instructions"  max = '500'/>
 										</div>
 										<div className="column-8">
 											<p>Remarks</p>
 											<textarea   className="big" name="remarks" max = '500' />
+										</div>
+									</div>
+
+									<div className="row">
+										<div className="column-3">
+											<p>Port of Loading</p>
+											<input type="text" name="port_of_loading" />
+										</div>
+										<div className="column-3">
+											<p>Port of Discharge</p>
+											<input type="text" name="port_of_discharge" />
+										</div>
+										<div className="column-4">
+											<p>Vessel</p>
+											<input type="text" name="vessel" />
+										</div>
+										<div className="column-3">
+											<p>ETS</p>
+											<input type="text" name="ets" />
+										</div>
+										<div className="column-3">
+											<p>ETA</p>
+											<input type="text" name="eta" />
+										</div>
+									</div>
+									
+									<div className="row">
+										<div className="column-5">
+											<p>Shipper</p>
+											<textarea  className="big" name="shipper" max = '500'/>
+										</div>
+										<div className="column-5">
+											<p>Consignee</p>
+											<textarea className="big" name="consignee" max = '500'/>
+										</div>
+										<div className="column-6">
+											<p>Notify</p>
+											<textarea  className="big" name="notify" max = '500'/>
 										</div>
 									</div>
 									<input type="submit" className="button charcoal" value="Done" />
