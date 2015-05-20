@@ -6,8 +6,8 @@ var units = React.createClass({
 	render: function () {
 		var unit = this.props.unit;
 		return (
-			<units>
-				<div className="row column-14">
+			<units className="column-14 no-gutter">
+				<div className="row">
 					<div className="column-3">
 						<p>Unit No.</p>
 					</div>
@@ -25,7 +25,7 @@ var units = React.createClass({
 					</div>
 				</div>
 
-				<div className="row column-14">
+				<div className="row">
 					<div className="column-3">
 						<input className="view_input" type="text" name="unit_number" defaultValue={unit.unit_number} disabled={this.props.editing ? true : false} required/>
 						{( unit.unit_id
@@ -33,7 +33,7 @@ var units = React.createClass({
 							: <p className="display-none"></p>
 						)}
 					</div>
-					<div className="column-3">
+					<div className="column-3 ">
 						<input className="view_input" type="text" name="unit_type" defaultValue={unit.unit_type} disabled={this.props.editing ? true : false} required/>
 					</div>
 					<div className="column-4">
@@ -47,7 +47,7 @@ var units = React.createClass({
 					</div>
 				</div>
 
-				<div className="row column-14 no-gutter">
+				<div className="row">
 					<div className="column-2">
 						<p>Net Weight</p>
 					</div>
@@ -55,7 +55,7 @@ var units = React.createClass({
 						<p>Gross Weight</p>
 					</div>
 					<div className="column-2">
-						<p>Volume(m3)</p>
+						<p>Volume (m3)</p>
 					</div>
 					<div className="column-6">
 						<p>Commodity Description</p>
@@ -68,7 +68,7 @@ var units = React.createClass({
 					</div>
 				</div>
 
-				<div className="row column-14 no-gutter">
+				<div className="row">
 					<div className="column-2">
 						<input className="view_input" type="number" name="unit_net_weight" defaultValue={unit.unit_nett_weight} disabled={this.props.editing ? true : false}/>
 					</div>

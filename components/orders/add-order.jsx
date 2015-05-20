@@ -108,7 +108,7 @@ var addOrder = React.createClass({
 											<textarea type="text" name="carrier" max='500'/>
 										</div>
 									</div>
-									<div className="row">
+									<div className="row units">
 										{
 											this.state.unitsArr.map(function(num, i){
 										        return <Units key={i} />;

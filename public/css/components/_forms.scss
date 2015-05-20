@@ -91,3 +91,21 @@ datepicker{
     margin-top: 1em;
   }
 }
+
+.border-bottom {
+  border: 0.1em $light-grey solid;
+}
+
+units {
+  border-top: 0.5em $light-grey solid;
+  border-right: 0.5em white solid;
+  border-bottom: 0.5em white solid;
+  border-left: 0.5em $light-grey solid;
+  background-color: #F7F6F6;
+  input, select, textarea {
+    &[disabled] {
+      border: none;
+      background-color: #F7F6F6;
+    }
+  }
+}

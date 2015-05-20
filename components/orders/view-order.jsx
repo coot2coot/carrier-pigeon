@@ -171,7 +171,7 @@ var viewOrder = React.createClass({
 										</div>
 									</div>
 
-									<div className="row">
+									<div className="row units">
 
 										{ this.state.units.map(function(unit, i){
 										    return <Units unit={unit} key={i} editing = {editing} />;
