@@ -96,7 +96,6 @@ function post (table, clt, done, cb, doc) {
                     .columns(units.columns)
                     .values(units.values)
                     .end()
-        console.log(query);
 
     }
     
@@ -161,7 +160,7 @@ function edit (table, clt, done, cb, doc) {
             }
 
             done();
-            cb();
+            cb(null);
         });
     }
 }
@@ -187,7 +186,7 @@ function remove (table, clt, done, cb, doc) {
             }
 
             done()
-            cb()
+            cb(null)
         });
 }
 
