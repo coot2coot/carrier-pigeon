@@ -9,22 +9,34 @@ var units = React.createClass({
 				<div className="row column-14">
 					<div className="column-3">
 						<p>Unit No.</p>
-						<input type="text" name="unit_number"required/>
 					</div>
 					<div className="column-3">
 						<p>Unit Type</p>
-						<input type="text" name="unit_type"required/>
 					</div>
 					<div className="column-4">
 						<p>Loading Reference</p>
-						<input type="text" name="unit_loading_reference"/>
 					</div>
 					<div className="column-3">
 						<p>loading Date</p>
-						<input type="date" name="unit_loading_date"/>
 					</div>
 					<div className="column-3">
 						<p>loading Time</p>
+					</div>
+				</div>
+				<div className="row column-14">
+					<div className="column-3">
+						<input type="text" name="unit_number"required/>
+					</div>
+					<div className="column-3">
+						<input type="text" name="unit_type"required/>
+					</div>
+					<div className="column-4">
+						<input type="text" name="unit_loading_reference"/>
+					</div>
+					<div className="column-3">
+						<input type="date" name="unit_loading_date"/>
+					</div>
+					<div className="column-3">
 						<input type="time" name="unit_loading_time"/>
 					</div>
 				</div>
@@ -32,28 +44,41 @@ var units = React.createClass({
 				<div className="row column-14 no-gutter">
 					<div className="column-2">
 						<p>Net Weight</p>
-						<input type="number" name="unit_net_weight"/>
 					</div>
 					<div className="column-2">
 						<p>Gross Weight</p>
-						<input type="number" name="unit_gross_weight"/>
 					</div>
 					<div className="column-2">
-						<br/>
 						<p>Cube m3</p>
-						<input type="number" name="unit_volume"/>
 					</div>
 					<div className="column-6">
-						<br/>
 						<p>Commodity Description</p>
-						<input type="text" name="unit_commodity_description"/>
 					</div>
 					<div className="column-2">
 						<p>No of Packages</p>
-						<input type="number" name="unit_no_of_packages"/>
 					</div>
 					<div className="column-2">
 						<p>Kind of Packages</p>
+					</div>
+				</div>
+
+				<div className="row column-14 no-gutter">
+					<div className="column-2">
+						<input type="number" name="unit_net_weight"/>
+					</div>
+					<div className="column-2">
+						<input type="number" name="unit_gross_weight"/>
+					</div>
+					<div className="column-2">
+						<input type="number" name="unit_volume"/>
+					</div>
+					<div className="column-6">
+						<input type="text" name="unit_commodity_description"/>
+					</div>
+					<div className="column-2">
+						<input type="number" name="unit_no_of_packages"/>
+					</div>
+					<div className="column-2">
 						<input type="text" name="unit_kind_of_packages"/>
 					</div>
 				</div>
