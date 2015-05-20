@@ -24,14 +24,24 @@
     }
 }
 
+.panel-body.table-responsive {
+    height: 30em;
+}
+
 .panel-body.settings {
   height: 25em;
 }
 
 .model-overflow {
 	max-height: 25em;
-    overflow: hidden;
+  overflow: hidden;
 }
+
+.scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .model-middle {
 	top: 35%;
   	position: absolute;
@@ -39,11 +49,6 @@
   		padding: 0 1em 2em 1em;
   	}
 }
-
-.scroll {
-  overflow: scroll;
-}
-
 
 .model-top {
 	top: 15%;
