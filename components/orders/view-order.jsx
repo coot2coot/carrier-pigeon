@@ -167,7 +167,7 @@ var viewOrder = React.createClass({
 										</div>
 										<div className="column-8">
 											<p>Carrier </p>
-											<input className="view_input" type="text"  defaultValue={this.props.order.carrier} name="carrier" disabled />
+											<textarea className="view_input big" type="text"  defaultValue={this.props.order.carrier} name="carrier" disabled max='500'/>
 										</div>
 									</div>
 
