@@ -55,7 +55,7 @@ var units = React.createClass({
 						<p>Gross Weight</p>
 					</div>
 					<div className="column-2">
-						<p>Cube m3</p>
+						<p>Volume(m3)</p>
 					</div>
 					<div className="column-6">
 						<p>Commodity Description</p>

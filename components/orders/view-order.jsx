@@ -189,7 +189,7 @@ var viewOrder = React.createClass({
 											<textarea className="view_input big" type="text"  big defaultValue={this.props.order.collect_from} name="collect_from" max="500" disabled />
 										</div>
 										<div className="column-8">
-											<p>Deliver to</p>
+											<p>Deliver To</p>
 											<textarea className="view_input big" type="text" defaultValue={this.props.order.deliver_to} name="deliver_to" disabled max='500' />
 										</div>
 									</div>
