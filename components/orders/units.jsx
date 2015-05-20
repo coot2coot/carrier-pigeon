@@ -5,8 +5,8 @@ var React = require('react');
 var units = React.createClass({
 	render: function () {
 		return (
-			<units>
-				<div className="row column-14">
+			<units className="column-14 no-gutter">
+				<div className="row">
 					<div className="column-3">
 						<p>Unit No.</p>
 					</div>
@@ -23,7 +23,7 @@ var units = React.createClass({
 						<p>loading Time</p>
 					</div>
 				</div>
-				<div className="row column-14">
+				<div className="row">
 					<div className="column-3">
 						<input type="text" name="unit_number"required/>
 					</div>
@@ -41,7 +41,7 @@ var units = React.createClass({
 					</div>
 				</div>
 
-				<div className="row column-14 no-gutter">
+				<div className="row">
 					<div className="column-2">
 						<p>Net Weight</p>
 					</div>
@@ -49,7 +49,7 @@ var units = React.createClass({
 						<p>Gross Weight</p>
 					</div>
 					<div className="column-2">
-						<p>Volume(m3)</p>
+						<p>Volume (m3)</p>
 					</div>
 					<div className="column-6">
 						<p>Commodity Description</p>
@@ -62,7 +62,7 @@ var units = React.createClass({
 					</div>
 				</div>
 
-				<div className="row column-14 no-gutter">
+				<div className="row">
 					<div className="column-2">
 						<input type="number" name="unit_net_weight"/>
 					</div>

@@ -101,14 +101,14 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Client</p>
-											<input type="text" name="client" className="big"  required/>
+											<input type="text" name="client" required/>
 										</div>
 										<div className="column-8">
 											<p>Carrier </p>
 											<input type="text" name="carrier"/>
 										</div>
 									</div>
-									<div className="row">
+									<div className="row units">
 										{
 											this.state.unitsArr.map(function(num, i){
 										        return <Units key={i} />;
