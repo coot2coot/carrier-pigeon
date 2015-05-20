@@ -83,7 +83,6 @@ function post (table, clt, done, cb, doc) {
                     .columns(columns)
                     .values(values)
                     .end()
-        console.log(query);
     } else if (table === "unit_types") {
         var values = "" +stringifyData(doc).values
 
@@ -101,9 +100,9 @@ function post (table, clt, done, cb, doc) {
                     .values(orders.values)
                     .next()
                     .insertInto('units')
-                    .columns("unit_type,unit_weight,unit_number,job_number")
+                    .columns(units.columns)
                     .values(units.values)
-                    .end() 
+                    .end()
     }
     
     clt.query(query, function(err, result) {
@@ -149,15 +148,6 @@ function edit (table, clt, done, cb, doc) {
         var unitsUpdateQuery = editQuery.units(doc.unit).update;
         var unitsCreateQuery = editQuery.units(doc.unit).create;
         var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
-        console.log(command()
-                    .update("orders")
-                    .set(ordersQuery)
-                    .where("job_number = '" + doc.order.job_number+"'" )
-                    .next()
-                    .query(unitsUpdateQuery)
-                    .query(unitsDeleteQuery)
-                    .query(unitsCreateQuery)
-                    .end())
 
         clt.query(command()
                     .update("orders")
@@ -204,7 +194,6 @@ function remove (table, clt, done, cb, doc) {
             done()
             cb()
         });
-
 }
 
 

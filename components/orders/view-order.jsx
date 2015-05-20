@@ -70,7 +70,7 @@ var viewOrder = React.createClass({
 	    $.get(getOrderUrl, function(result) {
 	    	if(result !== ""){
 		    	var unit = JSON.parse(result);
-
+		    	
 		      	if (this.isMounted()) {
 		        	this.setState({
 		          		units : unit,
@@ -154,7 +154,6 @@ var viewOrder = React.createClass({
 									<div className="row">
 
 										{ this.state.units.map(function(unit, i){
-											console.log(unit.unit_id)
 										    return <Units unit={unit} key={i} editing = {editing} />;
 										})}
 

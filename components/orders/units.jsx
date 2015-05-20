@@ -3,35 +3,6 @@
 var React = require('react');
 
 var units = React.createClass({
-	getInitialState: function() {
-      return {
-        options: [
-        	{
-        		types: ""
-        	}
-        ]
-      };
-    },
-
-	componentDidMount: function() {
-		var getOrderUrl = "/unit_types/get";
-
-	    $.get(getOrderUrl, function(result) {
-	    	if(result !== ""){
-		    	var opts = JSON.parse(result);
-
-		      	if (this.isMounted()) {
-		        	this.setState({
-		          		options : opts
-		        	});
-		      	}
-		    }
-	    }.bind(this))
-	    .fail(function () {
-	    	"get request failed"
-	    });
-	},
-
 	render: function () {
 		return (
 			<units>
@@ -50,7 +21,7 @@ var units = React.createClass({
 					</div>
 					<div className="column-3">
 						<p>loading Date</p>
-						<input type="date" name="lunit_oading_date"/>
+						<input type="date" name="unit_loading_date"/>
 					</div>
 					<div className="column-3">
 						<p>loading Time</p>
@@ -60,8 +31,8 @@ var units = React.createClass({
 
 				<div className="row column-14 no-gutter">
 					<div className="column-2">
-						<p>Nett Weight</p>
-						<input type="number" name="unit_nett_weight"/>
+						<p>Net Weight</p>
+						<input type="number" name="unit_net_weight"/>
 					</div>
 					<div className="column-2">
 						<p>Gross Weight</p>
