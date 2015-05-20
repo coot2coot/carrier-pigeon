@@ -45,6 +45,10 @@ var commands ={
 		this.string += query
 		return	this
 	},
+	truncate: function (table){
+		this.string += "TRUNCATE "+ table +" CASCADE";
+		return this
+	},
 	end : function () {
 		this.string += ";"
 		return this.string

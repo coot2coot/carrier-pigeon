@@ -83,15 +83,6 @@ function post (table, clt, done, cb, doc) {
                     .columns(columns)
                     .values(values)
                     .end()
-        console.log(query);
-    } else if (table === "unit_types") {
-        var values = "" +stringifyData(doc).values
-
-        query = command()
-                    .insertInto(table)
-                    .columns("types")
-                    .values(values)
-                    .end()
     } else {
         orders = stringifyData(doc.order)
         units = stringifyUnits(doc.unit)
@@ -104,6 +95,7 @@ function post (table, clt, done, cb, doc) {
                     .columns("unit_type,unit_weight,unit_number,job_number")
                     .values(units.values)
                     .end() 
+            console.log(query);
     }
     
     clt.query(query, function(err, result) {
