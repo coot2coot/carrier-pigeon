@@ -27,48 +27,49 @@ var tests = function () {
 
 	// DB.POST
 
-	test("post function", function(t) {
+	test("post function posts to orders and units tables", function(t) {
 		var callback =  function (result){
-			t.equlas(result,null, "post request to units and orders table worked")
+			t.equals(result,null, "post request to units and orders table worked")
 		};
 		try {
 			db.post('orders', testDb.mockOrdersUnits, callback, client);
 		} catch(e) {
-			t.notOk(false, "post request to orders table did not work");
+			t.notOk(true, "post request to orders table did not work");
 		}
 
 	    t.end();
 	});
 
-	// // DB.REMOVE
-
-	// test("remove function works", function(t) {
-	// 	var callback =  function (){
-	// 		t.ok(true, "remove request to orders table worked")
-	// 	};
-	// 	try {
-	// 		db.remove(table, '$1234', callback, client);
-	// 	} catch(e) {
-	// 		t.notOk(false, "remove request to orders table did not work");
-	// 	}
-
-	//     t.end();
-	// });
-
 	// DB.EDIT
 
-	// test("edit function works", function(t) {
-	// 	var callback =  function (){
-	// 		t.ok(true, "edit request to orders table worked")
-	// 	};
-	// 	try {
-	// 		db.edit(table, testDb.mockObject2, callback, client);
-	// 	} catch(e) {
-	// 		t.notOk(false, "edit request to orders table did not work");
-	// 	}
+	test("edit function to orders and units table", function(t) {
+		var callback =  function (result){
+			t.equals(result, null, "edit request to units and orders table worked")
+		};
+		try {
+			db.edit("orders", testDb.mockOrdersUnits, callback, client);
+		} catch(e) {
+			t.notOk(true, "edit request to orders table did not work");
+		}
 
-	//     t.end();
-	// });
+	    t.end();
+	});
+
+	// DB.REMOVE
+
+	test("remove function for orders and units table", function(t) {
+		var callback =  function (result){
+			t.equals(result, null,  "remove request to orders and units table worked")
+		};
+		try {
+			db.remove("orders", '1234', callback, client);
+		} catch(e) {
+			t.notOk(true, "remove request to orders table did not work");
+		}
+
+	    t.end();
+	});
+
 
 	test("clear table", function(t) {
 		testDb.clearTable();

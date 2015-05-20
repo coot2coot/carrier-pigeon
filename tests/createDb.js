@@ -45,7 +45,6 @@ testDb.clearTable = function (){
         clt.query(command()
         			.truncate('orders')
                     .end(), function(err, result) {
-                        console.log(result)
 		    if (err) {
 		    	console.log('err >>>', err)
 	            if(!err) return false;
@@ -59,26 +58,29 @@ testDb.clearTable = function (){
     });
 };
 
+
 testDb.mockUnits = {
+    unit_id: "23445",
     unit_number: "345fgd",
-    job_number: 1234,
-    unit_type:"40dc"
+    unit_type:"40dc",
+    job_number: "",
 }
 
 testDb.mockOrders = {
-	job_number: 1234,
+	job_number: "1234",
 	client : 'fake',
 	date : '10-10-2010',
 }
 
 testDb.mockOrders2 = {
-	job_number: 12567,
+	job_number: "12567",
 	client : 'fake',
 	date : '10-10-2010',
 }
 testDb.mockOrdersUnits = {
     unit: testDb.mockUnits,
-    order: testDb.mockOrders
+    order: testDb.mockOrders,
+    unit_delete: ""
 }
 
 
