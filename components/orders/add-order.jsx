@@ -101,11 +101,11 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Client</p>
-											<textarea type="text" name="client" className="big"  required max='500'/>
+											<input type="text" name="client" className="big"  required/>
 										</div>
 										<div className="column-8">
 											<p>Carrier </p>
-											<textarea type="text" name="carrier" max='500'/>
+											<input type="text" name="carrier"/>
 										</div>
 									</div>
 									<div className="row">
