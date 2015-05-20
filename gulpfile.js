@@ -189,7 +189,7 @@
     });
     
     //TODO: Need to add tests task back in here once tests are updated
-    gulp.task("deploy", ["build"], function() {
+    gulp.task("deploy", ["build","integration-tests"], function() {
         console.log("Done building");
     });
 
