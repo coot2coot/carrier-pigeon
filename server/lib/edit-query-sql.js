@@ -16,22 +16,62 @@ query.units = function (units){
 		update: "",
 		create: ""
 	};
-
 	if(typeof units.unit_type ==="object"){
 		for(i = 0; i < units["unit_type"].length; i ++){
-			if(units["unit_id"][i] !== ""){
-				query.update += " UPDATE units SET unit_type = '" + units["unit_type"][i] + "',unit_number = '" + units["unit_number"][i] + "',unit_weight = " + units["unit_weight"][i] + " WHERE unit_id = " + units["unit_id"][i] +";";
-			}else{
-				query.create += "INSERT INTO units (unit_type, unit_weight, unit_number, job_number) VALUES ('" + units["unit_type"][i]+ "'," + units["unit_weight"][i] + ",'" + units["unit_number"][i] +"','" + units["job_number"] + "');"
+			var props,
+				updateArr = [];
+
+			if(!!units.unit_id[i] && units.unit_id[i] !== ""){
+				for (props in units) {
+					if (props !== "unit_id" && props !== "job_number") {
+						var value = "'" + units[props][i] + "'";
+
+						if (units[props][i] === "") {
+							value = "null";
+						}
+						var updateStr = props + "=" + value;
+              			updateArr.push(updateStr);
+					}
+				}
+				query.update += "UPDATE units SET " + updateArr.join() + 
+                    		" WHERE unit_id=" + units.unit_id[i] + "; ";
+			} else {
+				var data = {};
+				data.columns = [];
+				data.values = [];
+				for (props in units) {
+					if (props !== "unit_id" && props !== "job_number") {
+						data.columns.push(props);
+						var value = "'" + units[props][i] + "'";
+						if (units[props][i] === "") {
+							value = "null";
+						}
+						data.values.push(value);
+					}
+				}
+				query.create += "INSERT INTO units (" + data.columns.join() +
+								",job_number) VALUES (" + data.values.join() + "," + 
+								units.job_number + "); ";
 			}
-
 		}
-	}else{
-		query.update += " UPDATE units SET unit_type = '" + units["unit_type"] + "',unit_number = '" + units["unit_number"] + "',unit_weight = " + units["unit_weight"] + " WHERE unit_id = " + units["unit_id"] +";";
+	} else {
+		var updateArr = [],
+			updateStr = "";
+
+		for (props in units) {
+			if (props !== "unit_id" && props !== "job_number") {
+				var value = "'" + units[props] + "'";
+
+				if (units[props] === "") {
+					value = "null";
+				}
+				var updateStr = props + "=" + value;
+      			updateArr.push(updateStr);
+			}
+		}
+		query.update += "UPDATE units SET " + updateArr.join() + 
+            		" WHERE unit_id=" + units.unit_id + "; ";
 	}
-
-
-
 	return query;
 }
 

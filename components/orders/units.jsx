@@ -3,58 +3,83 @@
 var React = require('react');
 
 var units = React.createClass({
-	getInitialState: function() {
-      return {
-        options: [
-        	{
-        		types: ""
-        	}
-        ]
-      };
-    },
-
-	componentDidMount: function() {
-		var getOrderUrl = "/unit_types/get";
-
-	    $.get(getOrderUrl, function(result) {
-	    	if(result !== ""){
-		    	var opts = JSON.parse(result);
-
-		      	if (this.isMounted()) {
-		        	this.setState({
-		          		options : opts
-		        	});
-		      	}
-		    }
-	    }.bind(this))
-	    .fail(function () {
-	    	"get request failed"
-	    });
-	},
-
 	render: function () {
 		return (
 			<units>
 				<div className="row column-14">
-					<div className="column-4">
+					<div className="column-3">
+						<p>Unit No.</p>
+					</div>
+					<div className="column-3">
 						<p>Unit Type</p>
-						<select name="unit_type"required>
-
-							{ this.state.options.map(function (unit, i) {
-						        return (
-						        	<option>{unit.types}</option>
-						        )
-						    })}
-						    
-						</select>
 					</div>
 					<div className="column-4">
-						<p>Unit Weight</p>
-						<input type="number" defaultValue = "0" name="unit_weight"/>
+						<p>Loading Reference</p>
 					</div>
-					<div className="column-8">
-						<p>Unit Number</p>
+					<div className="column-3">
+						<p>loading Date</p>
+					</div>
+					<div className="column-3">
+						<p>loading Time</p>
+					</div>
+				</div>
+				<div className="row column-14">
+					<div className="column-3">
 						<input type="text" name="unit_number"required/>
+					</div>
+					<div className="column-3">
+						<input type="text" name="unit_type"required/>
+					</div>
+					<div className="column-4">
+						<input type="text" name="unit_loading_reference"/>
+					</div>
+					<div className="column-3">
+						<input type="date" name="unit_loading_date"/>
+					</div>
+					<div className="column-3">
+						<input type="time" name="unit_loading_time"/>
+					</div>
+				</div>
+
+				<div className="row column-14 no-gutter">
+					<div className="column-2">
+						<p>Net Weight</p>
+					</div>
+					<div className="column-2">
+						<p>Gross Weight</p>
+					</div>
+					<div className="column-2">
+						<p>Volume(m3)</p>
+					</div>
+					<div className="column-6">
+						<p>Commodity Description</p>
+					</div>
+					<div className="column-2">
+						<p>No of Packages</p>
+					</div>
+					<div className="column-2">
+						<p>Kind of Packages</p>
+					</div>
+				</div>
+
+				<div className="row column-14 no-gutter">
+					<div className="column-2">
+						<input type="number" name="unit_net_weight"/>
+					</div>
+					<div className="column-2">
+						<input type="number" name="unit_gross_weight"/>
+					</div>
+					<div className="column-2">
+						<input type="number" name="unit_volume"/>
+					</div>
+					<div className="column-6">
+						<input type="text" name="unit_commodity_description"/>
+					</div>
+					<div className="column-2">
+						<input type="number" name="unit_no_of_packages"/>
+					</div>
+					<div className="column-2">
+						<input type="text" name="unit_kind_of_packages"/>
 					</div>
 				</div>
 			</units>
