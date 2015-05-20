@@ -1,6 +1,4 @@
 "use strict";
-
-var stringify = require("./stringify-units-sql.js");
 var query = {};
 
 query.standard = function (result) {
@@ -24,7 +22,6 @@ query.units = function (units){
 				updateArr = [];
 
 			if(!!units.unit_id[i] && units.unit_id[i] !== ""){
-				console.log("update");
 				for (props in units) {
 					if (props !== "unit_id" && props !== "job_number") {
 						var value = "'" + units[props][i] + "'";
@@ -39,18 +36,28 @@ query.units = function (units){
 				query.update += "UPDATE units SET " + updateArr.join() + 
                     		" WHERE unit_id=" + units.unit_id[i] + "; ";
 			} else {
-				console.log("create");
-				var data = stringify(units);
-				query.create = "INSERT INTO units " + data.columns +
-								" VALUES " + data.values + "; "
+				var data = {};
+				data.columns = [];
+				data.values = [];
+				for (props in units) {
+					if (props !== "unit_id" && props !== "job_number") {
+						data.columns.push(props);
+						var value = "'" + units[props][i] + "'";
+						if (units[props][i] === "") {
+							value = "null";
+						}
+						data.values.push(value);
+					}
+				}
+				query.create += "INSERT INTO units (" + data.columns.join() +
+								",job_number) VALUES (" + data.values.join() + "," + 
+								units.job_number + "); ";
 			}
 		}
 	}else{
 		//TODO:
 		query.update += " UPDATE units SET unit_type = '" + units["unit_type"] + "',unit_number = '" + units["unit_number"] + "',unit_weight = " + units["unit_weight"] + " WHERE unit_id = " + units["unit_id"] +";";
 	}
-
-	console.log(query);
 
 	return query;
 }
