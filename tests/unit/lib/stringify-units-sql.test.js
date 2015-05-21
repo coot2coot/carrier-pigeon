@@ -1,5 +1,5 @@
 var test = require('tape');
-var stringify = require('../../../server/lib/stringify-units-sql.js');
+var stringify = require('../../../server/lib/stringify-units-sql.js').stringify;
 var addUnitMock = require('../mocks/add-order.js').oneUnit;
 var mockData = require('../mocks/add-order.js').stringifiedOneUnit;
 var addMultiUnitMock = require('../mocks/add-order.js').multiUnits;

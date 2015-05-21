@@ -64,7 +64,7 @@ function getValues (object) {
 	return values.join();
 }
 
-module.exports = function (units){
+function stringifyUnits (units){
 	var data = {};
 
 	if(typeof units.unit_type === "object"){
@@ -80,5 +80,12 @@ module.exports = function (units){
 	} else {
 	  	return stringifyOneUnit(units);
 	}
+}
+
+module.exports = {
+  stringify: stringifyUnits,
+  values: getValues,
+  columns: getColumns,
+  isJobNumber: isJobNumber
 }
 
