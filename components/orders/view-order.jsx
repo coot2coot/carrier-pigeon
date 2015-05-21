@@ -258,7 +258,7 @@ var viewOrder = React.createClass({
 					</div>
 				</div>	
 				{(this.state.closeView
-                    ? <Close message="If you close you will lose what you have done?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
+                    ? <Close message="Do you want to close without saving?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}			
 			</div>

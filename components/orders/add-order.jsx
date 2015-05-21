@@ -184,7 +184,7 @@ var addOrder = React.createClass({
 					</div>
 				</div>
 				{(this.state.closeView
-                    ? <Warning message="If you close you will lose what you have done?" closeView={this.closeView} closeWarning={this.closeWarning}/>
+                    ? <Warning message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}
 			
