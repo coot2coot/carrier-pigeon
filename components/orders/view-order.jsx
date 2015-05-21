@@ -27,6 +27,7 @@ var viewOrder = React.createClass({
         closeView: false
       };
     },
+
     closeView: function() {
 		if(this.state.closeView){
 			this.props.closeView()
@@ -38,6 +39,10 @@ var viewOrder = React.createClass({
 	    		closeView: true
 	    	})
 		}
+	},
+
+	copyOrder: function () {
+		this.props.copy(this.props.order, this.state.units);
 	},
 
 	closeWarning: function () {
@@ -145,8 +150,8 @@ var viewOrder = React.createClass({
 					<div className="panel-header">
 						<h3>{getJobNumber(this.props.order.job_number)}</h3>
 						<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.order)}>Delete</a>
-						<button className="button blue" onClick = {this.edit}  >Edit</button>
-						<button className="button blue">Copy</button>
+						<button className="button blue" onClick={this.edit}  >Edit</button>
+						<button className="button blue" onClick={this.copyOrder}>Copy</button>
 						<Link className="button blue" to="booking-note" params={{job_no: this.props.order.job_number}}>Make a booking note</Link>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
