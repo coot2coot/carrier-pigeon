@@ -5,7 +5,7 @@ var testDb 		  = {};
 
 
 testDb.createOrder = function (test){
-	pg.connect(client, function(err, clt, done) {
+	pg.connect(client, function(err, clt, done) {postgres://qzdwpgfrviqmcu:1hJBjZXlz_8pjTb9qjPUTHiQao@ec2-107-20-159-103.compute-1.amazonaws.com:5432/d6dar9ohioh4dh?ssl=true
 
     	if (err) {
     		console.log(err)
@@ -85,5 +85,3 @@ testDb.mockOrdersUnits = {
 
 
 module.exports = testDb;
-
-
