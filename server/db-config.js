@@ -3,9 +3,10 @@
 var pg 		 	   = require("pg");
 var str            = process.env.POSTGRES_URI || require("../credentials.json").postgres;
 var url 	       = "postgres://"+ str + "/carrier-pigeon-dev"
+
 var stringifyData  = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js").stringify;
-var editQuery      = require("./lib/edit-query-sql.js");
+var editQuery      = require("./lib/edit-query-sql.js").query;
 var queryStrings   = require("./lib/querys.js");
 var command        = require("./lib/commands");
 var dataBase       = {};
@@ -124,7 +125,7 @@ function edit (table, clt, done, cb, doc) {
         var query = editQuery.standard(updateUser);
 
         clt.query(command()
-                    .update(users)
+                    .update("users")
                     .set(query+ ",password = crypt($3, gen_salt('md5'))")
                     .where("username = $1 AND password = crypt($2, password)")
                     .end() , [doc.username, doc.current_password, doc.new_password], function(err, result) {
