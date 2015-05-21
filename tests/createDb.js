@@ -1,5 +1,5 @@
 var pg 		 	  = require("pg");
-var command 	  = require("./commands");
+var command 	  = require("../server/lib/commands.js");
 var client   	  = "postgres://qzdwpgfrviqmcu:1hJBjZXlz_8pjTb9qjPUTHiQao@ec2-107-20-159-103.compute-1.amazonaws.com:5432/d6dar9ohioh4dh?ssl=true";
 var testDb 		  = {};
 
@@ -15,12 +15,11 @@ testDb.createOrder = function (test){
         clt.query(command()
         			.insertInto('orders ')
         			.columns('job_number, client, date ,loading_reference')
-        			.values("12567, 'jeff', '10-10-2010' ,'123new'")
-        			.end()
+        			.values("3248, 'jeff', '10-10-2010' ,'123new'")
         			.next()
         			.insertInto('units')
         			.columns('unit_id, job_number, unit_number ,unit_type')
-        			.values("12, 12567, 'j245ff', '40dd'")
+        			.values("2, 3248, 'j245ff', '40dd'")
         			.end(), function(err, result) {
 		    if (err) {
 		    	console.log('err >>>', err)
@@ -30,7 +29,7 @@ testDb.createOrder = function (test){
 		    	return;
 		    }
 		    done();
-            test(table);
+            test();
 		});
     });
 };
@@ -44,11 +43,8 @@ testDb.clearTable = function (){
     	}
 
         clt.query(command()
-        			.deletes()
-        			.from('orders')
-        			.next()
-        			.deletes()
-        			.from('units'), function(err, result) {
+        			.truncate('orders')
+                    .end(), function(err, result) {
 		    if (err) {
 		    	console.log('err >>>', err)
 	            if(!err) return false;
@@ -62,20 +58,29 @@ testDb.clearTable = function (){
     });
 };
 
-testDb.mockUnits = {
 
+testDb.mockUnits = {
+    unit_id: "23445",
+    unit_number: "345fgd",
+    unit_type:"40dc",
+    job_number: "",
 }
 
 testDb.mockOrders = {
-	job_number: '$1234',
+	job_number: "1234",
 	client : 'fake',
 	date : '10-10-2010',
 }
 
 testDb.mockOrders2 = {
-	job_number: '$12567',
+	job_number: "12567",
 	client : 'fake',
 	date : '10-10-2010',
+}
+testDb.mockOrdersUnits = {
+    unit: testDb.mockUnits,
+    order: testDb.mockOrders,
+    unit_delete: ""
 }
 
 

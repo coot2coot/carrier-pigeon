@@ -83,14 +83,6 @@ function post (table, clt, done, cb, doc) {
                     .columns(columns)
                     .values(values)
                     .end()
-    } else if (table === "unit_types") {
-        var values = "" +stringifyData(doc).values
-
-        query = command()
-                    .insertInto(table)
-                    .columns("types")
-                    .values(values)
-                    .end()
     } else {
         orders = stringifyData(doc.order)
         units = stringifyUnits(doc.unit)
@@ -104,7 +96,7 @@ function post (table, clt, done, cb, doc) {
                     .columns(units.columns)
                     .values(units.values)
                     .end()
-        console.log(query);
+
     }
     
     clt.query(query, function(err, result) {
@@ -168,7 +160,7 @@ function edit (table, clt, done, cb, doc) {
             }
 
             done();
-            cb();
+            cb(null);
         });
     }
 }
@@ -194,7 +186,7 @@ function remove (table, clt, done, cb, doc) {
             }
 
             done()
-            cb()
+            cb(null)
         });
 }
 
