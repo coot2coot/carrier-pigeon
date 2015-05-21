@@ -1,6 +1,7 @@
 var pg 		 	  = require("pg");
 var command 	  = require("../../../server/lib/commands.js");
-var client   	  = "postgres://" + require("../../../credentials.json").postgres;
+var strng 		  = process.env.POSTGRES_URI  || require("../../../credentials.json").postgres;
+var client   	  = "postgres://" + strng
 var mock   	  	  =  require("../mocks/orders-units.js");
 var testDb 		  = {};
 
@@ -28,7 +29,7 @@ testDb.createOrder = function (test){
         			.select("unit_id")
         			.from('units ORDER BY unit_id DESC LIMIT 1')
         			.end(), function(err, result) {
-        				
+
         	// The job number anf unit_id created in the query is being saved with in the mock object so that it can be reused in the tests.
 
         	mock.ordersUnitsEdit.order.job_number = result.rows[0].job_number.toString();
