@@ -1,11 +1,12 @@
 var pg 		 	  = require("pg");
-var command 	  = require("../server/lib/commands.js");
-var client   	  = "postgres://qzdwpgfrviqmcu:1hJBjZXlz_8pjTb9qjPUTHiQao@ec2-107-20-159-103.compute-1.amazonaws.com:5432/d6dar9ohioh4dh?ssl=true";
+var command 	  = require("../../../server/lib/commands.js");
+var client   	  = "postgres://" + require("../../../credentials.json").postgres;
+var mock   	  	  =  require("../mocks/orders-units.js");
 var testDb 		  = {};
 
 
 testDb.createOrder = function (test){
-	pg.connect(client, function(err, clt, done) {postgres://qzdwpgfrviqmcu:1hJBjZXlz_8pjTb9qjPUTHiQao@ec2-107-20-159-103.compute-1.amazonaws.com:5432/d6dar9ohioh4dh?ssl=true
+	pg.connect(client, function(err, clt, done) {
 
     	if (err) {
     		console.log(err)
@@ -14,13 +15,24 @@ testDb.createOrder = function (test){
 
         clt.query(command()
         			.insertInto('orders ')
-        			.columns('job_number, client, date ,special_instructions')
-        			.values("3248, 'jeff', '10-10-2010' ,'123new'")
+        			.columns('client, date ,special_instructions')
+        			.values("'jeff', '10-10-2010' ,'123new'")
         			.next()
         			.insertInto('units')
-        			.columns('unit_id, job_number, unit_number ,unit_type')
-        			.values("2, 3248, 'j245ff', '40dd'")
+        			.columns(' job_number, unit_number ,unit_type')
+        			.values(" (SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1),'guns758', '40dd'")
+        			.next()
+        			.select("job_number")
+        			.from('orders ORDER BY job_number DESC LIMIT 1')
+        			.next()
+        			.select("unit_id")
+        			.from('units ORDER BY unit_id DESC LIMIT 1')
         			.end(), function(err, result) {
+        				
+        	// The job number anf unit_id created in the query is being saved with in the mock object so that it can be reused in the tests.
+
+        	mock.ordersUnitsEdit.order.job_number = result.rows[0].job_number.toString();
+        	mock.ordersUnitsEdit.unit.unit_id = result.rows[1].unit_id.toString();
 		    if (err) {
 		    	console.log('err >>>', err)
 	            if(!err) return false;
@@ -57,31 +69,6 @@ testDb.clearTable = function (){
 		});
     });
 };
-
-
-testDb.mockUnits = {
-    unit_id: "23445",
-    unit_number: "345fgd",
-    unit_type:"40dc",
-    job_number: "",
-}
-
-testDb.mockOrders = {
-	job_number: "1234",
-	client : 'fake',
-	date : '10-10-2010',
-}
-
-testDb.mockOrders2 = {
-	job_number: "12567",
-	client : 'fake',
-	date : '10-10-2010',
-}
-testDb.mockOrdersUnits = {
-    unit: testDb.mockUnits,
-    order: testDb.mockOrders,
-    unit_delete: ""
-}
 
 
 module.exports = testDb;
