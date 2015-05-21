@@ -1,5 +1,5 @@
 var parseData 	 	= require('../lib/get-form-data.js');
-var validateOrder = require('../lib/validate-order.js');
+var validateOrder = require('../lib/validate-order.js').validate;
 var validateUser = require('../lib/validate-user.js');
 var splitObject = require('../lib/split-orders-object.js');
 var db 				= require("../db-config.js");
