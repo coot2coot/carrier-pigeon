@@ -89,6 +89,16 @@ var ordersPage = React.createClass({
 			creatingOrder: true
 		})
 	},
+
+	copyOrder: function (order, units) {
+		this.setState({
+			selectedOrder: null,
+			creatingOrder: true,
+			copiedOrder: order,
+			copiedUnits: units
+		})
+	},
+
 	pickDate: function () {
 		this.state.datePicker
 		?	this.setState({
@@ -121,6 +131,7 @@ var ordersPage = React.createClass({
 			"get searchfailed"
 		});
 	},
+
 	get90: function (dates) {
 		var date;
 		var currentDate = new Date();
@@ -144,6 +155,7 @@ var ordersPage = React.createClass({
 		this.getDateOrders(date);
 
 	},
+
 	getTodays: function (dates) {
 		var date;
 		var currentDate = new Date();
@@ -159,6 +171,7 @@ var ordersPage = React.createClass({
 		this.getDateOrders(date);
 
 	},
+
 	getDateOrders: function (dates) {
 		var getUrl = "/search/dates/" + dates;
 		$.get(getUrl,function (result) {	
@@ -253,9 +266,9 @@ var ordersPage = React.createClass({
 				</div>
 
 				{(this.state.selectedOrder
-                    ? <ViewOrder order={this.state.selectedOrder} closeView={this.onCloseComponent}/>
+                    ? <ViewOrder order={this.state.selectedOrder} copy={this.copyOrder} closeView={this.onCloseComponent}/>
                     : this.state.creatingOrder
-                    ? <CreateOrder jobNo={this.state.lastJobNo} closeView={this.onCloseComponent}/>
+                    ? <CreateOrder copiedOrder={this.state.copiedOrder} units={this.state.copiedUnits} closeView={this.onCloseComponent}/>
                     : this.state.datePicker
                     ? <Datepicker getorders={this.getDateOrders} closeView={this.onCloseComponent}/>
                     : <p></p>
