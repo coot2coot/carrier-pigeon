@@ -44,7 +44,7 @@
     ]));
 
     gulp.task('unit-tests', shell.task([
-      'tape tests/unit/*.js'
+      'node_modules/.bin/tape tests/unit/lib/*.js'
     ]));
 
     //Please run task `gulp selenium-start` before running
@@ -189,7 +189,7 @@
     });
     
     //TODO: Need to add tests task back in here once tests are updated
-    gulp.task("deploy", ["build","integration-tests"], function() {
+    gulp.task("deploy", ["build","test"], function() {
         console.log("Done building");
     });
 

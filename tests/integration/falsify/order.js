@@ -14,7 +14,7 @@ testDb.createOrder = function (test){
 
         clt.query(command()
         			.insertInto('orders ')
-        			.columns('job_number, client, date ,loading_reference')
+        			.columns('job_number, client, date ,special_instructions')
         			.values("3248, 'jeff', '10-10-2010' ,'123new'")
         			.next()
         			.insertInto('units')
