@@ -14,9 +14,13 @@ function validate (data, res, cb) {
 
 function dateIsValid(date) {
 
-	var regex = /^[2][0-9]{3}[-][0-9]{2}[-][0-9]{2}$/
+	var regex = /^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$/
+	
 	return date.match(regex);
 }
 
-module.exports = validate;
+module.exports = {
+	validate: validate,
+	dateIsValid: dateIsValid
+}
 
