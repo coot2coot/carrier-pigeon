@@ -1,9 +1,8 @@
 "use strict"
-
+// + "/carrier-pigeon-dev"
 var pg 		 	   = require("pg");
-var str            = process.env.POSTGRES_URI || require("../credentials.json").postgres;
-var url 	       = "postgres://"+ str + "/carrier-pigeon-dev"
-
+var str            = process.env.POSTGRES_URI  || require("../credentials.json").postgres;
+var url 	       = "postgres://" + str
 var stringifyData  = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js").stringify;
 var editQuery      = require("./lib/edit-query-sql.js").query;
@@ -12,17 +11,10 @@ var command        = require("./lib/commands");
 var dataBase       = {};
 
 
-function tests (test){
-	if(test){
-		return test;
-	}else{
-		return url;
-	}
-}
 
-function connect (query, table, cb, test, var1, var2, var3) {
+function connect (query, table, cb, var1, var2, var3) {
 
-	pg.connect(tests(test), function(err, clt, done) {
+	pg.connect(url, function(err, clt, done) {
 
     	if (err) {
     		console.log(err)
@@ -71,33 +63,12 @@ function getOrder (table, clt, done, cb, job_number) {
 
 function post (table, clt, done, cb, doc) {
     var data,
-        orders,
-        query,
-        units;
+        query;
 
     if (table === "users") {
-        var columns = stringifyData(doc).columns +", password";
-        var values = stringifyData(doc).values + ", crypt('changeme', gen_salt('md5'))";
-
-        query = command()
-                    .insertInto(table)
-                    .columns(columns)
-                    .values(values)
-                    .end()
+        query = postUsers(table,doc)
     } else {
-        orders = stringifyData(doc.order)
-        units = stringifyUnits(doc.unit)
-
-        query = command()
-                    .insertInto(table)
-                    .columns(orders.columns)
-                    .values(orders.values)
-                    .next()
-                    .insertInto('units')
-                    .columns(units.columns)
-                    .values(units.values)
-                    .end()
-
+        query = postOrders(table,doc);
     }
     
     clt.query(query, function(err, result) {
@@ -113,9 +84,45 @@ function post (table, clt, done, cb, doc) {
     });
 }
 
+function postUsers (table, doc) {
+    var columns = stringifyData(doc).columns +", password";
+    var values = stringifyData(doc).values + ", crypt('changeme', gen_salt('md5'))";
+
+    var query = command()
+                .insertInto(table)
+                .columns(columns)
+                .values(values)
+                .end()
+    return query
+}
+
+function postOrders (table, doc) {
+    var orders = stringifyData(doc.order)
+    var units = stringifyUnits(doc.unit)
+
+    var query = command()
+                .insertInto(table)
+                .columns(orders.columns)
+                .values(orders.values)
+                .next()
+                .insertInto('units')
+                .columns(units.columns)
+                .values(units.values)
+                .end()
+    return query
+}
+
+
 function edit (table, clt, done, cb, doc) {
 
     if (table === 'users') {
+        editUsers(doc,clt,cb, done)
+    } else {
+        editOrders(doc,clt,cb, done)
+    }
+}
+
+function editUsers (doc,clt,cb, done) {
         var updateUser = {
             first_name: doc.first_name,
             last_name: doc.last_name,
@@ -138,33 +145,35 @@ function edit (table, clt, done, cb, doc) {
             done();
             cb();
         });
-    } else {
-        var ordersQuery = editQuery.standard(doc.order);
-        var unitsUpdateQuery = editQuery.units(doc.unit).update;
-        var unitsCreateQuery = editQuery.units(doc.unit).create;
-        var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
 
-        clt.query(command()
-                    .update("orders")
-                    .set(ordersQuery)
-                    .where("job_number = '" + doc.order.job_number+"'" )
-                    .next()
-                    .query(unitsUpdateQuery)
-                    .query(unitsDeleteQuery)
-                    .query(unitsCreateQuery)
-                    .end(), function(err, result) {
-            if (err) {
-                console.log(err)
-
-                done(clt);
-                return;
-            }
-
-            done();
-            cb(null);
-        });
-    }
 }
+
+function editOrders (doc,clt,cb, done) {
+    var ordersQuery = editQuery.standard(doc.order);
+    var unitsUpdateQuery = editQuery.units(doc.unit).update;
+    var unitsCreateQuery = editQuery.units(doc.unit).create;
+    var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
+
+    clt.query(command()
+                .update("orders")
+                .set(ordersQuery)
+                .where("job_number = '" + doc.order.job_number+"'" )
+                .next()
+                .query(unitsUpdateQuery)
+                .query(unitsDeleteQuery)
+                .query(unitsCreateQuery), function(err, result) {
+        if (err) {
+            console.log(err)
+
+            done(clt);
+            return;
+        }
+
+        done();
+        cb(null);
+    });
+}
+
 
 function remove (table, clt, done, cb, doc) {
 
@@ -275,38 +284,38 @@ function searchDates (table, clt, done, cb, dates){
 }
 
 
-dataBase.get = function (table, cb, test){
- 	connect(get, table, cb, test)
+dataBase.get = function (table, cb){
+ 	connect(get, table, cb)
 };
 
-dataBase.getOrder = function (table, id, cb, test){
-    connect(getOrder, table, cb, test, id)
+dataBase.getOrder = function (table, id, cb){
+    connect(getOrder, table, cb, id)
 };
 
-dataBase.post = function (table, doc, cb, test){
-	connect(post, table, cb, test, doc)
+dataBase.post = function (table, doc, cb){
+	connect(post, table, cb, doc)
 };
 
-dataBase.edit = function (table, doc, cb, test){
-    connect(edit, table, cb, test, doc);
+dataBase.edit = function (table, doc, cb){
+    connect(edit, table, cb, doc);
 };
-dataBase.remove = function (table, doc, cb, test){
-    connect(remove,table,cb,test, doc)
-};
-
-dataBase.selectUnits = function (table, job_number, cb , test){
-    connect(selectUnits, table,cb, test, job_number)
+dataBase.remove = function (table, doc, cb){
+    connect(remove,table,cb, doc)
 };
 
-dataBase.selectUser = function (username, password, remember, cb, test) {
-   connect(loginUser,"users",cb, test, username, password, remember)
+dataBase.selectUnits = function (table, job_number, cb ){
+    connect(selectUnits, table,cb, job_number)
 };
 
-dataBase.searcher = function (table, data, cb, test) {
-    connect(search, table,cb,test,data)
+dataBase.selectUser = function (username, password, remember, cb) {
+   connect(loginUser,"users",cb, username, password, remember)
 };
-dataBase.searchDates = function (table, data, cb, test) {
-    connect(searchDates, table,cb,test,data)
+
+dataBase.searcher = function (table, data, cb) {
+    connect(search, table,cb,data)
+};
+dataBase.searchDates = function (table, data, cb) {
+    connect(searchDates, table,cb,data)
 };
 
 module.exports = dataBase;

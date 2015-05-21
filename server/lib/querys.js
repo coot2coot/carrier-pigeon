@@ -104,7 +104,6 @@ query.searchOrders = function (value) {
 					.from("orders")
 					.where("job_number = " + job_value.job_number)
 					.end()
-					console.log
 
 	}else if(isJobNumber(value)){
 		job_value.newValue = Number(value.slice(-4));
