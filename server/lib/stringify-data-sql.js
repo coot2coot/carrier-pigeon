@@ -11,7 +11,6 @@ module.exports = function (result) {
 	}
 	data.columns = keys.join(", ");
 	data.values = "'" + value.join("','") + "'";
-	
 	return data;
 }
 
