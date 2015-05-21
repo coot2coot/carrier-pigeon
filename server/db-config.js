@@ -1,7 +1,7 @@
 "use strict"
 
 var pg 		 	   = require("pg");
-// var str            = process.env.POSTGRES_URI || require("../credentials.json").postgres;
+var str            = process.env.POSTGRES_URI || require("../credentials.json").postgres;
 var url 	       = "postgres://"+ str + "/carrier-pigeon-dev"
 var stringifyData  = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js");
