@@ -1,5 +1,5 @@
 "use strict"
-// + "/carrier-pigeon-dev"
+
 var pg 		 	   = require("pg");
 var str            = process.env.POSTGRES_URI  || require("../credentials.json").postgres;
 var url 	       = "postgres://" + str
