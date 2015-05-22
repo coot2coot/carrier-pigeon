@@ -21,13 +21,20 @@ var getJobNumber = function (dbId) {
 var viewOrder = React.createClass({
 	getInitialState: function() {
       return {
-        editing: true,
+        viewing: true,
         units: [],
         deletedUnits: "",
         closeView: false
       };
     },
+
     closeView: function() {
+    	if (this.state.viewing) {
+    		this.props.closeView()
+			this.setState({
+	    		closeView: false
+	    	})
+    	}
 		if(this.state.closeView){
 			this.props.closeView()
 			this.setState({
@@ -40,21 +47,23 @@ var viewOrder = React.createClass({
 		}
 	},
 
+	copyOrder: function () {
+		this.props.copy(this.props.order, this.state.units);
+	},
+
 	closeWarning: function () {
-		this.setState({
-	    	closeView: false
-	    })
+		if (this.state.viewing) {
+			this.setState({
+		    	closeView: false
+		    })
+		} else {
+			this.closeView();
+		}
 	},
 
 	deleteHandler: function (item) {
 		this.setState({
 			deleteUser: item
-		})
-	},
-
-	onCloseComponent: function () {
-		this.setState({
-			deleteUser: null
 		})
 	},
 
@@ -105,19 +114,19 @@ var viewOrder = React.createClass({
 
 	edit: function () {
 		var disabled = document.getElementsByClassName('view_input');
-		if(this.state.editing === true){
+		if(this.state.viewing === true){
 			for (var prop in disabled){
 				disabled[prop].disabled = false;
 			}
 			this.setState({
-				editing: false
+				viewing: false
 			});
 		} else {
 			for (var prop in disabled){
 				disabled[prop].disabled = true;
 			}
 			this.setState({
-				editing: true
+				viewing: true
 			});
 		}
 	},
@@ -125,11 +134,11 @@ var viewOrder = React.createClass({
 	render: function() {
 		var addUnit = this.addUnit;
 		var removeUnit = this.removeUnit;
-		var editing = this.state.editing;
+		var viewing = this.state.viewing;
 		var cx = React.addons.classSet;
 		var rowClasses = cx({
 		    'row': true,
-		    'border-bottom': editing
+		    'border-bottom': viewing
 		});
 
 		return (
@@ -145,8 +154,8 @@ var viewOrder = React.createClass({
 					<div className="panel-header">
 						<h3>{getJobNumber(this.props.order.job_number)}</h3>
 						<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.order)}>Delete</a>
-						<button className="button blue" onClick = {this.edit}  >Edit</button>
-						<button className="button blue">Copy</button>
+						<button className="button blue" onClick={this.edit}  >Edit</button>
+						<button className="button blue" onClick={this.copyOrder}>Copy</button>
 						<Link className="button blue" to="booking-note" params={{job_no: this.props.order.job_number}}>Make a booking note</Link>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
@@ -179,12 +188,12 @@ var viewOrder = React.createClass({
 								<div className="row units">
 
 									{ this.state.units.map(function(unit, i){
-									    return <Units unit={unit} key={i} editing = {editing} />;
+									    return <Units unit={unit} key={i} viewing = {viewing} />;
 									})}
 
 									<div className="column-2">
-										<button type="button" className="view_input button	units" onClick = {addUnit} disabled={editing ? true : false}>+</button>
-										<button type="button" className="view_input button	units" onClick = {removeUnit} disabled={editing ? true : false}>-</button>
+										<button type="button" className="view_input button	units" onClick = {addUnit} disabled={viewing ? true : false}>+</button>
+										<button type="button" className="view_input button	units" onClick = {removeUnit} disabled={viewing ? true : false}>-</button>
 									</div>
 								</div>
 
@@ -252,8 +261,8 @@ var viewOrder = React.createClass({
 						</form>
 					</div>
 				</div>	
-				{(this.state.closeView
-                    ? <Close message="If you close you will lose what you have done?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
+				{( this.state.closeView
+                    ? <Close message="Do you want to close without saving?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}			
 			</div>

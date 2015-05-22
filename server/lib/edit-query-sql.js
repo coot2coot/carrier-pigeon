@@ -92,4 +92,6 @@ query.unitDelete = function (units) {
 }
 
 
-module.exports = query;
+module.exports = {
+	query: query
+}

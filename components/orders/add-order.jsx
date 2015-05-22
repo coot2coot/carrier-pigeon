@@ -28,7 +28,8 @@ var addOrder = React.createClass({
 	    	dateValue: currentDate(),
 	    	valid: false,
 	    	unitsArr: [0],
-	    	closeView: false
+	    	closeView: false,
+	    	units: null
 	    };
 	},
 
@@ -51,12 +52,6 @@ var addOrder = React.createClass({
 	    })
 	},
 
-	onDateChange: function(event) {
-    	this.setState({
-    		dateValue: event.target.value
-    	});
-  	},
-
   	addUnit: function() {
 		this.state.unitsArr.push(1)
 		var newState = this.state.unitsArr
@@ -78,6 +73,8 @@ var addOrder = React.createClass({
   	},
   	
 	render: function() {
+		var order = this.props.copiedOrder;
+		var units = this.props.units;
 		var addUnit = this.addUnit;
 		var removeUnit = this.removeUnit;
 		var today = currentDate();
@@ -95,28 +92,28 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-16">
 											<p>Date</p>
-											<input type="date" name="date" min={today} value={this.state.dateValue} onChange={this.onDateChange} required/>
+											<input type="date" name="date" min={today} defaultValue={order ? order.date.substring(0, 10) : this.state.dateValue} required/>
 										</div>
 									</div>
 									<div className="row">
 										<div className="column-8">
 											<p>Client</p>
-											<input type="text" name="client" required/>
+											<input type="text" name="client" defaultValue={order ? order.client : ""} required/>
 										</div>
 										<div className="column-8">
 											<p>Carrier </p>
-											<input type="text" name="carrier"/>
+											<input type="text" name="carrier" defaultValue={order ? order.carrier : ""}/>
 										</div>
 									</div>
 									<div className="row units">
 										{
 											this.state.unitsArr.map(function(num, i){
-										        return <Units key={i} />;
+										        return <Units unit={units} key={i} />;
 										   })
 										}
 										<div className="column-2">
-											<button type="button"  className="button units" onClick = {addUnit}>+</button>
-											<button type="button" className="button units float-right" onClick = {removeUnit}>-</button>
+											<button type="button"  className="button units" onClick={addUnit}>+</button>
+											<button type="button" className="button units float-right" onClick={removeUnit}>-</button>
 										</div>
 
 									</div>
@@ -124,60 +121,60 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Collection From</p>
-											<textarea type="text" className="big" name="collect_from" max='500'/>
+											<textarea type="text" className="big" name="collect_from" max='500' defaultValue={order ? order.collection_from : ""}/>
 										</div>	
 										<div className="column-8">
 											<p>Deliver To</p>
-											<textarea className="big" name="deliver_to"  max = '500'/>
+											<textarea className="big" name="deliver_to"  max='500' defaultValue={order ? order.deliver_to : ""}/>
 										</div>					
 									</div>
 									
 									<div className="row">
 										<div className="column-8">
 											<p>Special Instructions</p>
-											<textarea  name="special_instructions"  max = '500'/>
+											<textarea  name="special_instructions"  max='500' defaultValue={order ? order.special_instructions : ""}/>
 										</div>
 										<div className="column-8">
 											<p>Remarks</p>
-											<textarea   className="big" name="remarks" max = '500' />
+											<textarea   className="big" name="remarks" max='500' defaultValue={order ? order.remarks : ""}/>
 										</div>
 									</div>
 
 									<div className="row">
 										<div className="column-3">
 											<p>Port of Loading</p>
-											<input type="text" name="port_of_loading" />
+											<input type="text" name="port_of_loading" defaultValue={order ? order.port_of_loading : ""}/>
 										</div>
 										<div className="column-3">
 											<p>Port of Discharge</p>
-											<input type="text" name="port_of_discharge" />
+											<input type="text" name="port_of_discharge" defaultValue={order ? order.port_of_discharge : ""}/>
 										</div>
 										<div className="column-4">
 											<p>Vessel</p>
-											<input type="text" name="vessel" />
+											<input type="text" name="vessel" defaultValue={order ? order.vessel : ""}/>
 										</div>
 										<div className="column-3">
 											<p>ETS</p>
-											<input type="text" name="ets" />
+											<input type="text" name="ets" defaultValue={order ? order.ets : ""}/>
 										</div>
 										<div className="column-3">
 											<p>ETA</p>
-											<input type="text" name="eta" />
+											<input type="text" name="eta" defaultValue={order ? order.eta : ""}/>
 										</div>
 									</div>
 									
 									<div className="row">
 										<div className="column-5">
 											<p>Shipper</p>
-											<textarea  className="big" name="shipper" max = '500'/>
+											<textarea  className="big" name="shipper" max='500' defaultValue={order ? order.shipper : ""}/>
 										</div>
 										<div className="column-5">
 											<p>Consignee</p>
-											<textarea className="big" name="consignee" max = '500'/>
+											<textarea className="big" name="consignee" max='500' defaultValue={order ? order.consignee : ""}/>
 										</div>
 										<div className="column-6">
 											<p>Notify</p>
-											<textarea  className="big" name="notify" max = '500'/>
+											<textarea  className="big" name="notify" max='500' defaultValue={order ? order.notify : ""}/>
 										</div>
 									</div>
 									<input type="submit" className="button charcoal" value="Done" />
@@ -187,7 +184,7 @@ var addOrder = React.createClass({
 					</div>
 				</div>
 				{(this.state.closeView
-                    ? <Warning message="If you close you will lose what you have done?" closeView={this.closeView} closeWarning={this.closeWarning}/>
+                    ? <Warning message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}
 			

@@ -1,5 +1,37 @@
 var addOrder = {};
 
+addOrder.fullOrder = function() {
+	var mock = { 
+	 	date: '2015-05-21',
+	  	client: 'ewer',
+	  	carrier: 'wer',
+	  	unit_number: [ 'wer', 'wer' ],
+	  	unit_type: [ 'wer', 'wer' ],
+	  	unit_loading_reference: [ '', '' ],
+	  	unit_loading_date: [ '', '' ],
+	  	unit_loading_time: [ '', '' ],
+	  	unit_net_weight: [ '', '' ],
+	  	unit_gross_weight: [ '', '' ],
+	  	unit_volume: [ '', '' ],
+	  	unit_commodity_description: [ '', '' ],
+	  	unit_no_of_packages: [ '', '' ],
+	  	unit_kind_of_packages: [ '', '' ],
+	  	collect_from: '',
+	  	deliver_to: '',
+	  	special_instructions: '',
+	  	remarks: '',
+	  	port_of_loading: '',
+	  	port_of_discharge: '',
+	  	vessel: '',
+	  	ets: '',
+	  	eta: '',
+	  	shipper: '',
+	  	consignee: '',
+	  	notify: '' 
+	}
+	return mock;
+}
+
 addOrder.order = function() {
 	var mock = { 
 		date: '2015-05-21',
