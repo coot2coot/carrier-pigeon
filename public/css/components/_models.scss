@@ -92,11 +92,12 @@ p.small {
     }
 }
 
+.close-warning {
+  text-align: center;
+  margin: 1em 0 0;
+}
 .view-order, .warning{
     .panel-header {
         padding: 0.3em;
-    }
-    .row {
-        // border-bottom: 0.1em $light-grey solid;
     }
 }

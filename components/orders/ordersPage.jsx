@@ -9,13 +9,6 @@ var SearchBox 	= require("./search-box.jsx");
 var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
 
-function sortJobIds (nums) {
-	var sorted = nums.sort(function (a, b) {
-		return Number(b.job_number) - Number(a.job_number);
-	});
-
-	return sorted[0].job_number;
-}
 
 var getJobNumber = function (dbId) {
     var today = new Date();
@@ -59,8 +52,7 @@ var ordersPage = React.createClass({
 
 		      	if (this.isMounted()) {
 		        	this.setState({
-		          		orders : order,
-		          		lastJobNo : sortJobIds(order)
+		          		orders : order
 		        	});
 		      	}
 		    }
