@@ -2,7 +2,6 @@
 
 var test = require('tape');
 var db = require('../../../server/db-config.js');
-var falsify = require('../falsify/order.js');
 var mocks = require('../mocks/orders-units.js');
 
 var tests = function () {
@@ -19,12 +18,6 @@ var tests = function () {
 
 	    t.end();
 	});
-
-	test("clear table", function(t) {
-		falsify.clearTable();
-		t.ok(true, "table cleared");
-	    t.end();
-	});
 }
 
-falsify.createOrder(tests)
+module.exports = tests;

@@ -1,6 +1,8 @@
 "use strict";
 var command = require("./commands");
 
+var query = {};
+
 var searchItem= [
 	{
 		table: "orders",
@@ -84,50 +86,62 @@ function isPartialJobNumber(job_number) {
 	return job_number.match(regex);
 }
 
-var query = {};
+function findYear(value) {
+	var job_value = {};
+	job_value.year = "20" + value.slice(0,2);
+	job_value.month = value.slice(2,4);
+	job_value.job_number = value.replace(/^0+(?!\.|$)/, '')
+	string += command()
+				.select("*")
+				.from("orders")
+				.where("EXTRACT(YEAR FROM date) = " + job_value.year + " AND EXTRACT(MONTH FROM date) = " + job_value.month)
+				.next()
+				.select("*")
+				.from("orders")
+				.where("job_number = " + job_value.job_number)
+				.end()
+}
+
+function findJobNumber(value) {
+	var job_value = {};
+	var string = "";
+	job_value.newValue = Number(value.slice(-4));
+	string += command()
+				.select("*")
+				.from("orders")
+				.where("CAST(job_number AS text) ILIKE  '%" + job_value.newValue +"%'")
+				.end()
+	return string;
+}
+
+function keyWord (value) {
+	var string = "";
+	searchItem.map(function (item, i) {
+	var newString = command()
+					.select("job_number")
+					.from(item.table)
+					.where(item.column+" ILIKE '%" + value +"%'")
+					.end().slice(0,-1)
+	string += command()
+				.select("*")
+				.from("orders")
+				.where("job_number in (" + newString + ")")
+				.end()
+	})
+	return string;
+
+}
 
 query.searchOrders = function (value) {
 	var string = "";
 	var funct;
-	var job_value = {};
 
 	if(isPartialJobNumber(value)){
-		job_value.year = "20" + value.slice(0,2);
-		job_value.month = value.slice(2,4);
-		job_value.job_number = value.replace(/^0+(?!\.|$)/, '')
-		string += command()
-					.select("*")
-					.from("orders")
-					.where("EXTRACT(YEAR FROM date) = " + job_value.year + " AND EXTRACT(MONTH FROM date) = " + job_value.month)
-					.next()
-					.select("*")
-					.from("orders")
-					.where("job_number = " + job_value.job_number)
-					.end()
-
+		string += findYear(value);
 	}else if(isJobNumber(value)){
-		job_value.newValue = Number(value.slice(-4));
-		string += command()
-					.select("*")
-					.from("orders")
-					.where("CAST(job_number AS text) ILIKE  '%" + job_value.newValue +"%'")
-					.end()
+		string +=  findJobNumber(value);
 	}
-
-
-	searchItem.map(function (item, i) {
-		var newString = command()
-						.select("job_number")
-						.from(item.table)
-						.where(item.column+" ILIKE '%" + value +"%'")
-						.end().slice(0,-1)
-		string += command()
-					.select("*")
-					.from("orders")
-					.where("job_number in (" + newString + ")")
-					.end()
-	})
-
+	string += keyWord(value);
 	return string;
 }
 
