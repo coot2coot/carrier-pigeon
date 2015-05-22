@@ -11,10 +11,10 @@ var tests = function () {
 		var getJobNumber = function () {
 		    var today = new Date();
 		  
-			var id = ("0000" + mocks.ordersUnitsEdit.order.job_number).slice(-4);
+			var id = ("0000" + mocks.edit.order.job_number).slice(-4);
 		    var mm = ("0" + (today.getMonth()+1)).slice(-2);
 		    var yy = today.getFullYear().toString().slice(-2);
-		  	console.log(yy + mm + id)
+
 		    return yy + mm + id;
 		}
 		var callback =  function (n,result){

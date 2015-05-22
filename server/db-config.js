@@ -154,6 +154,8 @@ function editOrders (doc,clt,cb, done) {
     var unitsCreateQuery = editQuery.units(doc.unit).create;
     var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
 
+    console.log(unitsCreateQuery);
+
     clt.query(command()
                 .update("orders")
                 .set(ordersQuery)
@@ -161,7 +163,8 @@ function editOrders (doc,clt,cb, done) {
                 .next()
                 .query(unitsUpdateQuery)
                 .query(unitsDeleteQuery)
-                .query(unitsCreateQuery), function(err, result) {
+                .query(unitsCreateQuery)
+                .end(), function(err, result) {
         if (err) {
             console.log(err)
 
