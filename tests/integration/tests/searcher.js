@@ -45,7 +45,6 @@ var tests = function () {
 	test("searcher method gets all units for a keyword and returns the orders", function(t) {
 
 		var callback =  function (n,result){
-			console.log(result);
 			t.equals(typeof result,'object', "search request for key word in units worked")
 		};
 		try {
