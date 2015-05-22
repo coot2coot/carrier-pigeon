@@ -16,7 +16,7 @@ var loginPanel = React.createClass({
                     </div>
                     <div className="panel-body">
                          <div>
-                            {(false
+                            {(this.props.params.error
                                 ? <Error message="Sorry, those logins are not correct" />
                                 : <p className="display-none"></p>
                             )}

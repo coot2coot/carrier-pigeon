@@ -29,30 +29,32 @@ function createSession (details, callback) {
 }
 
 function loginUser (req, res) {
-	checkUserLogins(req, res, function(err, user, remember, message) {
-        if (err || message) {
-            return authFailed(req, res);
+	checkUserLogins(req, res, function(err, user, remember) {
+        if (err) {
+            console.log(err);
+            authFailed(req, res);
+        } else {
+            createSession(user, function(token) {
+                var cookies = new Cookies(req, res, ['token']);
+
+                if (remember === "on") {
+                    cookies.set( "token", token, {
+                        maxAge: 1000 * 60 * 60 * 24 * 31,
+                        signed: true
+                    });
+                } else {
+                    cookies.set( "token", token, {
+                        signed: true
+                    });
+                }
+
+                res.writeHead(303, {
+                    'Location': '/#/orders'
+                });
+
+                res.end();
+            })
         }
-        createSession(user, function(token) {
-            var cookies = new Cookies(req, res, ['token']);
-
-            if (remember === "on") {
-                cookies.set( "token", token, {
-                    maxAge: 1000 * 60 * 60 * 24 * 31,
-                    signed: true
-                });
-            } else {
-                cookies.set( "token", token, {
-                    signed: true
-                });
-            }
-
-            res.writeHead(303, {
-                'Location': '/#/orders'
-            });
-
-            res.end();
-        })
     });
 }
 
@@ -61,7 +63,7 @@ function loginHandler (req, res) {
  	if (req.method === "POST") {
 		loginUser(req, res);
 	} else {
-		authFailed(req, res, 'Sorry, those logins are not correct');
+		authFailed(req, res);
 	}
 }
 
