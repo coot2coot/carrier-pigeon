@@ -11,7 +11,7 @@ var tests = function () {
 			t.equals(result, null,  "remove request to orders and units table worked")
 		};
 		try {
-			db.remove("orders", mocks.ordersUnitsEdit.order.job_number , callback);
+			db.remove("orders", mocks.edit.order.job_number , callback);
 		} catch(e) {
 			t.notOk(true, "remove request to orders table did not work");
 		}

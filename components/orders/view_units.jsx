@@ -30,7 +30,7 @@ var units = React.createClass({
 						<input className="view_input" type="text" name="unit_number" defaultValue={unit.unit_number} disabled={this.props.viewing ? true : false} required/>
 						{( unit.unit_id
 							? <input className="display-none" type="text" name="unit_id" defaultValue={unit.unit_id} disabled={this.props.viewing ? true : false} required/>
-							: <p className="display-none"></p>
+							: <input className="display-none" type="text" name="unit_id" defaultValue={""} disabled={this.props.viewing ? true : false} novalidate/>
 						)}
 					</div>
 					<div className="column-3 ">

@@ -32,8 +32,8 @@ testDb.createOrder = function (test){
 
         	// The job number anf unit_id created in the query is being saved with in the mock object so that it can be reused in the tests.
 
-        	mock.ordersUnitsEdit.order.job_number = result.rows[0].job_number.toString();
-        	mock.ordersUnitsEdit.unit.unit_id = result.rows[1].unit_id.toString();
+        	mock.job_number = result.rows[0].job_number.toString();
+        	mock.unit_id = result.rows[1].unit_id.toString();
 		    if (err) {
 		    	console.log('err >>>', err)
 	            if(!err) return false;

@@ -11,11 +11,10 @@ var tests = function () {
 			t.equals(typeof result,'object', "get request to units worked")
 		};
 		try {
-			db.selectUnits('units',mocks.ordersUnitsEdit.order.job_number, callback);
+			db.selectUnits('units',mocks.edit.order.job_number, callback);
 		} catch(e) {
 			t.notOk(true, "get request to units table did not work");
 		}
-
 	    t.end();
 	});
 }
