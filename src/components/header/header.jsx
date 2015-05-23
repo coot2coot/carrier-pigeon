@@ -39,7 +39,7 @@ var header = React.createClass({
             error: function(xhr, status, err){
                 var router = this._reactInternalInstance._context.router;
                 var routes = router.getCurrentRoutes();
-                if (routes.length === 3 && routes[2].name !== "errorLogin") {
+                if (routes.length === 2) {
                     this._reactInternalInstance._context.router.transitionTo("login");
                 }
             }.bind(this)

@@ -31,7 +31,6 @@ function createSession (details, callback) {
 function loginUser (req, res) {
 	checkUserLogins(req, res, function(err, user, remember) {
         if (err) {
-            console.log(err);
             authFailed(req, res);
         } else {
             createSession(user, function(token) {
