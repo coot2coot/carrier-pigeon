@@ -1,22 +1,25 @@
 (function () {
 	"use strict";
 
-	var gulp = require("gulp"),
-		sass = require("gulp-sass"),
-		nodemon = require("gulp-nodemon"),
-        shell = require('gulp-shell'),
-        mocha = require('gulp-mocha'),
-        browserify = require("browserify"),
-        reactify = require('reactify'),
-        watchify = require("watchify"),
-        uglify = require('gulp-uglify'),
-        source = require('vinyl-source-stream'),
-        sauceUsername = process.env.SAUCE_USERNAME || require("./credentials.json").username,
-        sauceAccesskey = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey,
-        sauceConnectLauncher = require("sauce-connect-launcher");
+	var gulp       = require("gulp");
+	var sass       = require("gulp-sass");
+	var nodemon    = require("gulp-nodemon");
+    var shell      = require('gulp-shell');
+    var mocha      = require('gulp-mocha');
+    var browserify = require("browserify");
+    var reactify   = require('reactify');
+    var watchify   = require("watchify");
+    var uglify     = require('gulp-uglify');
+    var source     = require('vinyl-source-stream');
+    var sauceUser  = process.env.SAUCE_USERNAME || require("./credentials.json").username;
+    var sauceKey   = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey;
+    var SCL        = require("sauce-connect-launcher");
 
-	var serverFiles = ["./server.js", "./server/*.js", "./server/*/*.js"],
-		sassFiles = ["./public/css/*.scss", "./public/css/*/*.scss"];
+    var sassSrc        = "./src/scss/main.scss";
+    var conciseSrc     = "./src/scss/vendors/concise/concise.scss";
+    var cssDestination = "./public/css/";
+    var reactSrc       = "./src/app.jsx";
+    var jsDestination  = "./public/js/";
 
 
 /*******************************
@@ -68,9 +71,9 @@
 
     //run server as well as this.
     gulp.task("e2e", function() {
-        sauceConnectLauncher({
-            username: sauceUsername,
-            accessKey: sauceAccesskey
+        SCL({
+            username: sauceUser,
+            accessKey: sauceKey
         }, function (err, sauceConnectProcess) {
             if (err) {
               console.error(err.message);
@@ -113,48 +116,48 @@
 ********************************/
 
 	gulp.task("sass-dev", function () {
-        return gulp.src("./public/css/main.scss")
+        return gulp.src(sassSrc)
             .pipe(sass())
-            .pipe(gulp.dest("./public/css/"));
+            .pipe(gulp.dest(cssDestination));
     });
 
     //task for minifying css for production
     gulp.task("sass-production", ["concise"], function () {
-        return gulp.src("./public/css/main.scss")
+        return gulp.src(sassSrc)
             .pipe(sass({
                 outputStyle: "compressed"
             }))
-            .pipe(gulp.dest("./public/css/"));
+            .pipe(gulp.dest(cssDestination));
     });
 
     //task for minifying css for production
     gulp.task("concise", function () {
-        return gulp.src("./public/css/vendors/concise/concise.scss")
+        return gulp.src(conciseSrc)
             .pipe(sass({
                 outputStyle: "compressed"
             }))
-            .pipe(gulp.dest("./public/css/vendors"));
+            .pipe(gulp.dest(cssDestination));
     });
 
     //Task for watching, and compiling sass for development
     gulp.task("sass-watch", function () {
-        gulp.watch(sassFiles, ["sass-dev", "concise"]);
+        gulp.watch(sassSrc, ["sass-dev", "concise"]);
     });
 
     gulp.task("bundle", function () {
 
         var b = browserify();
           b.transform(reactify);
-          b.add('./app.jsx');
+          b.add(reactSrc);
           return b.bundle()
             .pipe(source('bundle.js'))
-            .pipe(gulp.dest('./public/js/'));
+            .pipe(gulp.dest(jsDestination));
     });
 
     gulp.task("watchify", function () {
 
         var b = browserify({
-            entries: ['./app.jsx'], 
+            entries: [reactSrc], 
             transform: [reactify],
             debug: true,
             cache: {}, packageCache: {}, fullPaths: true 
@@ -167,12 +170,12 @@
                 var updateStart = Date.now();
                 watcher.bundle()
                     .pipe(source("bundle.js"))
-                    .pipe(gulp.dest('./public/js/'));
+                    .pipe(gulp.dest(jsDestination));
             console.log('Updated!', (Date.now() - updateStart) + 'ms');
         })
         .bundle()
         .pipe(source("bundle.js"))
-        .pipe(gulp.dest('./public/js/'));
+        .pipe(gulp.dest(jsDestination));
     });
 
 

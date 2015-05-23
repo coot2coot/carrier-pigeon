@@ -11,7 +11,7 @@ var tests = function () {
 			t.equals(result,null, "post request to units and orders table worked")
 		};
 		try {
-			db.post('orders', mocks.ordersUnits, callback);
+			db.post('orders', mocks.order, callback);
 		} catch(e) {
 			t.notOk(true, "post request to orders table did not work");
 		}

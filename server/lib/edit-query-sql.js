@@ -18,10 +18,11 @@ query.units = function (units){
 	};
 	if(typeof units.unit_type ==="object"){
 		for(i = 0; i < units["unit_type"].length; i ++){
+			
 			var props,
 				updateArr = [];
 
-			if(!!units.unit_id[i] && units.unit_id[i] !== ""){
+			if(units.unit_id[i] !== ""){
 				for (props in units) {
 					if (props !== "unit_id" && props !== "job_number") {
 						var value = "'" + units[props][i] + "'";
@@ -49,6 +50,7 @@ query.units = function (units){
 						data.values.push(value);
 					}
 				}
+
 				query.create += "INSERT INTO units (" + data.columns.join() +
 								",job_number) VALUES (" + data.values.join() + "," + 
 								units.job_number + "); ";
