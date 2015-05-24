@@ -1,16 +1,12 @@
 "use strict";
 
-var Static  = require('node-static');
-var file 	= new Static.Server('./public');
 var cache	= require("./handlers/read-db.js");
 
 
 var serverRoutes =  function (router) {
 
 	router.addRoute('/', function (req, res, match){
-		req.addListener('end', function () {
-	        file.serve(req, res);
-	    }).resume();
+		require('./handlers/home.js')(req, res);
 	});
 
 /* -------------------------------*

@@ -43,7 +43,7 @@
 ********************************/
 
     gulp.task('integration-tests', shell.task([
-      'tape tests/integration/integrationtests.js'
+      'node_modules/.bin/tape tests/integration/handlers/*.js tests/integration/integrationtests.js'
     ]));
 
     gulp.task('unit-tests', shell.task([

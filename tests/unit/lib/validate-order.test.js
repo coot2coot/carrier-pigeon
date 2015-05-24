@@ -70,13 +70,13 @@ test('Testing that dateIsValid is', function (t) {
 test('if wrong date format, dateIsValid comes back as false', function (t) {
 	var result = dateIsValid("40-20-1");
 
-	t.equals( result, null, "a function");
+	t.equals( result, null);
 	t.end();
 });
 
-test('if wrong date format, dateIsValid comes back as false', function (t) {
+test('if wrong date format, dateIsValid comes back as correct', function (t) {
 	var result = dateIsValid("2015-05-20")[0];
 
-	t.equals( result, "2015-05-20", "a function");
+	t.equals( result, "2015-05-20");
 	t.end();
 });

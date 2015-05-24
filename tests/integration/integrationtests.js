@@ -3,12 +3,12 @@
 var falsify = require('./falsify/order.js');
 
 var tests = function () {
-	require('./tests/get-orders.js')();
-	require('./tests/post-orders.js')();
-	require('./tests/select-units.js')();
-	require('./tests/searcher.js')();
-	require('./tests/edit-orders.js')();
-	require('./tests/delete-orders.js')();
+	require('./db/get-orders.js')();
+	require('./db/post-orders.js')();
+	require('./db/select-units.js')();
+	require('./db/searcher.js')();
+	require('./db/edit-orders.js')();
+	require('./db/delete-orders.js')();
 }
 
 falsify.createOrder(tests);
