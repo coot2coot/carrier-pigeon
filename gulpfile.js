@@ -4,13 +4,13 @@
 	var gulp       = require("gulp");
 	var sass       = require("gulp-sass");
 	var nodemon    = require("gulp-nodemon");
-    var shell      = require('gulp-shell');
-    var mocha      = require('gulp-mocha');
+    var shell      = require("gulp-shell");
+    var mocha      = require("gulp-mocha");
     var browserify = require("browserify");
-    var reactify   = require('reactify');
+    var reactify   = require("reactify");
     var watchify   = require("watchify");
-    var uglify     = require('gulp-uglify');
-    var source     = require('vinyl-source-stream');
+    var uglify     = require("gulp-uglify");
+    var source     = require("vinyl-source-stream");
     var sauceUser  = process.env.SAUCE_USERNAME || require("./credentials.json").username;
     var sauceKey   = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey;
     var SCL        = require("sauce-connect-launcher");
@@ -26,28 +26,32 @@
 *       PREREQUISITE TASKS
 ********************************/
     
-    gulp.task('open', shell.task([
-        'open http://localhost:8000'
+    gulp.task("open", shell.task([
+        "open http://localhost:8000"
     ]));
 
-    gulp.task('selenium-install', shell.task([
-      'node_modules/.bin/selenium-standalone install'
+    gulp.task("selenium-install", shell.task([
+      "node_modules/.bin/selenium-standalone install"
     ]));
 
-    gulp.task('selenium-start', shell.task([
-      'node_modules/.bin/selenium-standalone start'
+    gulp.task("selenium-start", shell.task([
+      "node_modules/.bin/selenium-standalone start"
     ]));
 
 /*******************************
 *       TEST TASKS
 ********************************/
 
-    gulp.task('integration-tests', shell.task([
-      'node_modules/.bin/tape tests/integration/handlers/*.js tests/integration/integrationtests.js'
+    gulp.task("integration-tests", shell.task([
+      "node_modules/.bin/tape tests/integration/handlers/*.js"
     ]));
 
-    gulp.task('unit-tests', shell.task([
-      'node_modules/.bin/tape tests/unit/lib/*.js'
+    gulp.task("db-tests", shell.task([
+      "node_modules/.bin/tape tests/integration/integrationtests.js"
+    ]));
+
+    gulp.task("unit-tests", shell.task([
+      "node_modules/.bin/tape tests/unit/lib/*.js"
     ]));
 
     //Please run task `gulp selenium-start` before running
@@ -60,7 +64,7 @@
         .on("start", function(){
             return gulp.src("./tests/acceptance/local.config.js")
             .pipe(mocha({
-                reporter: 'nyan'
+                reporter: "nyan"
             }))
             .on("end", function() {
                 console.log("Tests finished");
@@ -87,7 +91,7 @@
             .on("start", function(){
                 gulp.src("./tests/acceptance/remote.config.js")
                     .pipe(mocha({
-                        reporter: 'nyan'
+                        reporter: "nyan"
                     }))
                     .on("end", function() {
                         console.log("Tests finished");
@@ -107,7 +111,7 @@
         });
     });
 
-    gulp.task('test', ["integration-tests", "unit-tests"], function () {
+    gulp.task("test", ["db-tests", "unit-tests"], function () {
         console.log("Done testing");
     });
 
@@ -150,7 +154,7 @@
           b.transform(reactify);
           b.add(reactSrc);
           return b.bundle()
-            .pipe(source('bundle.js'))
+            .pipe(source("bundle.js"))
             .pipe(gulp.dest(jsDestination));
     });
 
@@ -166,12 +170,12 @@
         var watcher  = watchify(b);
 
         return watcher
-            .on('update', function () { 
+            .on("update", function () { 
                 var updateStart = Date.now();
                 watcher.bundle()
                     .pipe(source("bundle.js"))
                     .pipe(gulp.dest(jsDestination));
-            console.log('Updated!', (Date.now() - updateStart) + 'ms');
+            console.log("Updated!", (Date.now() - updateStart) + "ms");
         })
         .bundle()
         .pipe(source("bundle.js"))
