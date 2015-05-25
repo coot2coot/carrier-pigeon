@@ -12,6 +12,7 @@ var ledger = React.createClass({
 	    		purchase: [],
 	    		sales: []
 	    	},
+	    	deletedInvoices: "",
 	    	profit: 0,
 	    	currency: "£"
 	    };
@@ -37,25 +38,30 @@ var ledger = React.createClass({
 	},
 
 	addPurchaseInvoice: function() {
-		this.state.units.push(1)
-		var newState = this.state.units
+		this.state.invoices.purchase.push(1);
+
+		var newState = this.state.invoices;
 
   		this.setState({
-    		units: newState
+    		invoices: newState
     	});
   	},
   	
   	removePurchaseInvoice: function() {
-  		if(this.state.units.length > 1){
-  			var deleteUnit = this.state.units.splice(-1,1);
-  			var newState = this.state.units;
+  		if(this.state.invoices.purchase.length > 1){
+
+  			var deletedInvoice = this.state.invoices.purchase.splice(-1,1);
+  			var newState = this.state.invoices;
+
   			this.setState({
-	    			units: newState,
-	    		});
-  			if(deleteUnit[0].unit_id){
-  				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
+    			invoices: newState,
+    		});
+
+  			if(deletedInvoice[0].invoice_id){
+
+  				var newDeletedStrng = this.state.deletedInvoice + ',' + deletedInvoice[0].invoice_id;
   				this.setState({
-	    			deletedUnits: newDeletedStrng
+	    			deletedInvoices: newDeletedStrng
 	    		});
 	
 			}
@@ -63,11 +69,12 @@ var ledger = React.createClass({
   	},
 
   	addSalesInvoice: function() {
-		this.state.units.push(1)
-		var newState = this.state.units
+		this.state.invoices.sales.push(1);
+
+		var newState = this.state.invoices;
 
   		this.setState({
-    		units: newState
+    		invoices: newState
     	});
   	},
   	
@@ -100,6 +107,12 @@ var ledger = React.createClass({
     		closeView: true
     	})
 	},
+
+	closeWarning: function () {
+		this.setState({
+	    	closeView: false
+	    })
+	},
   	
 	render: function() {
 		var currency = this.state.currency;
@@ -111,7 +124,7 @@ var ledger = React.createClass({
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body container">
-						<form action="/ledger/update" method="POST">
+						<form action={"/invoice/edit/" + this.state.deletedInvoices.slice(1)} method="POST">
 							<div className="row gutters">
 								<div className="column-8">
 									<h4>Purchase Invoices</h4>
@@ -166,7 +179,7 @@ var ledger = React.createClass({
 					</div>
 				</div>
 				{(this.state.closeView
-                    ? <Warning message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
+                    ? <Warning message="Do you want to close without saving?" closeView={this.props.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}
 			
