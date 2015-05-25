@@ -37,7 +37,11 @@ var header = React.createClass({
                 });
             }.bind(this),
             error: function(xhr, status, err){
-                this._reactInternalInstance._context.router.transitionTo("login");
+                var router = this._reactInternalInstance._context.router;
+                var routes = router.getCurrentRoutes();
+                if (routes.length === 2) {
+                    this._reactInternalInstance._context.router.transitionTo("login");
+                }
             }.bind(this)
         });
     },

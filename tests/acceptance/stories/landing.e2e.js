@@ -50,9 +50,34 @@ function landingTests (wd, capability, remote) {
                 })
                 .nodeify(done);
         });
+        it("if you enter the wrong logins, a login message appears", function(done) {
+            browser
+                .waitForElementByCssSelector("input[name='username']")
+                .sendKeys("notausername", function (err) {
+                    if (err) console.log(err);
+                })
+                .elementByCssSelector("input[name='password']")
+                .sendKeys("whoops", function (err) {
+                    if (err) console.log(err);
+                })
+                .elementByTagName("form")
+                .submit(function (err) {
+                    if (err) console.log(err);
+                })
+                .elementsByClassName("error", function (err, elem) {
+                    if (err) {
+                        return console.log(err);
+                    } 
+                    var text = elem[0].innerText;
+                    var testText = "Sorry, those logins are not correct";
+                    
+                    expect(text).to.include(testText);
+                })
+                .nodeify(done);
+        });
         it("Should be able to Login", function(done) {
             browser
-                .elementByCssSelector("input[name='username']")
+                .waitForElementByCssSelector("input[name='username']")
                 .sendKeys(username, function (err) {
                     if (err) console.log(err);
                 })

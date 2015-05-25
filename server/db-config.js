@@ -229,18 +229,13 @@ function loginUser (table, clt, done, cb, username, password, remember) {
                 .where("username = $1 AND password = crypt($2, password)")
                 .end(), [username, password], function(err, user) {
 
-        if(err) {
-            console.log(err);
-            done();
-            return;
-        }
         done();
 
-        if (user.rows[0]) {
+        if(err || user.rows.length != 1) {
+            var error = err ? err : "no user"
+            cb(error);
+        } else {
             cb(null, user.rows[0], remember);
-        } 
-        else {
-            cb(null, false, null,'Incorrect username or password combo');
         }
     });
 }
