@@ -24,7 +24,7 @@ function calculate (invoices) {
   	var purchase = getAmount(invoices.purchase);
    
  	profit = sales - purchase;
-  	return profit;
+  	return (profit).toFixed(2);
 }
 
 var ledger = React.createClass({
@@ -44,13 +44,27 @@ var ledger = React.createClass({
 		var getInvoicesUrl = "/invoices/get/" + this.props.order.job_number;
 
 	    $.get(getInvoicesUrl, function (result) {
-	    	if(result !== ""){
+	    	if(result !== '{"sales":[],"purchase":[]}'){
 		    	var parsed = JSON.parse(result);
 
 	        	this.setState({
 	          		invoices: parsed,
-	          		profit: calculate(parsed)
+	          		profit: calculate(parsed),
+	          		currency: parsed.sales[0].currency
 	        	});
+		    } else {
+		    	this.setState({
+		    		invoices: {
+		    			sales: [{
+		    				invoice_number: "",
+		    				amount: ""
+		    			}],
+		    			purchase: [{
+		    				invoice_number: "",
+		    				amount: ""
+		    			}]
+		    		}
+		    	});
 		    }
 	    }.bind(this))
 	    .fail(function () {
@@ -153,7 +167,7 @@ var ledger = React.createClass({
 			<div className="overlay">
 				<div className="column-10 push-3 model-generic model-top ledger">
 					<div className="panel-header">
-						<h3>Ledger</h3>
+						<h3>Ledger - {this.props.order.job_number}</h3>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body container">
@@ -215,7 +229,7 @@ var ledger = React.createClass({
 									<p>Profit: {currency}{this.state.profit}</p>
 								</div>
 							</div>
-							<input type="submit" className="button charcoal"/>
+							<input type="submit" className="button charcoal no-margin"/>
 						</form>
 					</div>
 				</div>
