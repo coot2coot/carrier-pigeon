@@ -10,13 +10,13 @@ var ordersTests = function () {
 	require('./tests/searcher.js')();
 	require('./tests/edit-orders.js')();
 	require('./tests/delete-orders.js')();
-}
+};
 
 falsifyOrders.create(ordersTests);
 
 var contactsTests = function () {
 	require('./tests/post-contacts.js')();
 	require('./tests/get-contacts.js')();
-}
+};
 
 falsifyContacts.create(contactsTests);
