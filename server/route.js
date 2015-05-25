@@ -122,6 +122,10 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/read-invoices.js')(req, res);
 	});
 
+	router.addRoute('/invoices/edit/:deletedInvoices?', function (req, res, match){
+	  	require('./handlers/edit-invoices.js')(req, res);
+	});
+
 /* -------------------------------*
  *	   User Settings Routes
  * -------------------------------*/

@@ -37,6 +37,13 @@ var ledger = React.createClass({
 	    });
 	},
 
+	changeCurrency: function (e) {
+		this.setState({
+			currency: e.target.value
+		})
+
+	},
+
 	addPurchaseInvoice: function() {
 		this.state.invoices.purchase.push(1);
 
@@ -58,8 +65,8 @@ var ledger = React.createClass({
     		});
 
   			if(deletedInvoice[0].invoice_id){
-
   				var newDeletedStrng = this.state.deletedInvoice + ',' + deletedInvoice[0].invoice_id;
+  				
   				this.setState({
 	    			deletedInvoices: newDeletedStrng
 	    		});
@@ -79,16 +86,20 @@ var ledger = React.createClass({
   	},
   	
   	removeSalesInvoice: function() {
-  		if(this.state.units.length > 1){
-  			var deleteUnit = this.state.units.splice(-1,1);
-  			var newState = this.state.units;
+  		if(this.state.invoices.sales.length > 1){
+
+  			var deletedInvoice = this.state.invoices.sales.splice(-1,1);
+  			var newState = this.state.invoices;
+
   			this.setState({
-	    			units: newState,
-	    		});
-  			if(deleteUnit[0].unit_id){
-  				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
+    			invoices: newState,
+    		});
+
+  			if(deletedInvoice[0].invoice_id){
+  				var newDeletedStrng = this.state.deletedInvoice + ',' + deletedInvoice[0].invoice_id;
+  				
   				this.setState({
-	    			deletedUnits: newDeletedStrng
+	    			deletedInvoices: newDeletedStrng
 	    		});
 	
 			}
@@ -116,6 +127,7 @@ var ledger = React.createClass({
   	
 	render: function() {
 		var currency = this.state.currency;
+		var order = this.props.order;
 		return (
 			<div className="overlay">
 				<div className="column-10 push-3 model-generic model-top ledger">
@@ -124,7 +136,7 @@ var ledger = React.createClass({
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body container">
-						<form action={"/invoice/edit/" + this.state.deletedInvoices.slice(1)} method="POST">
+						<form action={"/invoices/edit/" + this.state.deletedInvoices.slice(1)} method="POST">
 							<div className="row gutters">
 								<div className="column-8">
 									<h4>Purchase Invoices</h4>
@@ -132,6 +144,11 @@ var ledger = React.createClass({
 										<div className="column-11">
 											<div className="column-10">
 												<p>Amount</p>
+												<select value={this.state.currency} onChange={this.changeCurrency}>
+											  		<option value="£">&pound;</option>
+											  		<option value="€">&euro;</option>
+												  	<option value="$">$</option>
+												</select>
 											</div>
 											<div className="column-6">
 												<p>Invoice No.</p>
@@ -140,7 +157,7 @@ var ledger = React.createClass({
 									</div>
 
 									{ this.state.invoices.purchase.map(function(invoice, i){
-									    return <Invoices currency={currency} invoice={invoice}/>
+									    return <Invoices currency={currency} jobnumber={order.job_number} type="purchase" invoice={invoice}/>
 									})}
 
 									<div className="column-4">
@@ -162,7 +179,7 @@ var ledger = React.createClass({
 									</div>
 
 									{ this.state.invoices.sales.map(function(invoice, i){
-									    return <Invoices invoice={invoice}/>
+									    return <Invoices currency={currency} jobnumber={order.job_number} type="sales" invoice={invoice}/>
 									})}
 
 									<div className="column-4">

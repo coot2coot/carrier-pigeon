@@ -154,27 +154,27 @@ function editOrders (doc,clt,cb, done) {
     var unitsCreateQuery = editQuery.units(doc.unit).create;
     var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
 
-    console.log(unitsCreateQuery);
+    console.log(unitsUpdateQuery, unitsCreateQuery, unitsDeleteQuery);
+    
+    // clt.query(command()
+    //             .update("orders")
+    //             .set(ordersQuery)
+    //             .where("job_number = '" + doc.order.job_number+"'" )
+    //             .next()
+    //             .query(unitsUpdateQuery)
+    //             .query(unitsDeleteQuery)
+    //             .query(unitsCreateQuery)
+    //             .end(), function(err, result) {
+    //     if (err) {
+    //         console.log(err)
 
-    clt.query(command()
-                .update("orders")
-                .set(ordersQuery)
-                .where("job_number = '" + doc.order.job_number+"'" )
-                .next()
-                .query(unitsUpdateQuery)
-                .query(unitsDeleteQuery)
-                .query(unitsCreateQuery)
-                .end(), function(err, result) {
-        if (err) {
-            console.log(err)
+    //         done(clt);
+    //         return;
+    //     }
 
-            done(clt);
-            return;
-        }
-
-        done();
-        cb(null);
-    });
+    //     done();
+    //     cb(null);
+    // });
 }
 
 
