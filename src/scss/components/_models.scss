@@ -111,4 +111,17 @@ p.small {
   p {
     text-align: center;
   }
+  
+  .currency {
+    text-align: center;
+    margin-bottom: 0;
+    p {
+      display: inline-block;
+    }
+    select {
+      display: inline-block;
+      width: 3em;
+      margin-left: 1em;
+    }
+  }
 }

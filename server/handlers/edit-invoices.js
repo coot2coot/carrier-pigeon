@@ -10,8 +10,6 @@ function edit (req, res, cb) {
 	validateUser(req, res, function() {
 		parseData(req, function (data) {
 
-			console.log(data);
-
 			data.delete_invoice = invoiceNumbers;
 
 			db.edit('invoice', data, function (err) {

@@ -5,6 +5,28 @@ var React = require('react');
 var Invoices = require("./invoice-register.jsx");
 var Warning = require("../close-warning.jsx");
 
+// for now profit will be the sales invoices - purchase invoices.
+// TODO: find out the real calculation of proffit.
+function getAmount (arr) {
+  	var i;
+  	var length = arr.length;
+  	var amount = 0;
+  
+  	for(i = 0; i < length; i ++) {
+  	  amount += Number(arr[i].amount);
+  	}
+  	return amount;
+}
+
+function calculate (invoices) {
+  	var profit;
+  	var sales = getAmount(invoices.sales);
+  	var purchase = getAmount(invoices.purchase);
+   
+ 	profit = sales - purchase;
+  	return profit;
+}
+
 var ledger = React.createClass({
 	getInitialState: function() {
 	    return {
@@ -21,14 +43,13 @@ var ledger = React.createClass({
 	componentDidMount: function() {
 		var getInvoicesUrl = "/invoices/get/" + this.props.order.job_number;
 
-	    $.get(getInvoicesUrl, function(result) {
+	    $.get(getInvoicesUrl, function (result) {
 	    	if(result !== ""){
 		    	var parsed = JSON.parse(result);
 
 	        	this.setState({
 	          		invoices: parsed,
-	          		// TODO:
-	          		profit: 100
+	          		profit: calculate(parsed)
 	        	});
 		    }
 	    }.bind(this))
@@ -137,6 +158,14 @@ var ledger = React.createClass({
 					</div>
 					<div className="panel-body container">
 						<form action={"/invoices/edit/" + this.state.deletedInvoices.slice(1)} method="POST">
+							<div className="row currency">
+								<p>Select your Currency: </p>
+								<select value={this.state.currency} onChange={this.changeCurrency}>
+							  		<option value="£">&pound;</option>
+							  		<option value="€">&euro;</option>
+								  	<option value="$">$</option>
+								</select>
+							</div>
 							<div className="row gutters">
 								<div className="column-8">
 									<h4>Purchase Invoices</h4>
@@ -144,11 +173,6 @@ var ledger = React.createClass({
 										<div className="column-11">
 											<div className="column-10">
 												<p>Amount</p>
-												<select value={this.state.currency} onChange={this.changeCurrency}>
-											  		<option value="£">&pound;</option>
-											  		<option value="€">&euro;</option>
-												  	<option value="$">$</option>
-												</select>
 											</div>
 											<div className="column-6">
 												<p>Invoice No.</p>
