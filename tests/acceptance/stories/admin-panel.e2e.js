@@ -95,7 +95,7 @@ function landingTests (wd, capability, remote) {
             browser
                 .elementByClassName('add')
                 .click()
-                .elementByCssSelector('input[name="email"]')
+                .waitForElementByCssSelector('input[name="email"]')
                 .sendKeys("test@email.com", function (err) {
                     if (err) console.log(err);
                 })

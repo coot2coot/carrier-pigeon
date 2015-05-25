@@ -229,7 +229,7 @@ var ledger = React.createClass({
 									<p>Profit: {currency}{this.state.profit}</p>
 								</div>
 							</div>
-							<input type="submit" className="button charcoal no-margin"/>
+							<input type="submit" className="button charcoal no-margin" value="Submit"/>
 						</form>
 					</div>
 				</div>
