@@ -23,6 +23,22 @@ var getOrders = function (req, res) {
 	})
 };
 
+var getContacts = function (req, res) {
+
+	db.get('contacts',function (contacts) {		
+		myCache.set("contacts", contacts, secondsToSave, function(err, success){
+
+			if(err){
+				console.error(err)
+			}
+		});
+		var contact = JSON.stringify(contacts);
+
+		res.writeHead(200, {"Content-Type" : "text/plain"});
+		res.end(contact);
+	})
+};
+
 var getUserList = function (req, res) {
 	db.get('users',function (usrs) {
 		var users = [];
@@ -49,11 +65,14 @@ var getUserList = function (req, res) {
 readOptions.cached = function (req, res) {
 	validateUser(req, res, function () {
 		var table;
+		console.log(req.url)
 
 		if (req.url.indexOf('user') > -1) {
 			table = "users";
+		} else if (req.url.indexOf('contact') > -1) {
+			table = "contacts";
 		} else {
-			table = "orders";
+			table = "orders"
 		}
 
 		myCache.get(table, function (err, value){
@@ -64,7 +83,9 @@ readOptions.cached = function (req, res) {
 			}else {
 				if (table === "users") {
 					getUserList(req, res);
-				} else {
+				} else if (table === "contacts") {
+					getContacts(req, res);
+				}else {
 					getOrders(req, res);
 				}
 				
@@ -79,13 +100,17 @@ readOptions.noCache = function (req, res) {
 
 		if (req.url.indexOf('users') > -1) {
 			table = "users";
+		} else if (req.url.indexOf('contact') > -1) {
+			table = "contacts";
 		} else {
-			table = "orders";
+			table ="orders"
 		}
 
 		if (table === "users") {
 			getUserList(req, res);
-		} else {
+		} else if(table === "contacts"){
+			getContacts(req,res)
+		}else {
 			getOrders(req, res);
 		}
 	});

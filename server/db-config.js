@@ -67,7 +67,9 @@ function post (table, clt, done, cb, doc) {
 
     if (table === "users") {
         query = postUsers(table,doc)
-    } else {
+    } else if (table === "contacts"){
+        query =postContacts(table,doc)
+    }else {
         query = postOrders(table,doc);
     }
     
@@ -93,6 +95,18 @@ function postUsers (table, doc) {
                 .columns(columns)
                 .values(values)
                 .end()
+
+    return query
+}
+
+function postContacts (table, doc) {
+    var contacts = stringifyData(doc);
+    var query = command()
+                .insertInto(table)
+                .columns(contacts.columns)
+                .values(contacts.values)
+                .end()
+
     return query
 }
 

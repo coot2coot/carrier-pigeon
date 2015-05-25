@@ -21,12 +21,6 @@ var nav = React.createClass({
 							<h5>Contacts</h5>
                         </Link>
 					</li>
-					<li>
-						<Link to="reports">
-                            <img src="../img/nav/booking.png" />
-							<h5>Reports</h5>
-                        </Link>
-					</li>
 			  	</ul>
 			</nav>
         );

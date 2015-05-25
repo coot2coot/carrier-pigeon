@@ -88,6 +88,20 @@ var serverRoutes =  function (router) {
 	router.addRoute('/units/delete/:id', function (req, res, match){
 	  	require('./handlers/delete-db.js')(req, res);
 	});
+/* -------------------------------*
+ *	   Contacts Routes
+ * -------------------------------*/
+
+ 	router.addRoute('/contact/post', function (req, res, match){
+	  	require('./handlers/create-contact.js')(req, res);
+	});
+	router.addRoute('/contacts/get', function (req, res, match){
+	  	require('./handlers/read-db.js').cached(req, res);
+	});
+	router.addRoute('/contacts/get/nocache', function (req, res, match){
+	  	require('./handlers/read-db.js').noCache(req, res);
+	});
+
 
 /* -------------------------------*
  *	   Search Routes

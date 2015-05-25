@@ -1,8 +1,9 @@
 'use strict';
 
-var falsify = require('./falsify/order.js');
+var falsifyOrders = require('./falsify/order.js');
+var falsifyContacts = require('./falsify/contact.js');
 
-var tests = function () {
+var ordersTests = function () {
 	require('./tests/get-orders.js')();
 	require('./tests/post-orders.js')();
 	require('./tests/select-units.js')();
@@ -11,4 +12,11 @@ var tests = function () {
 	require('./tests/delete-orders.js')();
 }
 
-falsify.createOrder(tests);
+falsifyOrders.create(ordersTests);
+
+var contactsTests = function () {
+	require('./tests/post-contacts.js')();
+	require('./tests/get-contacts.js')();
+}
+
+falsifyContacts.create(contactsTests);
