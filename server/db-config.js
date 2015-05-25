@@ -222,6 +222,22 @@ function selectUnits (table, clt, done, cb, job_number) {
     });
 }
 
+function getInvoices(table, clt, done, cb, job_number) {
+    clt.query(command()
+                .select("*")
+                .from("invoice")
+                .where("job_number = $1")
+                .end(), [job_number], function(err, units) {
+
+        done();
+
+        if(err) {
+            return cb(err);
+        }
+        cb(null, units.rows);
+    });
+}
+
 function loginUser (table, clt, done, cb, username, password, remember) {
     clt.query(command()
                 .select("*")
@@ -303,6 +319,10 @@ dataBase.remove = function (table, doc, cb){
 
 dataBase.selectUnits = function (table, job_number, cb ){
     connect(selectUnits, table,cb, job_number)
+};
+
+dataBase.getInvoices = function (table, job_number, cb ){
+    connect(getInvoices, table,cb, job_number)
 };
 
 dataBase.selectUser = function (username, password, remember, cb) {

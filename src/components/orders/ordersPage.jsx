@@ -57,7 +57,8 @@ var ordersPage = React.createClass({
 		this.setState({
 			selectedOrder: null,
 			creatingOrder: null,
-			datePicker: null
+			datePicker: null,
+			ledger: null
 		})
 	},
 
@@ -260,7 +261,7 @@ var ordersPage = React.createClass({
                     : this.state.datePicker
                     ? <Datepicker getorders={this.getDateOrders} closeView={this.onCloseComponent}/>
                     : this.state.ledger
-                    ? <Ledger closeView={this.onCloseComponent}/>
+                    ? <Ledger order={this.state.ledger} closeView={this.onCloseComponent}/>
                     : <p></p>
                 )}
 

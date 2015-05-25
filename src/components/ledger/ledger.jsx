@@ -2,27 +2,18 @@
 
 var React = require('react');
 
-var Invoices = require("./invoice-register.jsx")
+var Invoices = require("./invoice-register.jsx");
+var Warning = require("../close-warning.jsx");
 
 var ledger = React.createClass({
 	getInitialState: function() {
 	    return {
 	    	invoices: {
-	    		purchase: [{
-	    			invoice_id: "",
-	    			type: "",
-	    			currency: "",
-	    			amount: "",
-	    			invoice_number: ""
-	    		}],
-	    		sales: [{
-	    			invoice_id: "",
-	    			type: "",
-	    			currency: "",
-	    			amount: "",
-	    			invoice_number: ""
-	    		}]
-	    	}
+	    		purchase: [],
+	    		sales: []
+	    	},
+	    	profit: 0,
+	    	currency: "£"
 	    };
 	},
 
@@ -33,19 +24,19 @@ var ledger = React.createClass({
 	    	if(result !== ""){
 		    	var parsed = JSON.parse(result);
 
-		    	console.log(parsed);
-
 	        	this.setState({
-	          		invoices: parsed
+	          		invoices: parsed,
+	          		// TODO:
+	          		profit: 100
 	        	});
 		    }
 	    }.bind(this))
 	    .fail(function () {
-	    	"get request failed"
+	    	console.log("get request failed");
 	    });
 	},
 
-	addInvoice: function() {
+	addPurchaseInvoice: function() {
 		this.state.units.push(1)
 		var newState = this.state.units
 
@@ -54,7 +45,7 @@ var ledger = React.createClass({
     	});
   	},
   	
-  	removeInvoice: function() {
+  	removePurchaseInvoice: function() {
   		if(this.state.units.length > 1){
   			var deleteUnit = this.state.units.splice(-1,1);
   			var newState = this.state.units;
@@ -71,6 +62,39 @@ var ledger = React.createClass({
 	    }
   	},
 
+  	addSalesInvoice: function() {
+		this.state.units.push(1)
+		var newState = this.state.units
+
+  		this.setState({
+    		units: newState
+    	});
+  	},
+  	
+  	removeSalesInvoice: function() {
+  		if(this.state.units.length > 1){
+  			var deleteUnit = this.state.units.splice(-1,1);
+  			var newState = this.state.units;
+  			this.setState({
+	    			units: newState,
+	    		});
+  			if(deleteUnit[0].unit_id){
+  				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
+  				this.setState({
+	    			deletedUnits: newDeletedStrng
+	    		});
+	
+			}
+	    }
+  	},
+
+  	calculate: function(e) {
+  		console.log(e);
+  		this.setState({
+  			profit: ""
+  		})
+  	},
+
 	closeView: function() {
 	    this.setState({
     		closeView: true
@@ -78,6 +102,7 @@ var ledger = React.createClass({
 	},
   	
 	render: function() {
+		var currency = this.state.currency;
 		return (
 			<div className="overlay">
 				<div className="column-10 push-3 model-generic model-top ledger">
@@ -85,7 +110,7 @@ var ledger = React.createClass({
 						<h3>Ledger</h3>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
-					<div className="panel-body scroll container">
+					<div className="panel-body container">
 						<form action="/ledger/update" method="POST">
 							<div className="row gutters">
 								<div className="column-8">
@@ -102,12 +127,12 @@ var ledger = React.createClass({
 									</div>
 
 									{ this.state.invoices.purchase.map(function(invoice, i){
-									    return <Invoices invoice={invoice}/>
+									    return <Invoices currency={currency} invoice={invoice}/>
 									})}
 
 									<div className="column-4">
-										<button type="button" className="button blue add-row" onClick={this.addInvoice}>+</button>
-										<button type="button" className="button blue add-row" onClick={this.removeInvoice}>-</button>
+										<button type="button" className="button blue add-row" onClick={this.addPurchaseInvoice}>+</button>
+										<button type="button" className="button blue add-row" onClick={this.removePurchaseInvoice}>-</button>
 									</div>
 								</div>
 								<div className="column-8">
@@ -128,11 +153,15 @@ var ledger = React.createClass({
 									})}
 
 									<div className="column-4">
-										<button type="button" className="button	blue add-row" onClick={this.addInvoice}>+</button>
-										<button type="button" className="button	blue add-row" onClick={this.removeInvoice}>-</button>
+										<button type="button" className="button	blue add-row" onClick={this.addSalesInvoice}>+</button>
+										<button type="button" className="button	blue add-row" onClick={this.removeSalesInvoice}>-</button>
 									</div>
 								</div>
+								<div className="column-6 push-10">
+									<p>Profit: {currency}{this.state.profit}</p>
+								</div>
 							</div>
+							<input type="submit" className="button charcoal"/>
 						</form>
 					</div>
 				</div>
