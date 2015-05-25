@@ -16,7 +16,7 @@ var InvoiceRegister = React.createClass({
 					<input type="number" name="invoice_number" defaultValue={ this.props.invoice ? this.props.invoice.invoice_number : "" }/>
 				</div>
 				<input type="number" className="display-none" name="invoice_id" value={this.props.invoice ? this.props.invoice.invoice_id : "" }/>
-				<input type="text" className="display-none" name="type" value={this.props.invoice ? this.props.invoice.type : "" }/>
+				<input type="text" className="display-none" name="type" value={this.props.type }/>
 				<input type="text" className="display-none" name="currency" value={this.props.currency}/>
 				<input type="number" className="display-none" name="job_number" value={this.props.jobnumber}/>
 			</invoice>

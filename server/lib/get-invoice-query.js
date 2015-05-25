@@ -8,8 +8,6 @@ query.invoice = function (invoices){
         create: ""
     };
 
-    console.log(invoices)
-
     if(typeof invoices.currency ==="object"){
         for(i = 0; i < invoices.currency.length; i ++){
             
@@ -18,7 +16,7 @@ query.invoice = function (invoices){
 
             if(invoices.invoice_id[i] !== ""){
                 for (props in invoices) {
-                    if (props !== "invoice_id" && props !== "job_number") {
+                    if (props !== "invoice_id" && props !== "job_number" && props !== "delete_invoice") {
                         var value = "'" + invoices[props][i] + "'";
 
                         if (invoices[props][i] === "") {
@@ -34,10 +32,18 @@ query.invoice = function (invoices){
                 var data = {};
                 data.columns = [];
                 data.values = [];
+
                 for (props in invoices) {
-                    if (props !== "invoice_id" && props !== "job_number") {
+                    if (props !== "invoice_id" && props !== "job_number" && props !== "delete_invoice") {
+
                         data.columns.push(props);
-                        var value = "'" + invoices[props][i] + "'";
+
+                        if (props === "amount" || props === "invoice_number") {
+                            var value = invoices[props][i];
+                        } else {
+                            var value = "'" + invoices[props][i] + "'";
+                        }
+                        
                         if (invoices[props][i] === "") {
                             value = "null";
                         }
@@ -47,33 +53,59 @@ query.invoice = function (invoices){
 
                 query.create += "INSERT INTO invoice (" + data.columns.join() +
                                 ",job_number) VALUES (" + data.values.join() + "," + 
-                                invoices.job_number + "); ";
+                                invoices.job_number[i] + "); ";
             }
         }
     } else {
-        var updateArr = [],
-            updateStr = "";
+        var arr = [],
+            str = "";
+        if(invoices.invoice_id !== "") {
+            for (props in invoices) {
+                if (props !== "invoice_id" && props !== "job_number" && props !== "delete_invoice") {
+                    var value = "'" + invoices[props] + "'";
 
-        for (props in invoices) {
-            if (props !== "invoice_id" && props !== "job_number") {
-                var value = "'" + invoices[props] + "'";
-
-                if (invoices[props] === "") {
-                    value = "null";
+                    if (invoices[props] === "") {
+                        value = "null";
+                    }
+                    var str = props + "=" + value;
+                    arr.push(str);
                 }
-                var updateStr = props + "=" + value;
-                updateArr.push(updateStr);
             }
-        }
-        query.update += "UPDATE invoices SET " + updateArr.join() + 
+            query.update += "UPDATE invoices SET " + arr.join() + 
                     " WHERE invoice_id=" + invoices.invoice_id + "; ";
+        } else {
+            var data = {};
+                data.columns = [];
+                data.values = [];
+
+            for (props in invoices) {
+                if (props !== "invoice_id" && props !== "job_number" && props !== "delete_invoice") {
+
+                    data.columns.push(props);
+
+                    if (props === "amount" || props === "invoice_number") {
+                        var value = invoices[props];
+                    } else {
+                        var value = "'" + invoices[props] + "'";
+                    }
+                    
+                    if (invoices[props] === "") {
+                        value = "null";
+                    }
+                    data.values.push(value);
+                }
+            }
+            query.create += "INSERT INTO invoice (" + data.columns.join() +
+                            ",job_number) VALUES (" + data.values.join() + "," + 
+                            invoices.job_number + "); ";
+        }
     }
     return query;
 }
 
-query.invoiceDelete = function (invoices) {
-    if (invoices !== ""){
-        var arr = invoices.split(",")
+query.invoiceDelete = function (toDelete) {
+    if (toDelete !== ""){
+        var arr = toDelete.split(",")
         var deleteQuery = "";
         var i;
 

@@ -65,7 +65,7 @@ var ledger = React.createClass({
     		});
 
   			if(deletedInvoice[0].invoice_id){
-  				var newDeletedStrng = this.state.deletedInvoice + ',' + deletedInvoice[0].invoice_id;
+  				var newDeletedStrng = this.state.deletedInvoices + ',' + deletedInvoice[0].invoice_id;
   				
   				this.setState({
 	    			deletedInvoices: newDeletedStrng
@@ -96,7 +96,7 @@ var ledger = React.createClass({
     		});
 
   			if(deletedInvoice[0].invoice_id){
-  				var newDeletedStrng = this.state.deletedInvoice + ',' + deletedInvoice[0].invoice_id;
+  				var newDeletedStrng = this.state.deletedInvoices + ',' + deletedInvoice[0].invoice_id;
   				
   				this.setState({
 	    			deletedInvoices: newDeletedStrng

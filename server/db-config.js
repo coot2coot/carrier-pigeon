@@ -6,6 +6,7 @@ var url 	       = "postgres://" + str
 var stringifyData  = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js").stringify;
 var editQuery      = require("./lib/edit-query-sql.js").query;
+var invoiceQuery   = require("./lib/get-invoice-query.js").query;
 var queryStrings   = require("./lib/querys.js");
 var command        = require("./lib/commands");
 var dataBase       = {};
@@ -115,10 +116,12 @@ function postOrders (table, doc) {
 
 function edit (table, clt, done, cb, doc) {
 
-    if (table === 'users') {
-        editUsers(doc,clt,cb, done)
+    if (table === "users") {
+        editUsers(doc,clt,cb, done);
+    } else if (table === "invoice") {
+        editInvoices(doc, clt, cb, done);
     } else {
-        editOrders(doc,clt,cb, done)
+        editOrders(doc,clt,cb, done);
     }
 }
 
@@ -154,27 +157,46 @@ function editOrders (doc,clt,cb, done) {
     var unitsCreateQuery = editQuery.units(doc.unit).create;
     var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
 
-    console.log(unitsUpdateQuery, unitsCreateQuery, unitsDeleteQuery);
-    
-    // clt.query(command()
-    //             .update("orders")
-    //             .set(ordersQuery)
-    //             .where("job_number = '" + doc.order.job_number+"'" )
-    //             .next()
-    //             .query(unitsUpdateQuery)
-    //             .query(unitsDeleteQuery)
-    //             .query(unitsCreateQuery)
-    //             .end(), function(err, result) {
-    //     if (err) {
-    //         console.log(err)
+    clt.query(command()
+                .update("orders")
+                .set(ordersQuery)
+                .where("job_number = '" + doc.order.job_number+"'" )
+                .next()
+                .query(unitsUpdateQuery)
+                .query(unitsDeleteQuery)
+                .query(unitsCreateQuery)
+                .end(), function(err, result) {
+        if (err) {
+            console.log(err)
 
-    //         done(clt);
-    //         return;
-    //     }
+            done(clt);
+            return;
+        }
 
-    //     done();
-    //     cb(null);
-    // });
+        done();
+        cb(null);
+    });
+}
+
+function editInvoices (doc, clt, cb, done) {
+
+    var updateQuery = invoiceQuery.invoice(doc).update;
+    var createQuery = invoiceQuery.invoice(doc).create;
+    var deleteQuery = invoiceQuery.invoiceDelete(doc.delete_invoice);
+
+    clt.query(command()
+                .query(updateQuery)
+                .query(deleteQuery)
+                .query(createQuery)
+                .end(), function(err, result) {
+        
+        done();
+        if (err) {
+            return cb(err);
+        }
+       
+        cb(null);
+    });
 }
 
 
