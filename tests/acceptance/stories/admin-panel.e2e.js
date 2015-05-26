@@ -8,7 +8,6 @@ function landingTests (wd, capability, remote) {
         var browser;
 
         before(function(done) {
-
             if (remote) {
                 browser = wd.promiseChainRemote("ondemand.saucelabs.com", 80, sauceUsername, sauceAccessKey);
             } else {
@@ -23,34 +22,20 @@ function landingTests (wd, capability, remote) {
             browser
                 .get("http://localhost:8000")
                 .waitForElementByCssSelector("input[name='username']")
-                .sendKeys(username, function (err) {
-                    if (err) console.log(err);
-                })
+                .sendKeys(username)
                 .elementByCssSelector("input[name='password']")
-                .sendKeys(password, function (err) {
-                    if (err) console.log(err);
-                })
+                .sendKeys(password)
                 .elementByTagName("form")
-                .submit(function (err) {
-                    if (err) console.log(err);
-                })
-                .waitForElementByLinkText("Admin Panel", function (err, element) {
-                    if (err) console.log(err);
-                })
-                .click(function(err) {
-                    if (err) console.log(err);
-                })
+                .submit()
+                .waitForElementByLinkText("Admin Panel")
+                .click()
                 .nodeify(done);
         });
         
         afterEach(function(done) {
             browser
-                .waitForElementByLinkText("Logout", function (err, element) {
-                    if (err) console.log(err);
-                })
-                .click(function(err) {
-                    if (err) console.log(err);
-                })
+                .waitForElementByLinkText("Logout")
+                .click()
                 .nodeify(done);
         });
 
@@ -63,30 +48,28 @@ function landingTests (wd, capability, remote) {
         it('Page title is correct', function(done) {
             browser
                 .elementByTagName('h3')
-                .text(function (err, text) {
-                    if (err) console.log(err);
-                    expect(text).to.equal("Users")
+                .text()
+                .then(function(text) {
+                    text.should.equal("Users")
                 })
                 .nodeify(done);
         });
 
         it("url is correct", function(done) {
             browser
-                .url(function(err, url) {
-                if (err) {
-                    return console.log(err);
-                }
-                expect(url).to.have.string("users");
-            })
-            .nodeify(done);
+                .url()
+                .then(function(url) {
+                    url.should.contain("users");
+                })
+                .nodeify(done);
         });
 
         it("displays list of users", function(done) {
             browser
-                .elementByTagName('table')
-                .isDisplayed(function (err, success) {
-                    if (err) console.log(err);
-                    expect(success).to.equal(true);
+                .elementsByTagName('tr')
+                .then(function(element) {
+                    var length = element.length;
+                    (length).should.be.greaterThan(1);
                 })
                 .nodeify(done);
         });
@@ -95,51 +78,43 @@ function landingTests (wd, capability, remote) {
             browser
                 .elementByClassName('add')
                 .click()
-                .elementByCssSelector('input[name="email"]')
-                .sendKeys("test@email.com", function (err) {
-                    if (err) console.log(err);
-                })
+                .waitForElementByCssSelector('input[name="email"]')
+                .sendKeys("test@email.com")
                 .elementByTagName('form')
-                .submit(function (err) {
-                    if (err) console.log(err);
-                })
-                .waitForElementByClassName("test-username", 2000)
-                .elementByClassName("test-username", function (err, element) {
-                    if (err) console.log(err);
-                })
-                .isDisplayed(function (err, success) {
-                    if (err) console.log(err);
-                    expect(success).to.equal(true);
+                .submit()
+                .waitForElementsByClassName("test-username")
+                .then(function(element) {
+                    var length = element.length;
+                    (length).should.be.greaterThan(0);
                 })
                 .nodeify(done);
         });
 
         it("Delete button opens panel", function(done) {
             browser
-                .elementByCssSelector(".delete.test", function (err, element) {
-                    if (err) console.log(err);
-                })
+                .waitForElementByCssSelector("a.delete.test")
                 .click()
-                .elementByTagName("h3")
-                .text(function (err, text) {
-                    if (err) console.log(err);
-                    expect(text).to.equal("Delete this user?")
+                .elementByClassName("warning", function(err, element) {
+                    element
+                        .elementByTagName("h3")
+                        .text()
+                        .then(function(text) {
+                            text.should.equal("Delete this user?");
+                        })
+                        .nodeify(done);
                 })
-                .nodeify(done);
+                
         });
 
         it("Delete user works", function(done) {
             browser
-                .elementByCssSelector(".delete.test", function (err, element) {
-                    if (err) console.log(err);
-                })
+                .waitForElementByCssSelector(".delete.test")
                 .click()
-                .elementByCssSelector("a.button.charcoal", function (err, element) {
-                    if (err) console.log(err);
-                })
+                .elementByCssSelector("a.button.charcoal")
                 .click()
-                .elementByClassNameIfExists("test-username", function (err, element) {
-                    expect(err).to.not.equal(null);
+                .elementByClassNameIfExists("test-username")
+                .then(function(element) {
+                    (element === undefined).should.be.true;
                 })
                 .nodeify(done);
         });

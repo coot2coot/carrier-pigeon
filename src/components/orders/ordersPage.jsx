@@ -8,17 +8,9 @@ var CreateOrder = require("./add-order.jsx");
 var SearchBox 	= require("./search-box.jsx");
 var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
+var Ledger      = require("../ledger/ledger.jsx");
 
-
-var getJobNumber = function (dbId) {
-    var today = new Date();
-  
-	var id = ("0000" + dbId).slice(-4);
-    var mm = ("0" + (today.getMonth()+1)).slice(-2);
-    var yy = today.getFullYear().toString().slice(-2);
-  
-    return yy + mm + id;
-}
+var getJobNumber = require("../../lib/format-job-number.js");
 
 var ordersPage = React.createClass({
 	getInitialState: function() {
@@ -34,8 +26,7 @@ var ordersPage = React.createClass({
             }
         ],
         searchValue: "",
-        error:false
-
+        error: false
       };
     },
 
@@ -66,13 +57,20 @@ var ordersPage = React.createClass({
 		this.setState({
 			selectedOrder: null,
 			creatingOrder: null,
-			datePicker: null
+			datePicker: null,
+			ledger: null
 		})
 	},
 
 	orderHandler: function (item) {
 		this.setState({
 			selectedOrder: item
+		})
+	},
+
+	ledgerHandler: function (item) {
+		this.setState({
+			ledger: item
 		})
 	},
 
@@ -172,7 +170,7 @@ var ordersPage = React.createClass({
 					error: true,
 					datePicker: null
 				})
-			}else{		
+			} else {		
 				var order = JSON.parse(result);
 				this.setState({
 					error: false
@@ -192,6 +190,7 @@ var ordersPage = React.createClass({
 	render: function() {
 		var orderHandler = this.orderHandler;
 		var addInvoiceHandler = this.addInvoice;
+		var ledgerHandler = this.ledgerHandler;
 		return (
 
 			<div>
@@ -245,9 +244,7 @@ var ordersPage = React.createClass({
 													</a>
 												</td>
 												<td key={i + "fourth"}>
-													<a onClick={orderHandler.bind(null, order)}>
-														<p></p>
-													</a>
+													<a onClick={ledgerHandler.bind(null, order)}>ledger</a>
 												</td>
 											</tr>
 							    })}
@@ -263,6 +260,8 @@ var ordersPage = React.createClass({
                     ? <CreateOrder copiedOrder={this.state.copiedOrder} units={this.state.copiedUnits} closeView={this.onCloseComponent}/>
                     : this.state.datePicker
                     ? <Datepicker getorders={this.getDateOrders} closeView={this.onCloseComponent}/>
+                    : this.state.ledger
+                    ? <Ledger order={this.state.ledger} closeView={this.onCloseComponent}/>
                     : <p></p>
                 )}
 

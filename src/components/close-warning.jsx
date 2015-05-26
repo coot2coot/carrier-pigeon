@@ -14,8 +14,8 @@ var warning = React.createClass({
                     
                     <div className="panel-body">
                         <div className="row close-warning">
-                            <button className="button charcoal center" onClick={this.props.closeView}>YES</button>
-                            <button className="button charcoal center" onClick={this.props.closeWarning}>NO</button>
+                            <a className="button charcoal center" onClick={this.props.closeView}>YES</a>
+                            <a className="button charcoal center" onClick={this.props.closeWarning}>NO</a>
                         </div>
                     </div>
                 </div>

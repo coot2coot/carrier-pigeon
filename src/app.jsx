@@ -40,7 +40,9 @@ var routes = (
         <Route name="login" path="/login" handler={Login}>
             <Route name="errorLogin" path=":error" handler={Login} />
         </Route>
-        
+
+        <Route name="reports" path="/reports" handler={Test} />
+
         <Route name="booking-note" path="/booking-note/:job_no" handler={BookingNote} />
 
         <Route name="admin" path="/users" handler={AdminPanel}>

@@ -34,12 +34,9 @@ function landingTests (wd, capability, remote) {
         it('if not authenticated, should redirect to login page', function(done) {
             browser
                 .url(function(err, url) {
-                if (err) {
-                    return console.log(err);
-                }
-                expect(url).to.have.string("login");
-            })
-            .nodeify(done);
+                    url.should.contain("login");
+                })
+                .nodeify(done);
         });
 
         it("should retrieve the page title", function(done) {
@@ -53,47 +50,31 @@ function landingTests (wd, capability, remote) {
         it("if you enter the wrong logins, a login message appears", function(done) {
             browser
                 .waitForElementByCssSelector("input[name='username']")
-                .sendKeys("notausername", function (err) {
-                    if (err) console.log(err);
-                })
+                .sendKeys("notausername")
                 .elementByCssSelector("input[name='password']")
-                .sendKeys("whoops", function (err) {
-                    if (err) console.log(err);
-                })
+                .sendKeys("whoops")
                 .elementByTagName("form")
-                .submit(function (err) {
-                    if (err) console.log(err);
-                })
-                .elementsByClassName("error", function (err, elem) {
-                    if (err) {
-                        return console.log(err);
-                    } 
-                    var text = elem[0].innerText;
-                    var testText = "Sorry, those logins are not correct";
-                    
-                    expect(text).to.include(testText);
+                .submit()
+                .elementByClassName("error", function (err, elem) {
+                    elem
+                        .text()
+                        .then(function(text) {
+                            var testText = "Sorry, those logins are not correct";
+                            text.should.contain(testText);
+                        })
                 })
                 .nodeify(done);
         });
         it("Should be able to Login", function(done) {
             browser
                 .waitForElementByCssSelector("input[name='username']")
-                .sendKeys(username, function (err) {
-                    if (err) console.log(err);
-                })
+                .sendKeys(username)
                 .elementByCssSelector("input[name='password']")
-                .sendKeys(password, function (err) {
-                    if (err) console.log(err);
-                })
+                .sendKeys(password)
                 .elementByTagName("form")
-                .submit(function (err) {
-                    if (err) console.log(err);
-                })
+                .submit()
                 .url(function(err, url) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                    expect(url).to.have.string("ordrs");
+                    url.should.contain("ordrs");
                 })
                 .nodeify(done);
         });
