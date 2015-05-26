@@ -34,9 +34,7 @@ var ledger = React.createClass({
 	    		purchase: [],
 	    		sales: []
 	    	},
-	    	deletedInvoices: "",
-	    	profit: 0,
-	    	currency: "£"
+	    	deletedInvoices: ""
 	    };
 	},
 
@@ -44,28 +42,41 @@ var ledger = React.createClass({
 		var getInvoicesUrl = "/invoices/get/" + this.props.order.job_number;
 
 	    $.get(getInvoicesUrl, function (result) {
-	    	if(result !== '{"sales":[],"purchase":[]}'){
-		    	var parsed = JSON.parse(result);
+    		var parsed = JSON.parse(result);
+    		var invoices = {};
+    		var currency = "£";
+    		var profit = 0;
 
-	        	this.setState({
-	          		invoices: parsed,
-	          		profit: calculate(parsed),
-	          		currency: parsed.sales[0].currency
-	        	});
-		    } else {
-		    	this.setState({
-		    		invoices: {
-		    			sales: [{
-		    				invoice_number: "",
-		    				amount: ""
-		    			}],
-		    			purchase: [{
-		    				invoice_number: "",
-		    				amount: ""
-		    			}]
-		    		}
-		    	});
-		    }
+	    	if (parsed.sales.length === 0) {
+	    		invoices.sales = [{
+    				invoice_number: "",
+    				amount: ""
+    			}]
+	    	} else {
+	    		invoices.sales = parsed.sales;
+	    		currency = parsed.sales[0].currency
+	    	}
+
+	    	if (parsed.purchase.length === 0) {
+	    		invoices.purchase = [{
+    				invoice_number: "",
+    				amount: ""
+    			}]
+	    	} else {
+	    		invoices.purchase = parsed.purchase;
+	    		currency = parsed.purchase[0].currency
+	    	}
+	    	
+	    	if (parsed.sales.length > 0 || parsed.purchase.length > 0) {
+	    		profit = calculate(parsed);
+	    	}
+
+        	this.setState({
+          		invoices: invoices,
+          		profit: profit,
+          		currency: currency
+        	});
+		    
 	    }.bind(this))
 	    .fail(function () {
 	    	console.log("get request failed");
@@ -181,7 +192,7 @@ var ledger = React.createClass({
 								</select>
 							</div>
 							<div className="row gutters">
-								<div className="column-8">
+								<div className="column-8 purchase">
 									<h4>Purchase Invoices</h4>
 									<div className="row gutters no-margin">
 										<div className="column-11">
@@ -203,7 +214,7 @@ var ledger = React.createClass({
 										<button type="button" className="button blue add-row" onClick={this.removePurchaseInvoice}>-</button>
 									</div>
 								</div>
-								<div className="column-8">
+								<div className="column-8 sales">
 									<h4>Sales Invoices</h4>
 									<div className="row gutters no-margin">
 										<div className="column-11">

@@ -110,7 +110,7 @@ query.invoiceDelete = function (toDelete) {
         var i;
 
         for(i = 0; i < arr.length; i++){
-            deleteQuery += "DELETE FROM invoices WHERE invoice_id = "+arr[i]+";"
+            deleteQuery += "DELETE FROM invoice WHERE invoice_id = "+arr[i]+";"
         }
         return deleteQuery
     }else{

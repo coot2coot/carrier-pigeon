@@ -4,7 +4,6 @@ var React = require('react');
 
 var InvoiceRegister = React.createClass({
 	render: function () {
-		console.log(this.props.currency);
 		return (
 			<invoice className="column-11">
 				<div className="column-1">
