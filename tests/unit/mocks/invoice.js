@@ -53,7 +53,7 @@ invoice.updateTest = function() {
 }
 
 invoice.deleteTest = function() {
-	var result = "DELETE FROM invoice WHERE invoice_id = 6;DELETE FROM invoices WHERE invoice_id =  7;";
+	var result = "DELETE FROM invoice WHERE invoice_id = 6;DELETE FROM invoice WHERE invoice_id =  7;";
 
 	return result;
 }
