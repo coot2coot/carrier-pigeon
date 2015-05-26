@@ -6,6 +6,7 @@ var url 	       = "postgres://" + str
 var stringifyData  = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js").stringify;
 var editQuery      = require("./lib/edit-query-sql.js").query;
+var invoiceQuery   = require("./lib/get-invoice-query.js").query;
 var queryStrings   = require("./lib/querys.js");
 var command        = require("./lib/commands");
 var dataBase       = {};
@@ -115,10 +116,12 @@ function postOrders (table, doc) {
 
 function edit (table, clt, done, cb, doc) {
 
-    if (table === 'users') {
-        editUsers(doc,clt,cb, done)
+    if (table === "users") {
+        editUsers(doc,clt,cb, done);
+    } else if (table === "invoice") {
+        editInvoices(doc, clt, cb, done);
     } else {
-        editOrders(doc,clt,cb, done)
+        editOrders(doc,clt,cb, done);
     }
 }
 
@@ -154,8 +157,6 @@ function editOrders (doc,clt,cb, done) {
     var unitsCreateQuery = editQuery.units(doc.unit).create;
     var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
 
-    console.log(unitsCreateQuery);
-
     clt.query(command()
                 .update("orders")
                 .set(ordersQuery)
@@ -173,6 +174,27 @@ function editOrders (doc,clt,cb, done) {
         }
 
         done();
+        cb(null);
+    });
+}
+
+function editInvoices (doc, clt, cb, done) {
+
+    var updateQuery = invoiceQuery.invoice(doc).update;
+    var createQuery = invoiceQuery.invoice(doc).create;
+    var deleteQuery = invoiceQuery.invoiceDelete(doc.delete_invoice);
+
+    clt.query(command()
+                .query(updateQuery)
+                .query(deleteQuery)
+                .query(createQuery)
+                .end(), function(err, result) {
+        
+        done();
+        if (err) {
+            return cb(err);
+        }
+       
         cb(null);
     });
 }
@@ -219,6 +241,22 @@ function selectUnits (table, clt, done, cb, job_number) {
         }
         done();
         cb(units.rows);
+    });
+}
+
+function getInvoices(table, clt, done, cb, job_number) {
+    clt.query(command()
+                .select("*")
+                .from("invoice")
+                .where("job_number = $1")
+                .end(), [job_number], function(err, units) {
+
+        done();
+
+        if(err) {
+            return cb(err);
+        }
+        cb(null, units.rows);
     });
 }
 
@@ -303,6 +341,10 @@ dataBase.remove = function (table, doc, cb){
 
 dataBase.selectUnits = function (table, job_number, cb ){
     connect(selectUnits, table,cb, job_number)
+};
+
+dataBase.getInvoices = function (table, job_number, cb ){
+    connect(getInvoices, table,cb, job_number)
 };
 
 dataBase.selectUser = function (username, password, remember, cb) {

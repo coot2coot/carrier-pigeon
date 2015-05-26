@@ -39,7 +39,7 @@ var routes = (
 
         <Route name="reports" path="/reports" handler={Test} />
         <Route name="contacts" path="/contacts" handler={Test} />
-        
+
         <Route name="booking-note" path="/booking-note/:job_no" handler={BookingNote} />
 
         <Route name="admin" path="/users" handler={AdminPanel}>

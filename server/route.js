@@ -115,6 +115,18 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/email-invite.js')(req, res);
 	});
 /* -------------------------------*
+ *	   		Ledger Routes
+ * -------------------------------*/
+
+	router.addRoute('/invoices/get/:jobNo', function (req, res, match){
+	  	require('./handlers/read-invoices.js')(req, res);
+	});
+
+	router.addRoute('/invoices/edit/:deletedInvoices?', function (req, res, match){
+	  	require('./handlers/edit-invoices.js')(req, res);
+	});
+
+/* -------------------------------*
  *	   User Settings Routes
  * -------------------------------*/
 
