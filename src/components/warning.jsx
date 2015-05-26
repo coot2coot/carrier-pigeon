@@ -23,6 +23,8 @@ var warning = React.createClass({
                             
                             {(this.props.user
                                 ?   <tr><td><p>username:</p></td><td><p>{this.props.user.username}</p></td> </tr>
+                                :   this.props.contact  
+                                ?   <tr><td><p>Contact Name:</p></td><td><p>{this.props.contact.name}</p></td> </tr>
                                 :   <tr><td><p>Job No:</p></td><td><p>{this.props.order.job_number}</p></td> </tr>
                             )}
                            

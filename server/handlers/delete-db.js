@@ -11,6 +11,8 @@ function remove (req, res) {
 
 		if (req.url.indexOf('user') > -1) {
 			table = "users";
+		} else if(req.url.indexOf('contact') > -1){
+			table = "contacts";
 		} else {
 			table = "orders";
 		}

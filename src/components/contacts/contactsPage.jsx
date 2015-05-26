@@ -1,9 +1,12 @@
 /** @jsx React.DOM */
 
 var React  			= require('react');
+var Error 			= require("../error-message.jsx");
 var CreateContact 	= require('./add-contact.jsx');
+var ViewContact 	= require("./view-contact.jsx");
 var Header 			= require("../header/header.jsx");
-
+var SearchBox 		= require("../orders/search-box.jsx");
+	
 var contactsPage = React.createClass({
 	getInitialState: function() {
       return {
@@ -13,6 +16,7 @@ var contactsPage = React.createClass({
             	number: "012345",
             }
         ],
+        error: false,
         creatingContact: false
       };
     },
@@ -38,16 +42,43 @@ var contactsPage = React.createClass({
 	    	"get request failed"
 	    });
 	},
+	getSearchedContacts: function (value) {
+		var getUrl = "/search/contacts/" + value;
+		$.get(getUrl,function (result) {	
+			if(result === "error"){
+				this.setState({
+					error: true
+				})
+			}else{		
+				var contact = JSON.parse(result);
+				this.setState({
+					error: false
+				})
+				this.setState({
+				    contacts : contact
+				});
+			}				
+		}.bind(this))
+		.fail(function(){
+			"get searchfailed"
+		});
+	},
 
     onCloseComponent: function () {
 		this.setState({
 			creatingContact: false,
+			selectedContact: false
 		})
 	},
 
     addContact: function () {
 		this.setState({
 			creatingContact: true
+		})
+	},
+	contactHandler: function (item) {
+		this.setState({
+			selectedContact: item
 		})
 	},
 
@@ -58,9 +89,16 @@ var contactsPage = React.createClass({
 			<div>
 				<Header/>
 				<div className="column-14 push-1 model-generic">
+					<div>
+						{(this.state.error
+                            ? <Error message="Sorry, that search returned no results. Try another search." />
+                            : <p className="display-none"></p>
+                        )}
+                    </div>
 					<div className="panel-header" >
 						<h3>Contacts</h3>
 						<button data-tooltip="Add contact" className="button add blue" onClick={this.addContact}>+</button>
+						<SearchBox getorders= {this.getSearchedContacts} />
 					</div>
 					<div className="panel-body table-responsive scroll">
 						<table className="table table-full">
@@ -75,12 +113,14 @@ var contactsPage = React.createClass({
 						  		{ this.state.contacts.map(function (contact, i) {
 							        return <tr>
 							            		<td key={i + "first"}>
-							            			
+							            			<a onClick={contactHandler.bind(null, contact)}>
 							            				<p>{contact.name}</p>
+							            			</a>
 							            		</td>
 												<td key={i + "second"}>
-													
+													<a onClick={contactHandler.bind(null, contact)}>
 														<p>{contact.telephone}</p>
+													</a>
 												</td>
 											</tr>
 							    })}
@@ -92,7 +132,9 @@ var contactsPage = React.createClass({
 
 				{(this.state.creatingContact
                     ? <CreateContact contact={this.state.contacts} closeView={this.onCloseComponent} />
-                    : <p></p>
+                    : this.state.selectedContact
+                    ? <ViewContact contact= {this.state.selectedContact} closeView={this.onCloseComponent}/>
+                    :<p></p>
                 )}
                 
 			</div>

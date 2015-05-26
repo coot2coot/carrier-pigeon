@@ -63,7 +63,7 @@ var serverRoutes =  function (router) {
 	});
 
 	router.addRoute('/order/edit/:unit?', function (req, res, match){
-	  	require('./handlers/edit-db.js')(req, res, cache.noCache);
+	  	require('./handlers/edit-db.js').orders(req, res, cache.noCache);
 	});
 /* -------------------------------*
  *	   Units Routes
@@ -91,11 +91,17 @@ var serverRoutes =  function (router) {
  	router.addRoute('/contact/post', function (req, res, match){
 	  	require('./handlers/create-contact.js')(req, res);
 	});
+	router.addRoute('/contacts/edit', function (req, res, match){
+	  	require('./handlers/edit-db.js').contacts(req, res, cache.noCache);
+	});
 	router.addRoute('/contacts/get', function (req, res, match){
 	  	require('./handlers/read-db.js').cached(req, res);
 	});
 	router.addRoute('/contacts/get/nocache', function (req, res, match){
 	  	require('./handlers/read-db.js').noCache(req, res);
+	});
+	router.addRoute('/contacts/delete/:id?', function (req, res, match){
+	  	require('./handlers/delete-db.js')(req, res);
 	});
 
 
@@ -103,7 +109,10 @@ var serverRoutes =  function (router) {
  *	   Search Routes
  * -------------------------------*/
  	router.addRoute('/search/orders/:searchTerms?', function (req, res, match){
- 		require('./handlers/search.js')(req, res);
+ 		require('./handlers/search.js')(req, res, "orders");
+ 	});
+ 	router.addRoute('/search/contacts/:searchTerms?', function (req, res, match){
+ 		require('./handlers/search.js')(req, res, "contacts");
  	});
  	router.addRoute('/search/dates/:searchDates?', function (req, res, match){
  		require('./handlers/search-dates.js')(req, res);
