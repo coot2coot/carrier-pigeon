@@ -150,7 +150,7 @@ var viewOrder = React.createClass({
 
 									<div className="row">
 										<div className="column-8">
-											<p>Telephone</p>qw34
+											<p>Telephone</p>
 											<input type="text" name="telephone" defaultValue={this.props.contact ? this.props.contact.telephone : ""} disabled={viewing ? true : false}/>
 										</div>
 										<div className="column-8">
