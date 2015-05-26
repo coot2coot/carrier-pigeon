@@ -3,6 +3,7 @@ var chai = require("chai"),
     webdriver = require('wd'),
     landingTests = require("./stories/landing.e2e.js"),
     adminTests = require("./stories/admin-panel.e2e.js"),
+    contactTests = require("./stories/contacts.e2e.js"),
     capabilites;
    
 
@@ -23,7 +24,8 @@ describe('', function() {
     	length = capabilites.length;
 
     for (i = length - 1; i >= 0; i--) {
-    	landingTests(webdriver, capabilites[i]);
-    	adminTests(webdriver, capabilites[i]);
+    	// landingTests(webdriver, capabilites[i]);
+        // adminTests(webdriver, capabilites[i]);
+        contactTests(webdriver, capabilites[i]);
     };
 });
