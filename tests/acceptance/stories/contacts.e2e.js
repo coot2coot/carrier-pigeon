@@ -37,7 +37,7 @@ function landingTests (wd, capability, remote) {
                 .sendKeys(password)
                 .elementByTagName("form")
                 .submit()
-                .waitForElementByCssSelector("a[href='#/contacts']")
+                .waitForElementByLinkText("Contacts")
                 .click()
                 .nodeify(done);
         });
