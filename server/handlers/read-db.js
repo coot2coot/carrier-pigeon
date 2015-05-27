@@ -65,7 +65,6 @@ var getUserList = function (req, res) {
 readOptions.cached = function (req, res) {
 	validateUser(req, res, function () {
 		var table;
-		console.log(req.url)
 
 		if (req.url.indexOf('user') > -1) {
 			table = "users";

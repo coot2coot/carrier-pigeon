@@ -15,7 +15,7 @@
     var sauceKey   = process.env.SAUCE_ACCESS_KEY || require("./credentials.json").accesskey;
     var SCL        = require("sauce-connect-launcher");
 
-    var sassSrc        = "./src/scss/main.scss";
+    var sassSrc        = ["./src/scss/main.scss", "./src/scss/*/*.scss"];
     var conciseSrc     = "./src/scss/vendors/concise/concise.scss";
     var cssDestination = "./public/css/";
     var reactSrc       = "./src/app.jsx";

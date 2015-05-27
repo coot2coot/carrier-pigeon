@@ -8,15 +8,7 @@ var Link    = Router.Link;
 var Units 	= require("./view_units.jsx");
 var Warning = require("../warning.jsx");
 
-var getJobNumber = function (dbId) {
-    var today = new Date();
-  
-	var id = ("0000" + dbId).slice(-4);
-    var mm = ("0" + (today.getMonth()+1)).slice(-2);
-    var yy = today.getFullYear().toString().slice(-2);
-  
-    return yy + mm + id;
-}
+var getJobNumber = require("../../lib/format-job-number.js");
 
 var viewOrder = React.createClass({
 	getInitialState: function() {
@@ -212,8 +204,8 @@ var viewOrder = React.createClass({
 									})}
 
 									<div className="column-2">
-										<button type="button" className="view_input button	units" onClick = {addUnit} disabled={viewing ? true : false}>+</button>
-										<button type="button" className="view_input button	units" onClick = {removeUnit} disabled={viewing ? true : false}>-</button>
+										<button type="button" className="view_input button blue	units add-row" onClick = {addUnit} disabled={viewing ? true : false}>+</button>
+										<button type="button" className="view_input button blue	units add-row" onClick = {removeUnit} disabled={viewing ? true : false}>-</button>
 									</div>
 								</div>
 

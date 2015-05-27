@@ -112,8 +112,8 @@ var addOrder = React.createClass({
 										   })
 										}
 										<div className="column-2">
-											<button type="button"  className="button units" onClick={addUnit}>+</button>
-											<button type="button" className="button units float-right" onClick={removeUnit}>-</button>
+											<button type="button"  className="button blue add-row units" onClick={addUnit}>+</button>
+											<button type="button" className="button blue add-row units float-right" onClick={removeUnit}>-</button>
 										</div>
 
 									</div>

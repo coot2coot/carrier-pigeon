@@ -1,10 +1,11 @@
-var chai = require("chai"),
-    chaiAsPromised = require("chai-as-promised"),
-    webdriver = require('wd'),
-    landingTests = require("./stories/landing.e2e.js"),
-    adminTests = require("./stories/admin-panel.e2e.js"),
-    contactTests = require("./stories/contacts.e2e.js"),
-    capabilites;
+var chai            = require("chai");
+var chaiAsPromised  = require("chai-as-promised");
+var webdriver       = require('wd');
+var landingTests    = require("./stories/landing.e2e.js");
+var adminTests      = require("./stories/admin-panel.e2e.js");
+var ledgerTests     = require("./stories/ledger.e2e.js");
+var contactTests    = require("./stories/contacts.e2e.js");
+var capabilites;
    
 
 chai.use(chaiAsPromised);
@@ -27,5 +28,6 @@ describe('', function() {
     	landingTests(webdriver, capabilites[i]);
         adminTests(webdriver, capabilites[i]);
         contactTests(webdriver, capabilites[i]);
+    	ledgerTests(webdriver, capabilites[i]);
     };
 });
