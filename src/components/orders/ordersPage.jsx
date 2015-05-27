@@ -25,9 +25,32 @@ var ordersPage = React.createClass({
             	handler: "",
             }
         ],
+        contacts : [],
         searchValue: "",
         error: false
       };
+    },
+
+    getContacts : function () {
+    	var getContactUrl = "/contacts/get";
+    	if (window.location.href.indexOf('true') > -1 ) {
+			getContactUrl = "/contacts/get/nocache"
+		}
+    	$.get(getContactUrl, function(result) {
+	    	if(result !== ""){
+		    	var contact = JSON.parse(result);
+
+		      	if (this.isMounted()) {
+		        	this.setState({
+		          		contacts : contact
+		        	});
+		      	}
+		    }
+	    }.bind(this))
+	    .fail(function () {
+	    	"get request failed"
+	    });
+
     },
 
 	componentDidMount: function() {
@@ -255,7 +278,7 @@ var ordersPage = React.createClass({
 				</div>
 
 				{(this.state.selectedOrder
-                    ? <ViewOrder order={this.state.selectedOrder} copy={this.copyOrder} closeView={this.onCloseComponent}/>
+                    ? <ViewOrder contacts={this.state.contacts} order={this.state.selectedOrder} copy={this.copyOrder} closeView={this.onCloseComponent}/>
                     : this.state.creatingOrder
                     ? <CreateOrder copiedOrder={this.state.copiedOrder} units={this.state.copiedUnits} closeView={this.onCloseComponent}/>
                     : this.state.datePicker

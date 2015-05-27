@@ -16,7 +16,8 @@ var viewOrder = React.createClass({
         viewing: true,
         units: [],
         deletedUnits: "",
-        closeView: false
+        closeView: false,
+
       };
     },
 
@@ -85,6 +86,20 @@ var viewOrder = React.createClass({
 	    }
   	},
 
+  	createDropDown: function () {
+  		var select = document.getElementById("dropdown"); 
+  		var i;
+  		console.log(this.props.contacts)
+  		if(this.props.contacts){
+			this.props.contacts.map(function(item){
+				var opt = item.company_name;
+			    var el = document.createElement("option");
+			    el.value = opt;
+			    select.appendChild(el);
+			})
+		}
+  	},
+
 	componentWillMount: function() {
 		var getOrderUrl = "/units/" + this.props.order.job_number;
 
@@ -102,6 +117,10 @@ var viewOrder = React.createClass({
 	    .fail(function () {
 	    	"get units request failed"
 	    });
+	},
+
+	componentDidMount: function () {
+	      this.createDropDown();
 	},
 
 	edit: function () {
@@ -169,7 +188,8 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Client</p>
-										<input className="view_input" type="text"  defaultValue= {this.props.order.client}  name="client" disabled required/>
+										<input list="dropdown"  className="view_input" type="text"  defaultValue={this.props.order.client} name="client" disabled/>
+										<datalist id ="dropdown"></datalist>
 									</div>
 									<div className="column-8">
 										<p>Carrier </p>
