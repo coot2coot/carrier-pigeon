@@ -3,6 +3,7 @@
 var React = require('react');
 var Units = require("./units.jsx");
 var Warning = require("../close-warning.jsx");
+var DataList = require("./data-list.jsx");
 
 var currentDate = function () {
     var today = new Date();
@@ -98,7 +99,7 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Client</p>
-											<input type="text" name="client" defaultValue={order ? order.client : ""} required/>
+											<DataList contacts={this.props.contacts} client={order ? order.client : ""} />
 										</div>
 										<div className="column-8">
 											<p>Carrier </p>

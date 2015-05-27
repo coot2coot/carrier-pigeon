@@ -7,6 +7,7 @@ var Link    = Router.Link;
 
 var Units 	= require("./view_units.jsx");
 var Warning = require("../warning.jsx");
+var DataList = require("./data-list.jsx");
 
 var getJobNumber = require("../../lib/format-job-number.js");
 
@@ -16,7 +17,8 @@ var viewOrder = React.createClass({
         viewing: true,
         units: [],
         deletedUnits: "",
-        closeView: false
+        closeView: false,
+
       };
     },
 
@@ -85,6 +87,7 @@ var viewOrder = React.createClass({
 	    }
   	},
 
+
 	componentWillMount: function() {
 		var getOrderUrl = "/units/" + this.props.order.job_number;
 
@@ -103,6 +106,7 @@ var viewOrder = React.createClass({
 	    	"get units request failed"
 	    });
 	},
+
 
 	edit: function () {
 		var disabled = document.getElementsByClassName('view_input');
@@ -169,7 +173,7 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Client</p>
-										<input className="view_input" type="text"  defaultValue= {this.props.order.client}  name="client" disabled required/>
+										<DataList contacts={this.props.contacts} vieworder={true} client={this.props.order.client}/>
 									</div>
 									<div className="column-8">
 										<p>Carrier </p>
