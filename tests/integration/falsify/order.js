@@ -6,7 +6,7 @@ var mock   	  	  =  require("../mocks/orders-units.js");
 var testDb 		  = {};
 
 
-testDb.createOrder = function (test){
+testDb.create = function (test){
 	pg.connect(client, function(err, clt, done) {
 
     	if (err) {

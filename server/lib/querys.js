@@ -74,6 +74,17 @@ var searchItem= [
 	}
 ];
 
+var contactsArray = [
+	'vat_number',
+	'city',
+	'country',
+	'address_line',
+	'company_name',
+	'sales_report',
+	'remarks',
+	'name'
+]
+
 function isJobNumber(job_number) {
 
 	var regex = /^[0-9]{8}$/
@@ -142,6 +153,18 @@ query.searchOrders = function (value) {
 		string +=  findJobNumber(value);
 	}
 	string += keyWord(value);
+	return string;
+}
+
+query.searchContacts = function (value) {
+	var string = "";
+	contactsArray.map(function (item, i) {
+	string += command()
+				.select("*")
+				.from("contacts")
+				.where(item + " ILIKE '%" + value +"%'")
+				.end()
+	})
 	return string;
 }
 

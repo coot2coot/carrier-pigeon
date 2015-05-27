@@ -68,7 +68,9 @@ function post (table, clt, done, cb, doc) {
 
     if (table === "users") {
         query = postUsers(table,doc)
-    } else {
+    } else if (table === "contacts"){
+        query =postContacts(table,doc)
+    }else {
         query = postOrders(table,doc);
     }
     
@@ -94,6 +96,18 @@ function postUsers (table, doc) {
                 .columns(columns)
                 .values(values)
                 .end()
+
+    return query
+}
+
+function postContacts (table, doc) {
+    var contacts = stringifyData(doc);
+    var query = command()
+                .insertInto(table)
+                .columns(contacts.columns)
+                .values(contacts.values)
+                .end()
+
     return query
 }
 
@@ -120,35 +134,55 @@ function edit (table, clt, done, cb, doc) {
         editUsers(doc,clt,cb, done);
     } else if (table === "invoice") {
         editInvoices(doc, clt, cb, done);
+    } else if (table === 'contacts') {
+        editContacts(doc,clt,cb,done) 
     } else {
         editOrders(doc,clt,cb, done);
     }
 }
 
-function editUsers (doc,clt,cb, done) {
-        var updateUser = {
-            first_name: doc.first_name,
-            last_name: doc.last_name,
-            invitation: true
+function editContacts (doc,clt,cb, done) {
+    var query = editQuery.standard(doc);
+
+    clt.query(command()
+                .update("contacts")
+                .set(query)
+                .where("contact_id ="  + doc.contact_id)
+                .end(), function(err, result) {
+        if (err) {
+            console.log(err)
+
+            done(clt);
+            return;
         }
+        done();
+        cb(null);
+    })
+}
 
-        var query = editQuery.standard(updateUser);
+function editUsers (doc,clt,cb, done) {
+    var updateUser = {
+        first_name: doc.first_name,
+        last_name: doc.last_name,
+        invitation: true
+    }
 
-        clt.query(command()
-                    .update("users")
-                    .set(query+ ",password = crypt($3, gen_salt('md5'))")
-                    .where("username = $1 AND password = crypt($2, password)")
-                    .end() , [doc.username, doc.current_password, doc.new_password], function(err, result) {
-            if (err) {
-                console.log(err)
+    var query = editQuery.standard(updateUser);
 
-                done(clt);
-                return;
-            }
-            done();
-            cb();
-        });
+    clt.query(command()
+                .update("users")
+                .set(query+ ",password = crypt($3, gen_salt('md5'))")
+                .where("username = $1 AND password = crypt($2, password)")
+                .end() , [doc.username, doc.current_password, doc.new_password], function(err, result) {
+        if (err) {
+            console.log(err)
 
+            done(clt);
+            return;
+        }
+        done();
+        cb();
+    });
 }
 
 function editOrders (doc,clt,cb, done) {
@@ -204,7 +238,7 @@ function remove (table, clt, done, cb, doc) {
 
     var column;
 
-    column = table === "users" ? "username" :table === "units" ? "unit_id" : "job_number"
+    column = table === "users" ? "username" :table === "units" ? "unit_id" :table === "contacts" ? "contact_id" : "job_number"
 
     clt.query(command()
                 .deletes()
@@ -279,7 +313,12 @@ function loginUser (table, clt, done, cb, username, password, remember) {
 }
 
 function search (table, clt, done, cb, value){
-    var query = queryStrings.searchOrders(value);
+    var query;
+    if(table === "orders"){
+        query = queryStrings.searchOrders(value);
+    } else {
+        query = queryStrings.searchContacts(value);
+    }
     clt.query(query, function (err,result){
         if(err || result.rows.length ===0) {
             console.log(err);

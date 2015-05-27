@@ -6,7 +6,9 @@ var validateUser = require('../lib/validate-user.js');
 var splitObject  = require('../lib/split-orders-object.js');
 var db 			 = require("../db-config.js");
 
-function edit (req, res, cb) {
+var edit = {};
+
+edit.orders = function (req, res, cb) {
 	var data = req.url;
 	strng = data.replace(/\/order\/edit\//g, "");
 
@@ -35,5 +37,27 @@ function edit (req, res, cb) {
 		});
 	});
 };
+
+edit.contacts = function (req, res, cb) {
+	parseData(req, function (data) {
+		validateUser(req, res, function() {
+
+			db.edit('contacts', data, function (err) {
+				if (err) {
+					console.log(err)
+					res.writeHead(500);
+					res.write(err);
+					res.end();
+				} else {
+					cb(req, res);
+					res.writeHead(303, {
+						"Location": "/#/contacts/true"
+					});
+					res.end();
+				}
+			});
+		});
+	});
+}
 
 module.exports = edit;

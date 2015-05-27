@@ -11,6 +11,7 @@ var RouteHandler= Router.RouteHandler;
 var Header      = require("./components/header/header.jsx");
 var Login       = require("./components/login-panel.jsx");
 var Orders      = require("./components/orders/ordersPage.jsx");
+var Contacts    = require("./components/contacts/contactsPage.jsx");
 var AdminPanel  = require("./components/admin-panel.jsx");
 var Settings    = require("./components/settings/settings.jsx");
 var BookingNote = require("./components/booking-note/booking-note.jsx");
@@ -32,13 +33,15 @@ var routes = (
         <Route name="orders" path="/orders" handler={Orders}>
             <Route name="orderUpdate" path=":update" handler={Orders} />
         </Route>
+         <Route name="contacts" path="/contacts" handler={Contacts}>
+            <Route name="contactUpdate" path=":update" handler={Contacts} />
+        </Route>
 
         <Route name="login" path="/login" handler={Login}>
             <Route name="errorLogin" path=":error" handler={Login} />
         </Route>
 
         <Route name="reports" path="/reports" handler={Test} />
-        <Route name="contacts" path="/contacts" handler={Test} />
 
         <Route name="booking-note" path="/booking-note/:job_no" handler={BookingNote} />
 
