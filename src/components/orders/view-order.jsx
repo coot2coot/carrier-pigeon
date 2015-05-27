@@ -7,6 +7,7 @@ var Link    = Router.Link;
 
 var Units 	= require("./view_units.jsx");
 var Warning = require("../warning.jsx");
+var DataList = require("./data-list.jsx");
 
 var getJobNumber = require("../../lib/format-job-number.js");
 
@@ -86,19 +87,6 @@ var viewOrder = React.createClass({
 	    }
   	},
 
-  	createDropDown: function () {
-  		var select = document.getElementById("dropdown"); 
-  		var i;
-  		console.log(this.props.contacts)
-  		if(this.props.contacts){
-			this.props.contacts.map(function(item){
-				var opt = item.company_name;
-			    var el = document.createElement("option");
-			    el.value = opt;
-			    select.appendChild(el);
-			})
-		}
-  	},
 
 	componentWillMount: function() {
 		var getOrderUrl = "/units/" + this.props.order.job_number;
@@ -119,9 +107,6 @@ var viewOrder = React.createClass({
 	    });
 	},
 
-	componentDidMount: function () {
-	      this.createDropDown();
-	},
 
 	edit: function () {
 		var disabled = document.getElementsByClassName('view_input');
@@ -188,8 +173,7 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Client</p>
-										<input list="dropdown"  className="view_input" type="text"  defaultValue={this.props.order.client} name="client" disabled/>
-										<datalist id ="dropdown"></datalist>
+										<DataList contacts={this.props.contacts} vieworder={true} client={this.props.order.client}/>
 									</div>
 									<div className="column-8">
 										<p>Carrier </p>

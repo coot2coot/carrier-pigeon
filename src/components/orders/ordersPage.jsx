@@ -74,6 +74,7 @@ var ordersPage = React.createClass({
 	    .fail(function () {
 	    	"get request failed"
 	    });
+	    		this.getContacts();
 	},
 
 	onCloseComponent: function () {
@@ -280,7 +281,7 @@ var ordersPage = React.createClass({
 				{(this.state.selectedOrder
                     ? <ViewOrder contacts={this.state.contacts} order={this.state.selectedOrder} copy={this.copyOrder} closeView={this.onCloseComponent}/>
                     : this.state.creatingOrder
-                    ? <CreateOrder copiedOrder={this.state.copiedOrder} units={this.state.copiedUnits} closeView={this.onCloseComponent}/>
+                    ? <CreateOrder contacts={this.state.contacts} copiedOrder={this.state.copiedOrder} units={this.state.copiedUnits} closeView={this.onCloseComponent}/>
                     : this.state.datePicker
                     ? <Datepicker getorders={this.getDateOrders} closeView={this.onCloseComponent}/>
                     : this.state.ledger
