@@ -14,7 +14,6 @@ var dataBase       = {};
 
 
 function connect (query, table, cb, var1, var2, var3) {
-
 	pg.connect(url, function(err, clt, done) {
 
     	if (err) {
@@ -29,6 +28,7 @@ function connect (query, table, cb, var1, var2, var3) {
 
 function get (table, clt, done, cb) {
     var query;
+
     if(table == "contacts"){
         query = command()
                     .select('*')
@@ -99,15 +99,15 @@ function post (table, clt, done, cb, doc) {
 
 function postUsers (table, doc) {
     var columns = stringifyData(doc).columns +", password";
-    var values = stringifyData(doc).values + ", crypt('changeme', gen_salt('md5'))";
+    var values  = stringifyData(doc).values + ", crypt('changeme', gen_salt('md5'))";
 
     var query = command()
                 .insertInto(table)
                 .columns(columns)
                 .values(values)
-                .end()
+                .end();
 
-    return query
+    return query;
 }
 
 function postContacts (table, doc) {
@@ -116,14 +116,14 @@ function postContacts (table, doc) {
                 .insertInto(table)
                 .columns(contacts.columns)
                 .values(contacts.values)
-                .end()
+                .end();
 
-    return query
+    return query;
 }
 
 function postOrders (table, doc) {
-    var orders = stringifyData(doc.order)
-    var units = stringifyUnits(doc.unit)
+    var orders = stringifyData(doc.order);
+    var units   = stringifyUnits(doc.unit);
 
     var query = command()
                 .insertInto(table)
@@ -133,8 +133,9 @@ function postOrders (table, doc) {
                 .insertInto('units')
                 .columns(units.columns)
                 .values(units.values)
-                .end()
-    return query
+                .end();
+
+    return query;
 }
 
 
@@ -159,13 +160,12 @@ function editContacts (doc,clt,cb, done) {
                 .set(query)
                 .where("contact_id ="  + doc.contact_id)
                 .end(), function(err, result) {
-        if (err) {
-            console.log(err)
 
-            done(clt);
-            return;
-        }
         done();
+
+        if (err) {
+            return console.log(err);
+        }
         cb(null);
     })
 }
@@ -175,7 +175,7 @@ function editUsers (doc,clt,cb, done) {
         first_name: doc.first_name,
         last_name: doc.last_name,
         invitation: true
-    }
+    };
 
     var query = editQuery.standard(updateUser);
 
@@ -184,13 +184,11 @@ function editUsers (doc,clt,cb, done) {
                 .set(query+ ",password = crypt($3, gen_salt('md5'))")
                 .where("username = $1 AND password = crypt($2, password)")
                 .end() , [doc.username, doc.current_password, doc.new_password], function(err, result) {
-        if (err) {
-            console.log(err)
-
-            done(clt);
-            return;
-        }
+        
         done();
+        if (err) {
+            return console.log(err);
+        }
         cb();
     });
 }
@@ -210,8 +208,9 @@ function editOrders (doc,clt,cb, done) {
                 .query(unitsDeleteQuery)
                 .query(unitsCreateQuery)
                 .end(), function(err, result) {
+
         if (err) {
-            console.log(err)
+            console.log(err);
 
             done(clt);
             return;
@@ -235,6 +234,7 @@ function editInvoices (doc, clt, cb, done) {
                 .end(), function(err, result) {
         
         done();
+        
         if (err) {
             return cb(err);
         }
@@ -248,7 +248,9 @@ function remove (table, clt, done, cb, doc) {
 
     var column;
 
-    column = table === "users" ? "username" :table === "units" ? "unit_id" :table === "contacts" ? "contact_id" : "job_number"
+    column = table === "users" ? "username" : 
+            table === "units" ? "unit_id" : 
+            table === "contacts" ? "contact_id" : "job_number";
 
     clt.query(command()
                 .deletes()
@@ -256,17 +258,14 @@ function remove (table, clt, done, cb, doc) {
                 .where(column + " = $1")
                 .end(), [doc], function(err, user) {
 
+        done();
+
         if (err) {
-            console.log(err)
-                if(!err) return false;
-
-                done(clt);
-                return;
-            }
-
-            done()
-            cb(null)
-        });
+            return console.log(err);
+        }
+            
+        cb(null)
+    });
 }
 
 
@@ -283,6 +282,7 @@ function selectUnits (table, clt, done, cb, job_number) {
             done();
             return;
         }
+
         done();
         cb(units.rows);
     });
@@ -300,6 +300,7 @@ function getInvoices(table, clt, done, cb, job_number) {
         if(err) {
             return cb(err);
         }
+
         cb(null, units.rows);
     });
 }
@@ -324,24 +325,25 @@ function loginUser (table, clt, done, cb, username, password, remember) {
 
 function search (table, clt, done, cb, value){
     var query;
+
     if(table === "orders"){
         query = queryStrings.searchOrders(value);
     } else {
         query = queryStrings.searchContacts(value);
     }
+
     clt.query(query, function (err,result){
+        
+        done();
+
         if(err || result.rows.length ===0) {
             console.log(err);
-            done();
 
             return cb(true);
         }
-        done();
 
         cb(null,result.rows);
-
     })
-
 }
 
 function searchDates (table, clt, done, cb, dates){
@@ -350,19 +352,18 @@ function searchDates (table, clt, done, cb, dates){
     }
     else{
         clt.query(command()
-                    .select("*")
-                    .from(table)
-                    .where("date >='" + dates[0] + "' AND date <='"+dates[1] + "'")
-                    .end(), function (err,result){
-                        if(err || result.rows.length ===0) {
-                            console.log(err);
-                            done();
+            .select("*")
+            .from(table)
+            .where("date >='" + dates[0] + "' AND date <='"+dates[1] + "'")
+            .end(), function (err,result){
 
-                            return cb(true);
-                        }
-                        done();
+                done();
 
-                        cb(null,result.rows);
+                if(err || result.rows.length ===0) {
+                    return cb(true);
+                }
+
+                cb(null,result.rows);
 
         })
     }
