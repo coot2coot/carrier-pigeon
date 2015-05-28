@@ -120,11 +120,11 @@ function findYear(value) {
 function findJobNumber(value) {
 	var job_value = {};
 	var string = "";
-	job_value.newValue = Number(value.slice(-4));
+	job_value.newValue = Number(value.slice(-4))
 	string += command()
 				.select("*")
 				.from("orders")
-				.where("CAST(job_number AS text) ILIKE  '%" + job_value.newValue +"%'")
+				.where("CAST(job_number AS text) ILIKE  '" + job_value.newValue +"'")
 				.end()
 	return string;
 }

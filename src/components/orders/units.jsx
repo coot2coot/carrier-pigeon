@@ -26,7 +26,7 @@ var units = React.createClass({
 				</div>
 				<div className="row">
 					<div className="column-3">
-						<input type="text" name="unit_number" defaultValue={!!unit ? unit.unit_number : ""} required/>
+						<input type="text" name="unit_number" defaultValue={!!unit ? unit.unit_number : ""}/>
 					</div>
 					<div className="column-3">
 						<input type="text" name="unit_type" defaultValue={!!unit ? unit.unit_type : ""} required/>
