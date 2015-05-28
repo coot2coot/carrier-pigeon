@@ -214,23 +214,23 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-3">
 										<p>Port of Loading</p>
-										<input className="view_input" type="text" name="port_of_loading" disabled/>
+										<input className="view_input" type="text" name="port_of_loading" defaultValue={this.props.order.port_of_loading}  disabled/>
 									</div>
 									<div className="column-3">
 										<p>Port of Discharge</p>
-										<input className="view_input" type="text" name="port_of_discharge" disabled/>
+										<input className="view_input" type="text" name="port_of_discharge" defaultValue={this.props.order.port_of_discharge} disabled/>
 									</div>
 									<div className="column-4">
 										<p>Vessel</p>
-										<input className="view_input" type="text" name="vessel" disabled/>
+										<input className="view_input" type="text" name="vessel" defaultValue={this.props.order.vessel} disabled/>
 									</div>
 									<div className="column-3">
 										<p>ETS</p>
-										<input className="view_input" type="text" name="ets" disabled/>
+										<input className="view_input" type="date" name="ets" defaultValue={this.props.order.ets ? this.props.order.ets.substring(0, 10) : "" } disabled/>
 									</div>
 									<div className="column-3">
 										<p>ETA</p>
-										<input className="view_input" type="text" name="eta" disabled/>
+										<input className="view_input" type="date" name="eta" defaultValue={this.props.order.eta ? this.props.order.eta.substring(0, 10) : ""}  disabled/>
 									</div>
 								</div>
 

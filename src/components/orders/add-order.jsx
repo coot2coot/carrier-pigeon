@@ -156,11 +156,11 @@ var addOrder = React.createClass({
 										</div>
 										<div className="column-3">
 											<p>ETS</p>
-											<input type="text" name="ets" defaultValue={order ? order.ets : ""}/>
+											<input type="date" name="ets" defaultValue={order ? order.ets.substring(0, 10) : ""}/>
 										</div>
 										<div className="column-3">
 											<p>ETA</p>
-											<input type="text" name="eta" defaultValue={order ? order.eta : ""}/>
+											<input type="date" name="eta" defaultValue={order ? order.eta.substring(0, 10) : ""}/>
 										</div>
 									</div>
 									

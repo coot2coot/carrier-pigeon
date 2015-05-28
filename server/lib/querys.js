@@ -99,9 +99,11 @@ function isPartialJobNumber(job_number) {
 
 function findYear(value) {
 	var job_value = {};
+	var string = "";
 	job_value.year = "20" + value.slice(0,2);
 	job_value.month = value.slice(2,4);
 	job_value.job_number = value.replace(/^0+(?!\.|$)/, '')
+	
 	string += command()
 				.select("*")
 				.from("orders")
@@ -111,6 +113,8 @@ function findYear(value) {
 				.from("orders")
 				.where("job_number = " + job_value.job_number)
 				.end()
+
+	return string;
 }
 
 function findJobNumber(value) {
@@ -145,7 +149,6 @@ function keyWord (value) {
 
 query.searchOrders = function (value) {
 	var string = "";
-	var funct;
 
 	if(isPartialJobNumber(value)){
 		string += findYear(value);
