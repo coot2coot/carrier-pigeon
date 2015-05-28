@@ -8,6 +8,10 @@ var commands ={
 		this.string += " FROM " + table
 		return this
 	},
+	order : function (column) {
+		this.string += " ORDER BY " + column
+		return this
+	},	
 	deletes : function (table) {
 		this.string += " DELETE " 
 		return this
