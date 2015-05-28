@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var searchBox = React.createClass({
+var dataList = React.createClass({
 	componentDidMount: function () {
   		var select = document.getElementById("dropdown"); 
   		var i;
@@ -31,4 +31,4 @@ var searchBox = React.createClass({
 	}
 })
 
-module.exports = searchBox;
+module.exports = dataList;

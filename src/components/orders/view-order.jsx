@@ -46,13 +46,9 @@ var viewOrder = React.createClass({
 	},
 
 	closeWarning: function () {
-		if (this.state.viewing) {
-			this.setState({
-		    	closeView: false
-		    })
-		} else {
-			this.closeView();
-		}
+		this.setState({
+	    	closeView: false
+	    })
 	},
 
 	deleteHandler: function (item) {
