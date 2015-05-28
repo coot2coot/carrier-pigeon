@@ -152,7 +152,7 @@ var viewOrder = React.createClass({
 						<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.order)}>Delete</a>
 						<a className="button blue" onClick={this.edit}  >Edit</a>
 						<a className="button blue" onClick={this.copyOrder}>Copy</a>
-						<Link className="button blue" to="booking-note" params={{job_no: this.props.order.job_number}}>Make a booking note</Link>
+						<Link className="button blue" to="booking-note" params={{job_no: this.props.order.job_number}}>Booking Request</Link>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body scroll">
