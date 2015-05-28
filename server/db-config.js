@@ -28,10 +28,20 @@ function connect (query, table, cb, var1, var2, var3) {
 
 
 function get (table, clt, done, cb) {
-    clt.query(command()
-                .select("*")
-                .from(table)
-                .end(), function(err, result) {
+    var query;
+    if(table == "contacts"){
+        query = command()
+                    .select('*')
+                    .from(table)
+                    .order("name")
+                    .end()
+    }else{
+        query = command()
+                    .select("*")
+                    .from(table)
+                    .end()
+    }
+    clt.query(query, function(err, result) {
         if (err) {
             console.log(err)
 
