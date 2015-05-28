@@ -5,6 +5,7 @@ var landingTests    = require("./stories/landing.e2e.js");
 var adminTests      = require("./stories/admin-panel.e2e.js");
 var ledgerTests     = require("./stories/ledger.e2e.js");
 var contactTests    = require("./stories/contacts.e2e.js");
+var orderTests     = require("./stories/orders.e2e.js");
 var capabilites;
    
 
@@ -25,9 +26,10 @@ describe('', function() {
     	length = capabilites.length;
 
     for (i = length - 1; i >= 0; i--) {
-    	landingTests(webdriver, capabilites[i]);
-        adminTests(webdriver, capabilites[i]);
-        contactTests(webdriver, capabilites[i]);
-    	ledgerTests(webdriver, capabilites[i]);
+    	// landingTests(webdriver, capabilites[i]);
+     //    adminTests(webdriver, capabilites[i]);
+        // contactTests(webdriver, capabilites[i]);
+        // ledgerTests(webdriver, capabilites[i]);
+    	orderTests(webdriver, capabilites[i]);
     };
 });

@@ -10,7 +10,7 @@ var edit = {};
 
 edit.orders = function (req, res, cb) {
 	var data = req.url;
-	strng = data.replace(/\/order\/edit\//g, "");
+	var strng = data.replace(/\/order\/edit\//g, "");
 
 	parseData(req, function (data) {
 		validateOrder(data, res, function () {
