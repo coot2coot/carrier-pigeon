@@ -26,10 +26,10 @@ describe('', function() {
     	length = capabilites.length;
 
     for (i = length - 1; i >= 0; i--) {
-    	// landingTests(webdriver, capabilites[i]);
-     //    adminTests(webdriver, capabilites[i]);
-        // contactTests(webdriver, capabilites[i]);
-        // ledgerTests(webdriver, capabilites[i]);
+    	landingTests(webdriver, capabilites[i]);
+        adminTests(webdriver, capabilites[i]);
+        contactTests(webdriver, capabilites[i]);
+        ledgerTests(webdriver, capabilites[i]);
     	orderTests(webdriver, capabilites[i]);
     };
 });
