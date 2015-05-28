@@ -57,29 +57,29 @@ var addContact = React.createClass({
 									<div className="row">
 										<div className="column-16">
 											<p>Address Line</p>
-											<input type="text" name="address_line" defaultValue={contact ? contact.adress_line : ""} required/>
+											<input type="text" name="address_line" defaultValue={contact ? contact.address_line : ""} required/>
 										</div>					
 									</div>
 									
 									<div className="row">
 										<div className="column-8">
 											<p>City</p>
-											<input type="text" name="city"  defaultValue={contact ? contact.city : ""} required/>
+											<input type="text" name="city"  defaultValue={contact ? contact.city : ""} />
 										</div>
 										<div className="column-8">
 											<p>Post Code</p>
-											<input type="text" name="postcode"  defaultValue={contact ? contact.postcode : ""} required/>
+											<input type="text" name="postcode"  defaultValue={contact ? contact.postcode : ""} />
 										</div>
 									</div>
 
 									<div>
 										<div className="column-8">
 											<p>Country</p>
-											<input type="text" name="country"  defaultValue={contact ? contact.country : ""} required/>
+											<input type="text" name="country"  defaultValue={contact ? contact.country : ""} />
 										</div>
 										<div className="column-8">
 											<p>Contact Name</p>
-											<input type="text" name="name" defaultValue={contact ? contact.name : ""} required/>
+											<input type="text" name="name" defaultValue={contact ? contact.name : ""} required />
 										</div>
 									</div>
 

@@ -20,6 +20,12 @@ var viewOrder = React.createClass({
 		})
 	},
 
+	onCloseComponent: function () {
+		this.setState({
+			deleteContact: false
+		})
+	}, 
+
     closeView: function() {
     	if (this.state.viewing) {
     		this.props.closeView()
@@ -40,13 +46,9 @@ var viewOrder = React.createClass({
 	},
 
 	closeWarning: function () {
-		if (this.state.viewing) {
-			this.setState({
-		    	closeView: false
-		    })
-		} else {
-			this.closeView();
-		}
+		this.setState({
+	    	closeView: false
+	    })
 	},
 
 	deleteHandler: function (item) {
@@ -122,29 +124,29 @@ var viewOrder = React.createClass({
 									<div className="row">
 										<div className="column-16">
 											<p>Address Line</p>
-											<input type="text" name="address_line" defaultValue={this.props.contact ? this.props.contact.adress_line : ""}disabled={viewing ? true : false} required/>
+											<input type="text" name="address_line" defaultValue={this.props.contact ? this.props.contact.address_line : ""}disabled={viewing ? true : false} required/>
 										</div>					
 									</div>
 									
 									<div className="row">
 										<div className="column-8">
 											<p>City</p>
-											<input type="text" name="city"  defaultValue={this.props.contact ? this.props.contact.city : ""} disabled={viewing ? true : false} required/>
+											<input type="text" name="city"  defaultValue={this.props.contact ? this.props.contact.city : ""} disabled={viewing ? true : false}/>
 										</div>
 										<div className="column-8">
 											<p>Post Code</p>
-											<input type="text" name="postcode"  defaultValue={this.props.contact ? this.props.contact.postcode : ""} disabled={viewing ? true : false} required/>
+											<input type="text" name="postcode"  defaultValue={this.props.contact ? this.props.contact.postcode : ""} disabled={viewing ? true : false}/>
 										</div>
 									</div>
 
 									<div>
 										<div className="column-8">
 											<p>Country</p>
-											<input type="text" name="country"  defaultValue={this.props.contact ? this.props.contact.country : ""} disabled={viewing ? true : false} required/>
+											<input type="text" name="country"  defaultValue={this.props.contact ? this.props.contact.country : ""} disabled={viewing ? true : false} />
 										</div>
 										<div className="column-8">
 											<p>Contact Name</p>
-											<input type="text" name="name" defaultValue={this.props.contact ? this.props.contact.name : ""} disabled={viewing ? true : false} required/>
+											<input type="text" name="name" defaultValue={this.props.contact ? this.props.contact.name : ""} disabled={viewing ? true : false} require/>
 										</div>
 									</div>
 
