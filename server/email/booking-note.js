@@ -16,24 +16,6 @@ function invitationString (logins) {
 				  	'margin: 0;' +
   					'padding: 0;' +
 	  			'}' +
-	  			'header {' +
-	  				'background: url("'+ url +'/img/email-header.png") top center no-repeat;' +
-	  			'}' +
-	  			'img {' +
-	  				'text-align: left;' +
-	  				'padding: 19px;' +
-	  			'}' +
-	  			'table {' +
-	  				'width: 400px;' +
-	  				'border-spacing: 0;' +
-	  				'margin: 0 200px;' +
-	  			'}' +
-	  			'td {' +
-					'border: 0.1em #D8D8D8 solid;' +
-					'background: white;' +
-					'color: #434343;' +
-					'padding: 5px;' +
-				'}' +
 				'h2, p {' +
 					'text-align: center;' +
 					'color: black;' +
@@ -41,12 +23,12 @@ function invitationString (logins) {
 	  		'</style>' +
 		'</head>' +
 		'<body>' +
-			'<header>' +
-				'<img src="' + url + '/img/logo-full.png">' +
-			'</header>' +
 			'<div>' +
-				'<h2>Hello!</h2>' +
-				'<p>Attached is your booking note from Coot Freight</p>' +
+				'<p>Hi,</pp>' +
+				'<p>Please find attached the booking request.</pp>' +
+				'<p>Please confirm details by emailing info@cootfreight.co.uk.</p>' +
+				'<p>Yours Sincerely,</p>' +
+				'<p>Coot Freight Ltd</p>' +
 			'</div>' +
 		'</body>' +
 	'</html>';
