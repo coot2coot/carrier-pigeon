@@ -18,10 +18,10 @@ var units = React.createClass({
 						<p>Loading Reference</p>
 					</div>
 					<div className="column-3">
-						<p>loading Date</p>
+						<p>Loading Date</p>
 					</div>
 					<div className="column-3">
-						<p>loading Time</p>
+						<p>Loading Time</p>
 					</div>
 				</div>
 
