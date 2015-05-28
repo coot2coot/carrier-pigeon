@@ -123,6 +123,12 @@ var ordersPage = React.createClass({
 			})
 	},
 
+	uniq: function (a) {
+	    var seen = {};
+	    return a.filter(function(order) {
+	        return seen.hasOwnProperty(order.job_number) ? false : (seen[order.job_number] = true);
+	    });
+	},
 	getSearchedOrders: function (value) {
 
 		var getUrl = "/search/orders/" + value;
@@ -133,11 +139,12 @@ var ordersPage = React.createClass({
 				})
 			}else{		
 				var order = JSON.parse(result);
+				var uniqOrder = this.uniq(order)
 				this.setState({
 					error: false
 				})
 				this.setState({
-				    orders : order
+				    orders : uniqOrder
 				});
 			}				
 		}.bind(this))
