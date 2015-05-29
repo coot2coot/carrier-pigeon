@@ -32,11 +32,6 @@
   height: 25em;
 }
 
-.model-overflow {
-	max-height: 25em;
-  overflow: hidden;
-}
-
 .scroll {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -56,6 +51,12 @@
   	div.panel-body {
   		padding: 0 1em 2em 1em;
       max-height: 35em;
+      @include respond(small-height) {
+        max-height: 30em;
+      };
+      @include respond(extra-small-height) {
+        max-height: 25em;
+      };
   	}
 }
 
@@ -67,7 +68,7 @@ p.small {
 
 .overlay {
     z-index: 2;
-	  position: absolute;
+	  position: fixed;
     width: 100%;
     height: 100%;
     top: 0px;
