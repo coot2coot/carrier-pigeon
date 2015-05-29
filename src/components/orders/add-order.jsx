@@ -91,7 +91,7 @@ var addOrder = React.createClass({
 							<div className="row gutters">
 								<div>
 									<div className="row">
-										<div className="column-16">
+										<div className="column-8">
 											<p>Date</p>
 											<input type="date" name="date" min={today} defaultValue={order ? order.date.substring(0, 10) : this.state.dateValue} required/>
 										</div>
