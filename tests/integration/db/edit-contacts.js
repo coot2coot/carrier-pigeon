@@ -10,7 +10,7 @@ var tests = function () {
 		var callback =  function (result){
 			t.equals(result, null, "edit request to contacts table worked")
 		};
-		try {
+		try {   
 			db.edit("contacts", mocks.edit, callback);
 		} catch(e) {
 			t.notOk(true, "edit request to contacts table did not work");
