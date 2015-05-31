@@ -2,6 +2,7 @@
 
 var React  = require('react');
 
+// For emailing as a pdf, inine styling is required.
 var h5 = {
     display: "block",
     fontSize: "12px",

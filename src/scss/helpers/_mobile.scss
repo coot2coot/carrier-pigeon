@@ -7,6 +7,8 @@ $extra-small: 480px;
 $small: 768px;
 $regular: 992px;
 $large: 1200px;
+$height: 45em;
+$small-height: 40em;
 
 @mixin respond($size) {
     @if $size == extraSmall {
@@ -31,6 +33,16 @@ $large: 1200px;
     }
     @else if $size == monitor {
         @media (min-width: $large) {
+            @content;
+        }
+    }
+    @else if $size == small-height {
+        @media screen and (max-height: $height ) {
+            @content;
+        }
+    }
+    @else if $size == extra-small-height {
+        @media screen and (max-height: $small-height ) {
             @content;
         }
     }
