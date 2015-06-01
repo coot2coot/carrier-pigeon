@@ -4,7 +4,7 @@ var React       = require('react');
 var BookingPage = require("./booking-note-page.jsx");
 var EmailInput  = require("./email-input.jsx");
 
-var bookingNote = React.createClass({
+var bookingNoteButtons = React.createClass({
     getInitialState: function() {
         return {
             emailInput: false
@@ -14,7 +14,7 @@ var bookingNote = React.createClass({
         var getOrderUrl = "/booking-note/email";
 
         var component = React.renderToString(
-            <BookingPage order={this.props.order} />
+            <BookingPage order={this.props.order} units={this.props.units}/>
         );
 
         var data = {
@@ -79,4 +79,4 @@ var bookingNote = React.createClass({
 });
 
 
-module.exports = bookingNote;
+module.exports = bookingNoteButtons;

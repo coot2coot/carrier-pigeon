@@ -59,6 +59,10 @@ function getOrder (table, clt, done, cb, job_number) {
                 .select("*")
                 .from(table)
                 .where("job_number = " + job_number)
+                .next()
+                .select("*")
+                .from("units")
+                .where("job_number = " + job_number)
                 .end(), function(err, result) {
                     
         if (err) {

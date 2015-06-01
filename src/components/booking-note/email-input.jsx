@@ -2,7 +2,7 @@
 
 var React  = require('react');
 
-var bookingNote = React.createClass({
+var EmailInput = React.createClass({
     render: function() {
         return (
             <div className="overlay">
@@ -24,4 +24,4 @@ var bookingNote = React.createClass({
 });
 
 
-module.exports = bookingNote;
+module.exports = EmailInput;

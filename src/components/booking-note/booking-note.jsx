@@ -3,6 +3,7 @@
 var React  = require('react');
 
 var Header         = require("../header/header.jsx");
+// TODO:
 // If the buttons don't work... If email: Please double check your email address and try again.
 // If save/print doesn't work... sorry, there has been an internal error. Try again at a late point.
 var Error          = require("../error-message.jsx");
@@ -37,7 +38,8 @@ var bookingNote = React.createClass({
                 var order = JSON.parse(result);
 
                 this.setState({
-                    order : order,
+                    order: order.order,
+                    units: order.units
                 });
             }
         }.bind(this))
@@ -50,8 +52,8 @@ var bookingNote = React.createClass({
         return (
             <div >
                 <Header/>
-                <BookingOptions order={this.state.order} />
-                <BookingPage order={this.state.order} />
+                <BookingOptions order={this.state.order} units={this.state.units}/>
+                <BookingPage order={this.state.order} units={this.state.units}/>
             </div>
         )
     }

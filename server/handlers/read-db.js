@@ -13,14 +13,14 @@ var getOrders = function (req, res) {
 		myCache.set("orders", orders, secondsToSave, function(err, success){
 
 			if(err){
-				console.error(err)
+				console.error(err);
 			}
 		});
 		var order = JSON.stringify(orders);
 
 		res.writeHead(200, {"Content-Type" : "text/plain"});
 		res.end(order);
-	})
+	});
 };
 
 var getContacts = function (req, res) {
@@ -29,14 +29,14 @@ var getContacts = function (req, res) {
 		myCache.set("contacts", contacts, secondsToSave, function(err, success){
 
 			if(err){
-				console.error(err)
+				console.error(err);
 			}
 		});
 		var contact = JSON.stringify(contacts);
 
 		res.writeHead(200, {"Content-Type" : "text/plain"});
 		res.end(contact);
-	})
+	});
 };
 
 var getUserList = function (req, res) {
@@ -47,19 +47,19 @@ var getUserList = function (req, res) {
 			if (user.admin === false) {
 				users.push(user);
 			}
-		})
+		});
 
 		myCache.set("users", users, function(err, success){
 			if(err){
-				console.error(err)
+				console.error(err);
 			}
 		});
 		
-		var userList = JSON.stringify(users)
+		var userList = JSON.stringify(users);
 
 		res.writeHead(200, {"Content-Type" : "text/plain"});
 		res.end(userList);
-	})
+	});
 };
 
 readOptions.cached = function (req, res) {
@@ -71,14 +71,14 @@ readOptions.cached = function (req, res) {
 		} else if (req.url.indexOf('contact') > -1) {
 			table = "contacts";
 		} else {
-			table = "orders"
+			table = "orders";
 		}
 
 		myCache.get(table, function (err, value){
 			if(!err && value.hasOwnProperty(table)){
 				var values = JSON.stringify(value[table]);
 				res.writeHead(200, {"Content-Type" : "text/plain"});
-				res.end(values)
+				res.end(values);
 			}else {
 				if (table === "users") {
 					getUserList(req, res);
@@ -89,9 +89,9 @@ readOptions.cached = function (req, res) {
 				}
 				
 			}
-		})
+		});
 	});
-}
+};
 
 readOptions.noCache = function (req, res) {
 	validateUser(req, res, function () {
@@ -102,57 +102,39 @@ readOptions.noCache = function (req, res) {
 		} else if (req.url.indexOf('contact') > -1) {
 			table = "contacts";
 		} else {
-			table ="orders"
+			table ="orders";
 		}
 
 		if (table === "users") {
 			getUserList(req, res);
 		} else if(table === "contacts"){
-			getContacts(req,res)
+			getContacts(req,res);
 		}else {
 			getOrders(req, res);
 		}
 	});
-}
+};
 
 readOptions.getOrder = function (req, res) {
 	var id = req.url.split("/").pop();
 
 	validateUser(req, res, function () {
-		myCache.get("orders", function (err, value) {
-			var order, foundOrder;
-
-			if(!err && value.hasOwnProperty("orders")) {
-
-				var jobNumbers = value.orders.map(function (result) {
-					return result.job_number;
-				});
-
-				var position = jobNumbers.indexOf(Number(id));
-
-				foundOrder = value.orders[position];
-
-				order = JSON.stringify(foundOrder);
-				res.writeHead(200, {"Content-Type" : "text/plain"});
-				res.end(order);
-
-			} else {
-				db.getOrder('orders', id, function (err, result) {
-					if (err) {
-						console.log(err);
-						return;
-					}
-					foundOrder = result[0];
-
-					order = JSON.stringify(foundOrder);
-					res.writeHead(200, {"Content-Type" : "text/plain"});
-					res.end(order);
-				})
+		db.getOrder('orders', id, function (err, results) {
+			if (err) {
+				console.log(err);
+				return;
 			}
+
+			var result = {};
+			result.order = results.shift();
+			result.units = results;
+
+			var stringResult = JSON.stringify(result);
+			
+			res.writeHead(200, {"Content-Type" : "text/plain"});
+			res.end(stringResult);
 		});
 	});
-}
+};
 
 module.exports = readOptions;
-
-
