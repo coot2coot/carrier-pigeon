@@ -49,6 +49,9 @@ var units = React.createClass({
 
 				<div className="row">
 					<div className="column-2">
+						<p>Weight</p>
+					</div>
+					<div className="column-2">
 						<p>Net Weight</p>
 					</div>
 					<div className="column-2">
@@ -57,7 +60,7 @@ var units = React.createClass({
 					<div className="column-2">
 						<p>Volume (m3)</p>
 					</div>
-					<div className="column-6">
+					<div className="column-4">
 						<p>Commodity Description</p>
 					</div>
 					<div className="column-2">
@@ -69,6 +72,12 @@ var units = React.createClass({
 				</div>
 
 				<div className="row">
+					<div className="column-2" >
+						<select className="view_input" name="unit_weight" defaultValue={unit.unit_weight} disabled={this.props.viewing ? true : false}>
+							<option value= "kg">kg</option>
+							<option value= "tons">tons</option>
+						</select>
+					</div>
 					<div className="column-2">
 						<input className="view_input" type="number" name="unit_net_weight" defaultValue={unit.unit_nett_weight} disabled={this.props.viewing ? true : false}/>
 					</div>
@@ -78,7 +87,7 @@ var units = React.createClass({
 					<div className="column-2">
 						<input className="view_input" type="number" name="unit_volume" defaultValue={unit.unit_volume} disabled={this.props.viewing ? true : false}/>
 					</div>
-					<div className="column-6">
+					<div className="column-4">
 						<input className="view_input" type="text" name="unit_commodity_description" defaultValue={unit.unit_commodity_description} disabled={this.props.viewing ? true : false}/>
 					</div>
 					<div className="column-2">
