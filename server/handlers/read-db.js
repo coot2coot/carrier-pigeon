@@ -121,34 +121,38 @@ readOptions.getOrder = function (req, res) {
 	validateUser(req, res, function () {
 		myCache.get("orders", function (err, value) {
 			var order, foundOrder;
+			// TODO: Are units cached?
+			// if(!err && value.hasOwnProperty("orders")) {
 
-			if(!err && value.hasOwnProperty("orders")) {
+			// 	var jobNumbers = value.orders.map(function (result) {
+			// 		return result.job_number;
+			// 	});
 
-				var jobNumbers = value.orders.map(function (result) {
-					return result.job_number;
-				});
+			// 	var position = jobNumbers.indexOf(Number(id));
 
-				var position = jobNumbers.indexOf(Number(id));
+			// 	foundOrder = value.orders[position];
 
-				foundOrder = value.orders[position];
+			// 	order = JSON.stringify(foundOrder);
+			// 	res.writeHead(200, {"Content-Type" : "text/plain"});
+			// 	res.end(order);
 
-				order = JSON.stringify(foundOrder);
-				res.writeHead(200, {"Content-Type" : "text/plain"});
-				res.end(order);
-
-			} else {
-				db.getOrder('orders', id, function (err, result) {
+			// } else {
+				db.getOrder('orders', id, function (err, results) {
 					if (err) {
 						console.log(err);
 						return;
 					}
-					foundOrder = result[0];
 
-					order = JSON.stringify(foundOrder);
+					var result = {};
+					result.order = results.shift();
+					result.units = results;
+
+					var stringResult = JSON.stringify(result);
+					
 					res.writeHead(200, {"Content-Type" : "text/plain"});
-					res.end(order);
+					res.end(stringResult);
 				})
-			}
+			// }
 		});
 	});
 }

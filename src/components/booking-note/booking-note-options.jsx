@@ -4,7 +4,7 @@ var React       = require('react');
 var BookingPage = require("./booking-note-page.jsx");
 var EmailInput  = require("./email-input.jsx");
 
-var bookingNote = React.createClass({
+var bookingNoteButtons = React.createClass({
     getInitialState: function() {
         return {
             emailInput: false
@@ -79,4 +79,4 @@ var bookingNote = React.createClass({
 });
 
 
-module.exports = bookingNote;
+module.exports = bookingNoteButtons;

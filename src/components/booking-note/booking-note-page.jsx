@@ -78,7 +78,7 @@ var halfLeft = {
     textAlign: "left"
 }
 
-var bookingNote = React.createClass({
+var bookingNotePage = React.createClass({
     render: function() {
         return (
             <div id="form" className="booking-note container" style={bookingStyle}>
@@ -94,10 +94,12 @@ var bookingNote = React.createClass({
                     <p style={pRight}><b> Job no: </b> {getJobNumber(this.props.order.job_number)}</p>
                 </div>
                 <div>
-                    <BookingForm order={this.props.order} />
+                    <BookingForm order={this.props.order} units={this.props.units}/>
                 </div>
+
                 <br />
                 <hr style={hr}/>
+
                 <div style={halfLeft}>
                     <div style={halfLeft}>
                         <p style={pSmall}> Davenport House </p>
@@ -131,4 +133,4 @@ var bookingNote = React.createClass({
     }
 });
 
-module.exports = bookingNote;
+module.exports = bookingNotePage;

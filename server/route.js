@@ -158,7 +158,7 @@ var serverRoutes =  function (router) {
 	});
 
 /* -------------------------------*
- *	   Booking Note Routes
+ *	   Booking Request Routes
  * -------------------------------*/
 
 	router.addRoute('/booking-note/email', function (req, res, match){

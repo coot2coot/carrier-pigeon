@@ -38,7 +38,8 @@ var bookingNote = React.createClass({
                 var order = JSON.parse(result);
 
                 this.setState({
-                    order : order,
+                    order: order.order,
+                    units: order.units
                 });
             }
         }.bind(this))
@@ -52,7 +53,7 @@ var bookingNote = React.createClass({
             <div >
                 <Header/>
                 <BookingOptions order={this.state.order} />
-                <BookingPage order={this.state.order} />
+                <BookingPage order={this.state.order} units={this.state.units}/>
             </div>
         )
     }

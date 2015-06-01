@@ -2,101 +2,68 @@
 
 var React  = require('react');
 
-var h5 = {
-    display: "block",
-    fontSize: "12px",
-    color: "black",
-    fontWeight: "700",
-    padding: "2px"
-}
-
 var table = {
-    border: "1px #D8D8D8 solid",
     width: "100%"
 }
 
-var td = {
-    borderRight: "1px #D8D8D8 solid",
-    borderBottom: "1px #D8D8D8 solid",
-    fontSize: "12px",
-    padding: "2px"
+var th = {
+    fontSize: "9px",
+    fontWeight: "600",
+    border: "1px black solid",
+    padding: "2px 0",
+    background: "none",
+    backgroundColor: "#B9F3F4"
 }
 
-var tdLast = {
-    borderRight: "1px #D8D8D8 solid",
-    fontSize: "12px",
+var td = {
+    border: "none",
+    borderRight: "1px black solid",
+    fontSize: "10px",
     padding: "2px"
 }
 
 var tdRight = {
-    borderBottom: "1px #D8D8D8 solid",
-    fontSize: "12px",
+    border: "none",
+    fontSize: "10px",
     padding: "2px"
 }
 
-var tdCorner = {
-    fontSize: "12px",
-    padding: "2px"
-}
-
-var bookingNoteFrom = React.createClass({
+var bookingNoteForm = React.createClass({
     render: function() {
+        var order = this.props.order;
+        var units = this.props.units;
         return (
             <div>
                 <table style={table}>
-                    <tbody>
-                        <tr>
-                            <td style={td}><h5 style={h5}>Loading Place</h5></td>
-                            <td style={tdRight}>{this.props.order.collect_from}</td>
-                        </tr>
-                        <tr>
-                            <td style={td}><h5 style={h5}>Delivery Place</h5></td>
-                            <td style={tdRight}>{this.props.order.deliver_to}</td>
-                        </tr>
-                        <tr>
-                            <td style={td}><h5 style={h5}>Container Type/Vehicle</h5></td>
-                            <td style={tdRight}>{this.props.order.deliver_to}</td>
-                        </tr>
-                        <tr>
-                            <td style={td}><h5 style={h5}>Reference</h5></td>
-                            <td style={tdRight}>{this.props.order.loading_reference}</td>
-                        </tr>
-                        <tr>
-                            <td style={td}><h5 style={h5}>Commodity Description</h5></td>
-                            <td style={tdRight}>{this.props.order.commodity_details}</td>
-                        </tr>
-                        <tr>
-                            <td style={td}><h5 style={h5}>Collection Date/Time</h5></td>
-                            <td style={tdRight}>{this.props.order.collection_date} / {this.props.order.collection_time}</td>
-                        </tr>
-                        <tr>
-                            <td style={td}><h5 style={h5}>Contact Details</h5></td>
-                            <td style={tdRight}>{this.props.order.contact_details}</td>
-                        </tr>
-                        <tr>
-                            <td style={tdLast}><h5 style={h5}>Additional Information</h5></td>
-                            <td style={tdCorner}>{this.props.order.remarks}</td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <th style={th}>Collect on:</th>
+                        <th style={th}>Collect at:</th>
+                        <th style={th}>Equipment:</th>
+                        <th style={th}>Loading reference:</th>
+                        <th style={th}>Commodity description:</th>
+                        <th style={th}>Gross weight:</th>
+                    </tr>
+                    {/* TODO: loop through all the units here*/}
                 </table>
 
-                <h5 style={h5}><u>Waybill Instructions</u></h5>
-                <br />
                 <table style={table}>
-                    <tbody>
-                        <tr>
-                            <td style={td}><h5 style={h5}>Shipper</h5></td>
-                            <td style={tdRight}>{this.props.order.shipper}</td>
-                        </tr>
-                        <tr>
-                            <td style={td}><h5 style={h5}>Consignee</h5></td>
-                            <td style={tdRight}>{this.props.order.consignee}</td>
-                        </tr>
-                        <tr>
-                            <td style={tdLast}><h5 style={h5}>Notify</h5></td>
-                            <td style={tdCorner}>{this.props.order.notify}</td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <th style={th}>Collect from:</th>
+                        <th style={th}>Deliver to:</th>
+                    </tr>
+                    <tr>
+                        <td style={td}>{order.collect_from}</td>
+                        <td style={tdRight}>{order.deliver_to}</td>
+                    </tr>
+                </table>
+
+                <table style={table}>
+                    <tr>
+                        <th style={th}>Special Instructions:</th>
+                    </tr>
+                    <tr>
+                        <td style={td}>{order.special_instructions}</td>
+                    </tr>
                 </table>
             </div>
         )
@@ -104,4 +71,4 @@ var bookingNoteFrom = React.createClass({
 });
 
 
-module.exports = bookingNoteFrom;
+module.exports = bookingNoteForm;
