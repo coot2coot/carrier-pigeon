@@ -26,19 +26,19 @@ var units = React.createClass({
 				</div>
 				<div className="row">
 					<div className="column-3">
-						<input type="text" name="unit_number" defaultValue={!!unit ? unit.unit_number : ""}/>
+						<input type="text" name="unit_number" defaultValue={!!unit.unit_number ? unit.unit_number : ""}/>
 					</div>
 					<div className="column-3">
-						<input type="text" name="unit_type" defaultValue={!!unit ? unit.unit_type : ""} required/>
+						<input type="text" name="unit_type" defaultValue={!!unit.unit_type ? unit.unit_type : ""} required/>
 					</div>
 					<div className="column-4">
-						<input type="text" name="unit_loading_reference" defaultValue={!!unit ? unit.unit_loading_reference : ""}/>
+						<input type="text" name="unit_loading_reference" defaultValue={!!unit.unit_loading_reference ? unit.unit_loading_reference : ""}/>
 					</div>
 					<div className="column-3">
-						<input type="date" name="unit_loading_date" defaultValue={!!unit ? unit.unit_loading_date : ""}/>
+						<input type="date" name="unit_loading_date" defaultValue={!!unit.unit_loading_date ? unit.unit_loading_date : ""}/>
 					</div>
 					<div className="column-3">
-						<input type="time" name="unit_loading_time" defaultValue={!!unit ? unit.unit_loading_time : ""}/>
+						<input type="time" name="unit_loading_time" defaultValue={!!unit.unit_loading_time ? unit.unit_loading_time : ""}/>
 					</div>
 				</div>
 
@@ -74,22 +74,22 @@ var units = React.createClass({
 						</select>
 					</div>
 					<div className="column-2">
-						<input type="number" name="unit_net_weight" defaultValue={!!unit ? unit.unit_net_weight : ""}/>
+						<input type="number" name="unit_net_weight" defaultValue={!!unit.unit_net_weight ? unit.unit_net_weight : ""}/>
 					</div>
 					<div className="column-2">
-						<input type="number" name="unit_gross_weight" defaultValue={!!unit ? unit.unit_gross_weight : ""}/>
+						<input type="number" name="unit_gross_weight" defaultValue={!!unit.unit_gross_weight ? unit.unit_gross_weight : ""}/>
 					</div>
 					<div className="column-2">
-						<input type="number" name="unit_volume" defaultValue={!!unit ? unit.unit_volume : ""}/>
+						<input type="number" name="unit_volume" defaultValue={!!unit.unit_volume ? unit.unit_volume : ""}/>
 					</div>
 					<div className="column-4">
-						<input type="text" name="unit_commodity_description" defaultValue={!!unit ? unit.unit_commodity_description : ""}/>
+						<input type="text" name="unit_commodity_description" defaultValue={!!unit.unit_commodity_description ? unit.unit_commodity_description : ""}/>
 					</div>
 					<div className="column-2">
-						<input type="number" name="unit_no_of_packages" defaultValue={!!unit ? unit.unit_no_of_packages : ""}/>
+						<input type="number" name="unit_no_of_packages" defaultValue={!!unit.unit_no_of_packages ? unit.unit_no_of_packages : ""}/>
 					</div>
 					<div className="column-2">
-						<input type="text" name="unit_kind_of_packages" defaultValue={!!unit ? unit.unit_kind_of_packages : ""}/>
+						<input type="text" name="unit_kind_of_packages" defaultValue={!!unit.unit_kind_of_packages ? unit.unit_kind_of_packages : ""}/>
 					</div>
 				</div>
 			</units>
