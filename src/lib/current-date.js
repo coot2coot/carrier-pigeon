@@ -1,7 +1,7 @@
 (function () {
 	"use strict"
 
-	var getCurrentDate = function (dbId) {
+	var getCurrentDate = function () {
 	    var today = new Date();
 
 	    var dd = today.getDate();
@@ -9,10 +9,10 @@
 	    var yyyy = today.getFullYear();
 
 	    if (dd < 10){
-	        dd='0'+dd
+	        dd = '0' + dd;
 	    }
 	    if (mm < 10) {
-	        mm='0'+mm
+	        mm = '0' + mm;
 	    }
 
 	    var todayDate = yyyy + "-" + mm + "-" + dd;
