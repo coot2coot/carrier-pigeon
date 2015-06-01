@@ -42,6 +42,12 @@ var contactsPage = React.createClass({
 	    	"get request failed"
 	    });
 	},
+	uniq: function (a) {
+	    var seen = {};
+	    return a.filter(function(contact) {
+	        return seen.hasOwnProperty(contact.contact_id) ? false : (seen[contact.contact_id] = true);
+	    });
+	},
 	getSearchedContacts: function (value) {
 		var getUrl = "/search/contacts/" + value;
 		$.get(getUrl,function (result) {	
@@ -51,11 +57,12 @@ var contactsPage = React.createClass({
 				})
 			}else{		
 				var contact = JSON.parse(result);
+				var uniqContact = this.uniq(contact)
 				this.setState({
 					error: false
 				})
 				this.setState({
-				    contacts : contact
+				    contacts : uniqContact
 				});
 			}				
 		}.bind(this))

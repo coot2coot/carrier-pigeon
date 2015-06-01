@@ -24,10 +24,10 @@ capability = {
 describe('', function() {
     this.timeout(100000);
 
-	// landingTests(webdriver, capability);
-    // adminTests(webdriver, capability);
-    // contactTests(webdriver, capability);
-    // ledgerTests(webdriver, capability);
-    // orderTests(webdriver, capability);
+	landingTests(webdriver, capability);
+    adminTests(webdriver, capability);
+    contactTests(webdriver, capability);
+    ledgerTests(webdriver, capability);
+    orderTests(webdriver, capability);
 	bookingNoteTests(webdriver, capability);
 });
