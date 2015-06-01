@@ -46,16 +46,16 @@
 }
 
 .model-top {
-	top: 15%;
+	top: 5%;
   	position: absolute;
   	div.panel-body {
   		padding: 0 1em 2em 1em;
-      max-height: 35em;
+      max-height: 45em;
       @include respond(small-height) {
-        max-height: 30em;
+        max-height: 35em;
       };
       @include respond(extra-small-height) {
-        max-height: 25em;
+        max-height: 30em;
       };
   	}
 }
