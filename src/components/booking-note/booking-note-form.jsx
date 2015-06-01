@@ -6,7 +6,8 @@ var UnitForm = require("./booking-note-unit.jsx");
 
 // For emailing as a pdf, inine styling is required.
 var table = {
-    width: "100%"
+    width: "100%",
+    marginBottom: "24px"
 }
 
 var th = {
@@ -15,6 +16,10 @@ var th = {
     border: "1px black solid",
     padding: "2px 0",
     background: "none",
+    margin: "0"
+}
+
+var trHeader = {
     backgroundColor: "#B9F3F4"
 }
 
@@ -22,7 +27,8 @@ var td = {
     border: "none",
     borderRight: "1px black solid",
     fontSize: "10px",
-    padding: "2px"
+    padding: "2px 0",
+    margin: "0"
 }
 
 var tdRight = {
@@ -42,7 +48,7 @@ var bookingNoteForm = React.createClass({
         return (
             <div>
                 <table style={table}>
-                    <tr>
+                    <tr style={trHeader}>
                         <th style={th}>Collect on:</th>
                         <th style={th}>Collect at:</th>
                         <th style={th}>Equipment:</th>
@@ -56,7 +62,7 @@ var bookingNoteForm = React.createClass({
                 </table>
 
                 <table style={table}>
-                    <tr>
+                    <tr style={trHeader}>
                         <th style={th}>Collect from:</th>
                         <th style={th}>Deliver to:</th>
                     </tr>
@@ -67,7 +73,7 @@ var bookingNoteForm = React.createClass({
                 </table>
 
                 <table style={table}>
-                    <tr>
+                    <tr style={trHeader}>
                         <th style={th}>Special Instructions:</th>
                     </tr>
                     <tr>
