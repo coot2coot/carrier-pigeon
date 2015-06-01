@@ -3,15 +3,9 @@
 var React       = require('react');
 var BookingForm = require("./booking-note-form.jsx");
 
-var getJobNumber = function (dbId) {
-    var today = new Date();
-  
-    var id = ("0000" + dbId).slice(-4);
-    var mm = ("0" + (today.getMonth()+1)).slice(-2);
-    var yy = today.getFullYear().toString().slice(-2);
-  
-    return yy + mm + id;
-}
+var getJobNumber = require("../../lib/format-job-number.js");
+var currentDate  = require("../../lib/current-date.js");
+
 
 var bookingStyle = {
     width: "595px",
@@ -76,8 +70,8 @@ var bookingNote = React.createClass({
                 </div>
                 <h2 style={h2}>BOOKING NOTE</h2>
                 <div className="float-right">
-                    <p style={pDate}>Job no: {getJobNumber(this.props.order.job_number)}</p>
-                    <p style={pDate}>date: { this.props.order.date.substring(0, 10)}</p>
+                    <p style={ pDate }>Job no: { getJobNumber(this.props.order.job_number) }</p>
+                    <p style={ pDate }>date: { currentDate() }</p>
                 </div>
                 <div>
                     <BookingForm order={this.props.order} />
