@@ -59,7 +59,7 @@ var addOrder = React.createClass({
 	    }
   	},
 
-  	ifEdited: function(e) {
+  	ifEdited: function() {
   		if (!this.state.edited) {
   			this.setState({
 	  			edited: true
