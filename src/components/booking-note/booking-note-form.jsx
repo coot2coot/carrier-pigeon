@@ -2,6 +2,8 @@
 
 var React  = require('react');
 
+var UnitForm = require("./booking-note-unit.jsx");
+
 var table = {
     width: "100%"
 }
@@ -29,9 +31,13 @@ var tdRight = {
 }
 
 var bookingNoteForm = React.createClass({
+    getDefaultProps: function () {
+        return {
+            units: [] 
+        };
+    },
     render: function() {
         var order = this.props.order;
-        var units = this.props.units;
         return (
             <div>
                 <table style={table}>
@@ -43,7 +49,9 @@ var bookingNoteForm = React.createClass({
                         <th style={th}>Commodity description:</th>
                         <th style={th}>Gross weight:</th>
                     </tr>
-                    {/* TODO: loop through all the units here*/}
+                    { this.props.units.map(function(unit){
+                        return <UnitForm unit={unit} />
+                    })}
                 </table>
 
                 <table style={table}>
@@ -62,7 +70,7 @@ var bookingNoteForm = React.createClass({
                         <th style={th}>Special Instructions:</th>
                     </tr>
                     <tr>
-                        <td style={td}>{order.special_instructions}</td>
+                        <td style={tdRight}>{order.special_instructions}</td>
                     </tr>
                 </table>
             </div>

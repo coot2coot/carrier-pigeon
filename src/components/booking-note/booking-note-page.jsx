@@ -79,6 +79,12 @@ var halfLeft = {
 }
 
 var bookingNotePage = React.createClass({
+    getDefaultProps: function () {
+        return {
+            order: {},
+            units: []  
+        };
+    },
     render: function() {
         return (
             <div id="form" className="booking-note container" style={bookingStyle}>
