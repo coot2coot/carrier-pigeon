@@ -173,7 +173,7 @@ var viewOrder = React.createClass({
 									</div>
 									<div className="column-8">
 										<p>Carrier </p>
-										<input className="view_input" type="text"  defaultValue={this.props.order.carrier} name="carrier" disabled/>
+										<DataList contacts={this.props.contacts} vieworder={true} client={this.props.order.carrier}/>
 									</div>
 								</div>
 
