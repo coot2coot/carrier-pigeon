@@ -8,7 +8,7 @@ var dataList = React.createClass({
   		var i;
   		if(this.props.contacts){
 			this.props.contacts.map(function(item){
-				var opt = item.name;
+				var opt = item.company_name;
 			    var el = document.createElement("option");
 			    el.value = opt;
 			    select.appendChild(el);

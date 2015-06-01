@@ -87,7 +87,7 @@ var addOrder = React.createClass({
 										</div>
 										<div className="column-8">
 											<p>Carrier </p>
-											<input type="text" name="carrier" defaultValue={order ? order.carrier : ""}/>
+											<DataList contacts={this.props.contacts} client={order ? order.carrier : ""} />
 										</div>
 									</div>
 									<div className="row units">
