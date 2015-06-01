@@ -19,7 +19,7 @@ var unitsInformation = React.createClass({
     render: function() {
         return (
             <tr>
-                <td style={td}>{this.props.unit.unit_loading_date}</td>
+                <td style={td}>{this.props.unit.unit_loading_date.substring(0, 10)}</td>
                 <td style={td}>{this.props.unit.unit_loading_time}</td>
                 <td style={td}>{this.props.unit.unit_type}</td>
                 <td style={td}>{this.props.unit.unit_loading_reference}</td>

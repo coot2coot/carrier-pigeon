@@ -4,6 +4,7 @@ var React  = require('react');
 
 var UnitForm = require("./booking-note-unit.jsx");
 
+// For emailing as a pdf, inine styling is required.
 var table = {
     width: "100%"
 }
