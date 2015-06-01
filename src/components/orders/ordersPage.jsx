@@ -54,27 +54,8 @@ var ordersPage = React.createClass({
     },
 
 	componentDidMount: function() {
-		var getOrderUrl = "/orders/get";
-
-		if (window.location.href.indexOf('true') > -1 ) {
-			getOrderUrl = "/orders/get/nocache"
-		}
-
-	    $.get(getOrderUrl, function(result) {
-	    	if(result !== ""){
-		    	var order = JSON.parse(result);
-
-		      	if (this.isMounted()) {
-		        	this.setState({
-		          		orders : order
-		        	});
-		      	}
-		    }
-	    }.bind(this))
-	    .fail(function () {
-	    	"get request failed"
-	    });
-	    		this.getContacts();
+		this.getTodays();
+	    this.getContacts();
 	},
 
 	onCloseComponent: function () {

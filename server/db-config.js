@@ -354,7 +354,7 @@ function searchDates (table, clt, done, cb, dates){
         clt.query(command()
             .select("*")
             .from(table)
-            .where("date >='" + dates[0] + "' AND date <='"+dates[1] + "'")
+            .where("ets >='" + dates[0] + "' AND ets <='"+dates[1] + "'")
             .end(), function (err,result){
 
                 done();
@@ -368,6 +368,7 @@ function searchDates (table, clt, done, cb, dates){
         })
     }
 }
+
 
 
 dataBase.get = function (table, cb){
