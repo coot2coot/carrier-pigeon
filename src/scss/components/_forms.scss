@@ -1,5 +1,5 @@
 input, select, textarea {
-	   width: 100%;
+	  width: 100%;
   	border-radius: 0.3em;
   	border: 0.1em $light-grey solid;
   	padding: 0.15em 0.3em 0.3em;
@@ -13,7 +13,6 @@ input, select, textarea {
   }
 }
 
-
 input.job_no {
   border: none;
   background: $lightest-grey;
@@ -24,9 +23,6 @@ input.invalid {
  	box-shadow: 0 0 10px red;
 }
 
-input.big {
-	height: 5.5em;
-}
 input.unit_id {
   display: none;
 }

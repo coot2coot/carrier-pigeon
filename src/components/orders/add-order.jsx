@@ -106,11 +106,11 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Collection From</p>
-											<textarea type="text" className="big" name="collect_from" max='500' defaultValue={order ? order.collection_from : ""}/>
+											<textarea type="text" name="collect_from" max='500' defaultValue={order ? order.collection_from : ""}/>
 										</div>	
 										<div className="column-8">
 											<p>Deliver To</p>
-											<textarea className="big" name="deliver_to"  max='500' defaultValue={order ? order.deliver_to : ""}/>
+											<textarea name="deliver_to"  max='500' defaultValue={order ? order.deliver_to : ""}/>
 										</div>					
 									</div>
 									
@@ -121,7 +121,7 @@ var addOrder = React.createClass({
 										</div>
 										<div className="column-8">
 											<p>Remarks</p>
-											<textarea   className="big" name="remarks" max='500' defaultValue={order ? order.remarks : ""}/>
+											<textarea name="remarks" max='500' defaultValue={order ? order.remarks : ""}/>
 										</div>
 									</div>
 
@@ -151,15 +151,15 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-5">
 											<p>Shipper</p>
-											<textarea  className="big" name="shipper" max='500' defaultValue={order ? order.shipper : ""}/>
+											<textarea name="shipper" max='500' defaultValue={order ? order.shipper : ""}/>
 										</div>
 										<div className="column-5">
 											<p>Consignee</p>
-											<textarea className="big" name="consignee" max='500' defaultValue={order ? order.consignee : ""}/>
+											<textarea name="consignee" max='500' defaultValue={order ? order.consignee : ""}/>
 										</div>
 										<div className="column-6">
 											<p>Notify</p>
-											<textarea  className="big" name="notify" max='500' defaultValue={order ? order.notify : ""}/>
+											<textarea name="notify" max='500' defaultValue={order ? order.notify : ""}/>
 										</div>
 									</div>
 									<input type="submit" className="button charcoal" value="Done" />

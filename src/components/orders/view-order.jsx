@@ -192,11 +192,11 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Collection From</p>
-										<textarea className="view_input big" type="text"  big defaultValue={this.props.order.collect_from} name="collect_from" max="500" disabled />
+										<textarea className="view_input" type="text" defaultValue={this.props.order.collect_from} name="collect_from" max="500" disabled />
 									</div>
 									<div className="column-8">
 										<p>Deliver To</p>
-										<textarea className="view_input big" type="text" defaultValue={this.props.order.deliver_to} name="deliver_to" disabled max='500' />
+										<textarea className="view_input" type="text" defaultValue={this.props.order.deliver_to} name="deliver_to" disabled max='500' />
 									</div>
 								</div>
 
@@ -207,7 +207,7 @@ var viewOrder = React.createClass({
 									</div>
 									<div className="column-8">
 										<p>Remarks</p>
-										<textarea className="view_input big" type="text"   defaultValue={this.props.order.remarks} name="remarks"  disabled max ='500'/>
+										<textarea className="view_input" type="text"   defaultValue={this.props.order.remarks} name="remarks"  disabled max ='500'/>
 									</div>
 								</div>
 
@@ -237,15 +237,15 @@ var viewOrder = React.createClass({
 								<div className="row">
 									<div className="column-5">
 										<p>Shipper</p>
-										<textarea className="view_input big" type="text"   defaultValue={this.props.order.shipper} name="shipper" disabled  max ='500'/>
+										<textarea className="view_input" type="text"   defaultValue={this.props.order.shipper} name="shipper" disabled  max ='500'/>
 									</div>
 									<div className="column-5">
 										<p>Consignee</p>
-										<textarea className="view_input big" type="text"   defaultValue={this.props.order.consignee} name="consignee" disabled  max ='500'/>
+										<textarea className="view_input" type="text"   defaultValue={this.props.order.consignee} name="consignee" disabled  max ='500'/>
 									</div>
 									<div className="column-6">
 										<p>Notify</p>
-										<textarea className="view_input big" type="text"  defaultValue={this.props.order.notify} name="notify" disabled  max ='500'/>
+										<textarea className="view_input" type="text"  defaultValue={this.props.order.notify} name="notify" disabled  max ='500'/>
 									</div>
 								</div>
 								<input className="button charcoal" type="submit" value="Update" />
