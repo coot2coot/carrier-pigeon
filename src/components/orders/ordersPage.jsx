@@ -157,6 +157,29 @@ var ordersPage = React.createClass({
 		this.getDateOrders(date);
 
 	},
+	getCm: function (dates) {
+		var date;
+		var currentDate = new Date();
+		var pastDate = new Date();
+
+		currentDate = [
+			currentDate.getUTCFullYear(),
+			currentDate.getUTCMonth() + 1,
+			currentDate.getUTCDate()
+		];
+
+		pastDate = [
+			pastDate.getUTCFullYear(),
+			pastDate.getUTCMonth() + 1,
+			1
+		];
+
+		date = pastDate.join("-")+ "," + currentDate.join("-")
+		console.log(date);
+
+		this.getDateOrders(date);
+
+	},
 
 	getTodays: function (dates) {
 		var date;
@@ -219,6 +242,7 @@ var ordersPage = React.createClass({
 						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
 						<button data-tooltip="Get last 90 days of orders" className="button blue add" onClick={this.get90}>90</button>
 						<button data-tooltip="Get todays orders" className="button blue add" onClick={this.getTodays}>T</button>
+						<button data-tooltip="Get this months orders" className="button blue add" onClick={this.getCm}>CM</button>
 						<button data-tooltip="Pick Date Range" className="button grey column-2 float-right " onClick={this.pickDate}>Date Range</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
 					</div>

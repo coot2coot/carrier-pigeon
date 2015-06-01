@@ -44,6 +44,9 @@ var units = React.createClass({
 
 				<div className="row">
 					<div className="column-2">
+						<p>Weight</p>
+					</div>
+					<div className="column-2">
 						<p>Net Weight</p>
 					</div>
 					<div className="column-2">
@@ -52,7 +55,7 @@ var units = React.createClass({
 					<div className="column-2">
 						<p>Volume (m3)</p>
 					</div>
-					<div className="column-6">
+					<div className="column-4">
 						<p>Commodity Description</p>
 					</div>
 					<div className="column-2">
@@ -65,6 +68,12 @@ var units = React.createClass({
 
 				<div className="row">
 					<div className="column-2">
+						<select name="unit_weight" >
+							<option value= "kg">kg</option>
+							<option value= "tons">tons</option>
+						</select>
+					</div>
+					<div className="column-2">
 						<input type="number" name="unit_net_weight" defaultValue={!!unit ? unit.unit_net_weight : ""}/>
 					</div>
 					<div className="column-2">
@@ -73,7 +82,7 @@ var units = React.createClass({
 					<div className="column-2">
 						<input type="number" name="unit_volume" defaultValue={!!unit ? unit.unit_volume : ""}/>
 					</div>
-					<div className="column-6">
+					<div className="column-4">
 						<input type="text" name="unit_commodity_description" defaultValue={!!unit ? unit.unit_commodity_description : ""}/>
 					</div>
 					<div className="column-2">
