@@ -86,7 +86,7 @@ function landingTests (wd, capability, remote) {
                 })
         });
 
-        it("Should be able to delete a contact", function(done) {
+        it("Should be able to delete a order", function(done) {
             browser
                 .setImplicitWaitTimeout(2000)
                 .elementsByTagName("td")

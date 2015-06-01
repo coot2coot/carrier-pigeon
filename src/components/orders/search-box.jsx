@@ -22,7 +22,7 @@ var searchBox = React.createClass({
 			<searchbox className="column-4 float-right">
 				<form onSubmit={this.handleSubmit}>
 					<input placeholder="Search ..." type="text" name="search" onChange={this.setSearchValue} />
-					<input className="button blue" type="submit" />
+					<input className="button blue" type="submit" value="Submit" />
 				</form>
 			</searchbox>
 		)

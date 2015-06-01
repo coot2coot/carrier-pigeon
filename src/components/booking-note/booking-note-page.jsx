@@ -115,7 +115,7 @@ var bookingNotePage = React.createClass({
                 </div>
 
                 <div style={halfRight}>
-                    <p style={pRight}><b> Job no: </b> {getJobNumber(this.props.order.job_number)}</p>
+                    <p id="job-number" style={pRight}><b> Job no: </b> {getJobNumber(this.props.order.job_number)}</p>
                 </div>
                 
                 <div>
