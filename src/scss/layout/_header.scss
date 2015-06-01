@@ -9,6 +9,7 @@ header {
   	.row {
   		margin-bottom: 0.5em;
   	}
+
 	p {
 		color: white;
 	  	float: right;
@@ -17,9 +18,12 @@ header {
 	  		padding: 1em 1em 1.5em 2em;
 	  	}
 	}
-	a {
+	div {
 		&:hover {
-	  		font-weight: 600;
-	  	}
+	  		p {
+  				padding-top: 0em;
+  			}
+	}
+
 	}
 }
