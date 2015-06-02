@@ -2,11 +2,6 @@
 
 var query = {};
 
-//TODO: make simplier, and more generic. 
-//  write more unit tests and combine with get invoice query
-// LINT!! --- > make benji lint this code too.
-
-// Need to export and test;
 function getLength(type, obj) {
 	if (type === "units") {
 		return obj.unit_type.length;
@@ -14,28 +9,27 @@ function getLength(type, obj) {
 		return obj.currency.length;
 	}
 }
-// Need to export and test;
+
 function whichJobNumber(items, i) {
 	var no = (typeof items.job_number === "object") 
 			? items.job_number[i] 
-			: items.job_number
+			: items.job_number;
 
 	return no;
 }
-// Need to export and test;
+
 function getRightValue(item, property, i) {
-	var prop  = i !== undefined ? item[property][i] : item[property]
+	var prop  = i !== undefined ? item[property][i] : item[property];
 
 	var val = (prop === "")
 		? "null"
 		: (property === "amount" || property === "invoice_number")
 		? prop
-		: "'" + prop + "'"
+		: "'" + prop + "'";
 
 	return val;
 }
 
-// Need to export and test in isolation;
 function getCreateQuery (type, obj, id, index) {
 	var props;
 	var query = "";
@@ -61,10 +55,10 @@ function getCreateQuery (type, obj, id, index) {
 
 	return query;
 }
-// Need to export and test in isolation;
+
 function getUpdateQuery (type, id, obj, index) {
 	var props;
-	var itemId = index !== undefined ? obj[id][index] : obj[id]
+	var itemId = index !== undefined ? obj[id][index] : obj[id];
 	var query = "";
 	var updateArr = [];
 	var updateStr = "";
@@ -72,13 +66,13 @@ function getUpdateQuery (type, id, obj, index) {
 	for (props in obj) {
 		if (props !== id && props !== "job_number" && props !== "delete_invoice") {
 
-			var prop  = index !== undefined ? obj[props][index] : obj[props]
+			var prop  = index !== undefined ? obj[props][index] : obj[props];
 			var value = "'" + prop + "'";
 
 			if (prop === "") {
 				value = "null";
 			}
-			var updateStr = props + "=" + value;
+			updateStr = props + "=" + value;
   			updateArr.push(updateStr);
 
 		}
@@ -92,7 +86,7 @@ function getUpdateQuery (type, id, obj, index) {
 
 
 query.update = function (items, table, idName){
-	var query = {}
+	var query = {};
 
 	query.update = "";
 	query.create = "";
@@ -102,39 +96,41 @@ query.update = function (items, table, idName){
 		var length = getLength(table, items);
 
 		for(i = 0; i < length; i ++){
-
 			if(items[idName][i] !== ""){
 				query.update += getUpdateQuery(table, idName, items, i);
 			} else {
 				query.create += getCreateQuery(table, items, idName, i);
 			}
 		}
+
 	} else {
-		if (items[idName] == "") {
+		if (items[idName] === "") {
 			query.create = getCreateQuery(table, items, idName);
 		} else {
 			query.update = getUpdateQuery(table, idName, items); 
 		}
 	}
 	return query;
-}
+};
 
 query.del = function (items, table, idName) {
+
 	if (items !== "") {
-		var arr = items.split(",")
+		var arr = items.split(",");
         var deleteQuery = "";
         var i;
 
         for(i = 0; i < arr.length; i++) {
             deleteQuery += "DELETE FROM " + table + " WHERE " + 
-            				idName + " = "+arr[i]+";"
+            				idName + " = "+arr[i]+";";
         }
-        return deleteQuery
+        return deleteQuery;
+
     } else {
     	return "";
     }
 
-}
+};
 
 query.standard = function (result) {
 	var query = "";
@@ -144,8 +140,10 @@ query.standard = function (result) {
 	}
 	var newQuery = query.substring(0, query.length - 1);
 	return newQuery;
-}
+};
 
 module.exports = {
-	getQuery: query
-}
+	getQuery: query,
+	getLength: getLength,
+	getJobNumber: whichJobNumber
+};
