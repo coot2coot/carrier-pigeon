@@ -17,12 +17,13 @@ var dataList = React.createClass({
   	},
 
 	render: function (){
+		console.log(this.props.contactType, this.props.contact, this.props);
 		return(
 			<div>
 			<div>
 				{( this.props.vieworder
-					? <input list="dropdown"  className="view_input" type="text"  defaultValue={this.props.contact} name="client" onChange={this.props.handleChange} disabled/>
-					: <input list="dropdown" type="text"  defaultValue={this.props.contact ? this.props.contact : ""} name="client" onChange={this.props.handleChange} required/>
+					? <input list="dropdown"  className="view_input" type="text"  defaultValue={this.props.contact} name={this.props.contactType} onChange={this.props.handleChange} disabled/>
+					: <input list="dropdown" type="text"  defaultValue={this.props.contact ? this.props.contact : ""} name={this.props.contactType} onChange={this.props.handleChange} required/>
 				)}
 			</div>
 				<datalist id ="dropdown"></datalist>
