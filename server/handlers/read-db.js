@@ -9,7 +9,6 @@ var readOptions  = {};
 
 
 var get = function (table, req, res) {
-
 	db.get(table,function (result) {		
 		myCache.set(table, result, secondsToSave, function(err, success){
 
@@ -17,10 +16,10 @@ var get = function (table, req, res) {
 				console.error(err);
 			}
 		});
-		var contact = JSON.stringify(result);
+		var result = JSON.stringify(result);
 
 		res.writeHead(200, {"Content-Type" : "text/plain"});
-		res.end(contact);
+		res.end(result);
 	});
 };
 
@@ -65,7 +64,7 @@ readOptions.cached = function (req, res) {
 				var values = JSON.stringify(value[table]);
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end(values);
-			}else if(table = "users") {
+			}else if(table === "users") {
 				getUserList(req, res);
 			} else {
 				get(table, req, res)
@@ -76,7 +75,6 @@ readOptions.cached = function (req, res) {
 
 readOptions.noCache = function (req, res) {
 	validateUser(req, res, function () {
-		var table;
 
 		if (req.url.indexOf('users') > -1) {
 			getUserList(req, res);
@@ -87,7 +85,7 @@ readOptions.noCache = function (req, res) {
 		} else{
 			get("orders",req, res);
 		}
-
+	})
 };
 
 readOptions.getOrder = function (req, res) {

@@ -79,7 +79,7 @@ var addContact = React.createClass({
 										</div>
 										<div className="column-8">
 											<p>Contact Name</p>
-											<input type="text" name="name" defaultValue={contact ? contact.name : ""} required />
+											<input type="text" name="name" defaultValue={contact ? contact.name : ""}  />
 										</div>
 									</div>
 
