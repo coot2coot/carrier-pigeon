@@ -17,7 +17,6 @@ var dataList = React.createClass({
   	},
 
 	render: function (){
-		console.log(this.props.contactType, this.props.contact, this.props);
 		return(
 			<div>
 			<div>

@@ -15,7 +15,8 @@ var addOrder = React.createClass({
 	    	unitsArr: [0],
 	    	closeView: false,
 	    	units: null,
-	    	edited: false
+	    	edited: false,
+	    	order: {}
 	    };
 	},
 
