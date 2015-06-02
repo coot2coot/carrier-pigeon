@@ -89,7 +89,7 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Date</p>
-											<input type="date" name="date" min={today} defaultValue={order && order.date ? order.date.substring(0, 10) : this.state.dateValue} onChange={edited} required/>
+											<input type="date" name="date" min={today} defaultValue={this.state.dateValue} onChange={edited} required/>
 										</div>
 									</div>
 									<div className="row">
