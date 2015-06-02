@@ -104,7 +104,7 @@ query.update = function (items, table, idName){
 		}
 
 	} else {
-		if (items[idName] === "") {
+		if (items[idName] === "" || items[idName] === undefined) {
 			query.create = getCreateQuery(table, items, idName);
 		} else {
 			query.update = getUpdateQuery(table, idName, items); 
