@@ -57,7 +57,7 @@ var addContact = React.createClass({
 									<div className="row">
 										<div className="column-16">
 											<p>Address Line</p>
-											<input type="text" name="address_line" defaultValue={contact ? contact.address_line : ""} required/>
+											<input type="text" name="address_line" defaultValue={contact ? contact.address_line : ""}/>
 										</div>					
 									</div>
 									

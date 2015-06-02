@@ -110,10 +110,7 @@ var contactsPage = React.createClass({
 					<div className="panel-body table-responsive scroll">
 						<table className="table table-full">
 							<th>
-								<h5>Contact Name</h5>
-							</th>
-							<th>
-								<h5>Contact No.</h5>
+								<h5>Company Name</h5>
 							</th>
 							<tbody>
 
@@ -121,14 +118,9 @@ var contactsPage = React.createClass({
 							        return <tr>
 							            		<td key={i + "first"}>
 							            			<a onClick={contactHandler.bind(null, contact)}>
-							            				<p>{contact.name}</p>
+							            				<p>{contact.company_name}</p>
 							            			</a>
 							            		</td>
-												<td key={i + "second"}>
-													<a onClick={contactHandler.bind(null, contact)}>
-														<p>{contact.telephone}</p>
-													</a>
-												</td>
 											</tr>
 							    })}
 
