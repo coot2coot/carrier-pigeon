@@ -30,6 +30,10 @@ nav {
 			@include blue-hover;
 		}
 	}
+	li.active {
+		color: red;
+		@include blue-hover;
+	}
 	@include respond(desktop) {
 		li {
 			width: 30%;

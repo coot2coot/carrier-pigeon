@@ -27,27 +27,30 @@ var units = React.createClass({
 
 				<div className="row">
 					<div className="column-3">
-						<input className="view_input" type="text" name="unit_number" defaultValue={unit.unit_number} disabled={this.props.viewing ? true : false}/>
+						<input className="view_input" type="text" name="unit_number" defaultValue={unit.unit_number} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 						{( unit.unit_id
-							? <input className="display-none" type="text" name="unit_id" defaultValue={unit.unit_id} disabled={this.props.viewing ? true : false} required/>
-							: <input className="display-none" type="text" name="unit_id" defaultValue={""} disabled={this.props.viewing ? true : false} novalidate/>
+							? <input className="display-none" type="text" name="unit_id" defaultValue={unit.unit_id} disabled={this.props.viewing ? true : false} required onChange={this.props.handleChange}/>
+							: <input className="display-none" type="text" name="unit_id" defaultValue={""} disabled={this.props.viewing ? true : false} novalidate onChange={this.props.handleChange}/>
 						)}
 					</div>
 					<div className="column-3 ">
-						<input className="view_input" type="text" name="unit_type" defaultValue={unit.unit_type} disabled={this.props.viewing ? true : false} required/>
+						<input className="view_input" type="text" name="unit_type" defaultValue={unit.unit_type} disabled={this.props.viewing ? true : false} required onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-4">
-						<input className="view_input" type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference} disabled={this.props.viewing ? true : false}/>
+						<input className="view_input" type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-3">
-						<input className="view_input" type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date} disabled={this.props.viewing ? true : false}/>
+						<input className="view_input" type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-3">
-						<input className="view_input" type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time} disabled={this.props.viewing ? true : false}/>
+						<input className="view_input" type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 				</div>
 
 				<div className="row">
+					<div className="column-2">
+						<p>Weight</p>
+					</div>
 					<div className="column-2">
 						<p>Net Weight</p>
 					</div>
@@ -57,7 +60,7 @@ var units = React.createClass({
 					<div className="column-2">
 						<p>Volume (m3)</p>
 					</div>
-					<div className="column-6">
+					<div className="column-4">
 						<p>Commodity Description</p>
 					</div>
 					<div className="column-2">
@@ -69,23 +72,29 @@ var units = React.createClass({
 				</div>
 
 				<div className="row">
-					<div className="column-2">
-						<input className="view_input" type="number" name="unit_net_weight" defaultValue={unit.unit_nett_weight} disabled={this.props.viewing ? true : false}/>
+					<div className="column-2" >
+						<select className="view_input" name="unit_weight" defaultValue={unit.unit_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}>
+							<option value= "kg">kg</option>
+							<option value= "tons">tons</option>
+						</select>
 					</div>
 					<div className="column-2">
-						<input className="view_input" type="number" name="unit_gross_weight" defaultValue={unit.unit_gross_weight} disabled={this.props.viewing ? true : false}/>
+						<input className="view_input" type="number" name="unit_net_weight" defaultValue={unit.unit_nett_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-2">
-						<input className="view_input" type="number" name="unit_volume" defaultValue={unit.unit_volume} disabled={this.props.viewing ? true : false}/>
-					</div>
-					<div className="column-6">
-						<input className="view_input" type="text" name="unit_commodity_description" defaultValue={unit.unit_commodity_description} disabled={this.props.viewing ? true : false}/>
+						<input className="view_input" type="number" name="unit_gross_weight" defaultValue={unit.unit_gross_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-2">
-						<input className="view_input" type="number" name="unit_no_of_packages" defaultValue={unit.unit_no_of_packages} disabled={this.props.viewing ? true : false}/>
+						<input className="view_input" type="number" name="unit_volume" defaultValue={unit.unit_volume} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
+					</div>
+					<div className="column-4">
+						<input className="view_input" type="text" name="unit_commodity_description" defaultValue={unit.unit_commodity_description} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-2">
-						<input className="view_input" type="text" name="unit_kind_of_packages" defaultValue={unit.unit_kind_of_packages} disabled={this.props.viewing ? true : false}/>
+						<input className="view_input" type="number" name="unit_no_of_packages" defaultValue={unit.unit_no_of_packages} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
+					</div>
+					<div className="column-2">
+						<input className="view_input" type="text" name="unit_kind_of_packages" defaultValue={unit.unit_kind_of_packages} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 				</div>
 			</units>

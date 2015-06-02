@@ -59,6 +59,10 @@ function getOrder (table, clt, done, cb, job_number) {
                 .select("*")
                 .from(table)
                 .where("job_number = " + job_number)
+                .next()
+                .select("*")
+                .from("units")
+                .where("job_number = " + job_number)
                 .end(), function(err, result) {
                     
         if (err) {
@@ -354,7 +358,7 @@ function searchDates (table, clt, done, cb, dates){
         clt.query(command()
             .select("*")
             .from(table)
-            .where("date >='" + dates[0] + "' AND date <='"+dates[1] + "'")
+            .where("ets >='" + dates[0] + "' AND ets <='"+dates[1] + "'")
             .end(), function (err,result){
 
                 done();
@@ -368,6 +372,7 @@ function searchDates (table, clt, done, cb, dates){
         })
     }
 }
+
 
 
 dataBase.get = function (table, cb){

@@ -10,21 +10,12 @@ var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
 var Ledger      = require("../ledger/ledger.jsx");
 
+var sorts      	 = require("../../lib/order-by-job-number.js");
 var getJobNumber = require("../../lib/format-job-number.js");
 
 var ordersPage = React.createClass({
 	getInitialState: function() {
       return {
-        orders: [
-            {
-            	job_number : "",
-            	client: "",
-            	carrier: "",
-            	collect_from: "",
-            	deliver_to: "",
-            	handler: "",
-            }
-        ],
         contacts : [],
         searchValue: "",
         error: false
@@ -54,27 +45,8 @@ var ordersPage = React.createClass({
     },
 
 	componentDidMount: function() {
-		var getOrderUrl = "/orders/get";
-
-		if (window.location.href.indexOf('true') > -1 ) {
-			getOrderUrl = "/orders/get/nocache"
-		}
-
-	    $.get(getOrderUrl, function(result) {
-	    	if(result !== ""){
-		    	var order = JSON.parse(result);
-
-		      	if (this.isMounted()) {
-		        	this.setState({
-		          		orders : order
-		        	});
-		      	}
-		    }
-	    }.bind(this))
-	    .fail(function () {
-	    	"get request failed"
-	    });
-	    		this.getContacts();
+		this.getTodays();
+	    this.getContacts();
 	},
 
 	onCloseComponent: function () {
@@ -139,7 +111,7 @@ var ordersPage = React.createClass({
 				})
 			}else{		
 				var order = JSON.parse(result);
-				var uniqOrder = this.uniq(order)
+				var uniqOrder = sorts(this.uniq(order))
 				this.setState({
 					error: false
 				})
@@ -176,6 +148,29 @@ var ordersPage = React.createClass({
 		this.getDateOrders(date);
 
 	},
+	getCm: function (dates) {
+		var date;
+		var currentDate = new Date();
+		var pastDate = new Date();
+
+		currentDate = [
+			currentDate.getUTCFullYear(),
+			currentDate.getUTCMonth() + 1,
+			currentDate.getUTCDate()
+		];
+
+		pastDate = [
+			pastDate.getUTCFullYear(),
+			pastDate.getUTCMonth() + 1,
+			1
+		];
+
+		date = pastDate.join("-")+ "," + currentDate.join("-")
+		console.log(date);
+
+		this.getDateOrders(date);
+
+	},
 
 	getTodays: function (dates) {
 		var date;
@@ -202,7 +197,7 @@ var ordersPage = React.createClass({
 					datePicker: null
 				})
 			} else {		
-				var order = JSON.parse(result);
+				var order = sorts(JSON.parse(result));
 				this.setState({
 					error: false
 				});
@@ -228,7 +223,7 @@ var ordersPage = React.createClass({
 				<Header/>
 				<div className="column-14 push-1 model-generic">
 					<div>
-						{(this.state.error
+						{(this.state.error && this.state.orders
                             ? <Error message="Sorry, that search returned no results. Try another search." />
                             : <p className="display-none"></p>
                         )}
@@ -238,26 +233,20 @@ var ordersPage = React.createClass({
 						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
 						<button data-tooltip="Get last 90 days of orders" className="button blue add" onClick={this.get90}>90</button>
 						<button data-tooltip="Get todays orders" className="button blue add" onClick={this.getTodays}>T</button>
+						<button data-tooltip="Get this months orders" className="button blue add" onClick={this.getCm}>CM</button>
 						<button data-tooltip="Pick Date Range" className="button grey column-2 float-right " onClick={this.pickDate}>Date Range</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
 					</div>
 					<div className="panel-body table-responsive scroll">
 						<table className="table table-full">
-							<th>
-								<h5>Job No.</h5>
-							</th>
-							<th>
-								<h5>Client</h5>
-							</th>
-							<th>
-								<h5>Carrier</h5>
-							</th>
-							<th>
-								<h5>Ledger</h5>
-							</th>
+							{this.state.orders
+						  		?<tr><th><h5>Job No.</h5></th><th><h5>Client</h5></th><th><h5>Carrier</h5></th><th><h5>Ledger</h5></th></tr>
+								:<th><h5>Sorry there are no orders for today</h5></th>
+							}
 							<tbody>
 
-						  		{ this.state.orders.map(function (order, i) {
+						  	{this.state.orders
+						  		? this.state.orders.map(function (order, i) {
 							        return <tr>
 							            		<td key={i + "first"}>
 							            			<a onClick={orderHandler.bind(null, order)}>
@@ -278,7 +267,9 @@ var ordersPage = React.createClass({
 													<a onClick={ledgerHandler.bind(null, order)}>ledger</a>
 												</td>
 											</tr>
-							    })}
+							    })
+								:<tr><td><p></p></td></tr>
+						  	}
 
 							</tbody>
 						</table>

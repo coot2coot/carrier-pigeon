@@ -51,7 +51,7 @@
     ]));
 
     gulp.task("unit-tests", shell.task([
-      "node_modules/.bin/tape tests/unit/lib/*.js"
+      "node_modules/.bin/tape tests/unit/lib/*.js tests/unit/src/*.js"
     ]));
 
     //Please run task `gulp selenium-start` before running

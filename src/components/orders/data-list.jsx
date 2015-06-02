@@ -8,7 +8,7 @@ var dataList = React.createClass({
   		var i;
   		if(this.props.contacts){
 			this.props.contacts.map(function(item){
-				var opt = item.name;
+				var opt = item.company_name;
 			    var el = document.createElement("option");
 			    el.value = opt;
 			    select.appendChild(el);
@@ -21,8 +21,8 @@ var dataList = React.createClass({
 			<div>
 			<div>
 				{( this.props.vieworder
-					? <input list="dropdown"  className="view_input" type="text"  defaultValue={this.props.client} name="client" disabled/>
-					: <input list="dropdown" type="text"  defaultValue={this.props.client ? this.props.client : ""} name="client" required/>
+					? <input list="dropdown"  className="view_input" type="text"  defaultValue={this.props.client} name="client" onChange={this.props.handleChange} disabled/>
+					: <input list="dropdown" type="text"  defaultValue={this.props.client ? this.props.client : ""} name="client" onChange={this.props.handleChange} required/>
 				)}
 			</div>
 				<datalist id ="dropdown"></datalist>
