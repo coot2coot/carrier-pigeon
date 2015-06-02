@@ -10,6 +10,7 @@ var bookingNoteButtons = React.createClass({
             emailInput: false
         };
     },
+    
     emailBooking: function (e) {
         var getOrderUrl = "/booking-note/email";
 

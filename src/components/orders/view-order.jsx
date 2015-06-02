@@ -177,11 +177,11 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Client</p>
-										<DataList contacts={this.props.contacts} vieworder={true} client={this.props.order.client} handleChange={edited}/>
+										<DataList contacts={this.props.contacts} vieworder={true} contact={this.props.order.client} contactType="client" handleChange={edited}/>
 									</div>
 									<div className="column-8">
 										<p>Carrier </p>
-										<DataList contacts={this.props.contacts} vieworder={true} client={this.props.order.carrier} handleChange={edited}/>
+										<DataList contacts={this.props.contacts} vieworder={true} contact={this.props.order.carrier} contactType="carrier" handleChange={edited}/>
 									</div>
 								</div>
 

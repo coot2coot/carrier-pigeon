@@ -72,7 +72,8 @@ var ordersPage = React.createClass({
 
 	addOrder: function () {
 		this.setState({
-			creatingOrder: true
+			creatingOrder: true,
+			newOrder: true
 		})
 	},
 
@@ -166,7 +167,6 @@ var ordersPage = React.createClass({
 		];
 
 		date = pastDate.join("-")+ "," + currentDate.join("-")
-		console.log(date);
 
 		this.getDateOrders(date);
 
@@ -278,6 +278,8 @@ var ordersPage = React.createClass({
 
 				{(this.state.selectedOrder
                     ? <ViewOrder contacts={this.state.contacts} order={this.state.selectedOrder} copy={this.copyOrder} closeView={this.onCloseComponent}/>
+                    : this.state.creatingOrder && this.state.newOrder
+                    ? <CreateOrder contacts={this.state.contacts} closeView={this.onCloseComponent}/>
                     : this.state.creatingOrder
                     ? <CreateOrder contacts={this.state.contacts} copiedOrder={this.state.copiedOrder} units={this.state.copiedUnits} closeView={this.onCloseComponent}/>
                     : this.state.datePicker
