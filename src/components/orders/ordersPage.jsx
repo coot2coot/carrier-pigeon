@@ -15,16 +15,6 @@ var getJobNumber = require("../../lib/format-job-number.js");
 var ordersPage = React.createClass({
 	getInitialState: function() {
       return {
-        orders: [
-            {
-            	job_number : "",
-            	client: "",
-            	carrier: "",
-            	collect_from: "",
-            	deliver_to: "",
-            	handler: "",
-            }
-        ],
         contacts : [],
         searchValue: "",
         error: false
@@ -262,7 +252,8 @@ var ordersPage = React.createClass({
 							</th>
 							<tbody>
 
-						  		{ this.state.orders.map(function (order, i) {
+						  	{this.state.orders
+						  		? this.state.orders.map(function (order, i) {
 							        return <tr>
 							            		<td key={i + "first"}>
 							            			<a onClick={orderHandler.bind(null, order)}>
@@ -283,7 +274,9 @@ var ordersPage = React.createClass({
 													<a onClick={ledgerHandler.bind(null, order)}>ledger</a>
 												</td>
 											</tr>
-							    })}
+							    })
+								:<tr></tr>
+						  	}
 
 							</tbody>
 						</table>
