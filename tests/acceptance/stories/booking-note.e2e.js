@@ -33,7 +33,6 @@ function landingTests (wd, capability, remote) {
                 .sleep(500)
                 .elementsByTagName("td")
                 .then(function(elements) {
-                    console.log(elements.length);
                     elements[1]
                         .elementByTagName("a")
                         .click()
