@@ -143,7 +143,6 @@ var viewOrder = React.createClass({
 		});
 
 		return (
-
 			<div className="overlay">
 				<div>
 					{( this.state.deleteUser
@@ -212,7 +211,7 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Special Instructions</p>
-										<textarea className="view_input" type="text"  defaultValue={this.props.order.special_instructions} name="special_instructions" disabled max='500' onChange={edited}/>
+										<textarea className="view_input" type="text" defaultValue={this.props.order.special_instructions} name="special_instructions" disabled max='500' onChange={edited}/>
 									</div>
 									<div className="column-8">
 										<p>Remarks</p>
