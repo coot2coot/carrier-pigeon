@@ -1,7 +1,6 @@
-
 function sort (array) {
 	array.sort(function (a,b) {
-		return a.job_number - b.job_number
+		return b.job_number - a.job_number
 	})
 	return array
 }
