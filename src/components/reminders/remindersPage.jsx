@@ -32,6 +32,9 @@ var remindersPage = React.createClass({
 							<th>
 								<h5>Contact</h5>
 							</th>
+							<th>
+								<h5>State</h5>
+							</th>
 							<tbody>
 								 <tr>
 				            		<td >

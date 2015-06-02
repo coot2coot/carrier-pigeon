@@ -82,10 +82,10 @@ function post (table, clt, done, cb, doc) {
 
     if (table === "users") {
         query = postUsers(table,doc)
-    } else if (table === "contacts"){
-        query =postContacts(table,doc)
-    }else {
+    } else if (table === "orders"){
         query = postOrders(table,doc);
+    }else {
+        query = postContactsReminders(table,doc)
     }
     
     clt.query(query, function(err, result) {
@@ -114,7 +114,7 @@ function postUsers (table, doc) {
     return query;
 }
 
-function postContacts (table, doc) {
+function postContactsReminders (table, doc) {
     var contacts = stringifyData(doc);
     var query = command()
                 .insertInto(table)
@@ -150,7 +150,9 @@ function edit (table, clt, done, cb, doc) {
     } else if (table === "invoice") {
         editInvoices(doc, clt, cb, done);
     } else if (table === 'contacts') {
-        editContacts(doc,clt,cb,done) 
+        editContacts(doc,clt,cb,done)
+    } else if (table ==='reminders') {
+        editReminders(doc,clt,cb,done)
     } else {
         editOrders(doc,clt,cb, done);
     }
@@ -174,6 +176,23 @@ function editContacts (doc,clt,cb, done) {
     })
 }
 
+function editReminders (doc,clt,cb, done) {
+    var query = editQuery.standard(doc);
+
+    clt.query(command()
+                .update("reminders")
+                .set(query)
+                .where("reminder_id ="  + doc.reminder_id)
+                .end(), function(err, result) {
+
+        done();
+
+        if (err) {
+            return console.log(err);
+        }
+        cb(null);
+    })
+}
 function editUsers (doc,clt,cb, done) {
     var updateUser = {
         first_name: doc.first_name,
@@ -254,6 +273,7 @@ function remove (table, clt, done, cb, doc) {
 
     column = table === "users" ? "username" : 
             table === "units" ? "unit_id" : 
+            table === "reminders" ? "reminder_id" : 
             table === "contacts" ? "contact_id" : "job_number";
 
     clt.query(command()
