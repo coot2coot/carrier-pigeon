@@ -10,6 +10,7 @@ var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
 var Ledger      = require("../ledger/ledger.jsx");
 
+var sorts      	 = require("../../lib/order-by-job-number.js");
 var getJobNumber = require("../../lib/format-job-number.js");
 
 var ordersPage = React.createClass({
@@ -110,7 +111,7 @@ var ordersPage = React.createClass({
 				})
 			}else{		
 				var order = JSON.parse(result);
-				var uniqOrder = this.uniq(order)
+				var uniqOrder = sorts(this.uniq(order))
 				this.setState({
 					error: false
 				})
@@ -196,7 +197,7 @@ var ordersPage = React.createClass({
 					datePicker: null
 				})
 			} else {		
-				var order = JSON.parse(result);
+				var order = sorts(JSON.parse(result));
 				this.setState({
 					error: false
 				});
@@ -222,7 +223,7 @@ var ordersPage = React.createClass({
 				<Header/>
 				<div className="column-14 push-1 model-generic">
 					<div>
-						{(this.state.error
+						{(this.state.error && this.state.orders
                             ? <Error message="Sorry, that search returned no results. Try another search." />
                             : <p className="display-none"></p>
                         )}
@@ -238,18 +239,10 @@ var ordersPage = React.createClass({
 					</div>
 					<div className="panel-body table-responsive scroll">
 						<table className="table table-full">
-							<th>
-								<h5>Job No.</h5>
-							</th>
-							<th>
-								<h5>Client</h5>
-							</th>
-							<th>
-								<h5>Carrier</h5>
-							</th>
-							<th>
-								<h5>Ledger</h5>
-							</th>
+							{this.state.orders
+						  		?<tr><th><h5>Job No.</h5></th><th><h5>Client</h5></th><th><h5>Carrier</h5></th><th><h5>Ledger</h5></th></tr>
+								:<th><h5>Sorry there are no orders for today</h5></th>
+							}
 							<tbody>
 
 						  	{this.state.orders
@@ -275,7 +268,7 @@ var ordersPage = React.createClass({
 												</td>
 											</tr>
 							    })
-								:<tr></tr>
+								:<tr><td><p></p></td></tr>
 						  	}
 
 							</tbody>
