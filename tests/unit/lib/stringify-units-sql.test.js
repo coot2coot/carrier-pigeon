@@ -1,7 +1,11 @@
-var test = require('tape');
-var stringify = require('../../../server/lib/stringify-units-sql.js').stringify;
-var addUnitMock = require('../mocks/add-order.js').oneUnit;
-var mockData = require('../mocks/add-order.js').stringifiedOneUnit;
+var test 				= require('tape');
+var stringify 			= require('../../../server/lib/stringify-units-sql.js').stringify;
+
+var addUnitMock 		= require('../mocks/add-order.mock.js').oneUnit;
+var mockData 			= require('../mocks/add-order.mock.js').stringifiedOneUnit;
+var addMultiUnitMock  	= require('../mocks/add-order.mock.js').multiUnits;
+var multiUnitMockData 	= require('../mocks/add-order.mock.js').stringifiedMultiUnits;
+
 
 test('Testing that stringify units in lib is', function (t) {
 	t.equals( typeof stringify, 'function', "a function");
@@ -46,9 +50,6 @@ test('when stringify data is given a result, returns data with values format', f
 /*********************************
 * 	For adding a Multiple Units
 **********************************/
-
-var addMultiUnitMock = require('../mocks/add-order.js').multiUnits;
-var multiUnitMockData = require('../mocks/add-order.js').stringifiedMultiUnits;
 
 test('when stringify data is given a result, returns data with columns format', function (t) {
 

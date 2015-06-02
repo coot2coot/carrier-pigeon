@@ -1,12 +1,15 @@
-"use strict"
+"use strict";
+
+// Lint!
+// better error handling
+// use === not ==
 
 var pg 		 	   = require("pg");
 var str            = process.env.POSTGRES_URI  || require("../credentials.json").postgres;
-var url 	       = "postgres://" + str
+var url 	       = "postgres://" + str;
 var stringifyData  = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js").stringify;
-var editQuery      = require("./lib/edit-query-sql.js").query;
-var invoiceQuery   = require("./lib/get-invoice-query.js").query;
+var getQuery      = require("./lib/edit-query-sql.js").getQuery;
 var queryStrings   = require("./lib/querys.js");
 var command        = require("./lib/commands");
 var dataBase       = {};
@@ -157,7 +160,7 @@ function edit (table, clt, done, cb, doc) {
 }
 
 function editContacts (doc,clt,cb, done) {
-    var query = editQuery.standard(doc);
+    var query = getQuery.standard(doc);
 
     clt.query(command()
                 .update("contacts")
@@ -198,10 +201,11 @@ function editUsers (doc,clt,cb, done) {
 }
 
 function editOrders (doc,clt,cb, done) {
-    var ordersQuery = editQuery.standard(doc.order);
-    var unitsUpdateQuery = editQuery.units(doc.unit).update;
-    var unitsCreateQuery = editQuery.units(doc.unit).create;
-    var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
+
+    var ordersQuery = getQuery.standard(doc.order);
+    var unitsUpdateQuery = getQuery.update(doc.unit, "units", "unit_id").update;
+    var unitsCreateQuery = getQuery.update(doc.unit, "units", "unit_id").create;
+    var unitsDeleteQuery = getQuery.del(doc.unit_delete, "units", "unit_id");
 
     clt.query(command()
                 .update("orders")
@@ -227,9 +231,9 @@ function editOrders (doc,clt,cb, done) {
 
 function editInvoices (doc, clt, cb, done) {
 
-    var updateQuery = invoiceQuery.invoice(doc).update;
-    var createQuery = invoiceQuery.invoice(doc).create;
-    var deleteQuery = invoiceQuery.invoiceDelete(doc.delete_invoice);
+    var updateQuery = getQuery.update(doc, "invoice", "invoice_id").update;
+    var createQuery = getQuery.update(doc, "invoice", "invoice_id").create;
+    var deleteQuery = getQuery.del(doc.delete_invoice, "invoice", "invoice_id");
 
     clt.query(command()
                 .query(updateQuery)
