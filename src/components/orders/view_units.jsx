@@ -79,13 +79,13 @@ var units = React.createClass({
 						</select>
 					</div>
 					<div className="column-2">
-						<input className="view_input" type="number" name="unit_net_weight" defaultValue={unit.unit_nett_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
+						<input className="view_input" type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_nett_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-2">
-						<input className="view_input" type="number" name="unit_gross_weight" defaultValue={unit.unit_gross_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
+						<input className="view_input" type="number" name="unit_gross_weight" step="any" defaultValue={unit.unit_gross_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-2">
-						<input className="view_input" type="number" name="unit_volume" defaultValue={unit.unit_volume} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
+						<input className="view_input" type="number" name="unit_volume" step="any" defaultValue={unit.unit_volume} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-4">
 						<input className="view_input" type="text" name="unit_commodity_description" defaultValue={unit.unit_commodity_description} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>

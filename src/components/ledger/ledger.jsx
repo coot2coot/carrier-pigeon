@@ -152,13 +152,6 @@ var ledger = React.createClass({
 	    }
   	},
 
-  	calculate: function(e) {
-  		console.log(e);
-  		this.setState({
-  			profit: ""
-  		})
-  	},
-
 	closeView: function() {
 	    this.setState({
     		closeView: true
@@ -172,11 +165,13 @@ var ledger = React.createClass({
 	},
   	
 	render: function() {
-		var currency = this.state.currency;
-		var order = this.props.order;
+		var currency 	= this.state.currency;
+		var order 		= this.props.order;
+		var calculate 	= this.calculate;
+
 		return (
 			<div className="overlay">
-				<div className="column-10 push-3 model-generic model-top ledger">
+				<div className="column-10 push-3 model-generic model-middle ledger">
 					<div className="panel-header">
 						<h3>Ledger - {this.props.order.job_number}</h3>
 						<a className="close" onClick={this.closeView}>x</a>

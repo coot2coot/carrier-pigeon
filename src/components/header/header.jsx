@@ -46,7 +46,6 @@ var header = React.createClass({
         });
     },
 
-    // console.log();
     render: function() {
         return (
             <header className="container-fluid">

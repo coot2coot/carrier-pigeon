@@ -6,6 +6,7 @@ var BookingForm = require("./booking-note-form.jsx");
 var getJobNumber = require("../../lib/format-job-number.js");
 var currentDate  = require("../../lib/current-date.js");
 
+// For emailing as a pdf, inine styling is required.
 var bookingStyle = {
     width: "595px",
     height: "842px",
