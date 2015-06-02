@@ -11,6 +11,7 @@ var edit = {};
 edit.orders = function (req, res, cb) {
 	var data = req.url;
 	var strng = data.replace(/\/order\/edit\//g, "");
+	console.log("what")
 
 	parseData(req, function (data) {
 		validateOrder(data, res, function () {
@@ -45,10 +46,12 @@ edit.contactsReminders = function (req, res, cb) {
 	} else {
 		table = "reminders";
 	}
+	console.log(table)
 	parseData(req, function (data) {
 		validateUser(req, res, function() {
 
 			db.edit(table, data, function (err) {
+				console.log(data)
 				if (err) {
 					console.log(err)
 					res.writeHead(500);

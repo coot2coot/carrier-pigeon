@@ -73,8 +73,8 @@ var contactsPage = React.createClass({
 
     onCloseComponent: function () {
 		this.setState({
-			creatingContact: false,
-			selectedContact: false
+			creatingContact: null,
+			selectedContact: null
 		})
 	},
 

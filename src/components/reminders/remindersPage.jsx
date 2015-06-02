@@ -4,17 +4,30 @@ var React  			= require('react');
 var Error 			= require("../error-message.jsx");
 var Header 			= require("../header/header.jsx");
 var CreateReminder	= require("./add-reminder.jsx");
+var ViewReminder	= require("./view-reminder.jsx");
 
 var remindersPage = React.createClass({
 	getInitialState: function() {
       return {
         error: false,
-        creatingReminder: false
+        creatingReminder: false,
+        selectedReminder: null
       };
     },
     addReminder: function () {
 		this.setState({
 			creatingReminder: true
+		})
+	},
+	reminderHandler: function (item) {
+		this.setState({
+			selectedReminder: item
+		})
+	},
+	onCloseComponent: function () {
+		this.setState({
+			creatingReminder: false,
+			selectedReminder: null
 		})
 	},
     getContacts : function () {
@@ -49,6 +62,7 @@ var remindersPage = React.createClass({
 	    $.get(getContactUrl, function(result) {
 	    	if(result !== ""){
 		    	var reminder = JSON.parse(result);
+		    	console.log(reminder)
 
 		      	if (this.isMounted()) {
 		        	this.setState({
@@ -62,6 +76,7 @@ var remindersPage = React.createClass({
 	    });
 	},
 	render: function() {
+		var reminderHandler = this.reminderHandler;
 		return (
 			<div >
 				<Header/>
@@ -80,13 +95,12 @@ var remindersPage = React.createClass({
 								<h5>State</h5>
 							</th>
 							<tbody>
-
-						  		{this.state.contacts
-							  		? this.state.contacts.map(function (contact, i) {
+						  		{this.state.reminders
+							  		? this.state.reminders.map(function (reminder, i) {
 								        return <tr>
 								            		<td key={i + "first"}>
-								            			<a >
-								            				<p>{contact.company_name}</p>
+								            			<a  onClick={reminderHandler.bind(null, reminder)}>
+								            				<p>{reminder.contact}</p>
 								            			</a>
 								            		</td>
 								            		<td key={i + "second"}>
@@ -96,15 +110,17 @@ var remindersPage = React.createClass({
 								            		</td>
 												</tr>
 										})
-									: <p></p>
+									: <tr><td></td></tr>
 							    }
 							</tbody>
 						</table>
 					</div>
 				</div>
-				{this.creatingReminder
-                    ? <CreateReminder contacts={this.state.contacts} closeView={this.onCloseComponent}/>
-                    : <p></p>
+				{this.state.creatingReminder
+                    ? <CreateReminder contacts={this.state.contacts} closeView={this.onCloseComponent} />
+                    : this.state.selectedReminder
+                    ? <ViewReminder contacts= {this.state.contacts} reminder= {this.state.selectedReminder} closeView={this.onCloseComponent}/>
+                    :<p></p>
                 }               
 			</div>
 		);
