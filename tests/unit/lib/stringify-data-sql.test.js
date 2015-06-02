@@ -1,7 +1,7 @@
 var test = require('tape');
 var stringify = require('../../../server/lib/stringify-data-sql.js');
-var addOrderMock = require('../mocks/add-order.js').order;
-var mockData = require('../mocks/add-order.js').stringifiedTestData;
+var addOrderMock = require('../mocks/add-order.mock.js').order;
+var mockData = require('../mocks/add-order.mock.js').stringifiedTestData;
 
 test('Testing that stringify data in lib is', function (t) {
 	t.equals( typeof stringify, 'function', "a function");

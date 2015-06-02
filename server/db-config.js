@@ -1,12 +1,15 @@
-"use strict"
+"use strict";
 
-var pg 		 	   = require("pg");
+// Lint!
+// better error handling
+// use === not ==
+
+var pg             = require("pg");
 var str            = process.env.POSTGRES_URI  || require("../credentials.json").postgres;
-var url 	       = "postgres://" + str
+var url            = "postgres://" + str;
 var stringifyData  = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js").stringify;
-var editQuery      = require("./lib/edit-query-sql.js").query;
-var invoiceQuery   = require("./lib/get-invoice-query.js").query;
+var getQuery      = require("./lib/edit-query-sql.js").getQuery;
 var queryStrings   = require("./lib/querys.js");
 var command        = require("./lib/commands");
 var dataBase       = {};
@@ -14,14 +17,14 @@ var dataBase       = {};
 
 
 function connect (query, table, cb, var1, var2, var3) {
-	pg.connect(url, function(err, clt, done) {
+    pg.connect(url, function(err, clt, done) {
 
-    	if (err) {
-    		console.log(err)
+        if (err) {
+            cb(err);
             return;
-    	}
+        }
 
-        query(table, clt, done, cb, var1, var2, var3)
+        query(table, clt, done, cb, var1, var2, var3);
     });
 }
 
@@ -29,21 +32,21 @@ function connect (query, table, cb, var1, var2, var3) {
 function get (table, clt, done, cb) {
     var query;
 
-    if(table == "contacts"){
+    if (table === "contacts") {
         query = command()
                     .select('*')
                     .from(table)
                     .order("name")
-                    .end()
-    }else{
+                    .end();
+    } else {
         query = command()
                     .select("*")
                     .from(table)
-                    .end()
+                    .end();
     }
     clt.query(query, function(err, result) {
         if (err) {
-            console.log(err)
+            console.log(err);
 
             done(clt);
             return;
@@ -81,17 +84,15 @@ function post (table, clt, done, cb, doc) {
         query;
 
     if (table === "users") {
-        query = postUsers(table,doc)
+        query = postUsers(table,doc);
     } else if (table === "contacts"){
-        query =postContacts(table,doc)
+        query =postContacts(table,doc);
     }else {
         query = postOrders(table,doc);
     }
     
     clt.query(query, function(err, result) {
         if (err) {
-            console.log(err)
-
             done(clt);
             return cb(err);
         }
@@ -150,14 +151,14 @@ function edit (table, clt, done, cb, doc) {
     } else if (table === "invoice") {
         editInvoices(doc, clt, cb, done);
     } else if (table === 'contacts') {
-        editContacts(doc,clt,cb,done) 
+        editContacts(doc,clt,cb,done);
     } else {
         editOrders(doc,clt,cb, done);
     }
 }
 
 function editContacts (doc,clt,cb, done) {
-    var query = editQuery.standard(doc);
+    var query = getQuery.standard(doc);
 
     clt.query(command()
                 .update("contacts")
@@ -168,10 +169,10 @@ function editContacts (doc,clt,cb, done) {
         done();
 
         if (err) {
-            return console.log(err);
+            return cb(err);
         }
         cb(null);
-    })
+    });
 }
 
 function editUsers (doc,clt,cb, done) {
@@ -181,7 +182,7 @@ function editUsers (doc,clt,cb, done) {
         invitation: true
     };
 
-    var query = editQuery.standard(updateUser);
+    var query = getQuery.standard(updateUser);
 
     clt.query(command()
                 .update("users")
@@ -191,17 +192,18 @@ function editUsers (doc,clt,cb, done) {
         
         done();
         if (err) {
-            return console.log(err);
+            return cb(err);
         }
-        cb();
+        cb(null);
     });
 }
 
 function editOrders (doc,clt,cb, done) {
-    var ordersQuery = editQuery.standard(doc.order);
-    var unitsUpdateQuery = editQuery.units(doc.unit).update;
-    var unitsCreateQuery = editQuery.units(doc.unit).create;
-    var unitsDeleteQuery = editQuery.unitDelete(doc.unit_delete);
+
+    var ordersQuery = getQuery.standard(doc.order);
+    var unitsUpdateQuery = getQuery.update(doc.unit, "units", "unit_id").update;
+    var unitsCreateQuery = getQuery.update(doc.unit, "units", "unit_id").create;
+    var unitsDeleteQuery = getQuery.del(doc.unit_delete, "units", "unit_id");
 
     clt.query(command()
                 .update("orders")
@@ -214,10 +216,8 @@ function editOrders (doc,clt,cb, done) {
                 .end(), function(err, result) {
 
         if (err) {
-            console.log(err);
-
             done(clt);
-            return;
+            return cb(err);
         }
 
         done();
@@ -227,9 +227,9 @@ function editOrders (doc,clt,cb, done) {
 
 function editInvoices (doc, clt, cb, done) {
 
-    var updateQuery = invoiceQuery.invoice(doc).update;
-    var createQuery = invoiceQuery.invoice(doc).create;
-    var deleteQuery = invoiceQuery.invoiceDelete(doc.delete_invoice);
+    var updateQuery = getQuery.update(doc, "invoice", "invoice_id").update;
+    var createQuery = getQuery.update(doc, "invoice", "invoice_id").create;
+    var deleteQuery = getQuery.del(doc.delete_invoice, "invoice", "invoice_id");
 
     clt.query(command()
                 .query(updateQuery)
@@ -265,10 +265,9 @@ function remove (table, clt, done, cb, doc) {
         done();
 
         if (err) {
-            return console.log(err);
+            return cb(err);
         }
-            
-        cb(null)
+        cb(null);
     });
 }
 
@@ -319,7 +318,7 @@ function loginUser (table, clt, done, cb, username, password, remember) {
         done();
 
         if(err || user.rows.length != 1) {
-            var error = err ? err : "no user"
+            var error = err ? err : "no user";
             cb(error);
         } else {
             cb(null, user.rows[0], remember);
@@ -341,13 +340,12 @@ function search (table, clt, done, cb, value){
         done();
 
         if(err || result.rows.length ===0) {
-            console.log(err);
-
-            return cb(true);
+            var error = err ? err : true;
+            return cb(error);
         }
 
-        cb(null,result.rows);
-    })
+        cb(null, result.rows);
+    });
 }
 
 function searchDates (table, clt, done, cb, dates){
@@ -364,53 +362,53 @@ function searchDates (table, clt, done, cb, dates){
                 done();
 
                 if(err || result.rows.length ===0) {
-                    return cb(true);
+                    var error = err ? err : true;
+                    return cb(error);
                 }
 
                 cb(null,result.rows);
-
-        })
+        });
     }
 }
 
 
 
 dataBase.get = function (table, cb){
- 	connect(get, table, cb)
+    connect(get, table, cb);
 };
 
 dataBase.getOrder = function (table, id, cb){
-    connect(getOrder, table, cb, id)
+    connect(getOrder, table, cb, id);
 };
 
 dataBase.post = function (table, doc, cb){
-	connect(post, table, cb, doc)
+    connect(post, table, cb, doc);
 };
 
 dataBase.edit = function (table, doc, cb){
     connect(edit, table, cb, doc);
 };
 dataBase.remove = function (table, doc, cb){
-    connect(remove,table,cb, doc)
+    connect(remove,table,cb, doc);
 };
 
 dataBase.selectUnits = function (table, job_number, cb ){
-    connect(selectUnits, table,cb, job_number)
+    connect(selectUnits, table,cb, job_number);
 };
 
 dataBase.getInvoices = function (table, job_number, cb ){
-    connect(getInvoices, table,cb, job_number)
+    connect(getInvoices, table,cb, job_number);
 };
 
 dataBase.selectUser = function (username, password, remember, cb) {
-   connect(loginUser,"users",cb, username, password, remember)
+   connect(loginUser,"users",cb, username, password, remember);
 };
 
 dataBase.searcher = function (table, data, cb) {
-    connect(search, table,cb,data)
+    connect(search, table,cb,data);
 };
 dataBase.searchDates = function (table, data, cb) {
-    connect(searchDates, table,cb,data)
+    connect(searchDates, table,cb,data);
 };
 
 module.exports = dataBase;

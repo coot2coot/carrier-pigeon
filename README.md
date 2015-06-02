@@ -18,7 +18,24 @@ and use command:
 gulp
 ```
 
-This compiles the sass and starts the server
+This compiles the sass and starts the server.
+
+Before you join in developing this project, do make sure you have a `credentials.json` file. This is an example of what that should look like:
+
+```
+{
+	"secret": "yourJwtSecret",
+	"username":"yourSauceLabsUsername",
+	"accesskey":"yourSauceLabsAccessKey",
+	"postgres": "dbUrl",
+	"testUsername": "testUsername",
+	"testAdminUsername":  "testUsername",
+	"testPassword": "testPassword",
+	"testAdminPassword": "testPassword",
+	"mailGunApiKey": "example1234",
+	"mailGunDomain": "example1234.mailgun.org"
+}
+```
 
 To run all the tests first use command:
 

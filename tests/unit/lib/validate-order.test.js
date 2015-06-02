@@ -2,7 +2,7 @@ var test = require('tape');
 var validateOrder = require('../../../server/lib/validate-order.js').validate;
 var dateIsValid = require('../../../server/lib/validate-order.js').dateIsValid;
 
-var orderMock = require('../mocks/add-order.js').fullOrder;
+var orderMock = require('../mocks/add-order.mock.js').fullOrder;
 
 var res = {};
 res.writeHead = function (code) {

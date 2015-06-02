@@ -1,6 +1,6 @@
 var test = require('tape');
 var splitData = require('../../../server/lib/split-orders-object.js');
-var submittedOrder = require('../mocks/add-order.js').fullOrder;
+var submittedOrder = require('../mocks/add-order.mock.js').fullOrder;
 
 test('Testing that split orders in lib is', function (t) {
 	t.equals( typeof splitData, 'function', "a function");
