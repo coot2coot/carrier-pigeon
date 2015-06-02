@@ -1,7 +1,8 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var Warning = require("../close-warning.jsx");	
+var Close = require("../close-warning.jsx");	
+var Warning = require("../warning.jsx");	
 var DataList = require("../orders/data-list.jsx");	
 
 var addReminder = React.createClass({
@@ -32,7 +33,7 @@ var addReminder = React.createClass({
 	},
 	deleteHandler: function (item) {
 		this.setState({
-			deleteContact: item
+			deleteReminder: item
 		})
 	},
 
@@ -59,15 +60,23 @@ var addReminder = React.createClass({
 		var viewing = this.state.viewing;
 		return (
 			<div className="overlay">
+				<div>
+					{( this.state.deleteReminder
+	                    ? <Warning message="Delete this reminder?" reminder={reminder} url={"/reminders/delete/" + reminder.reminder_id} closeView={this.onCloseComponent}/>
+	                    : <p></p>
+	                )}
+	            </div>
 				<div className="column-12 push-2 model-generic model-top reminder create-order">
 					<div className="panel-header">
 						<h3>New Entry</h3>
+						<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.reminder)}>Delete</a>
 						<button className="button blue" onClick={this.edit} >Edit</button>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body scroll">
 						<form action="/reminders/edit/" method="POST">
 							<div className="row gutters">
+							
 									<input className="display-none" name="reminder_id" defaultValue= {reminder ? reminder.reminder_id : ""}></input>
 									<div className="row">	
 										<div className="column-8">
@@ -76,6 +85,7 @@ var addReminder = React.createClass({
 										</div>
 										<div className="column-8">
 											<p>Reminder Date </p>
+											{console.log(reminder.date.substring(0, 10))}
 											<input type="date" name="date" defaultValue={reminder ? reminder.date.substring(0, 10) : ""}required  disabled={viewing ? true : false}/>
 										</div>
 									</div>
@@ -108,7 +118,7 @@ var addReminder = React.createClass({
 					</div>
 				</div>
 				{(this.state.closeView
-                    ? <Warning message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
+                    ? <Close message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}
 			

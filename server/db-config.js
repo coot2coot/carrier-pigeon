@@ -178,6 +178,7 @@ function editContacts (doc,clt,cb, done) {
 
 function editReminders (doc,clt,cb, done) {
     var query = editQuery.standard(doc);
+    console.log(query);
 
     clt.query(command()
                 .update("reminders")

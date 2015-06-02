@@ -8,6 +8,10 @@ table.table th, table.table td {
 }
 
 td {
+	&.green{
+		background-color: rgb(119, 76, 158);
+		opacity: 0.4;
+	}	
 	border-right: 0.1em $light-grey solid;
 	border-left: 0.1em $light-grey solid;
 	background: white;
@@ -27,6 +31,8 @@ th {
 		border-bottom: 0.1em $light-grey solid;
 	}
 }
+
+
 
 .warning {
   table {

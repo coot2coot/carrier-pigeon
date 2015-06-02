@@ -17,13 +17,8 @@ header {
 	  	@include respond(mobile) {
 	  		padding: 1em 1em 1.5em 2em;
 	  	}
-	}
-	div {
-		&:hover {
-	  		p {
-  				padding-top: 0em;
-  			}
-	}
-
+	  	&:hover {
+			font-weight: 600;
+		}
 	}
 }

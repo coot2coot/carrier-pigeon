@@ -6,6 +6,8 @@ var Header 			= require("../header/header.jsx");
 var CreateReminder	= require("./add-reminder.jsx");
 var ViewReminder	= require("./view-reminder.jsx");
 
+var week			= require("../../lib/getWeek.js")
+
 var remindersPage = React.createClass({
 	getInitialState: function() {
       return {
@@ -61,12 +63,14 @@ var remindersPage = React.createClass({
 
 	    $.get(getContactUrl, function(result) {
 	    	if(result !== ""){
-		    	var reminder = JSON.parse(result);
-		    	console.log(reminder)
+		    	var reminder = week(JSON.parse(result))
+		    	var sortReminder = reminder.sort(function(x) {
+				    return (x.week === true)? 0 : 1;
+				});;
 
 		      	if (this.isMounted()) {
 		        	this.setState({
-		          		reminders : reminder
+		          		reminders : sortReminder
 		        	});
 		      	}
 		    }
@@ -103,8 +107,8 @@ var remindersPage = React.createClass({
 								            				<p>{reminder.contact}</p>
 								            			</a>
 								            		</td>
-								            		<td key={i + "second"}>
-								            			<a >
+								            		<td className = {reminder.week ? "green" : ""} key={i + "second"}>
+								            			<a>
 								            				<p></p>
 								            			</a>
 								            		</td>
