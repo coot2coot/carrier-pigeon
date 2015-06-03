@@ -7,35 +7,19 @@ var secondsToSave= 60 * 60 * 24 * 7;
 var myCache 	 = new NodeCache({ stdTTL: secondsToSave });
 var readOptions  = {};
 
-var getOrders = function (req, res) {
 
-	db.get('orders',function (orders) {		
-		myCache.set("orders", orders, secondsToSave, function(err, success){
-
-			if(err){
-				console.error(err);
-			}
-		});
-		var order = JSON.stringify(orders);
-
-		res.writeHead(200, {"Content-Type" : "text/plain"});
-		res.end(order);
-	});
-};
-
-var getContacts = function (req, res) {
-
-	db.get('contacts',function (contacts) {		
-		myCache.set("contacts", contacts, secondsToSave, function(err, success){
+var get = function (table, req, res) {
+	db.get(table,function (result) {		
+		myCache.set(table, result, secondsToSave, function(err, success){
 
 			if(err){
 				console.error(err);
 			}
 		});
-		var contact = JSON.stringify(contacts);
+		var result = JSON.stringify(result);
 
 		res.writeHead(200, {"Content-Type" : "text/plain"});
-		res.end(contact);
+		res.end(result);
 	});
 };
 
@@ -65,13 +49,14 @@ var getUserList = function (req, res) {
 readOptions.cached = function (req, res) {
 	validateUser(req, res, function () {
 		var table;
-
-		if (req.url.indexOf('user') > -1) {
-			table = "users";
+		if(req.url.indexOf('user') > -1) {
+			table = "users"
 		} else if (req.url.indexOf('contact') > -1) {
-			table = "contacts";
+			table = "contacts"
+		}else if (req.url.indexOf('reminder') > -1) {
+			table = "reminders"
 		} else {
-			table = "orders";
+			table = "orders"
 		}
 
 		myCache.get(table, function (err, value){
@@ -79,15 +64,10 @@ readOptions.cached = function (req, res) {
 				var values = JSON.stringify(value[table]);
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end(values);
-			}else {
-				if (table === "users") {
-					getUserList(req, res);
-				} else if (table === "contacts") {
-					getContacts(req, res);
-				}else {
-					getOrders(req, res);
-				}
-				
+			}else if(table === "users") {
+				getUserList(req, res);
+			} else {
+				get(table, req, res)
 			}
 		});
 	});
@@ -95,24 +75,17 @@ readOptions.cached = function (req, res) {
 
 readOptions.noCache = function (req, res) {
 	validateUser(req, res, function () {
-		var table;
 
 		if (req.url.indexOf('users') > -1) {
-			table = "users";
-		} else if (req.url.indexOf('contact') > -1) {
-			table = "contacts";
-		} else {
-			table ="orders";
-		}
-
-		if (table === "users") {
 			getUserList(req, res);
-		} else if(table === "contacts"){
-			getContacts(req,res);
-		}else {
-			getOrders(req, res);
+		} else if (req.url.indexOf('contact') > -1) {
+			get("contacts",req,res);
+		} else if  (req.url.indexOf('reminder') > -1){
+			get("reminders",req,res);
+		} else{
+			get("orders",req, res);
 		}
-	});
+	})
 };
 
 readOptions.getOrder = function (req, res) {

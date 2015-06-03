@@ -40,7 +40,7 @@ var units = React.createClass({
 						<input className="view_input" type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-3">
-						<input className="view_input" type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
+						<input className="view_input" type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.substring(0, 10): ""} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-3">
 						<input className="view_input" type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>

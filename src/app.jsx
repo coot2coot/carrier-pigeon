@@ -11,6 +11,7 @@ var Header      = require("./components/header/header.jsx");
 var Login       = require("./components/login-panel.jsx");
 var Orders      = require("./components/orders/ordersPage.jsx");
 var Contacts    = require("./components/contacts/contactsPage.jsx");
+var Reminders   = require("./components/reminders/remindersPage.jsx");
 var AdminPanel  = require("./components/admin-panel.jsx");
 var Settings    = require("./components/settings/settings.jsx");
 var BookingNote = require("./components/booking-note/booking-note.jsx");
@@ -34,6 +35,10 @@ var routes = (
         </Route>
          <Route name="contacts" path="/contacts" handler={Contacts}>
             <Route name="contactUpdate" path=":update" handler={Contacts} />
+        </Route>
+
+        <Route name="reminders" path="/reminders" handler={Reminders}>
+            <Route name="reminderUpdate" path=":update" handler={Reminders} />
         </Route>
 
         <Route name="login" path="/login" handler={Login}>

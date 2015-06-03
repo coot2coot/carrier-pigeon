@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var parseData 	 = require('../lib/get-form-data.js');
 var validateOrder= require('../lib/validate-order.js').validate;
@@ -21,7 +21,7 @@ edit.orders = function (req, res, cb) {
 
 				db.edit('orders', splitData, function (err) {
 					if (err) {
-						console.log(err)
+						console.log(err);
 						res.writeHead(500);
 						res.write(err);
 						res.end();
@@ -38,26 +38,32 @@ edit.orders = function (req, res, cb) {
 	});
 };
 
-edit.contacts = function (req, res, cb) {
+edit.contactsReminders = function (req, res, cb) {
+	var table;
+	if (req.url.indexOf('contact') > -1) {
+		table = "contacts";
+	} else {
+		table = "reminders";
+	}
 	parseData(req, function (data) {
 		validateUser(req, res, function() {
 
-			db.edit('contacts', data, function (err) {
+			db.edit(table, data, function (err) {
 				if (err) {
-					console.log(err)
+					console.log(err);
 					res.writeHead(500);
 					res.write(err);
 					res.end();
 				} else {
 					cb(req, res);
 					res.writeHead(303, {
-						"Location": "/#/contacts/true"
+						"Location": "/#/" + table + "/true"
 					});
 					res.end();
 				}
 			});
 		});
 	});
-}
+};
 
 module.exports = edit;

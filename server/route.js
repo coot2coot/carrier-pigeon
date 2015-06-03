@@ -89,10 +89,10 @@ var serverRoutes =  function (router) {
  * -------------------------------*/
 
  	router.addRoute('/contact/post', function (req, res, match){
-	  	require('./handlers/create-contact.js')(req, res);
+	  	require('./handlers/create-contact-reminder.js')("contacts",req, res);
 	});
 	router.addRoute('/contacts/edit', function (req, res, match){
-	  	require('./handlers/edit-db.js').contacts(req, res, cache.noCache);
+	  	require('./handlers/edit-db.js').contactsReminders(req, res, cache.noCache);
 	});
 	router.addRoute('/contacts/get', function (req, res, match){
 	  	require('./handlers/read-db.js').cached(req, res);
@@ -103,7 +103,25 @@ var serverRoutes =  function (router) {
 	router.addRoute('/contacts/delete/:id?', function (req, res, match){
 	  	require('./handlers/delete-db.js')(req, res);
 	});
+/* -------------------------------*
+ *	   Reminders Routes
+ * -------------------------------*/
 
+ 	router.addRoute('/reminders/post', function (req, res, match){
+	  	require('./handlers/create-contact-reminder.js')("reminders",req, res);
+	});
+	router.addRoute('/reminders/get', function (req, res, match){
+	  	require('./handlers/read-db.js').cached(req, res);
+	});
+	router.addRoute('/reminders/get/nocache', function (req, res, match){
+	  	require('./handlers/read-db.js').noCache(req, res);
+	});
+	router.addRoute('/reminders/delete/:id?', function (req, res, match){
+	  	require('./handlers/delete-db.js')(req, res);
+	});
+	router.addRoute('/reminders/edit', function (req, res, match){
+	  	require('./handlers/edit-db.js').contactsReminders(req, res, cache.noCache);
+	});
 
 /* -------------------------------*
  *	   Search Routes
