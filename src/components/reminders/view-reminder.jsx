@@ -85,7 +85,6 @@ var addReminder = React.createClass({
 										</div>
 										<div className="column-8">
 											<p>Reminder Date </p>
-											{console.log(reminder.date.substring(0, 10))}
 											<input type="date" name="date" defaultValue={reminder ? reminder.date.substring(0, 10) : ""}required  disabled={viewing ? true : false}/>
 										</div>
 									</div>

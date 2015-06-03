@@ -64,9 +64,10 @@ var remindersPage = React.createClass({
 	    $.get(getReminderUrl, function(result) {
 	    	if(result !== ""){
 		    	var reminder = week(JSON.parse(result))
-		    	var sortReminder = reminder.sort(function(x) {
-				    return (x.week === "urgent")? 0 :(x.week === "present") ? 1 : 2;
+		    	var sortReminder = reminder.sort(function(a,b){
+				  return new Date(a.date) - new Date(b.date);
 				});;
+				console.log(sortReminder);
 
 		      	if (this.isMounted()) {
 		        	this.setState({
