@@ -39,8 +39,8 @@ var nav = React.createClass({
 					<a href="/#/reminders">
 						<li className={remindersClass}>
 						
-                            <img src="../img/nav/list.png" />
-							<h5>reminders</h5>
+                            <img src="../img/nav/bell72.png" />
+							<h5>Reminders</h5>
 							
 						</li>
 					</a>
