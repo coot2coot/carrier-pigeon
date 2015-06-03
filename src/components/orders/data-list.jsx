@@ -21,7 +21,7 @@ var dataList = React.createClass({
 			<div>
 			<div>
 				{( this.props.vieworder
-					? <input list="dropdown"  className="view_input" type="text"  defaultValue={this.props.contact} name={this.props.contactType} onChange={this.props.handleChange} disabled/>
+					? <input list="dropdown"  className="view_input" type="text"  defaultValue={this.props.contact} name={this.props.contactType} onChange={this.props.handleChange} required disabled/>
 					: <input list="dropdown" type="text"  defaultValue={this.props.contact ? this.props.contact : ""} name={this.props.contactType} onChange={this.props.handleChange} required/>
 				)}
 			</div>
