@@ -23,7 +23,7 @@ var datePicker = React.createClass({
 
 	},
 	getOrders: function() {
-		return this.props.getorders(this.state.startDate+","+this.state.endDate)
+		return this.props.getorders(this.state.startDate+","+this.state.endDate , "orders")
 	},
 	render: function () {
 		return (
