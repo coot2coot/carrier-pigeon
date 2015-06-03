@@ -28,9 +28,12 @@ function landingTests (wd, capability, remote) {
                 .sendKeys(password)
                 .elementByTagName("form")
                 .submit()
-                .setImplicitWaitTimeout(500)
+                .waitForElementByCssSelector('button[data-tooltip="Get last 90 days of orders"]')
+                .click()
+                .sleep(500)
                 .elementsByTagName("td")
                 .then(function(elements) {
+                    console.log(elements.length);
                     elements[1]
                         .elementByTagName("a")
                         .click()

@@ -28,6 +28,9 @@ function landingTests (wd, capability, remote) {
                 .sendKeys(password)
                 .elementByTagName("form")
                 .submit()
+                .waitForElementByCssSelector('button[data-tooltip="Get last 90 days of orders"]')
+                .click()
+                .sleep(500)
                 .waitForElementByLinkText("ledger")
                 .click()
                 .nodeify(done);
