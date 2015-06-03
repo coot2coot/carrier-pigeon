@@ -7,7 +7,8 @@ var stringifyData  = require("./lib/stringify-data-sql.js");
 var stringifyUnits = require("./lib/stringify-units-sql.js").stringify;
 var getQuery       = require("./lib/edit-query-sql.js").getQuery;
 var queryStrings   = require("./lib/querys.js");
-var command        = require("./lib/commands");
+var command        = require("./lib/commands.js");
+var dateRange      = require("./lib/searchDates.js");
 var dataBase       = {};
 
 
@@ -343,6 +344,8 @@ dataBase.selectUser = function (username, password, remember, cb) {
     })
 };
 
+
+
 dataBase.searcher = function (table, data, cb) {
     connect(function(client, done) {
         var query;
@@ -360,22 +363,20 @@ dataBase.searcher = function (table, data, cb) {
                 var error = err ? err : true;
                 return cb(error);
             }
+
             cb(null, result.rows);
         });
     })
 };
 
 dataBase.searchDates = function (table, dates, cb) {
+    var query = dateRange(dates);
     connect(function(client, done) {
         if(dates === "" ||dates[0] === "" || dates[1] === ""){
             cb([]);
         }
         else{
-            client.query(command()
-                .select("*")
-                .from(table)
-                .where("ets >='" + dates[0] + "' AND ets <='"+dates[1] + "'")
-                .end(), function (err,result){
+            client.query(query, function (err,result){
                     done();
 
                     if(err || result.rows.length ===0) {

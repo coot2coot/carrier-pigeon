@@ -146,7 +146,7 @@ var ordersPage = React.createClass({
 
 		date = pastDate.join("-")+ "," + currentDate.join("-")
 
-		this.getDateOrders(date);
+		this.getDateOrders(date, "orders");
 
 	},
 	getCm: function (dates) {
@@ -168,11 +168,11 @@ var ordersPage = React.createClass({
 
 		date = pastDate.join("-")+ "," + currentDate.join("-")
 
-		this.getDateOrders(date);
+		this.getDateOrders(date, "orders");
 
 	},
 
-	getTodays: function (dates) {
+	getTodays: function () {
 		var date;
 		var currentDate = new Date();
 
@@ -182,14 +182,14 @@ var ordersPage = React.createClass({
 			currentDate.getUTCDate()
 		];
 
-		date = currentDate.join("-")+ "," + currentDate.join("-")
+		date = currentDate.join("-")
 
-		this.getDateOrders(date);
+		this.getDateOrders(date, "orders");
 
 	},
 
-	getDateOrders: function (dates) {
-		var getUrl = "/search/dates/" + dates;
+	getDateOrders: function (dates, table) {
+		var getUrl = "/search/"+table+"/dates/" + dates;
 		$.get(getUrl,function (result) {	
 			if(result === "error"){
 				this.setState({

@@ -132,7 +132,7 @@ var serverRoutes =  function (router) {
  	router.addRoute('/search/contacts/:searchTerms?', function (req, res, match){
  		require('./handlers/search.js')(req, res, "contacts");
  	});
- 	router.addRoute('/search/dates/:searchDates?', function (req, res, match){
+ 	router.addRoute('/search/orders/dates/:searchDates?', function (req, res, match){
  		require('./handlers/search-dates.js')(req, res);
  	});
 
