@@ -55,17 +55,17 @@ var remindersPage = React.createClass({
 	componentDidMount: function() {
 		this.getContacts();
 
-		var getContactUrl = "/reminders/get";
+		var getReminderUrl = "/reminders/get";
 
 		if (window.location.href.indexOf('true') > -1 ) {
-			getContactUrl = "/reminders/get/nocache"
+			getReminderUrl = "/reminders/get/nocache"
 		}
 
-	    $.get(getContactUrl, function(result) {
+	    $.get(getReminderUrl, function(result) {
 	    	if(result !== ""){
 		    	var reminder = week(JSON.parse(result))
 		    	var sortReminder = reminder.sort(function(x) {
-				    return (x.week === true)? 0 : 1;
+				    return (x.week === "urgent")? 0 :(x.week === "present") ? 1 : 2;
 				});;
 
 		      	if (this.isMounted()) {
@@ -107,13 +107,15 @@ var remindersPage = React.createClass({
 								            				<p>{reminder.contact}</p>
 								            			</a>
 								            		</td>
-								            		<td className = {reminder.week ? "green" : ""} key={i + "second"}>
-								            			<a>
-								            				<p></p>
-								            			</a>
-								            		</td>
-												</tr>
-										})
+								            		{(reminder.week === "present")
+								            			? <td className = "green"  key={i + "second"}><a><p>This Week</p></a></td>
+								            			: (reminder.week === "urgent")
+								            			?<td className = "red"  key={i + "second"}><a><p>Late</p></a></td>
+								            			: <td></td>
+								            		}
+								            	</tr>
+								            		
+									})
 									: <tr><td></td></tr>
 							    }
 							</tbody>
