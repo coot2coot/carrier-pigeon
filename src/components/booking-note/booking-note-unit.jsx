@@ -19,12 +19,12 @@ var unitsInformation = React.createClass({
     render: function() {
         return (
             <tr>
-                <td style={td}>{this.props.unit.unit_loading_date.substring(0, 10)}</td>
+                <td style={td}>{this.props.unit.unit_loading_date ? this.props.unit.unit_loading_date.substring(0, 10) : ""}</td>
                 <td style={td}>{this.props.unit.unit_loading_time}</td>
                 <td style={td}>{this.props.unit.unit_type}</td>
                 <td style={td}>{this.props.unit.unit_loading_reference}</td>
                 <td style={td}>{this.props.unit.unit_commodity_description}</td>
-                <td style={td}>{this.props.unit.unit_gross_weight}</td>
+                <td style={td}>{this.props.unit.unit_gross_weight} {this.props.unit.unit_gross_weight ? this.props.unit.unit_weight : ""}</td>
             </tr>
         )
     }
