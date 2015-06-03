@@ -10,6 +10,7 @@ var domain = process.env.MAIL_GUN_DOMAIN || require("../../credentials.json").ma
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 function sendBookingNote (attachment, email) {
+    console.log(email);
     var data = {
         from: 'Coot Freight Ltd <app@cootfreight.co.uk>',
         to: email,
@@ -19,7 +20,7 @@ function sendBookingNote (attachment, email) {
     }
     mailgun.messages().send(data, function (err, body) {
         err
-        ? console.log(err)
+        ? console.log("problem >>>",err)
         : console.log(body)
     });
 }

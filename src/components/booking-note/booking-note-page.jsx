@@ -6,12 +6,14 @@ var BookingForm = require("./booking-note-form.jsx");
 var getJobNumber = require("../../lib/format-job-number.js");
 var currentDate  = require("../../lib/current-date.js");
 
+
 // For emailing as a pdf, inine styling is required.
 var bookingStyle = {
     width: "595px",
     height: "842px",
     padding: "20px 60px",
-    fontFamily: "arial, sans-serif"
+    fontFamily: "arial, sans-serif",
+    position: "relative"
 }
 var hr = {
     backgroundColor: "#49A4A5",
@@ -68,6 +70,9 @@ var halfLeft = {
     float: "left",
     width: "50%",
 }
+var footer = {
+    marginTop: "410px"
+}
 
 var leftRight = {
     float: "left",
@@ -102,6 +107,8 @@ var bookingNotePage = React.createClass({
         };
     },
     render: function() {
+        footer.marginTop = parseInt(footer.marginTop) - (18 * this.props.units.length) + "px"
+        console.log(footer.marginTop)
         return (
             <div id="form" className="booking-note container" style={bookingStyle}>
                 <div>
@@ -112,7 +119,7 @@ var bookingNotePage = React.createClass({
                 <h2 style={h2}>Booking Request</h2>
                 
                 <div style={halfLeft}>
-                    <p style={pLeft}><b> date: </b> { this.props.order.date.substring(0, 10)}</p>
+                    <p style={pLeft}><b> Date: </b> { this.props.order.date.substring(0, 10)}</p>
                 </div>
 
                 <div style={halfRight}>
@@ -124,34 +131,36 @@ var bookingNotePage = React.createClass({
                 </div>
 
                 <br />
-                <hr style={hr}/>
+                <div style={footer}>
+                    <hr style={hr}/>
 
-                <div style={halfLeft}>
-                    <div style={leftLeft}>
-                        <p style={pSmall}> Davenport House </p>
-                        <p style={pSmall}> 16 Pepper Street </p>
-                        <p style={pSmall}> London E14 9RP </p>
-                        <p style={pSmall}> England </p>
+                    <div style={halfLeft}>
+                        <div style={leftLeft}>
+                            <p style={pSmall}> Davenport House </p>
+                            <p style={pSmall}> 16 Pepper Street </p>
+                            <p style={pSmall}> London E14 9RP </p>
+                            <p style={pSmall}> England </p>
+                        </div>
+                        <div style={leftRight}>
+                            <p style={pSmall}> Tel +44 020 7510 9625 </p>
+                            <p style={pSmall}> Fax +44 020 7510 9401 </p>
+                            <p style={pSmall}> info@cootfreight.co.uk </p>
+                            <p style={pSmall}> www.cootfreight.co.uk </p>
+                        </div>
                     </div>
-                    <div style={leftRight}>
-                        <p style={pSmall}> Tel +44 020 7510 9625 </p>
-                        <p style={pSmall}> Fax +44 020 7510 9401 </p>
-                        <p style={pSmall}> info@cootfreight.co.uk </p>
-                        <p style={pSmall}> www.cootfreight.co.uk </p>
-                    </div>
-                </div>
-                <div style={halfRight}>
-                    <div style={rightLeft}>
-                        <p style={pSmall}> All business is subject to the </p>
-                        <p style={pSmall}> current standing conditions </p>
-                        <p style={pSmall}> of the BIFA copies of </p>
-                        <p style={pSmall}> which are available on request </p>
-                    </div>
-                    <div style={rightRight}>
-                        <p style={pSmall}> Coot Freight Ltd. </p>
-                        <p style={pSmall}> Registered in England </p>
-                        <p style={pSmall}> No.07880722 </p>
-                        <p style={pSmall}> VAT No. GB 128 2159 22 </p>
+                    <div style={halfRight}>
+                        <div style={rightLeft}>
+                            <p style={pSmall}> All business is subject to the </p>
+                            <p style={pSmall}> current standing conditions </p>
+                            <p style={pSmall}> of the BIFA copies of </p>
+                            <p style={pSmall}> which are available on request </p>
+                        </div>
+                        <div style={rightRight}>
+                            <p style={pSmall}> Coot Freight Ltd. </p>
+                            <p style={pSmall}> Registered in England </p>
+                            <p style={pSmall}> No.07880722 </p>
+                            <p style={pSmall}> VAT No. GB 128 2159 22 </p>
+                        </div>
                     </div>
                 </div>
             </div>
