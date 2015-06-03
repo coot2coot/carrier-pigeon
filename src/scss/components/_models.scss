@@ -47,6 +47,9 @@
 
 .model-top {
 	top: 5%;
+  &.reminder{
+    top: 25%;
+  };
   	position: absolute;
   	div.panel-body {
   		padding: 0 1em 2em 1em;

@@ -9,6 +9,7 @@ header {
   	.row {
   		margin-bottom: 0.5em;
   	}
+
 	p {
 		color: white;
 	  	float: right;
@@ -16,10 +17,8 @@ header {
 	  	@include respond(mobile) {
 	  		padding: 1em 1em 1.5em 2em;
 	  	}
-	}
-	a {
-		&:hover {
-	  		font-weight: 600;
-	  	}
+	  	&:hover {
+			font-weight: 600;
+		}
 	}
 }

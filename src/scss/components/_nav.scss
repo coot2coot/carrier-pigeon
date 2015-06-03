@@ -26,6 +26,9 @@ nav {
 		&:hover {
 			@include blue-hover;
 		}
+		&.state {
+			@include blue-hover;
+		}
 	}
 	li.active {
 		color: red;

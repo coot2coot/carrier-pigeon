@@ -18,8 +18,7 @@ function connect (query) {
             cb(err);
             return;
         }
-
-        query(clt, done);
+        query( clt, done);
     });
 }
 
@@ -36,7 +35,7 @@ function postUsers (table, doc) {
     return query;
 }
 
-function postContacts (table, doc) {
+function postContactsReminders (table, doc) {
     var contacts = stringifyData(doc);
     var query = command()
                 .insertInto(table)
@@ -64,6 +63,8 @@ function postOrders (table, doc) {
     return query;
 }
 
+
+
 function editContacts (doc,clt,cb, done) {
     var query = getQuery.standard(doc);
 
@@ -82,6 +83,23 @@ function editContacts (doc,clt,cb, done) {
     });
 }
 
+function editReminders (doc,clt,cb, done) {
+    var query = getQuery.standard(doc);
+
+    clt.query(command()
+                .update("reminders")
+                .set(query)
+                .where("reminder_id ="  + doc.reminder_id)
+                .end(), function(err, result) {
+
+        done();
+
+        if (err) {
+            return console.log(err);
+        }
+        cb(null);
+    })
+}
 function editUsers (doc,clt,cb, done) {
     var updateUser = {
         first_name: doc.first_name,
@@ -209,10 +227,10 @@ dataBase.post = function (table, doc, cb){
 
         if (table === "users") {
             query = postUsers(table, doc);
-        } else if (table === "contacts"){
-            query = postContacts(table, doc);
-        } else {
+        } else if (table === "orders"){
             query = postOrders(table, doc);
+        } else {
+            query = postContactsReminders(table, doc);
         }
         
         client.query(query, function(err) {
@@ -234,11 +252,14 @@ dataBase.edit = function (table, doc, cb){
             editInvoices(doc, client, cb, done);
         } else if (table === 'contacts') {
             editContacts(doc, client, cb, done);
+        } else if (table ==='reminders') {
+            editReminders(doc,client,cb,done)
         } else {
             editOrders(doc, client, cb, done);
         }
     });
 };
+
 
 dataBase.remove = function (table, doc, cb){
     connect(function(client, done) {
@@ -246,6 +267,7 @@ dataBase.remove = function (table, doc, cb){
 
         column = table === "users" ? "username" : 
                 table === "units" ? "unit_id" : 
+                table === "reminders" ? "reminder_id" : 
                 table === "contacts" ? "contact_id" : "job_number";
 
         client.query(command()

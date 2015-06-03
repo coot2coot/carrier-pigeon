@@ -8,6 +8,7 @@ var ledgerTests     = require("./stories/ledger.e2e.js");
 var contactTests    = require("./stories/contacts.e2e.js");
 var orderTests      = require("./stories/orders.e2e.js");
 var bookingNoteTests= require("./stories/booking-note.e2e.js");
+var reminderTests	= require("./stories/reminder.e2e.js");
 
 var capabilites;
    
@@ -30,4 +31,5 @@ describe('', function() {
     ledgerTests(webdriver, capability);
     orderTests(webdriver, capability);
 	bookingNoteTests(webdriver, capability);
+	reminderTests(webdriver, capability);
 });
