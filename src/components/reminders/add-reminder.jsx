@@ -56,7 +56,7 @@ var addReminder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Contact</p>
-											<DataList contacts={this.props.contacts} contact={reminder ? reminder.contact: ""} contactType="contact" handleChange={edited} />
+											<DataList contacts={this.props.contacts} required={true} contact={reminder ? reminder.contact: ""} contactType="contact" handleChange={edited} />
 										</div>
 										<div className="column-8">
 											<p>Reminder Date </p>
