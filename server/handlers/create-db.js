@@ -3,10 +3,12 @@ var validateUser = require('../lib/validate-user.js');
 var validateOrder = require('../lib/validate-order.js').validate;
 var splitObject = require('../lib/split-orders-object.js');
 var db 			 = require("../db-config.js");
+var removes 		= require('../lib/removeQuotes.js');
 
 function create (req, res) {
 	
 	parseData(req, function (data) {
+		data = removes(data)
 		validateUser(req, res, function() {
 			if (data.new_unit) {
 				db.post('unit_types', data, function (err) {
