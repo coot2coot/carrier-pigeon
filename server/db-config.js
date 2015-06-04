@@ -126,6 +126,7 @@ function editUsers (doc,clt,cb, done) {
 
 function editOrders (doc,clt,cb, done) {
 
+
     var ordersQuery = getQuery.standard(doc.order);
     var unitsUpdateQuery = getQuery.update(doc.unit, "units", "unit_id").update;
     var unitsCreateQuery = getQuery.update(doc.unit, "units", "unit_id").create;

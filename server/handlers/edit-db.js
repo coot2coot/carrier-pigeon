@@ -5,6 +5,7 @@ var validateOrder= require('../lib/validate-order.js').validate;
 var validateUser = require('../lib/validate-user.js');
 var splitObject  = require('../lib/split-orders-object.js');
 var db 			 = require("../db-config.js");
+var removes 		= require('../lib/removeQuotes.js');
 
 var edit = {};
 
@@ -13,9 +14,9 @@ edit.orders = function (req, res, cb) {
 	var strng = data.replace(/\/order\/edit\//g, "");
 
 	parseData(req, function (data) {
+		data = removes(data)
 		validateOrder(data, res, function () {
 			validateUser(req, res, function() {
-
 				var splitData = splitObject(data);
 				splitData.unit_delete = strng;
 
@@ -46,6 +47,7 @@ edit.contactsReminders = function (req, res, cb) {
 		table = "reminders";
 	}
 	parseData(req, function (data) {
+		data = removes(data)
 		validateUser(req, res, function() {
 
 			db.edit(table, data, function (err) {
