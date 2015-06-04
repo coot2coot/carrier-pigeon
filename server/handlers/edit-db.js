@@ -17,7 +17,6 @@ edit.orders = function (req, res, cb) {
 		data = removes(data)
 		validateOrder(data, res, function () {
 			validateUser(req, res, function() {
-				a
 				var splitData = splitObject(data);
 				splitData.unit_delete = strng;
 
@@ -48,6 +47,7 @@ edit.contactsReminders = function (req, res, cb) {
 		table = "reminders";
 	}
 	parseData(req, function (data) {
+		data = removes(data)
 		validateUser(req, res, function() {
 
 			db.edit(table, data, function (err) {
