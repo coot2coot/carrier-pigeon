@@ -1,7 +1,9 @@
 function remove (object){
 	for( var prop in object){
-		var reg = /'/gi
-		object[prop] = object[prop].replace(reg,"''")
+		if(typeof object[prop] === 'string' ){
+			var reg = /'/gi
+			object[prop] = object[prop].replace(reg,"''")
+		}
 	}
 	return object;
 }
