@@ -6,6 +6,10 @@ input, select, textarea {
   	background: white;
 }
 
+.push-right {
+  padding-left: 0.5em
+}
+
 input, select, textarea {
   &[disabled] {
     border: none;
