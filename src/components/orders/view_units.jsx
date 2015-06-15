@@ -71,7 +71,7 @@ var units = React.createClass({
 				<div className="row">
 
 					<div className="column-2">
-						<input className="view_input" type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_nett_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
+						<input className="view_input" type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_net_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-2">
 						<input className="view_input" type="number" name="unit_gross_weight" step="any" defaultValue={unit.unit_gross_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
