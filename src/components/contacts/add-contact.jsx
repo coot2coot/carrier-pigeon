@@ -45,71 +45,75 @@ var addContact = React.createClass({
 							<div className="row gutters">
 								<div>
 									<div className="row">
-										<div className="column-8">
+										<div className="column-5">
 											<p>Company Name</p>
 											<input type="text" name="company_name" defaultValue={contact ? contact.company_name : ""} required/>
 										</div>
-										<div className="column-8">
+										<div className="column-5">
 											<p>VAT </p>
 											<input type="text" name="vat_number" defaultValue={contact ? contact.vat_number : ""}/>
 										</div>
+										<div className="column-6">
+											<p>Category</p>
+											<input type="text" name="category" defaultValue={contact ? contact.category : ""}/>
+										</div>
 									</div>
+
 									<div className="row">
-										<div className="column-16">
+										<div className="column-10">
 											<p>Address Line</p>
 											<input type="text" name="address_line" defaultValue={contact ? contact.address_line : ""}/>
-										</div>					
+										</div>	
+										<div className="column-6">
+											<p>City</p>
+											<input type="text" name="city"  defaultValue={contact ? contact.city : ""} />
+										</div>				
 									</div>
 									
 									<div className="row">
-										<div className="column-8">
-											<p>City</p>
-											<input type="text" name="city"  defaultValue={contact ? contact.city : ""} />
+										<div className="column-5">
+											<p>County</p>
+											<input type="text" name="county"  defaultValue={contact ? contact.county : ""} />
 										</div>
-										<div className="column-8">
+										<div className="column-5">
 											<p>Post Code</p>
 											<input type="text" name="postcode"  defaultValue={contact ? contact.postcode : ""} />
 										</div>
-									</div>
-
-									<div>
-										<div className="column-8">
+										<div className="column-6">
 											<p>Country</p>
 											<input type="text" name="country"  defaultValue={contact ? contact.country : ""} />
-										</div>
-										<div className="column-8">
-											<p>Contact Name</p>
-											<input type="text" name="name" defaultValue={contact ? contact.name : ""}  />
 										</div>
 									</div>
 
 									<div className="row">
-										<div className="column-8">
+										<div className="column-5">
+											<p>Contact Name</p>
+											<input type="text" name="name" defaultValue={contact ? contact.name : ""}  />
+										</div>
+										<div className="column-5">
 											<p>Telephone</p>
 											<input type="text" name="telephone" defaultValue={contact ? contact.telephone : ""}/>
 										</div>
-										<div className="column-8">
+										<div className="column-6">
 											<p>Email</p>
 											<input type="email" name="email" defaultValue={contact ? contact.email : ""}/>
 										</div>
 									</div>
 									
 									<div className="row">
-										<div className="column-8">
+										<div className="column-16">
 											<p>Remarks</p>
-											<input type="text" name="remarks" defaultValue={contact ? contact.remarks : ""}/>
-										</div>
-										<div className="column-8">
-											<p>Category</p>
-											<input type="text" name="category" defaultValue={contact ? contact.category : ""}/>
+											<textarea type="text" className="small" name="remarks" defaultValue={contact ? contact.remarks : ""} max="500"/>
 										</div>
 									</div>
+
 									<div className="row">
 										<div className="column-16">
 											<p>Sales Report</p>
 											<textarea className="big" max="500" name="sales_report" defaultValue={contact ? contact.sales_report : ""}/>
 										</div>
 									</div>
+
 									<input type="submit" className="button charcoal" value="Done" />
 								</div>
 							</div>

@@ -2,12 +2,10 @@
 
 var React  	= require('react/addons');
 var Router  = require('react-router');
-var Close = require("../close-warning.jsx");
-var Link    = Router.Link;
-
+var Close 	= require("../close-warning.jsx");
 var Units 	= require("./view_units.jsx");
 var Warning = require("../warning.jsx");
-var DataList = require("./data-list.jsx");
+var DataList= require("./data-list.jsx");
 
 var getJobNumber = require("../../lib/format-job-number.js");
 
