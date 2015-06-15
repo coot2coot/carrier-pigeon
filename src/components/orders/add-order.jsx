@@ -88,7 +88,7 @@ var addOrder = React.createClass({
 							<div className="row gutters">
 								<div>
 									<div className="row">
-										<div className="column-8">
+										<div className="column-3">
 											<p>Date</p>
 											<input type="date" name="date" min={today} defaultValue={this.state.dateValue} onChange={edited} required/>
 										</div>
