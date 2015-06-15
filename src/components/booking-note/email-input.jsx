@@ -16,7 +16,7 @@ var EmailInput = React.createClass({
                     </div>
                     <div className="panel-body">
                         <form onSubmit={this.props.sendEmail}>
-                            <input ref="emailInput" type="email" name="email" placeholder="email@example.com"/>
+                            <input type="email" name="email" placeholder="email@example.com"/>
                             <input type="submit" className="button charcoal" value="Submit"/>
                         </form>
                     </div>

@@ -51,8 +51,6 @@ var bookingNoteButtons = React.createClass({
     enterEmail: function () {
         this.setState({
             emailInput: true
-        }, function(){
-		React.findDOMNode(this.refs.emailInput).focus();
 		})
     },
 	
