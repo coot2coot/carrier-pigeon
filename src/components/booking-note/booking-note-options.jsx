@@ -51,9 +51,11 @@ var bookingNoteButtons = React.createClass({
     enterEmail: function () {
         this.setState({
             emailInput: true
-        })
+        }, function(){
+		React.findDOMNode(this.refs.emailInput).focus();
+		})
     },
-
+	
     render: function() {
         return (
             <links className="container">
@@ -63,7 +65,7 @@ var bookingNoteButtons = React.createClass({
                             Print
                         </a>
                         
-                        <a className="button blue" onClick={this.enterEmail}>
+						<a className="button blue" onClick={this.enterEmail}>
                             Email
                         </a>
                     </div>
