@@ -22,7 +22,7 @@ var searchBox = React.createClass({
 			<searchbox className="column-4 float-right">
 				<form onSubmit={this.handleSubmit}>
 					<input placeholder="Search ..." type="text" name="search" onChange={this.setSearchValue} />
-					<input className="button blue" type="submit" value="Submit" />
+					<button className="button blue add"><img src="../img/magnifying_glass.png"></img></button>
 				</form>
 			</searchbox>
 		)

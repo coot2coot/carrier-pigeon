@@ -88,7 +88,7 @@ var addOrder = React.createClass({
 							<div className="row gutters">
 								<div>
 									<div className="row">
-										<div className="column-8">
+										<div className="column-3">
 											<p>Date</p>
 											<input type="date" name="date" min={today} defaultValue={this.state.dateValue} onChange={edited} required/>
 										</div>
@@ -119,7 +119,7 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Collection From</p>
-											<textarea type="text" name="collect_from" max='500' defaultValue={order && order.collection_from ? order.collection_from : ""} onChange={this.ifEdited}/>
+											<textarea type="text" name="collect_from" max='500' defaultValue={order && order.collect_from ? order.collect_from : ""} onChange={this.ifEdited}/>
 										</div>	
 										<div className="column-8">
 											<p>Deliver To</p>
@@ -149,15 +149,15 @@ var addOrder = React.createClass({
 										</div>
 										<div className="column-4">
 											<p>Vessel</p>
-											<input type="text" name="vessel" defaultValue={order && order.vessel ? order.vessel : ""} onChange={this.ifEdited}/>
+											<input type="text" name="vessel" onChange={this.ifEdited}/>
 										</div>
 										<div className="column-3">
 											<p>ETS</p>
-											<input type="date" name="ets" defaultValue={order && order.ets ? order.ets.substring(0, 10) : ""} onChange={this.ifEdited}/>
+											<input type="date" name="ets" onChange={this.ifEdited}/>
 										</div>
 										<div className="column-3">
 											<p>ETA</p>
-											<input type="date" name="eta" defaultValue={order && order.eta ? order.eta.substring(0, 10) : ""} onChange={this.ifEdited}/>
+											<input type="date" name="eta" onChange={this.ifEdited}/>
 										</div>
 									</div>
 									

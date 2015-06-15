@@ -50,17 +50,17 @@
   &.reminder{
     top: 25%;
   };
-  	position: absolute;
-  	div.panel-body {
-  		padding: 0 1em 2em 1em;
-      max-height: 43em;
-      @include respond(small-height) {
-        max-height: 35em;
-      };
-      @include respond(extra-small-height) {
-        max-height: 30em;
-      };
-  	}
+	position: absolute;
+	div.panel-body {
+		padding: 0 1em 2em 1em;
+    max-height: 43em;
+    @include respond(small-height) {
+      max-height: 35em;
+    };
+    @include respond(extra-small-height) {
+      max-height: 30em;
+    };
+	}
 }
 
 p.small {
@@ -77,6 +77,11 @@ p.small {
     top: 0px;
     left: 0;
     background-color: rgba(50, 50, 50, 0.7);
+    .panel-body {
+      p {
+        font-weight: 600;
+      }
+    }
 }
 
 .view-order, .create-order {
