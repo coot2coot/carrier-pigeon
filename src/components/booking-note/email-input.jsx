@@ -4,8 +4,6 @@ var React  = require('react');
 
 var EmailInput = React.createClass({
 
-
-	
     render: function() {
         return (
             <div className="overlay">
@@ -16,7 +14,7 @@ var EmailInput = React.createClass({
                     </div>
                     <div className="panel-body">
                         <form onSubmit={this.props.sendEmail}>
-                            <input ref="emailInput" type="email" name="email" placeholder="email@example.com"/>
+						<input ref="emailInput" type="email" name="email" placeholder="email@example.com" autoFocus/>
                             <input type="submit" className="button charcoal" value="Submit"/>
                         </form>
                     </div>
