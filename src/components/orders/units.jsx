@@ -44,40 +44,38 @@ var units = React.createClass({
 
 				<div className="row">
 					<div className="column-2">
-						<p>Weight</p>
-					</div>
-					<div className="column-2">
 						<p>Net Weight</p>
 					</div>
 					<div className="column-2">
 						<p>Gross Weight</p>
 					</div>
-					<div className="column-2">
+					<div className="column-2 push-2 push-right">
 						<p>Volume (m3)</p>
 					</div>
-					<div className="column-4">
+					<div className="column-4 push-2 push-right">
 						<p>Commodity Description</p>
 					</div>
-					<div className="column-2">
+					<div className="column-2 push-2 push-right">
 						<p>No of Packages</p>
 					</div>
-					<div className="column-2">
+					<div className="column-2 push-2 push-right">
 						<p>Kind of Packages</p>
 					</div>
 				</div>
 
 				<div className="row">
-					<div className="column-2">
-						<select name="unit_weight" >
-							<option value= "kg">kg</option>
-							<option value= "tons">tons</option>
-						</select>
-					</div>
+					
 					<div className="column-2">
 						<input type="number" name="unit_net_weight" step="any" defaultValue={unit && unit.unit_net_weight ? unit.unit_net_weight : ""} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-2">
 						<input type="number" name="unit_gross_weight" step="any" defaultValue={unit && unit.unit_gross_weight ? unit.unit_gross_weight : ""} onChange={this.props.handleChange}/>
+					</div>
+					<div className="column-2">
+						<select name="unit_weight" >
+							<option value= "kg">kg</option>
+							<option value= "tons">tons</option>
+						</select>
 					</div>
 					<div className="column-2">
 						<input type="number" name="unit_volume" step="any" defaultValue={unit && unit.unit_volume ? unit.unit_volume : ""} onChange={this.props.handleChange}/>

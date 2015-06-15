@@ -49,40 +49,38 @@ var units = React.createClass({
 
 				<div className="row">
 					<div className="column-2">
-						<p>Weight</p>
-					</div>
-					<div className="column-2">
 						<p>Net Weight</p>
 					</div>
 					<div className="column-2">
 						<p>Gross Weight</p>
 					</div>
-					<div className="column-2">
+					<div className="column-2 push-2 push-right">
 						<p>Volume (m3)</p>
 					</div>
-					<div className="column-4">
+					<div className="column-4 push-2 push-right">
 						<p>Commodity Description</p>
 					</div>
-					<div className="column-2">
+					<div className="column-2 push-2 push-right">
 						<p>No of Packages</p>
 					</div>
-					<div className="column-2">
+					<div className="column-2 push-2 push-right">
 						<p>Kind of Packages</p>
 					</div>
 				</div>
 
 				<div className="row">
-					<div className="column-2" >
-						<select className="view_input" name="unit_weight" defaultValue={unit.unit_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}>
-							<option value= "kg">kg</option>
-							<option value= "tons">tons</option>
-						</select>
-					</div>
+
 					<div className="column-2">
 						<input className="view_input" type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_nett_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-2">
 						<input className="view_input" type="number" name="unit_gross_weight" step="any" defaultValue={unit.unit_gross_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
+					</div>
+					<div className="column-2" >
+						<select className="view_input" name="unit_weight" defaultValue={unit.unit_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}>
+							<option value= "kg">kg</option>
+							<option value= "tons">tons</option>
+						</select>
 					</div>
 					<div className="column-2">
 						<input className="view_input" type="number" name="unit_volume" step="any" defaultValue={unit.unit_volume} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
