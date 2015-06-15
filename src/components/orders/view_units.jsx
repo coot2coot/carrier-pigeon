@@ -86,7 +86,7 @@ var units = React.createClass({
 						<input className="view_input" type="number" name="unit_volume" step="any" defaultValue={unit.unit_volume} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-4">
-						<input className="view_input" type="text" name="unit_commodity_description" defaultValue={unit.unit_commodity_description} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
+						<textarea className="view_input small" type="text" name="unit_commodity_description" defaultValue={unit.unit_commodity_description} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange} max="500"/>
 					</div>
 					<div className="column-2">
 						<input className="view_input" type="number" name="unit_no_of_packages" defaultValue={unit.unit_no_of_packages} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}/>
