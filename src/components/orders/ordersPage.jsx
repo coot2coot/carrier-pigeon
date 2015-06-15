@@ -234,7 +234,7 @@ var ordersPage = React.createClass({
 						<button data-tooltip="Get last 90 days of orders" className="button blue add" onClick={this.get90}>90</button>
 						<button data-tooltip="Get todays orders" className="button blue add" onClick={this.getTodays}>T</button>
 						<button data-tooltip="Get this months orders" className="button blue add" onClick={this.getCm}>CM</button>
-						<button data-tooltip="Pick Date Range" className="button grey column-2 float-right " onClick={this.pickDate}>Date Range</button>
+						<button data-tooltip="Pick Date Range" className="button blue add" onClick={this.pickDate}>R</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
 					</div>
 					<div className="panel-body table-responsive scroll">
