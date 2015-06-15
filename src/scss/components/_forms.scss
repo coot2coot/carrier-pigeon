@@ -58,8 +58,12 @@ form.email-invite {
 }
 
 searchbox{
+  padding-top: 0.3em;
   input[type="text"]{
     width: 67%;  
+  }
+  img{
+      width: 1em;
   }
   input[type="submit"]{
     width: 30%;
