@@ -76,8 +76,6 @@ var addOrder = React.createClass({
 		var today 		= currentDate();
 		var edited 		= this.ifEdited;
 
-		console.log("collection_from", order.collect_from);
-
 		return (
 			<div className="overlay">
 				<div className="column-12 push-2 model-generic model-top create-order">
