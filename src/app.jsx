@@ -31,7 +31,9 @@ var Test = React.createClass({
 var routes = (
     <Route>  
         <Route name="orders" path="/orders" handler={Orders}>
-            <Route name="orderUpdate" path=":update" handler={Orders} />
+            <Route name="orderUpdate" path=":update" handler={Orders}>
+                <Route name="orderJobNumber" path=":job_no" handler={Orders}/>
+            </Route>
         </Route>
          <Route name="contacts" path="/contacts" handler={Contacts}>
             <Route name="contactUpdate" path=":update" handler={Contacts} />
