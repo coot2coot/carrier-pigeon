@@ -20,7 +20,8 @@ function createSession (details, callback) {
         username: details.username,
         admin: details.admin,
         first_name: details.first_name,
-        last_name: details.last_name
+        last_name: details.last_name,
+        email: details.email
     };
 
     var token = JWT.sign(payload, secret);

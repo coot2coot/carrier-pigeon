@@ -19,8 +19,9 @@ var bookingNoteButtons = React.createClass({
         );
 
         var data = {
+            order: JSON.stringify(this.props.order),
             attachment: component,
-            email: e.currentTarget[0].value,
+            email: e.currentTarget[0].value
         }
 
         $.post(getOrderUrl, data, function() {
