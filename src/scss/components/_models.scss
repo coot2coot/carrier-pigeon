@@ -19,6 +19,12 @@
     width:100%;
     background: $lightest-grey;
     border: 0.1em $light-grey solid;
+    @include respond(small-height) {
+      max-height: 25em;
+    };
+    @include respond(extra-small-height) {
+      max-height: 20em;
+    };
     p {
         margin-top: 0.7em;
     }

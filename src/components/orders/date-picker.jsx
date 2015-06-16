@@ -28,7 +28,7 @@ var datePicker = React.createClass({
 	render: function () {
 		return (
 			<datepicker className="pop-up container">
-				<div className="column-5 float-right">
+				<div className="column-5 float-left">
 					
 					<div className="row">
 						<p className="column-4">From: </p>
