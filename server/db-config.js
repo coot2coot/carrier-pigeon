@@ -59,6 +59,10 @@ function postOrders (table, doc) {
                 .insertInto('units')
                 .columns(units.columns)
                 .values(units.values)
+                .next()
+                .select("job_number")
+                .from("orders")
+                .where("job_number =(select max(job_number) from orders)")
                 .end();
 
     return query;
@@ -235,13 +239,13 @@ dataBase.post = function (table, doc, cb){
             query = postContactsReminders(table, doc);
         }
         
-        client.query(query, function(err) {
+        client.query(query, function(err, result) {
             done();
 
             if (err) {
                 return cb(err);
             }
-            cb(null);
+            cb(null, result);
         });
     });
 };

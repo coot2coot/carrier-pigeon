@@ -45,8 +45,12 @@ var ordersPage = React.createClass({
     },
 
 	componentDidMount: function() {
-		this.getTodays();
 	    this.getContacts();
+	    if(this.props.params.job_no){
+	    	this.getSearchedOrders(getJobNumber(this.props.params.job_no))	    	
+	    } else {
+	    	this.getTodays();
+	    }
 	},
 
 	onCloseComponent: function () {

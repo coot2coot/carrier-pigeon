@@ -28,7 +28,7 @@ function create (req, res) {
 			} else {
 				validateOrder(data, res, function () {
 					var splitData = splitObject(data);
-					db.post('orders', splitData, function (err) {
+					db.post('orders', splitData, function (err, jobNumber) {
 						if (err) {
 							console.log(err)
 							res.writeHead(500);
@@ -37,7 +37,7 @@ function create (req, res) {
 						}
 						else {
 							res.writeHead(303, {
-								"Location": "/#/orders/true"
+								"Location": "/#/orders/true/" + jobNumber.rows[0].job_number
 							});
 							res.end();
 						}
