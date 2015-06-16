@@ -1,12 +1,9 @@
 /** @jsx React.DOM */
 
-var React = require('react');
+var React 		= require('react');
+var Invoices 	= require("./invoice-register.jsx");
+var Warning 	= require("../close-warning.jsx");
 
-var Invoices = require("./invoice-register.jsx");
-var Warning = require("../close-warning.jsx");
-
-// for now profit will be the sales invoices - purchase invoices.
-// TODO: find out the real calculation of proffit.
 function getAmount (arr) {
   	var i;
   	var length = arr.length;

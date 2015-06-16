@@ -81,7 +81,7 @@ var units = React.createClass({
 						<input type="number" name="unit_volume" step="any" defaultValue={unit && unit.unit_volume ? unit.unit_volume : ""} onChange={this.props.handleChange}/>
 					</div>
 					<div className="column-4">
-						<input type="text" name="unit_commodity_description" defaultValue={unit && unit.unit_commodity_description ? unit.unit_commodity_description : ""} onChange={this.props.handleChange}/>
+						<textarea type="text" className="small" name="unit_commodity_description" defaultValue={unit && unit.unit_commodity_description ? unit.unit_commodity_description : ""} onChange={this.props.handleChange} max="500"/>
 					</div>
 					<div className="column-2">
 						<input type="number" name="unit_no_of_packages" defaultValue={unit && unit.unit_no_of_packages ? unit.unit_no_of_packages : ""} onChange={this.props.handleChange}/>
