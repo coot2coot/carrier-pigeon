@@ -11,13 +11,14 @@ var domain = process.env.MAIL_GUN_DOMAIN || require("../../credentials.json").ma
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 function sendBookingNote (attachment, email, order, sender) {
+    var attch = new mailgun.Attachment({data: attachment, filename: "booking-request.pdf"});
 
     var data = {
         from: 'Coot Freight Ltd <noreply@cootfreight.co.uk>',
         to: email,
         subject: formatJobId(order.job_number) + ' - Booking Request from Coot Freight',
         html: require('../email/booking-note.js')(order, sender),
-        attachment: attachment
+        attachment: attch
     }
 
     mailgun.messages().send(data, function (err, body) {
