@@ -17,8 +17,10 @@ function invitationString (logins) {
   					'padding: 0;' +
 	  			'}' +
 				'h2, p {' +
-					'text-align: center;' +
 					'color: black;' +
+				'}' +
+				'p {' +
+				'font-size: 14px;' +
 				'}' +
 	  		'</style>' +
 		'</head>' +
