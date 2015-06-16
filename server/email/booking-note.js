@@ -1,6 +1,9 @@
-var url = "http://carrierpigeonfac-se-env.elasticbeanstalk.com/";
+var url 		= "http://carrierpigeonfac-se-env.elasticbeanstalk.com/";
+var formatJobId = require('../../src/lib/format-job-number.js');
 
 function bookingRequestEmail (order, sender) {
+	var jobNumber 	= formatJobId(order.job_number);
+	
 	var string = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' +
 	'<html xmlns="http://www.w3.org/1999/xhtml">' +
 	 	'<head>' +
@@ -11,7 +14,7 @@ function bookingRequestEmail (order, sender) {
 	  			'body {' +
 				  	'font-family: arial, sans-serif;' +
 				  	'margin: 0;' +
-  					'padding-left: 20px;' +
+  					'padding-left: 30px;' +
 	  			'}' +
 				'h2, p {' +
 					'color: black;' +
@@ -24,8 +27,9 @@ function bookingRequestEmail (order, sender) {
 		'<body>' +
 			'<div>' +
 				'<p>Hi,</pp>' +
-				'<p>Please find attached the booking request.</pp>' +
-				'<p>Please confirm details by emailing ' + sender + '</p>' +
+				'<p>Please find attached the booking request for order ' + jobNumber + '.</pp>' +
+				'<p>Please confirm details by replying to ' + sender + '</p>' +
+				'<br>' +
 				'<p>Yours Sincerely,</p>' +
 				'<p>Coot Freight Ltd</p>' +
 			'</div>' +

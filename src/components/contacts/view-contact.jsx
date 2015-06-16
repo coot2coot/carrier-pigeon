@@ -2,8 +2,7 @@
 
 var React  	= require('react/addons');
 var Router  = require('react-router');
-var Close = require("../close-warning.jsx");
-var Link    = Router.Link;
+var Close 	= require("../close-warning.jsx");
 var Warning = require("../warning.jsx");
 
 
@@ -111,65 +110,69 @@ var viewOrder = React.createClass({
 							<input className="display-none" name="contact_id" defaultValue= {this.props.contact ? this.props.contact.contact_id : ""}></input>
 							<div className="row gutters">
 								<div>
+
 									<div className="row">
-										<div className="column-8">
+										<div className="column-5">
 											<p>Company Name</p>
 											<input type="text" name="company_name" defaultValue={this.props.contact ? this.props.contact.company_name : ""} disabled={viewing ? true : false} required/>
 										</div>
-										<div className="column-8">
+										<div className="column-5">
 											<p>VAT </p>
 											<input type="text" name="vat_number" defaultValue={this.props.contact ? this.props.contact.vat_number : ""} disabled={viewing ? true : false}/>
 										</div>
+										<div className="column-6">
+											<p>Category</p>
+											<input type="text" name="category" defaultValue={this.props.contact ? this.props.contact.category : ""} disabled={viewing ? true : false}/>
+										</div>
 									</div>
+
 									<div className="row">
-										<div className="column-16">
+										<div className="column-10">
 											<p>Address Line</p>
 											<input type="text" name="address_line" defaultValue={this.props.contact ? this.props.contact.address_line : ""}disabled={viewing ? true : false}/>
-										</div>					
+										</div>	
+										<div className="column-6">
+											<p>City</p>
+											<input type="text" name="city"  defaultValue={this.props.contact ? this.props.contact.city : ""} disabled={viewing ? true : false}/>
+										</div>				
 									</div>
 									
 									<div className="row">
-										<div className="column-8">
-											<p>City</p>
-											<input type="text" name="city"  defaultValue={this.props.contact ? this.props.contact.city : ""} disabled={viewing ? true : false}/>
+										<div className="column-5">
+											<p>County</p>
+											<input type="text" name="county"  defaultValue={this.props.contact ? this.props.contact.county : ""} disabled={viewing ? true : false} />
 										</div>
-										<div className="column-8">
+										<div className="column-5">
 											<p>Post Code</p>
 											<input type="text" name="postcode"  defaultValue={this.props.contact ? this.props.contact.postcode : ""} disabled={viewing ? true : false}/>
 										</div>
-									</div>
-
-									<div>
-										<div className="column-8">
+										<div className="column-6">
 											<p>Country</p>
 											<input type="text" name="country"  defaultValue={this.props.contact ? this.props.contact.country : ""} disabled={viewing ? true : false} />
-										</div>
-										<div className="column-8">
-											<p>Contact Name</p>
-											<input type="text" name="name" defaultValue={this.props.contact ? this.props.contact.name : ""} disabled={viewing ? true : false} />
 										</div>
 									</div>
 
 									<div className="row">
-										<div className="column-8">
+										<div className="column-5">
+											<p>Contact Name</p>
+											<input type="text" name="name" defaultValue={this.props.contact ? this.props.contact.name : ""} disabled={viewing ? true : false} />
+										</div>
+										<div className="column-5">
 											<p>Telephone</p>
 											<input type="text" name="telephone" defaultValue={this.props.contact ? this.props.contact.telephone : ""} disabled={viewing ? true : false}/>
 										</div>
-										<div className="column-8">
+										<div className="column-6">
 											<p>Email</p>
 											<input type="email" name="email" defaultValue={this.props.contact ? this.props.contact.email : ""} disabled={viewing ? true : false}/>
 										</div>
 									</div>
 									
 									<div className="row">
-										<div className="column-8">
+										<div className="column-16">
 											<p>Remarks</p>
-											<input type="text" name="remarks" defaultValue={this.props.contact ? this.props.contact.remarks : ""} disabled={viewing ? true : false}/>
+											<textarea type="text" className="small" name="remarks" defaultValue={this.props.contact ? this.props.contact.remarks : ""} disabled={viewing ? true : false} max="500"/>
 										</div>
-										<div className="column-8">
-											<p>Category</p>
-											<input type="text" name="category" defaultValue={this.props.contact ? this.props.contact.category : ""} disabled={viewing ? true : false}/>
-										</div>
+										
 									</div>
 									<div className="row">
 										<div className="column-16">

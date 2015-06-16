@@ -2,12 +2,12 @@
 
 var React  	= require('react/addons');
 var Router  = require('react-router');
-var Close = require("../close-warning.jsx");
-var Link    = Router.Link;
+var Link   	= Router.Link;
 
+var Close 	= require("../close-warning.jsx");
 var Units 	= require("./view_units.jsx");
 var Warning = require("../warning.jsx");
-var DataList = require("./data-list.jsx");
+var DataList= require("./data-list.jsx");
 
 var getJobNumber = require("../../lib/format-job-number.js");
 
@@ -21,6 +21,12 @@ var viewOrder = React.createClass({
         edited: false
       };
     },
+
+    closeDeleteView: function() {
+    	this.setState({
+    		deleteOrder: false
+    	})
+	},
 
     closeView: function() {
     	if (this.state.viewing || !this.state.edited) {
@@ -53,7 +59,7 @@ var viewOrder = React.createClass({
 
 	deleteHandler: function (item) {
 		this.setState({
-			deleteUser: item
+			deleteOrder: item
 		})
 	},
 
@@ -145,8 +151,8 @@ var viewOrder = React.createClass({
 		return (
 			<div className="overlay">
 				<div>
-					{( this.state.deleteUser
-	                    ? <Warning message="Delete this order?" order={this.props.order} url={"/order/delete/" + this.props.order.job_number} closeView={this.onCloseComponent}/>
+					{( this.state.deleteOrder
+	                    ? <Warning message="Delete this order?" order={this.props.order} url={"/order/delete/" + this.props.order.job_number} closeView={this.closeDeleteView}/>
 	                    : <p></p>
 	                )}
                 </div>
