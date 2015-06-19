@@ -59,11 +59,15 @@ form.email-invite {
 
 searchbox{
   padding-top: 0.3em;
+  button {
+    height:1.8em;
+  }
   input[type="text"]{
     width: 67%;  
   }
   img{
       width: 1em;
+      padding-top: 2.5px;
   }
   input[type="submit"]{
     width: 30%;
