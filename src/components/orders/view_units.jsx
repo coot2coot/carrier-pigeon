@@ -79,7 +79,7 @@ var units = React.createClass({
 					<div className="column-2" >
 						<select className="view_input" name="unit_weight" defaultValue={unit.unit_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange}>
 							<option value= "kg">kg</option>
-							<option value= "tons">tons</option>
+							<option value= "tons">T</option>
 						</select>
 					</div>
 					<div className="column-2">
