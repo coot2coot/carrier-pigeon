@@ -9,6 +9,7 @@ var SearchBox 	= require("./search-box.jsx");
 var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
 var Ledger      = require("../ledger/ledger.jsx");
+var contactStore= require("../../savingContacts");
 
 var sorts      	 = require("../../lib/order-by-job-number.js");
 var getJobNumber = require("../../lib/format-job-number.js");
@@ -22,26 +23,16 @@ var ordersPage = React.createClass({
       };
     },
 
+    setContacts : function (contact) {
+    	if (this.isMounted()) {
+        	this.setState({
+          		contacts : contact
+        	});
+      	}
+    },
+
     getContacts : function () {
-    	var getContactUrl = "/contacts/get";
-    	if (window.location.href.indexOf('true') > -1 ) {
-			getContactUrl = "/contacts/get/nocache"
-		}
-    	$.get(getContactUrl, function(result) {
-	    	if(result !== ""){
-		    	var contact = JSON.parse(result);
-
-		      	if (this.isMounted()) {
-		        	this.setState({
-		          		contacts : contact
-		        	});
-		      	}
-		    }
-	    }.bind(this))
-	    .fail(function () {
-	    	"get request failed"
-	    });
-
+		contactStore.get(this.setContacts);
     },
 
 	componentDidMount: function() {
@@ -106,6 +97,7 @@ var ordersPage = React.createClass({
 	        return seen.hasOwnProperty(order.job_number) ? false : (seen[order.job_number] = true);
 	    });
 	},
+
 	getSearchedOrders: function (value) {
 
 		var getUrl = "/search/orders/" + value;

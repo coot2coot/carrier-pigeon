@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Warning = require("../close-warning.jsx");	
+var contactStore= require("../../savingContacts");
 
 var addContact = React.createClass({
 	getInitialState: function() {
@@ -10,6 +11,10 @@ var addContact = React.createClass({
 	    	closeView: false,
 	    	units: null
 	    };
+	},
+
+	refreshContacts: function () {
+		contactStore.refresh();
 	},
 
 	closeView: function() {
@@ -114,7 +119,7 @@ var addContact = React.createClass({
 										</div>
 									</div>
 
-									<input type="submit" className="button charcoal" value="Done" />
+									<input type="submit" className="button charcoal" value="Done"s/>
 								</div>
 							</div>
 						</form>
