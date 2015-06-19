@@ -107,11 +107,15 @@ var contactsPage = React.createClass({
 						<button data-tooltip="Add contact" className="button add blue" onClick={this.addContact}>+</button>
 						<SearchBox getorders= {this.getSearchedContacts} />
 					</div>
-					<div className="panel-body table-responsive scroll">
+					<div className="panel-body table-head">
 						<table className="table table-full">
 							<th>
 								<h5>Company Name</h5>
 							</th>
+						</table>
+					</div>
+					<div className="panel-body table-responsive scroll">
+						<table className="table table-full">
 							<tbody>
 
 						  		{ this.state.contacts.map(function (contact, i) {

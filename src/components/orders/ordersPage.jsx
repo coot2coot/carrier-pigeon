@@ -241,39 +241,42 @@ var ordersPage = React.createClass({
 						<button data-tooltip="Pick Date Range" className="button blue add" onClick={this.pickDate}>R</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
 					</div>
-					<div className="panel-body table-responsive scroll">
+					<div className="panel-body table-head">
 						<table className="table table-full">
 							{this.state.orders
 						  		?<tr><th><h5>Job No.</h5></th><th><h5>Client</h5></th><th><h5>Carrier</h5></th><th><h5>Ledger</h5></th></tr>
 								:<th><h5>Sorry there are no orders for today</h5></th>
-							}
+							}							
+						</table>
+					</div>
+					<div className="panel-body table-responsive scroll">
+						<table className="table table-full ">
 							<tbody>
-
-						  	{this.state.orders
-						  		? this.state.orders.map(function (order, i) {
-							        return <tr>
-							            		<td key={i + "first"}>
-							            			<a onClick={orderHandler.bind(null, order)}>
-							            				<p>{getJobNumber(order.job_number)}</p>
-							            			</a>
-							            		</td>
-												<td key={i + "second"}>
-													<a onClick={orderHandler.bind(null, order)}>
-														<p>{order.client}</p>
-													</a>
-												</td>
-												<td key={i + "third"}>
-													<a onClick={orderHandler.bind(null, order)}>
-														<p>{order.carrier}</p>
-													</a>
-												</td>
-												<td key={i + "fourth"}>
-													<a onClick={ledgerHandler.bind(null, order)}>ledger</a>
-												</td>
-											</tr>
-							    })
-								:<tr><td><p></p></td></tr>
-						  	}
+							  	{this.state.orders
+							  		? this.state.orders.map(function (order, i) {
+								        return <tr>
+								            		<td key={i + "first"}>
+								            			<a onClick={orderHandler.bind(null, order)}>
+								            				<p>{getJobNumber(order.job_number)}</p>
+								            			</a>
+								            		</td>
+													<td key={i + "second"}>
+														<a onClick={orderHandler.bind(null, order)}>
+															<p>{order.client}</p>
+														</a>
+													</td>
+													<td key={i + "third"}>
+														<a onClick={orderHandler.bind(null, order)}>
+															<p>{order.carrier}</p>
+														</a>
+													</td>
+													<td key={i + "fourth"}>
+														<a onClick={ledgerHandler.bind(null, order)}>ledger</a>
+													</td>
+												</tr>
+								    })
+									:<tr><td><p></p></td></tr>
+							  	}
 
 							</tbody>
 						</table>
