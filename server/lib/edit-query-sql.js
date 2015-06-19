@@ -23,7 +23,7 @@ function getRightValue(item, property, i) {
 
 	var val = (prop === "")
 		? "null"
-		: (property === "amount" || property === "invoice_number")
+		: (property === "amount")
 		? prop
 		: "'" + prop + "'";
 

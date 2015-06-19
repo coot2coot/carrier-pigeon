@@ -28,10 +28,23 @@ invoice.createOne = function() {
   	return mock;
 }
 
+invoice.another = function() {
+	var mock = { 
+		amount: [ '1000.00', '500', '1232.00', '3242' ],
+  		invoice_number: [ 'DELETE', 'XDELETE', 'DELETE', 'DELETE' ],
+  		invoice_id: [ '62', '', '63', '' ],
+  		type: [ 'purchase', 'purchase', 'sales', 'sales' ],
+  		currency: [ '£', '£', '£', '£' ],
+  		job_number: [ '151', '151', '151', '151' ] 
+  	}
+
+  return mock;
+}
+
 invoice.createTest = function() {
 	var result = "INSERT INTO invoice " + 
 				"(amount,invoice_number,type,currency,job_number) " + 
-				"VALUES (0.04,5,'purchase','£',317); ";
+				"VALUES (0.04,'5','purchase','£',317); ";
 
 	return result;
 }
@@ -55,6 +68,19 @@ invoice.updateTest = function() {
 invoice.deleteTest = function() {
 	var result = "DELETE FROM invoice WHERE invoice_id = 6;DELETE FROM invoice WHERE invoice_id =  7;";
 
+	return result;
+}
+
+invoice.anotherTest = function() {
+	var result = { 
+		create: "INSERT INTO invoice (amount,invoice_number,type,currency,job_number) " +
+				"VALUES (500,'XDELETE','purchase','£',151); INSERT INTO invoice " +
+				"(amount,invoice_number,type,currency,job_number) VALUES (3242,'DELETE','sales','£',151); ", 
+		update: "UPDATE invoice SET amount='1000.00',invoice_number='DELETE'," +
+				"type='purchase',currency='£' WHERE invoice_id=62; UPDATE invoice SET " +
+				"amount='1232.00',invoice_number='DELETE',type='sales',currency='£' " +
+				"WHERE invoice_id=63; "
+	}
 	return result;
 }
 

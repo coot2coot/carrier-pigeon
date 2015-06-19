@@ -158,6 +158,16 @@ test('Testing that if there is nothing to update, no update query will comeback 
 	t.end();
 });
 
+test('Another Test, fixing a bug', function (t) {
+	var data = invoiceMocks.another();
+  	var queries = updateQuery(data, "invoice", "invoice_id");
+  	var result = invoiceMocks.anotherTest();
+
+	t.equals( queries.update, result.update );
+	t.equals( queries.create, result.create );
+	t.end();
+});
+
 
 
 /********************************
