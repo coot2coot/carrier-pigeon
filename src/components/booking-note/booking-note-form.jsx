@@ -11,7 +11,7 @@ var table = {
 }
 
 var th = {
-    fontSize: "11px",
+    fontSize: "10px",
     border: "1px black solid",
     padding: "2px 0",
     background: "none",

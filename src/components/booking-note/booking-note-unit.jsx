@@ -5,13 +5,13 @@ var React  = require('react');
 var td = {
     border: "none",
     borderRight: "1px black solid",
-    fontSize: "10px",
+    fontSize: "11px",
     padding: "2px"
 }
 
 var tdRight = {
     border: "none",
-    fontSize: "10px",
+    fontSize: "11px",
     padding: "2px"
 }
 
