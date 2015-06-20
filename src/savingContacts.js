@@ -31,13 +31,6 @@
 		        success: function (data) {
 		        	contacts.store = JSON.parse(data)
 		        	cb(contacts.store);
-
-		        contacts.store.map(function(item){
-				
-					if(item.company_name !== null){
-						console.log("first ==>",item.company_name)
-					}
-				})
 		        	return contacts.store
 		        }
 		    });

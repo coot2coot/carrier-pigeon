@@ -23,20 +23,7 @@ var ordersPage = React.createClass({
       };
     },
 
-    setContacts : function (contact) {
-    	if (this.isMounted()) {
-        	this.setState({
-          		contacts : contact
-        	});
-      	}
-    },
-
-    getContacts : function () {
-		contactStore.get(this.setContacts);
-    },
-
 	componentDidMount: function() {
-	    this.getContacts();
 	    if(this.props.params.job_no){
 	    	this.getSearchedOrders(getJobNumber(this.props.params.job_no))	    	
 	    } else {
@@ -273,11 +260,11 @@ var ordersPage = React.createClass({
 				</div>
 
 				{(this.state.selectedOrder
-                    ? <ViewOrder contacts={this.state.contacts} order={this.state.selectedOrder} copy={this.copyOrder} closeView={this.onCloseComponent}/>
+                    ? <ViewOrder  order={this.state.selectedOrder} copy={this.copyOrder} closeView={this.onCloseComponent}/>
                     : this.state.creatingOrder && this.state.newOrder
-                    ? <CreateOrder contacts={this.state.contacts} closeView={this.onCloseComponent}/>
+                    ? <CreateOrder closeView={this.onCloseComponent}/>
                     : this.state.creatingOrder
-                    ? <CreateOrder contacts={this.state.contacts} copiedOrder={this.state.copiedOrder} units={this.state.copiedUnits} closeView={this.onCloseComponent}/>
+                    ? <CreateOrder  copiedOrder={this.state.copiedOrder} units={this.state.copiedUnits} closeView={this.onCloseComponent}/>
                     : this.state.datePicker
                     ? <Datepicker getorders={this.getDateOrders} closeView={this.onCloseComponent}/>
                     : this.state.ledger
