@@ -9,7 +9,6 @@ var SearchBox 	= require("./search-box.jsx");
 var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
 var Ledger      = require("../ledger/ledger.jsx");
-var contactStore= require("../../savingContacts");
 
 var sorts      	 = require("../../lib/order-by-job-number.js");
 var getJobNumber = require("../../lib/format-job-number.js");
