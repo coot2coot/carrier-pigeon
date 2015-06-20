@@ -7,6 +7,10 @@ table.table th, table.table td {
   padding: 0.5em;
 }
 
+table {
+	  table-layout: fixed;
+}
+
 td {
 	&.green{
 		background-color: rgb(119, 76, 158);

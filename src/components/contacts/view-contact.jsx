@@ -10,9 +10,11 @@ var viewOrder = React.createClass({
 	getInitialState: function() {
       return {
         viewing: true,
-        closeView: false
+        closeView: false,
+        edited: false,
       };
     },
+
     deleteHandler: function (item) {
 		this.setState({
 			deleteContact: item
@@ -26,18 +28,9 @@ var viewOrder = React.createClass({
 	}, 
 
     closeView: function() {
-    	if (this.state.viewing) {
-    		this.props.closeView()
-			this.setState({
-	    		closeView: false
-	    	})
-    	}
-		if(this.state.closeView){
+		if(this.state.closeView || this.state.viewing || !this.state.edited){
 			this.props.closeView()
-			this.setState({
-	    		closeView: false
-	    	})
-	    }else{
+	    } else {
 		    this.setState({
 	    		closeView: true
 	    	})
@@ -56,25 +49,6 @@ var viewOrder = React.createClass({
 		})
 	},
 
-	componentWillMount: function() {
-		var getContactUrl = "/contacts/" + this.props.contact.contact_id;
-
-	    $.get(getContactUrl, function(result) {
-	    	if(result !== ""){
-		    	var contact = JSON.parse(result);
-		    	
-		      	if (this.isMounted()) {
-		        	this.setState({
-		          		contacts : contact,
-		        	});
-		      	}
-		    }
-	    }.bind(this))
-	    .fail(function () {
-	    	"get units request failed"
-	    });
-	},
-
 	edit: function () {
 		if(this.state.viewing === true){
 			this.setState({
@@ -86,9 +60,17 @@ var viewOrder = React.createClass({
 			});
 		}
 	},
+	ifEdited: function(e) {
+  		if (!this.state.edited) {
+  			this.setState({
+	  			edited: true
+	  		})
+  		}
+  	},
 
 	render: function() {
 		var viewing = this.state.viewing;
+		var edited = this.ifEdited;
 
 		return (
 
@@ -107,77 +89,77 @@ var viewOrder = React.createClass({
 					</div>
 					<div className="panel-body scroll">
 						<form action={"/contacts/edit"} method="POST">
-							<input className="display-none" name="contact_id" defaultValue= {this.props.contact ? this.props.contact.contact_id : ""}></input>
+							<input className="display-none" name="contact_id" defaultValue= {this.props.contact ? this.props.contact.contact_id : ""} onChange={edited}></input>
 							<div className="row gutters">
 								<div>
 
 									<div className="row">
 										<div className="column-5">
 											<p>Company Name</p>
-											<input type="text" name="company_name" defaultValue={this.props.contact ? this.props.contact.company_name : ""} disabled={viewing ? true : false} required/>
+											<input type="text" name="company_name" defaultValue={this.props.contact ? this.props.contact.company_name : ""} disabled={viewing ? true : false} onChange={edited} required/>
 										</div>
 										<div className="column-5">
 											<p>VAT </p>
-											<input type="text" name="vat_number" defaultValue={this.props.contact ? this.props.contact.vat_number : ""} disabled={viewing ? true : false}/>
+											<input type="text" name="vat_number" defaultValue={this.props.contact ? this.props.contact.vat_number : ""} disabled={viewing ? true : false} onChange={edited}/>
 										</div>
 										<div className="column-6">
 											<p>Category</p>
-											<input type="text" name="category" defaultValue={this.props.contact ? this.props.contact.category : ""} disabled={viewing ? true : false}/>
+											<input type="text" name="category" defaultValue={this.props.contact ? this.props.contact.category : ""} disabled={viewing ? true : false} onChange={edited}/>
 										</div>
 									</div>
 
 									<div className="row">
 										<div className="column-10">
 											<p>Address Line</p>
-											<input type="text" name="address_line" defaultValue={this.props.contact ? this.props.contact.address_line : ""}disabled={viewing ? true : false}/>
+											<input type="text" name="address_line" defaultValue={this.props.contact ? this.props.contact.address_line : ""}disabled={viewing ? true : false} onChange={edited}/>
 										</div>	
 										<div className="column-6">
 											<p>City</p>
-											<input type="text" name="city"  defaultValue={this.props.contact ? this.props.contact.city : ""} disabled={viewing ? true : false}/>
+											<input type="text" name="city"  defaultValue={this.props.contact ? this.props.contact.city : ""} disabled={viewing ? true : false} onChange={edited}/>
 										</div>				
 									</div>
 									
 									<div className="row">
 										<div className="column-5">
 											<p>County</p>
-											<input type="text" name="county"  defaultValue={this.props.contact ? this.props.contact.county : ""} disabled={viewing ? true : false} />
+											<input type="text" name="county"  defaultValue={this.props.contact ? this.props.contact.county : ""} disabled={viewing ? true : false} onChange={edited} />
 										</div>
 										<div className="column-5">
 											<p>Post Code</p>
-											<input type="text" name="postcode"  defaultValue={this.props.contact ? this.props.contact.postcode : ""} disabled={viewing ? true : false}/>
+											<input type="text" name="postcode"  defaultValue={this.props.contact ? this.props.contact.postcode : ""} disabled={viewing ? true : false} onChange={edited}/>
 										</div>
 										<div className="column-6">
 											<p>Country</p>
-											<input type="text" name="country"  defaultValue={this.props.contact ? this.props.contact.country : ""} disabled={viewing ? true : false} />
+											<input type="text" name="country"  defaultValue={this.props.contact ? this.props.contact.country : ""} disabled={viewing ? true : false} onChange={edited} />
 										</div>
 									</div>
 
 									<div className="row">
 										<div className="column-5">
 											<p>Contact Name</p>
-											<input type="text" name="name" defaultValue={this.props.contact ? this.props.contact.name : ""} disabled={viewing ? true : false} />
+											<input type="text" name="name" defaultValue={this.props.contact ? this.props.contact.name : ""} disabled={viewing ? true : false} onChange={edited} />
 										</div>
 										<div className="column-5">
 											<p>Telephone</p>
-											<input type="text" name="telephone" defaultValue={this.props.contact ? this.props.contact.telephone : ""} disabled={viewing ? true : false}/>
+											<input type="text" name="telephone" defaultValue={this.props.contact ? this.props.contact.telephone : ""} disabled={viewing ? true : false} onChange={edited}/>
 										</div>
 										<div className="column-6">
 											<p>Email</p>
-											<input type="email" name="email" defaultValue={this.props.contact ? this.props.contact.email : ""} disabled={viewing ? true : false}/>
+											<input type="email" name="email" defaultValue={this.props.contact ? this.props.contact.email : ""} disabled={viewing ? true : false} onChange={edited}/>
 										</div>
 									</div>
 									
 									<div className="row">
 										<div className="column-16">
 											<p>Remarks</p>
-											<textarea type="text" className="small" name="remarks" defaultValue={this.props.contact ? this.props.contact.remarks : ""} disabled={viewing ? true : false} max="500"/>
+											<textarea type="text" className="small" name="remarks" defaultValue={this.props.contact ? this.props.contact.remarks : ""} disabled={viewing ? true : false} max="500" onChange={edited}/>
 										</div>
 										
 									</div>
 									<div className="row">
 										<div className="column-16">
 											<p>Sales Report</p>
-											<textarea className="big" max="500" name="sales_report" defaultValue={this.props.contact ? this.props.contact.sales_report : ""} disabled={viewing ? true : false}/>
+											<textarea className="big" max="500" name="sales_report" defaultValue={this.props.contact ? this.props.contact.sales_report : ""} disabled={viewing ? true : false} onChange={edited}/>
 										</div>
 									</div>
 									<input type="submit" className="button charcoal" value="Done" disabled={viewing ? true : false}/>
@@ -186,8 +168,8 @@ var viewOrder = React.createClass({
 						</form>
 					</div>
 				</div>	
-				{( this.state.closeView
-                    ? <Close message="Do you want to close without saving?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
+				{( this.state.closeView 
+                    ?<Close message="Do you want to close without saving?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}			
 			</div>

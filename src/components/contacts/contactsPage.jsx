@@ -107,11 +107,24 @@ var contactsPage = React.createClass({
 						<button data-tooltip="Add contact" className="button add blue" onClick={this.addContact}>+</button>
 						<SearchBox getorders= {this.getSearchedContacts} />
 					</div>
-					<div className="panel-body table-responsive scroll">
+					<div className="panel-body table-head">
 						<table className="table table-full">
 							<th>
 								<h5>Company Name</h5>
 							</th>
+							<th>
+								<h5>Category</h5>
+							</th>
+							<th>
+								<h5>City</h5>
+							</th>
+							<th>
+								<h5>Post Code</h5>
+							</th>
+						</table>
+					</div>
+					<div className="panel-body table-responsive scroll">
+						<table className="table table-full">
 							<tbody>
 
 						  		{ this.state.contacts.map(function (contact, i) {
@@ -119,6 +132,21 @@ var contactsPage = React.createClass({
 							            		<td key={i + "first"}>
 							            			<a onClick={contactHandler.bind(null, contact)}>
 							            				<p>{contact.company_name}</p>
+							            			</a>
+							            		</td>
+							            		<td key={i + "second"}>
+							            			<a onClick={contactHandler.bind(null, contact)}>
+							            				<p>{contact.category}</p>
+							            			</a>
+							            		</td>
+							            		<td key={i + "third"}>
+							            			<a onClick={contactHandler.bind(null, contact)}>
+							            				<p>{contact.city}</p>
+							            			</a>
+							            		</td>
+							            		<td key={i + "fourth"}>
+							            			<a onClick={contactHandler.bind(null, contact)}>
+							            				<p>{contact.postcode}</p>
 							            			</a>
 							            		</td>
 											</tr>

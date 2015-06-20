@@ -27,8 +27,9 @@ function bookingRequestEmail (order, sender) {
 		'<body>' +
 			'<div>' +
 				'<p>Hi,</pp>' +
-				'<p>Please find attached the booking request for order ' + jobNumber + '.</pp>' +
-				'<p>Please confirm details by replying to ' + sender + '</p>' +
+				'<p>Please find attached the booking request.</p>' +
+				'<p>Our Reference: ' + jobNumber + '.</p>' +
+				'<p>Please confirm details by emailing ' + sender + '</p>' +
 				'<br>' +
 				'<p>Yours Sincerely,</p>' +
 				'<p>Coot Freight Ltd</p>' +

@@ -67,7 +67,6 @@ var remindersPage = React.createClass({
 		    	var sortReminder = reminder.sort(function(a,b){
 				  return new Date(a.date) - new Date(b.date);
 				});;
-				console.log(sortReminder);
 
 		      	if (this.isMounted()) {
 		        	this.setState({
@@ -91,7 +90,7 @@ var remindersPage = React.createClass({
 						<h3>Reminders</h3>
 						<button data-tooltip="Add reminder" className="button add blue" onClick={this.addReminder} >+</button>
 					</div>
-					<div className="panel-body table-responsive scroll">
+					<div className="panel-body table-head">
 						<table className="table table-full">
 							<th>
 								<h5>Contact</h5>
@@ -99,6 +98,10 @@ var remindersPage = React.createClass({
 							<th>
 								<h5>State</h5>
 							</th>
+						</table>
+					</div>
+					<div className="panel-body table-responsive scroll">
+						<table className="	table table-full">
 							<tbody>
 						  		{this.state.reminders
 							  		? this.state.reminders.map(function (reminder, i) {
