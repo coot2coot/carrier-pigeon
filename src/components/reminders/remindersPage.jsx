@@ -67,7 +67,6 @@ var remindersPage = React.createClass({
 		    	var sortReminder = reminder.sort(function(a,b){
 				  return new Date(a.date) - new Date(b.date);
 				});;
-				console.log(sortReminder);
 
 		      	if (this.isMounted()) {
 		        	this.setState({
