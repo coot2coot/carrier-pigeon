@@ -2,7 +2,7 @@
 
 var React = require('react');
 var Warning = require("../close-warning.jsx");	
-var contactStore= require("../../savingContacts");
+var contactStore= require("../../lib/storeContacts");
 
 
 
