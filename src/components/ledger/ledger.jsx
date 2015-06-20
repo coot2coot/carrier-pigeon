@@ -31,6 +31,7 @@ var ledger = React.createClass({
 	    		purchase: [],
 	    		sales: []
 	    	},
+	    	edited: false,
 	    	deletedInvoices: ""
 	    };
 	},
@@ -150,10 +151,21 @@ var ledger = React.createClass({
   	},
 
 	closeView: function() {
-	    this.setState({
-    		closeView: true
-    	})
+		if(!this.state.edited){
+			this.props.closeView();
+		} else {
+			this.setState({
+	    		closeView: true
+	    	})
+		}
 	},
+
+	ifEdited: function(e) {
+		console.log("4")
+		this.setState({
+  			edited: true
+  		})
+  	},
 
 	closeWarning: function () {
 		this.setState({
@@ -165,6 +177,7 @@ var ledger = React.createClass({
 		var currency 	= this.state.currency;
 		var order 		= this.props.order;
 		var calculate 	= this.calculate;
+		var edited 		= this.ifEdited;
 
 		return (
 			<div className="overlay">
@@ -198,7 +211,7 @@ var ledger = React.createClass({
 									</div>
 
 									{ this.state.invoices.purchase.map(function(invoice, i){
-									    return <Invoices currency={currency} jobnumber={order.job_number} type="purchase" invoice={invoice}/>
+									    return <Invoices currency={currency} jobnumber={order.job_number} type="purchase" invoice={invoice} edited={edited}/>
 									})}
 
 									<div className="column-4">
@@ -220,7 +233,7 @@ var ledger = React.createClass({
 									</div>
 
 									{ this.state.invoices.sales.map(function(invoice, i){
-									    return <Invoices currency={currency} jobnumber={order.job_number} type="sales" invoice={invoice}/>
+									    return <Invoices currency={currency} jobnumber={order.job_number} type="sales" invoice={invoice} edited={edited}/>
 									})}
 
 									<div className="column-4">
