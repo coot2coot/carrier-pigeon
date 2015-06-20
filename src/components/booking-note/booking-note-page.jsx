@@ -9,9 +9,9 @@ var currentDate  = require("../../lib/current-date.js");
 
 // For emailing as a pdf, inine styling is required.
 var bookingStyle = {
-    width: "595px",
-    height: "842px",
-    padding: "20px 60px",
+    width: "21cm",
+    height: "29.7cm",
+    padding: "1cm 1.9cm",
     fontFamily: "Verdana, Geneva, sans-serif",
     position: "relative"
 }
@@ -24,7 +24,7 @@ var hr = {
     fontFamily: "Verdana, Geneva, sans-serif"
 }
 var img = {
-    height: "35px",
+    height: "50pt",
     float: "right",
     margin: "20px 0 10px"
 }
@@ -32,19 +32,19 @@ var h2 = {
     color: "black",
     textAlign: "center",
     fontWeight: "700",
-    fontSize: "18px",
+    fontSize: "18pt",
     padding: "15px 0 20px"
 }
 
 var p = {
     display: "block",
-    fontSize: "11px",
+    fontSize: "11pt",
     color: "black"
 }
 
 var pRight = {
     display: "block",
-    fontSize: "11px",
+    fontSize: "11pt",
     color: "black",
     textAlign: "right",
     marginBottom: "10px"
@@ -52,14 +52,14 @@ var pRight = {
 
 var pLeft = {
     display: "block",
-    fontSize: "11px",
+    fontSize: "11pt",
     color: "black",
     marginBottom: "10px"
 }
 
 var pSmall = {
     display: "block",
-    fontSize: "10px",
+    fontSize: "10pt",
     color: "#6E6E6E",
     margin: "0",
     padding: "0"

@@ -11,7 +11,7 @@ var table = {
 }
 
 var th = {
-    fontSize: "10px",
+    fontSize: "10pt",
     border: "1px black solid",
     padding: "2px 0",
     background: "none",
@@ -25,14 +25,14 @@ var trHeader = {
 var td = {
     border: "none",
     borderRight: "1px black solid",
-    fontSize: "11px",
+    fontSize: "11pt",
     padding: "2px 0",
     margin: "0"
 }
 
 var tdRight = {
     border: "none",
-    fontSize: "11px",
+    fontSize: "11pt",
     padding: "2px"
 }
 
