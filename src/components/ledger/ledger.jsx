@@ -21,6 +21,7 @@ function calculate (invoices) {
   	var purchase = getAmount(invoices.purchase);
    
  	profit = sales - purchase;
+ 	console.log(sales, purchase, profit);
   	return (profit).toFixed(2);
 }
 
@@ -73,7 +74,6 @@ var ledger = React.createClass({
           		profit: profit,
           		currency: currency
         	});
-		    
 	    }.bind(this))
 	    .fail(function () {
 	    	console.log("get request failed");
@@ -228,7 +228,7 @@ var ledger = React.createClass({
 										<button type="button" className="button	blue add-row" onClick={this.removeSalesInvoice}>-</button>
 									</div>
 								</div>
-								<div className="column-6 push-10">
+								<div className="column-16 profit">
 									<p>Profit: {currency}{this.state.profit}</p>
 								</div>
 							</div>
