@@ -3,6 +3,7 @@
 var React 		= require('react');
 var Invoices 	= require("./invoice-register.jsx");
 var Warning 	= require("../close-warning.jsx");
+var formatJobNo = require("../../lib/format-job-number.js");
 
 function getAmount (arr) {
   	var i;
@@ -21,7 +22,6 @@ function calculate (invoices) {
   	var purchase = getAmount(invoices.purchase);
    
  	profit = sales - purchase;
- 	console.log(sales, purchase, profit);
   	return (profit).toFixed(2);
 }
 
@@ -183,7 +183,7 @@ var ledger = React.createClass({
 			<div className="overlay">
 				<div className="column-10 push-3 model-generic model-middle ledger">
 					<div className="panel-header">
-						<h3>Ledger - {this.props.order.job_number}</h3>
+						<h3>Ledger - {formatJobNo(this.props.order.job_number)}</h3>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body container">
