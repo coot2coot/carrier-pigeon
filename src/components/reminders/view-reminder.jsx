@@ -3,7 +3,7 @@
 var React = require('react');
 var Close = require("../close-warning.jsx");	
 var Warning = require("../warning.jsx");	
-var DataList = require("../orders/data-list.jsx");	
+var ContactList = require("../orders/contact-list.jsx");	
 
 var addReminder = React.createClass({
 	getInitialState: function() {
@@ -81,7 +81,7 @@ var addReminder = React.createClass({
 									<div className="row">	
 										<div className="column-8">
 											<p>Contact</p>
-											<DataList contacts={this.props.contacts} contact={reminder ? reminder.contact: ""} vieworder = {viewing ? true : false}  contactType="contact" />
+											<ContactList contact={reminder ? reminder.contact: ""} vieworder = {viewing ? true : false}  contactType="contact" />
 										</div>
 										<div className="column-8">
 											<p>Reminder Date </p>

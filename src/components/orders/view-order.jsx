@@ -7,7 +7,7 @@ var Link   	= Router.Link;
 var Close 	= require("../close-warning.jsx");
 var Units 	= require("./view_units.jsx");
 var Warning = require("../warning.jsx");
-var DataList= require("./data-list.jsx");
+var ContactList= require("./contact-list.jsx");
 
 var getJobNumber = require("../../lib/format-job-number.js");
 
@@ -183,11 +183,11 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Client</p>
-										<DataList contacts={this.props.contacts} required={true} vieworder={true} contact={this.props.order.client} contactType="client" handleChange={edited}/>
+										<ContactList required={true} vieworder={true} property="company_name" contact={this.props.order.client} contactType="client" handleChange={edited}/>
 									</div>
 									<div className="column-8">
 										<p>Carrier </p>
-										<DataList contacts={this.props.contacts} required={false} vieworder={true} contact={this.props.order.carrier} contactType="carrier" handleChange={edited}/>
+										<ContactList required={false} vieworder={true} property="company_name" contact={this.props.order.carrier} contactType="carrier" handleChange={edited}/>
 									</div>
 								</div>
 
