@@ -13,6 +13,7 @@
         padding: 0.2em 0.7em;
         padding-top: 0.5em;
     }
+
 }
 
 .panel-body {
@@ -20,18 +21,21 @@
     background: $lightest-grey;
     border: 0.1em $light-grey solid;
     @include respond(small-height) {
-      max-height: 25em;
+      max-height: 23em;
     };
     @include respond(extra-small-height) {
-      max-height: 20em;
+      max-height: 19em;
     };
     p {
-        margin-top: 0.7em;
+      margin-top: 0.7em;
+    }
+    &.table-head {
+      height : 2.5em;
     }
 }
 
 .panel-body.table-responsive {
-    height: 30em;
+    height: 27em;
 }
 
 .panel-body.settings {
@@ -61,7 +65,10 @@
 		padding: 0 1em 2em 1em;
     max-height: 43em;
     @include respond(small-height) {
-      max-height: 35em;
+      max-height: 33em;
+    };   
+    @include respond(large-height) {
+      max-height: 38em;
     };
     @include respond(extra-small-height) {
       max-height: 30em;
