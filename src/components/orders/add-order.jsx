@@ -3,7 +3,7 @@
 var React = require('react');
 var Units = require("./units.jsx");
 var Warning = require("../close-warning.jsx");
-var DataList = require("./data-list.jsx");
+var ContactList = require("./contact-list.jsx");
 
 var currentDate = require("../../lib/current-date.js");
 
@@ -96,11 +96,11 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Client</p>
-											<DataList contacts={this.props.contacts} required={true} contact={order && order.client ? order.client : ""} contactType="client" handleChange={edited} />
+											<ContactList contacts={this.props.contacts} required={true} property="company_name" contact={order && order.client ? order.client : ""} contactType="client" handleChange={edited} />
 										</div>
 										<div className="column-8">
 											<p>Carrier </p>
-											<DataList contacts={this.props.contacts} required={false}  contact={order && order.carrier ? order.carrier : ""} contactType="carrier" handleChange={edited} />
+											<ContactList contacts={this.props.contacts} required={false} property="company_name"  contact={order && order.carrier ? order.carrier : ""} contactType="carrier" handleChange={edited} />
 										</div>
 									</div>
 									<div className="row units">

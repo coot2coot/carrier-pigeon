@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React  = require('react');
+var ContactList = require('../orders/contact-list.jsx')
 
 var EmailInput = React.createClass({
 
@@ -14,7 +15,7 @@ var EmailInput = React.createClass({
                     </div>
                     <div className="panel-body">
                         <form onSubmit={this.props.sendEmail}>
-						<input type="email" name="email" placeholder="email@example.com" autoFocus/>
+                        <ContactList property="email" placeholder="email@example.com" contactType="email" email={true} />
                             <input type="submit" className="button charcoal" value="Submit"/>
                         </form>
                     </div>
