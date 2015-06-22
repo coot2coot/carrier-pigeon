@@ -78,6 +78,7 @@ var contactsArray = [
 	'vat_number',
 	'city',
 	'country',
+	'county',
 	'address_line',
 	'company_name',
 	'sales_report',
