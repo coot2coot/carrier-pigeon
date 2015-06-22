@@ -9,20 +9,22 @@ var currentDate  = require("../../lib/current-date.js");
 
 // For emailing as a pdf, inine styling is required.
 var bookingStyle = {
-    width: "595px",
-    height: "842px",
-    padding: "20px 60px",
-    fontFamily: "arial, sans-serif",
+    width: "21cm",
+    height: "29.7cm",
+    padding: "1cm 1.9cm",
+    fontFamily: "Verdana, Geneva, sans-serif",
     position: "relative"
 }
 var hr = {
     backgroundColor: "#49A4A5",
     height: "3px",
     width: "100%",
-    marginBottom: "5px"
+    marginBottom: "5px",
+    fontWeight: "600",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 var img = {
-    height: "35px",
+    height: "50pt",
     float: "right",
     margin: "20px 0 10px"
 }
@@ -30,19 +32,19 @@ var h2 = {
     color: "black",
     textAlign: "center",
     fontWeight: "700",
-    fontSize: "15px",
+    fontSize: "18pt",
     padding: "15px 0 20px"
 }
 
 var p = {
     display: "block",
-    fontSize: "12px",
+    fontSize: "11pt",
     color: "black"
 }
 
 var pRight = {
     display: "block",
-    fontSize: "9px",
+    fontSize: "11pt",
     color: "black",
     textAlign: "right",
     marginBottom: "10px"
@@ -50,15 +52,17 @@ var pRight = {
 
 var pLeft = {
     display: "block",
-    fontSize: "9px",
+    fontSize: "11pt",
     color: "black",
     marginBottom: "10px"
 }
 
 var pSmall = {
     display: "block",
-    fontSize: "8px",
-    color: "#6E6E6E"
+    fontSize: "10pt",
+    color: "#6E6E6E",
+    margin: "0",
+    padding: "0"
 }
 
 var halfRight = {
@@ -107,8 +111,8 @@ var bookingNotePage = React.createClass({
         };
     },
     render: function() {
-        footer.marginTop = parseInt(footer.marginTop) - (18 * this.props.units.length) + "px"
-        console.log(footer.marginTop)
+        footer.marginTop = parseInt(footer.marginTop) - (18 * this.props.units.length) + "px";
+
         return (
             <div id="form" className="booking-note container" style={bookingStyle}>
                 <div>
@@ -150,10 +154,11 @@ var bookingNotePage = React.createClass({
                     </div>
                     <div style={halfRight}>
                         <div style={rightLeft}>
-                            <p style={pSmall}> All business is subject to the </p>
-                            <p style={pSmall}> current standing conditions </p>
-                            <p style={pSmall}> of the BIFA copies of </p>
-                            <p style={pSmall}> which are available on request </p>
+                            <p style={pSmall}> All business is subject to </p>
+                            <p style={pSmall}> the current standing </p>
+                            <p style={pSmall}> conditions of the BIFA </p>
+                            <p style={pSmall}> copies of which are </p>
+                            <p style={pSmall}> available on request </p>
                         </div>
                         <div style={rightRight}>
                             <p style={pSmall}> Coot Freight Ltd. </p>

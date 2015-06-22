@@ -11,8 +11,7 @@ var table = {
 }
 
 var th = {
-    fontSize: "9px",
-    fontWeight: "600",
+    fontSize: "10pt",
     border: "1px black solid",
     padding: "2px 0",
     background: "none",
@@ -26,14 +25,14 @@ var trHeader = {
 var td = {
     border: "none",
     borderRight: "1px black solid",
-    fontSize: "10px",
+    fontSize: "11pt",
     padding: "2px 0",
     margin: "0"
 }
 
 var tdRight = {
     border: "none",
-    fontSize: "10px",
+    fontSize: "11pt",
     padding: "2px"
 }
 
@@ -49,12 +48,12 @@ var bookingNoteForm = React.createClass({
             <div>
                 <table style={table}>
                     <tr style={trHeader}>
-                        <th style={th}>Collect on:</th>
-                        <th style={th}>Collect at:</th>
-                        <th style={th}>Equipment:</th>
-                        <th style={th}>Loading reference:</th>
-                        <th style={th}>Commodity description:</th>
-                        <th style={th}>Gross weight:</th>
+                        <th style={th}><b> Collect on: </b></th>
+                        <th style={th}><b> Collect at: </b></th>
+                        <th style={th}><b> Equipment: </b></th>
+                        <th style={th}><b> Loading reference: </b></th>
+                        <th style={th}><b> Commodity description: </b></th>
+                        <th style={th}><b> Gross weight: </b></th>
                     </tr>
                     { this.props.units.map(function(unit){
                         return <UnitForm unit={unit} />
@@ -63,8 +62,8 @@ var bookingNoteForm = React.createClass({
 
                 <table style={table}>
                     <tr style={trHeader}>
-                        <th style={th}>Collect from:</th>
-                        <th style={th}>Deliver to:</th>
+                        <th style={th}><b> Collect from: </b></th>
+                        <th style={th}><b> Deliver to: </b></th>
                     </tr>
                     <tr>
                         <td style={td}>{order.collect_from}</td>
@@ -74,7 +73,7 @@ var bookingNoteForm = React.createClass({
 
                 <table style={table}>
                     <tr style={trHeader}>
-                        <th style={th}>Special Instructions:</th>
+                        <th style={th}><b> Special Instructions: </b></th>
                     </tr>
                     <tr>
                         <td style={tdRight}>{order.special_instructions}</td>
