@@ -128,16 +128,17 @@ function findJobNumber(value) {
 				.where("CAST(job_number AS text) ILIKE  '" + job_value.newValue +"'")
 				.end()
 	return string;
-}
+} 1630
 
 function keyWord (value) {
 	var string = "";
-	searchItem.map(function (item, i) {
+	searchItem.map( function (item, i) {
 	var newString = command()
 					.select("job_number")
 					.from(item.table)
 					.where(item.column+" ILIKE '%" + value +"%'")
 					.end().slice(0,-1)
+						
 	string += command()
 				.select("*")
 				.from("orders")

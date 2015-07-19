@@ -3,7 +3,7 @@ var db 			 = require("../db-config.js");
 var validateUser = require('../lib/validate-user.js');
 var removes 	= require('../lib/removeQuotes.js');
 
-function create (table,req, res) {	
+function create (table, req, res) {	
 	parseData(req, function (data) {
 		data = removes(data)
 		validateUser(req, res, function() {
@@ -16,7 +16,7 @@ function create (table,req, res) {
 				}
 				else {
 					res.writeHead(303, {
-						"Location": "/#/"+table+"/true"
+						"Location": "/#/" + table + "/true"
 					});
 					res.end();
 				}

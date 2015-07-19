@@ -16,7 +16,7 @@ function connect (query) {
     pg.connect(url, function(err, clt, done) {
 
         if (err) {
-            cb(err);
+            console.log(err)
             return;
         }
         query( clt, done);
@@ -129,7 +129,6 @@ function editUsers (doc,clt,cb, done) {
 }
 
 function editOrders (doc,clt,cb, done) {
-
 
     var ordersQuery = getQuery.standard(doc.order);
     var unitsUpdateQuery = getQuery.update(doc.unit, "units", "unit_id").update;

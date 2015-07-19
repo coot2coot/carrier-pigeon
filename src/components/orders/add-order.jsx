@@ -109,10 +109,12 @@ var addOrder = React.createClass({
 										        return <Units unit={units} key={i} handleChange={edited} />;
 										   })
 										}
-										<div className="column-2">
-											<button type="button" className="button blue add-row units" onClick={addUnit}>+</button>
-											<button type="button" className="button blue add-row units float-right" onClick={removeUnit}>-</button>
-										</div>
+										{/*
+											<div className="column-2">
+												<button type="button" className="button blue add-row units" onClick={addUnit}>+</button>
+												<button type="button" className="button blue add-row units float-right" onClick={removeUnit}>-</button>
+											</div>
+										*/}
 
 									</div>
 

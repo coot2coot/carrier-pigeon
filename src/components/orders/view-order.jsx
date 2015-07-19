@@ -12,7 +12,9 @@ var ContactList= require("./contact-list.jsx");
 var getJobNumber = require("../../lib/format-job-number.js");
 
 var viewOrder = React.createClass({
+
 	getInitialState: function() {
+
       return {
         viewing: true,
         units: [],
@@ -23,18 +25,21 @@ var viewOrder = React.createClass({
     },
 
     closeDeleteView: function() {
+
     	this.setState({
     		deleteOrder: false
     	})
 	},
 
     closeView: function() {
+
     	if (this.state.viewing || !this.state.edited) {
     		this.props.closeView()
 			this.setState({
 	    		closeView: false
 	    	})
     	}
+
 		if(this.state.closeView){
 			this.props.closeView()
 			this.setState({
@@ -48,52 +53,61 @@ var viewOrder = React.createClass({
 	},
 
 	copyOrder: function () {
+
 		this.props.copy(this.props.order, this.state.units);
 	},
 
 	closeWarning: function () {
+
 		this.setState({
 	    	closeView: false
 	    })
 	},
 
 	deleteHandler: function (item) {
+
 		this.setState({
 			deleteOrder: item
 		})
 	},
 
-	addUnit: function() {
-		this.state.units.push(1)
-		var newState = this.state.units
+	addUnit: function(key) {
+
+		this.state.units.splice(key + 1, 0, {});
+
+		var newState = this.state.units;
 
   		this.setState({
     		units: newState
     	});
   	},
-  	
-  	removeUnit: function() {
-  		if(this.state.units.length > 1){
-  			var deleteUnit = this.state.units.splice(-1,1);
-  			var newState = this.state.units;
-  			this.setState({
-	    			units: newState,
-	    		});
-  			if(deleteUnit[0].unit_id){
-  				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
-  				this.setState({
-	    			deletedUnits: newDeletedStrng
-	    		});
 	
+	removeUnit: function (key) {
+
+		if (this.state.units.length > 1) {
+			var deleteUnit = this.state.units.splice(key, 1);
+  			var newState = this.state.units;
+
+  			this.setState({
+				units: newState,
+			});
+
+			if (deleteUnit[0].unit_id) {
+				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
+				this.setState({
+					deletedUnits: newDeletedStrng
+				});	
 			}
-	    }
-  	},
+		}
+	},
 
 	componentWillMount: function() {
+
 		var getOrderUrl = "/units/" + this.props.order.job_number;
 
 	    $.get(getOrderUrl, function(result) {
-	    	if(result !== ""){
+
+	    	if (result !== "") {
 		    	var unit = JSON.parse(result);
 		    	
 		      	if (this.isMounted()) {
@@ -104,14 +118,16 @@ var viewOrder = React.createClass({
 		    }
 	    }.bind(this))
 	    .fail(function () {
+
 	    	"get units request failed"
 	    });
 	},
 
 
 	edit: function () {
+
 		var disabled = document.getElementsByClassName('view_input');
-		if(this.state.viewing === true){
+		if (this.state.viewing === true) {
 			for (var prop in disabled){
 				disabled[prop].disabled = false;
 			}
@@ -128,7 +144,8 @@ var viewOrder = React.createClass({
 		}
 	},
 
-	ifEdited: function(e) {
+	ifEdited: function(event) {
+
   		if (!this.state.edited) {
   			this.setState({
 	  			edited: true
@@ -136,11 +153,21 @@ var viewOrder = React.createClass({
   		}
   	},
 
+  	onUnitChange: function (key, event) {
+
+		this.ifEdited();
+		var name = event.target.name;
+		var value = event.target.value;
+		this.state.units[key][name] = value;
+	},
+
 	render: function() {
+		
 		var addUnit = this.addUnit;
 		var removeUnit = this.removeUnit;
 		var viewing = this.state.viewing;
 		var edited = this.ifEdited;
+		var onUnitChange = this.onUnitChange;
 
 		var cx = React.addons.classSet;
 		var rowClasses = cx({
@@ -193,14 +220,11 @@ var viewOrder = React.createClass({
 
 								<div className="row units">
 
-									{ this.state.units.map(function(unit, i){
-									    return <Units unit={unit} key={i} viewing = {viewing} handleChange={edited}/>;
+									{ this.state.units.map( function (unit, i) {
+										var key = new Date().getMilliseconds() + i;
+									    return <Units unit={unit} key={key} keys= {i}  viewing = {viewing} handleChange={onUnitChange} addUnit= {addUnit} removeUnit = {removeUnit} />;
 									})}
 
-									<div className="column-2">
-										<button type="button" className="view_input button blue	units add-row" onClick = {addUnit} disabled={viewing ? true : false}>+</button>
-										<button type="button" className="view_input button blue	units add-row" onClick = {removeUnit} disabled={viewing ? true : false}>-</button>
-									</div>
 								</div>
 
 								<div className={rowClasses}>

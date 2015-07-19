@@ -23,6 +23,7 @@ var ordersPage = React.createClass({
     },
 
 	componentDidMount: function() {
+
 	    if(this.props.params.job_no){
 	    	this.getSearchedOrders(getJobNumber(this.props.params.job_no))	    	
 	    } else {
@@ -31,6 +32,7 @@ var ordersPage = React.createClass({
 	},
 
 	onCloseComponent: function () {
+
 		this.setState({
 			selectedOrder: null,
 			creatingOrder: null,
@@ -40,18 +42,21 @@ var ordersPage = React.createClass({
 	},
 
 	orderHandler: function (item) {
+
 		this.setState({
 			selectedOrder: item
 		})
 	},
 
 	ledgerHandler: function (item) {
+
 		this.setState({
 			ledger: item
 		})
 	},
 
 	addOrder: function () {
+
 		this.setState({
 			creatingOrder: true,
 			newOrder: true
@@ -59,6 +64,7 @@ var ordersPage = React.createClass({
 	},
 
 	copyOrder: function (order, units) {
+
 		this.setState({
 			selectedOrder: null,
 			creatingOrder: true,
@@ -68,6 +74,7 @@ var ordersPage = React.createClass({
 	},
 
 	pickDate: function () {
+
 		this.state.datePicker
 		?	this.setState({
 				datePicker: false
@@ -78,6 +85,7 @@ var ordersPage = React.createClass({
 	},
 
 	uniq: function (a) {
+
 	    var seen = {};
 	    return a.filter(function(order) {
 	        return seen.hasOwnProperty(order.job_number) ? false : (seen[order.job_number] = true);
@@ -109,6 +117,7 @@ var ordersPage = React.createClass({
 	},
 
 	get90: function (dates) {
+
 		var date;
 		var currentDate = new Date();
 		var pastDate = new Date();
@@ -132,6 +141,7 @@ var ordersPage = React.createClass({
 
 	},
 	getCm: function (dates) {
+
 		var date;
 		var currentDate = new Date();
 		var pastDate = new Date();
@@ -155,6 +165,7 @@ var ordersPage = React.createClass({
 	},
 
 	getTodays: function () {
+
 		var date;
 		var currentDate = new Date();
 
@@ -171,7 +182,9 @@ var ordersPage = React.createClass({
 	},
 
 	getDateOrders: function (dates, table) {
+
 		var getUrl = "/search/"+table+"/dates/" + dates;
+
 		$.get(getUrl,function (result) {	
 			if(result === "error"){
 				this.setState({
@@ -196,6 +209,7 @@ var ordersPage = React.createClass({
 	},
 
 	render: function() {
+		
 		var orderHandler = this.orderHandler;
 		var addInvoiceHandler = this.addInvoice;
 		var ledgerHandler = this.ledgerHandler;
