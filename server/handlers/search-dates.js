@@ -5,19 +5,22 @@ var validateUser = require('../lib/validate-user.js');
 function search (req, res) {
 	var table;
 	var data = req.url.split("/").pop().split(",");
+
 	if (req.url.indexOf('unit') > -1) {
 		table = "units";
 	} else {
 		table = "orders"
 	}
+
 	validateUser(req,res, function (){
+
 		db.searchDates(table,data, function (err,orders) {
-			if(err){
+
+			if (err) {
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end('error');
-			}else{
+			} else {
 				var order = JSON.stringify(orders);
-
 
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end(order);

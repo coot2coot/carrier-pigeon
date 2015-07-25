@@ -1,0 +1,13 @@
+svg.ledger {
+	height: 25px;
+	width: 25px;
+	margin: 0 auto;
+  	display: block;
+	&.unactive {
+		fill: white;
+		stroke: $primary;
+	}
+	&.active {
+		fill: $primary;
+	}
+}
