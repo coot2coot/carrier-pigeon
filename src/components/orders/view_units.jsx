@@ -35,10 +35,7 @@ var units = React.createClass({
 					<div className="row">			
 						<div className="column-3">
 							<input className="view_input" type="text" name="unit_number" defaultValue={unit.unit_number} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
-							{( unit.unit_id
-								? <input className="display-none" type="text" name="unit_id" defaultValue={unit.unit_id} disabled={this.props.viewing ? true : false} required onChange={this.props.handleChange.bind(null, this.props.keys)}/>
-								: <input className="display-none" type="text" name="unit_id" defaultValue={""} disabled={this.props.viewing ? true : false} novalidate onChange={this.props.handleChange.bind(null, this.props.keys)}/>
-							)}
+							<input className="display-none" type="text" name="unit_id" defaultValue={unit.unit_id ? unit.unit_id : ""} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3 ">
 							<input className="view_input" type="text" name="unit_type" defaultValue={unit.unit_type} disabled={this.props.viewing ? true : false} required onChange={this.props.handleChange.bind(null, this.props.keys)}/>
@@ -78,10 +75,10 @@ var units = React.createClass({
 					<div className="row">
 
 						<div className="column-2">
-							<input className="view_input" type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_net_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(this).bind(null, this.props.keys)}/>
+							<input className="view_input" type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_net_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
-							<input className="view_input" type="number" name="unit_gross_weight" step="any" defaultValue={unit.unit_gross_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(this).bind(null, this.props.keys)}/>
+							<input className="view_input" type="number" name="unit_gross_weight" step="any" defaultValue={unit.unit_gross_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2" >
 							<select className="view_input" name="unit_weight" defaultValue={unit.unit_weight} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}>

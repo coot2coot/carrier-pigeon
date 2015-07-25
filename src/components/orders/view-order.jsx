@@ -92,7 +92,7 @@ var viewOrder = React.createClass({
 				units: newState,
 			});
 
-			if (deleteUnit[0].unit_id) {
+			if (deleteUnit[0].unit_id	) {
 				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
 				this.setState({
 					deletedUnits: newDeletedStrng
@@ -222,7 +222,14 @@ var viewOrder = React.createClass({
 
 									{ this.state.units.map( function (unit, i) {
 										var key = new Date().getMilliseconds() + i;
-									    return <Units unit={unit} key={key} keys= {i}  viewing = {viewing} handleChange={onUnitChange} addUnit= {addUnit} removeUnit = {removeUnit} />;
+									    return <Units 
+									    			unit={unit} 
+									    			key={key} 
+									    			keys={i}  
+									    			viewing={viewing} 
+									    			handleChange={onUnitChange} 
+									    			addUnit={addUnit} 
+									    			removeUnit={removeUnit} />;
 									})}
 
 								</div>

@@ -24,12 +24,3 @@ var contactsTests = function () {
 };
 
 falsifyContacts.create(contactsTests);
-
-var remindersTests = function () {
-	require('./db/post-reminders.js')();
-	require('./db/get-reminders.js')();
-	require('./db/edit-reminders.js')();
-	require('./db/delete-reminders.js')();
-};
-
-falsifyReminders.create(remindersTests);
