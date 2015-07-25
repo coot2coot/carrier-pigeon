@@ -26,7 +26,8 @@ function calculate (invoices) {
 }
 
 var ledger = React.createClass({
-	getInitialState: function() {
+	getInitialState: function () {
+
 	    return {
 	    	invoices: {
 	    		purchase: [],
@@ -37,7 +38,8 @@ var ledger = React.createClass({
 	    };
 	},
 
-	componentDidMount: function() {
+	componentDidMount: function () {
+
 		var getInvoicesUrl = "/invoices/get/" + this.props.order.job_number;
 
 	    $.get(getInvoicesUrl, function (result) {
@@ -77,19 +79,22 @@ var ledger = React.createClass({
         	});
 	    }.bind(this))
 	    .fail(function () {
+
 	    	console.log("get request failed");
 	    });
 	},
 
 	changeCurrency: function (e) {
+
 		this.setState({
 			currency: e.target.value
 		})
 
 	},
 
-	addPurchaseInvoice: function() {
-		this.state.invoices.purchase.push(1);
+	addPurchaseInvoice: function (key) {
+
+		this.state.invoices.purchase.splice(key + 1, 0, {});
 
 		var newState = this.state.invoices;
 
@@ -98,10 +103,11 @@ var ledger = React.createClass({
     	});
   	},
   	
-  	removePurchaseInvoice: function() {
+  	removePurchaseInvoice: function (key) {
+
   		if(this.state.invoices.purchase.length > 1){
 
-  			var deletedInvoice = this.state.invoices.purchase.splice(-1,1);
+  			var deletedInvoice = this.state.invoices.purchase.splice(key, 1);
   			var newState = this.state.invoices;
 
   			this.setState({
@@ -119,8 +125,9 @@ var ledger = React.createClass({
 	    }
   	},
 
-  	addSalesInvoice: function() {
-		this.state.invoices.sales.push(1);
+  	addSalesInvoice: function (key) {
+
+		this.state.invoices.sales.splice(key + 1, 0, {});
 
 		var newState = this.state.invoices;
 
@@ -129,10 +136,11 @@ var ledger = React.createClass({
     	});
   	},
   	
-  	removeSalesInvoice: function() {
+  	removeSalesInvoice: function (key) {
+
   		if(this.state.invoices.sales.length > 1){
 
-  			var deletedInvoice = this.state.invoices.sales.splice(-1,1);
+  			var deletedInvoice = this.state.invoices.sales.splice(key, 1);
   			var newState = this.state.invoices;
 
   			this.setState({
@@ -150,7 +158,8 @@ var ledger = React.createClass({
 	    }
   	},
 
-	closeView: function() {
+	closeView: function () {
+
 		if(!this.state.edited){
 			this.props.closeView();
 		} else {
@@ -160,24 +169,48 @@ var ledger = React.createClass({
 		}
 	},
 
-	ifEdited: function(e) {
-		console.log("4")
+	onPurchaseChange: function (key, event) {
+
+		this.ifEdited();
+		var name = event.target.name;
+		var value = event.target.value;
+		this.state.invoices.purchase[key][name] = value;
+	},
+
+	onSalesChange: function (key, event) {
+
+		this.ifEdited();
+		var name = event.target.name;
+		var value = event.target.value;
+		this.state.invoices.sales[key][name] = value;
+	},
+
+	ifEdited: function (e) {
+
 		this.setState({
   			edited: true
   		})
   	},
 
 	closeWarning: function () {
+
 		this.setState({
 	    	closeView: false
 	    })
 	},
   	
-	render: function() {
-		var currency 	= this.state.currency;
-		var order 		= this.props.order;
-		var calculate 	= this.calculate;
-		var edited 		= this.ifEdited;
+	render: function () {
+
+		var currency		= this.state.currency;
+		var order			= this.props.order;
+		var calculate		= this.calculate;
+		var edited			= this.ifEdited;
+		var onSalesChange	= this.onSalesChange;
+		var onPurchaseChange= this.onPurchaseChange;
+		var addPInvoice		= this.addPurchaseInvoice;
+		var addSInvoice		= this.addSalesInvoice;
+		var removeSInvoice	= this.removeSalesInvoice;
+		var removePInvoice 	= this.removePurchaseInvoice;
 
 		return (
 			<div className="overlay">
@@ -211,13 +244,19 @@ var ledger = React.createClass({
 									</div>
 
 									{ this.state.invoices.purchase.map(function(invoice, i){
-									    return <Invoices currency={currency} jobnumber={order.job_number} type="purchase" invoice={invoice} edited={edited}/>
+										var key = new Date().getMilliseconds() + i;
+									    return <Invoices
+										    		key={key} 
+													keys={i} 
+													currency={currency} 
+													addInvoice={addPInvoice} 
+													removeInvoice={removePInvoice} 
+													jobnumber={order.job_number} 
+													type="purchase" 
+													invoice={invoice} 
+													onInvoiceChange={onPurchaseChange}/>
 									})}
 
-									<div className="column-4">
-										<button type="button" className="button blue add-row" onClick={this.addPurchaseInvoice}>+</button>
-										<button type="button" className="button blue add-row" onClick={this.removePurchaseInvoice}>-</button>
-									</div>
 								</div>
 								<div className="column-8 sales">
 									<h4>Sales Invoices</h4>
@@ -233,13 +272,19 @@ var ledger = React.createClass({
 									</div>
 
 									{ this.state.invoices.sales.map(function(invoice, i){
-									    return <Invoices currency={currency} jobnumber={order.job_number} type="sales" invoice={invoice} edited={edited}/>
+										var key = new Date().getMilliseconds() + i;
+									    return <Invoices 
+										    		key={key} 
+													keys={i} 
+													currency={currency} 
+													addInvoice={addSInvoice} 
+													removeInvoice={removeSInvoice} 
+													jobnumber={order.job_number} 
+													type="sales" 
+													invoice={invoice} 
+													onInvoiceChange={onSalesChange}/>
 									})}
 
-									<div className="column-4">
-										<button type="button" className="button	blue add-row" onClick={this.addSalesInvoice}>+</button>
-										<button type="button" className="button	blue add-row" onClick={this.removeSalesInvoice}>-</button>
-									</div>
 								</div>
 								<div className="column-16 profit">
 									<p>Profit: {currency}{this.state.profit}</p>

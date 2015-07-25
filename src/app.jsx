@@ -16,7 +16,6 @@ var AdminPanel  = require("./components/admin-panel.jsx");
 var Settings    = require("./components/settings/settings.jsx");
 var BookingNote = require("./components/booking-note/booking-note.jsx");
 
-
 var Test = React.createClass({
     render: function() {
         return (

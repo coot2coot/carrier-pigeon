@@ -5,12 +5,17 @@ var validateOrder= require('../lib/validate-order.js').validate;
 var validateUser = require('../lib/validate-user.js');
 var splitObject  = require('../lib/split-orders-object.js');
 var db 			 = require("../db-config.js");
-var removes 		= require('../lib/removeQuotes.js');
+var removes 	 = require('../lib/removeQuotes.js');
 
 var edit = {};
 
 edit.orders = function (req, res, cb) {
 	var data = req.url;
+	/*
+	The id's for the units that have been deleted are sent to the server
+	in the url of the post request. The ids are then extracted and set 
+	as the value of the var strng
+	*/
 	var strng = data.replace(/\/order\/edit\//g, "");
 
 	parseData(req, function (data) {

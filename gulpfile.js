@@ -200,7 +200,7 @@
         console.log("Done building");
     });
 
-	gulp.task("default", ["build", "open"], function() {
+	gulp.task("default", ["build"], function() {
         nodemon({
             script: "server.js",
             ext: "js html",

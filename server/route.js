@@ -108,7 +108,7 @@ var serverRoutes =  function (router) {
  * -------------------------------*/
 
  	router.addRoute('/reminders/post', function (req, res, match){
-	  	require('./handlers/create-contact-reminder.js')("reminders",req, res);
+	  	require('./handlers/create-contact-reminder.js')("reminders", req, res);
 	});
 	router.addRoute('/reminders/get', function (req, res, match){
 	  	require('./handlers/read-db.js').cached(req, res);
