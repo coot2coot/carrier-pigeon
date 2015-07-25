@@ -6,7 +6,6 @@ var mocks = require('../mocks/orders-units.js');
 
 var tests = function () {
 
-
 	test("searcher method gets all units for a specific job_number", function(t) {
 		var getJobNumber = function () {
 		    var today = new Date();

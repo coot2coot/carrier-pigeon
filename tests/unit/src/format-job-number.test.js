@@ -9,10 +9,10 @@ var fakeJobIds = [
 ];
 
 var fakeAnswers = [
-	"15060689",
-	"15060001",
-	"15069000",
-	"15060089"
+	"15070689",
+	"15070001",
+	"15079000",
+	"15070089"
 ];
 
 var i;
@@ -27,7 +27,7 @@ for (i =  length; i >= 0; i--) {
 	var id 		= fakeJobIds[i]
 	var answer 	= fakeAnswers[i];
 
-	test('checking that the result for ' + id + 'is correct', function (t) {
+	test('checking that the result for ' + id + ' is correct', function (t) {
 		var result = formatJobNumber(id);
 
 		t.equals( result, answer );

@@ -9,10 +9,11 @@ var currentDate = require("../../lib/current-date.js");
 
 var addOrder = React.createClass({
 	getInitialState: function() {
+
 	    return {
 	    	dateValue: currentDate(),
 	    	valid: false,
-	    	unitsArr: [0],
+	    	unitsArr: [{}],
 	    	closeView: false,
 	    	units: null,
 	    	edited: false,
@@ -21,6 +22,7 @@ var addOrder = React.createClass({
 	},
 
 	closeView: function() {
+
 		if( this.state.closeView || !this.state.edited ){
 			this.props.closeView();
 
@@ -35,13 +37,16 @@ var addOrder = React.createClass({
 	},
 
 	closeWarning: function () {
+
 		this.setState({
 	    	closeView: false
 	    })
 	},
 
-  	addUnit: function() {
-		this.state.unitsArr.push(1)
+  	addUnit: function(key) {
+
+  		this.state.unitsArr.splice(key + 1, 0, {});
+		
 		var newState = this.state.unitsArr
 
   		this.setState({
@@ -49,9 +54,10 @@ var addOrder = React.createClass({
     	});
   	},
 
-  	removeUnit: function() {
+  	removeUnit: function(key) {  		
+
   		if(this.state.unitsArr.length > 1){
-			this.state.unitsArr.splice(-1,1)
+			this.state.unitsArr.splice(key, 1);
 			var newState = this.state.unitsArr
 
 	  		this.setState({
@@ -60,12 +66,20 @@ var addOrder = React.createClass({
 	    }
   	},
 
-  	ifEdited: function() {
+  	ifEdited: function () {
+
   		if (!this.state.edited) {
   			this.setState({
 	  			edited: true
 	  		})
   		}
+  	},
+
+  	onUnitChange: function (key, event) {
+  		this.ifEdited();
+  		var name = event.target.name;
+		var value = event.target.value;
+		this.state.unitsArr[key][name] = value;
   	},
   	
 	render: function() {
@@ -75,6 +89,7 @@ var addOrder = React.createClass({
 		var removeUnit 	= this.removeUnit;
 		var today 		= currentDate();
 		var edited 		= this.ifEdited;
+		var onUnitChange= this.onUnitChange;
 
 		return (
 			<div className="overlay">
@@ -103,16 +118,19 @@ var addOrder = React.createClass({
 											<ContactList contacts={this.props.contacts} required={false} property="company_name"  contact={order && order.carrier ? order.carrier : ""} contactType="carrier" handleChange={edited} />
 										</div>
 									</div>
+
 									<div className="row units">
-										{
-											this.state.unitsArr.map(function(num, i){
-										        return <Units unit={units} key={i} handleChange={edited} />;
-										   })
-										}
-										<div className="column-2">
-											<button type="button" className="button blue add-row units" onClick={addUnit}>+</button>
-											<button type="button" className="button blue add-row units float-right" onClick={removeUnit}>-</button>
-										</div>
+
+										{ this.state.unitsArr.map( function (unit, i) {
+											var key = new Date().getMilliseconds() + i;
+										    return <Units 
+										    			unit={unit} 
+										    			key={key} 
+										    			keys= {i} 
+										    			handleChange={onUnitChange} 
+										    			addUnit={addUnit} 
+										    			removeUnit={removeUnit} />;
+										})}
 
 									</div>
 
