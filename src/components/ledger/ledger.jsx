@@ -107,14 +107,14 @@ var ledger = React.createClass({
 
   		if(this.state.invoices.purchase.length > 1){
 
-  			var deletedInovice = this.state.invoices.purchase.splice(key, 1);
+  			var deletedInvoice = this.state.invoices.purchase.splice(key, 1);
   			var newState = this.state.invoices;
 
   			this.setState({
     			invoices: newState,
     		});
 
-  			if(deletedInovice[0].invoice_id){
+  			if(deletedInvoice[0].invoice_id){
   				var newDeletedStrng = this.state.deletedInvoices + ',' + deletedInvoice[0].invoice_id;
   				
   				this.setState({
@@ -140,15 +140,15 @@ var ledger = React.createClass({
 
   		if(this.state.invoices.sales.length > 1){
 
-  			var deletedInovice = this.state.invoices.sales.splice(key, 1);
+  			var deletedInvoice = this.state.invoices.sales.splice(key, 1);
   			var newState = this.state.invoices;
 
   			this.setState({
     			invoices: newState,
     		});
 
-  			if(deletedInovice[0].invoice_id){
-  				var newDeletedStrng = this.state.deletedInvoices + ',' + deletedInovice[0].invoice_id;
+  			if(deletedInvoice[0].invoice_id){
+  				var newDeletedStrng = this.state.deletedInvoices + ',' + deletedInvoice[0].invoice_id;
   				
   				this.setState({
 	    			deletedInvoices: newDeletedStrng
