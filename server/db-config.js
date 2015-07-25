@@ -185,6 +185,12 @@ dataBase.get = function (table, cb){
                     .from(table)
                     .order("name")
                     .end();
+        } else if (table === "orders") {
+            query = command()
+                    .select("*")
+                    .from(table)
+                    .query("inner join invoice on order.job_number = invoice.job_number")
+                    .end();
         } else {
             query = command()
                     .select("*")
@@ -351,19 +357,21 @@ dataBase.selectUser = function (username, password, remember, cb) {
 
 
 dataBase.searcher = function (table, data, cb) {
+
     connect(function(client, done) {
         var query;
 
-        if(table === "orders"){
+        if (table === "orders") {
             query = queryStrings.searchOrders(data);
         } else {
             query = queryStrings.searchContacts(data);
         }
 
         client.query(query, function (err, result) {
+
             done();
 
-            if(err || result.rows.length ===0) {
+            if (err || result.rows.length === 0) {
                 var error = err ? err : true;
                 return cb(error);
             }
@@ -375,6 +383,7 @@ dataBase.searcher = function (table, data, cb) {
 
 dataBase.searchDates = function (table, dates, cb) {
     var query = dateRange(dates);
+    
     connect(function(client, done) {
         if(dates === "" ||dates[0] === "" || dates[1] === ""){
             cb([]);

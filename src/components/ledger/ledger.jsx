@@ -294,6 +294,7 @@ var ledger = React.createClass({
 						</form>
 					</div>
 				</div>
+				
 				{(this.state.closeView
                     ? <Warning message="Do you want to close without saving?" closeView={this.props.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>

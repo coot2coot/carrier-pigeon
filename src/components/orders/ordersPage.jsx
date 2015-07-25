@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React  		= require('react');
 
 var Header 		= require("../header/header.jsx");
@@ -9,6 +7,7 @@ var SearchBox 	= require("./search-box.jsx");
 var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
 var Ledger      = require("../ledger/ledger.jsx");
+var LedgerIcon  = require("./ledger-svg.jsx");
 
 var sorts      	 = require("../../lib/order-by-job-number.js");
 var getJobNumber = require("../../lib/format-job-number.js");
@@ -18,7 +17,8 @@ var ordersPage = React.createClass({
       return {
         contacts : [],
         searchValue: "",
-        error: false
+        error: false,
+        salesInvoices: false
       };
     },
 
@@ -93,19 +93,24 @@ var ordersPage = React.createClass({
 	},
 
 	getSearchedOrders: function (value) {
-
 		var getUrl = "/search/orders/" + value;
-		$.get(getUrl,function (result) {	
-			if(result === "error"){
+
+		$.get(getUrl,function (result) {
+
+			if (result === "error") {
+
 				this.setState({
 					error: true
 				})
-			}else{		
+			} else {		
 				var order = JSON.parse(result);
 				var uniqOrder = sorts(this.uniq(order))
+				
 				this.setState({
 					error: false
 				})
+
+				console.log(uniqOrder);
 				this.setState({
 				    orders : uniqOrder
 				});
@@ -185,7 +190,8 @@ var ordersPage = React.createClass({
 
 		var getUrl = "/search/"+table+"/dates/" + dates;
 
-		$.get(getUrl,function (result) {	
+		$.get(getUrl, function (result) {
+
 			if(result === "error"){
 				this.setState({
 					error: true,
@@ -193,6 +199,7 @@ var ordersPage = React.createClass({
 				})
 			} else {		
 				var order = sorts(JSON.parse(result));
+
 				this.setState({
 					error: false
 				});
@@ -203,6 +210,7 @@ var ordersPage = React.createClass({
 				});
 			}				
 		}.bind(this))
+		
 		.fail(function(){
 			"get searchfailed"
 		});
@@ -213,6 +221,7 @@ var ordersPage = React.createClass({
 		var orderHandler = this.orderHandler;
 		var addInvoiceHandler = this.addInvoice;
 		var ledgerHandler = this.ledgerHandler;
+
 		return (
 
 			<div>
@@ -263,7 +272,9 @@ var ordersPage = React.createClass({
 														</a>
 													</td>
 													<td key={i + "fourth"}>
-														<a onClick={ledgerHandler.bind(null, order)}>ledger</a>
+														<a onClick={ledgerHandler.bind(null, order)}>
+															<LedgerIcon active={order.type && order.type === "sales" ? true : false}/>
+														</a>
 													</td>
 												</tr>
 								    })

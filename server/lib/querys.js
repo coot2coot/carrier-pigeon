@@ -1,9 +1,9 @@
 "use strict";
+
 var command = require("./commands");
+var query 	= {};
 
-var query = {};
-
-var searchItem= [
+var searchItem = [
 	{
 		table: "orders",
 		column: "client"
@@ -99,11 +99,13 @@ function isPartialJobNumber(job_number) {
 }
 
 function findYear(value) {
-	var job_value = {};
-	var string = "";
-	job_value.year = "20" + value.slice(0,2);
-	job_value.month = value.slice(2,4);
-	job_value.job_number = value.replace(/^0+(?!\.|$)/, '')
+
+	var job_value 	= {};
+	var string 		= "";
+
+	job_value.year 			= "20" + value.slice(0,2);
+	job_value.month 		= value.slice(2,4);
+	job_value.job_number	= value.replace(/^0+(?!\.|$)/, '')
 	
 	string += command()
 				.select("*")
@@ -119,60 +121,75 @@ function findYear(value) {
 }
 
 function findJobNumber(value) {
-	var job_value = {};
-	var string = "";
+
+	var job_value 	= {};
+	var string 		= "";
+
 	job_value.newValue = Number(value.slice(-4))
+
 	string += command()
 				.select("*")
 				.from("orders")
 				.where("CAST(job_number AS text) ILIKE  '" + job_value.newValue +"'")
-				.end()
+				.end();
+
 	return string;
-} 1630
+}
 
 function keyWord (value) {
-	var string = "";
-	searchItem.map( function (item, i) {
-	var newString = command()
-					.select("job_number")
-					.from(item.table)
-					.where(item.column+" ILIKE '%" + value +"%'")
-					.end().slice(0,-1)
-						
-	string += command()
+
+	var searchItemLength = searchItem.length -1;
+	var string = command()
 				.select("*")
 				.from("orders")
-				.where("job_number in (" + newString + ")")
-				.end()
-	})
-	return string;
+				.query(" FULL OUTER JOIN invoice on orders.job_number = invoice.job_number " +
+						"FULL OUTER JOIN units on units.job_number = invoice.job_number WHERE ")
+				.end().slice(0, -1);
 
+	searchItem.map( function (item, i) {
+
+		if (i < searchItemLength) {
+
+			string += item.column + " ILIKE '%" + value + "%' OR ";
+		} else {
+
+			string += item.column + " ILIKE '%" + value + "%'";
+		}
+	})
+
+	return string + ";";
 }
 
 query.searchOrders = function (value) {
 	var string = "";
 
-	if(isPartialJobNumber(value)){
+	if (isPartialJobNumber(value)) {
+
 		string += findYear(value);
-	}else if(isJobNumber(value)){
+	} else if (isJobNumber(value)) {
+
 		string +=  findJobNumber(value);
 	}
+
 	string += keyWord(value);
+
+	console.log(string);
 	return string;
 }
 
 query.searchContacts = function (value) {
 	var string = "";
+
 	contactsArray.map(function (item, i) {
+
 	string += command()
 				.select("*")
 				.from("contacts")
 				.where(item + " ILIKE '%" + value +"%'")
 				.end()
 	})
+
 	return string;
 }
-
-
 
 module.exports = query;
