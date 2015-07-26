@@ -1,22 +1,29 @@
-var test = require('tape');
+var test 			= require('tape');
 var formatJobNumber = require('../../../src/lib/format-job-number.js');
+
+var today 			= new Date();
+var mm 				= ("0" + (today.getMonth()+1)).slice(-2);
+var yy 				= today.getFullYear().toString().slice(-2);
+
+var length 			= fakeJobIds.length;
+var i;
+
 
 var fakeJobIds = [
 	689,
 	1,
 	9000,
-	89
+	89,
+	10678
 ];
 
 var fakeAnswers = [
-	"15070689",
-	"15070001",
-	"15079000",
-	"15070089"
+	yy + mm + "0689",
+	yy + mm + "0001",
+	yy + mm + "9000",
+	yy + mm + "0089",
+	yy + mm + "10678"
 ];
-
-var i;
-var length = fakeJobIds.length;
 
 test('Testing that standard in formatJobNumber is', function (t) {
 	t.equals( typeof formatJobNumber, 'function', "a function");
@@ -33,5 +40,4 @@ for (i =  length; i >= 0; i--) {
 		t.equals( result, answer );
 		t.end();
 	});
-
 };

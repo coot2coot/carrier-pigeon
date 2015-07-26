@@ -71,6 +71,10 @@ var searchItem = [
 	{
 		table: "units",
 		column: "unit_kind_of_packages"
+	},
+	{
+		table: "units",
+		column: "unit_seal"
 	}
 ];
 
