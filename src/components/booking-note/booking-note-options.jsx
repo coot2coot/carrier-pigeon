@@ -21,7 +21,8 @@ var bookingNoteButtons = React.createClass({
         var data = {
             order: JSON.stringify(this.props.order),
             attachment: component,
-            email: e.currentTarget[0].value
+            toemail: e.currentTarget[0].value,
+            ccemail: e.currentTarget[1].value
         }
 
         $.post(getOrderUrl, data, function() {
@@ -29,6 +30,7 @@ var bookingNoteButtons = React.createClass({
                 emailInput: false
             })
         }.bind(this))
+        
         .fail(function () {
             "get units request failed"
         });
