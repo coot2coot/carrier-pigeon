@@ -15,10 +15,13 @@ var units = React.createClass({
 						<div className="column-3">
 							<p>Unit No.</p>
 						</div>
-						<div className="column-3">
+						<div className="column-2">
+							<p>Seal</p>
+						</div>
+						<div className="column-2">
 							<p>Unit Type</p>
 						</div>
-						<div className="column-4">
+						<div className="column-3">
 							<p>Loading Reference</p>
 						</div>
 						<div className="column-3">
@@ -32,10 +35,13 @@ var units = React.createClass({
 						<div className="column-3">
 							<input type="text" name="unit_number" defaultValue={unit.unit_number ? unit.unit_number : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
-						<div className="column-3">
+						<div className="column-2">
+							<input type="text" name="unit_seal" defaultValue={unit.unit_seal ? unit.unit_seal : ""} onChange={this.props.handleChange.bind(null, this.props.keys)} required/>
+						</div>
+						<div className="column-2">
 							<input type="text" name="unit_type" defaultValue={unit.unit_type ? unit.unit_type : ""} onChange={this.props.handleChange.bind(null, this.props.keys)} required/>
 						</div>
-						<div className="column-4">
+						<div className="column-3">
 							<input type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference ? unit.unit_loading_reference : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
