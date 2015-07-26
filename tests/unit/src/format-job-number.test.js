@@ -5,7 +5,6 @@ var today 			= new Date();
 var mm 				= ("0" + (today.getMonth()+1)).slice(-2);
 var yy 				= today.getFullYear().toString().slice(-2);
 
-var length 			= fakeJobIds.length;
 var i;
 
 
@@ -16,6 +15,8 @@ var fakeJobIds = [
 	89,
 	10678
 ];
+
+var length = fakeJobIds.length;
 
 var fakeAnswers = [
 	yy + mm + "0689",
