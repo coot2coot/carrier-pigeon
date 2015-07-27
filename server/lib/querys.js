@@ -141,27 +141,24 @@ function findJobNumber(value) {
 }
 
 function keyWord (value) {
+	var string = "";
 
-	var searchItemLength = searchItem.length -1;
-	var string = command()
-				.select("*")
-				.from("orders")
-				.query(" FULL OUTER JOIN invoice on orders.job_number = invoice.job_number " +
-						"FULL OUTER JOIN units on units.job_number = invoice.job_number WHERE ")
-				.end().slice(0, -1);
+	searchItem.map(function (item, i) {
 
-	searchItem.map( function (item, i) {
-
-		if (i < searchItemLength) {
-
-			string += item.column + " ILIKE '%" + value + "%' OR ";
-		} else {
-
-			string += item.column + " ILIKE '%" + value + "%'";
-		}
+		var newString = command()
+						.select("job_number")
+						.from(item.table)
+						.where(item.column+" ILIKE '%" + value +"%'")
+						.end().slice(0,-1)
+						
+		string += command()
+					.select("*")
+					.from("orders")
+					.where("job_number in (" + newString + ")")
+					.end()
 	})
 
-	return string + ";";
+	return string;
 }
 
 query.searchOrders = function (value) {
