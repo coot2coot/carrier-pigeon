@@ -36,7 +36,7 @@ var units = React.createClass({
 							<input type="text" name="unit_number" defaultValue={unit.unit_number ? unit.unit_number : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
-							<input type="text" name="unit_seal" defaultValue={unit.unit_seal ? unit.unit_seal : ""} onChange={this.props.handleChange.bind(null, this.props.keys)} required/>
+							<input type="text" name="unit_seal" defaultValue={unit.unit_seal ? unit.unit_seal : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
 							<input type="text" name="unit_type" defaultValue={unit.unit_type ? unit.unit_type : ""} onChange={this.props.handleChange.bind(null, this.props.keys)} required/>
