@@ -50,11 +50,11 @@ invoice.createTest = function() {
 }
 
 invoice.updateTest = function() {
-	var result = "UPDATE invoice SET amount='1000.61'," +
-				"invoice_number='254',type='purchase',currency='£' " +
-				"WHERE invoice_id=1; UPDATE invoice SET amount='200.78'," +
-				"invoice_number='2568',type='purchase',currency='£' " +
-				"WHERE invoice_id=4; UPDATE invoice SET amount='1000.61'," +
+	var result = "UPDATE invoice SET amount='1000.61',invoice_number='254'," +
+				"type='purchase',currency='£' WHERE invoice_id=1; " +
+				"UPDATE invoice SET amount='200.78',invoice_number='2568'," +
+				"type='purchase',currency='£' WHERE invoice_id=4; " +
+				"UPDATE invoice SET amount='1000.61'," +
 				"invoice_number='254',type='sales',currency='£' WHERE " +
 				"invoice_id=2; UPDATE invoice SET amount='200.78'," +
 				"invoice_number='2568',type='sales',currency='£' " +
@@ -73,9 +73,10 @@ invoice.deleteTest = function() {
 
 invoice.anotherTest = function() {
 	var result = { 
-		create: "INSERT INTO invoice (amount,invoice_number,type,currency,job_number) " +
-				"VALUES (500,'XDELETE','purchase','£',151); INSERT INTO invoice " +
-				"(amount,invoice_number,type,currency,job_number) VALUES (3242,'DELETE','sales','£',151); ", 
+		create: "INSERT INTO invoice (amount,invoice_number,type,currency,job_number) VALUES (500,'XDELETE','purchase','£',151); " +
+				"UPDATE orders SET has_invoices=true WHERE job_number=151; " +
+				"INSERT INTO invoice (amount,invoice_number,type,currency,job_number) VALUES (3242,'DELETE','sales','£',151); " +
+				"UPDATE orders SET has_invoices=true WHERE job_number=151; ", 
 		update: "UPDATE invoice SET amount='1000.00',invoice_number='DELETE'," +
 				"type='purchase',currency='£' WHERE invoice_id=62; UPDATE invoice SET " +
 				"amount='1232.00',invoice_number='DELETE',type='sales',currency='£' " +

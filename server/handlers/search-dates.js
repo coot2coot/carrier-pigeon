@@ -1,14 +1,18 @@
 "use strict";
+
 var db 			 = require("../db-config.js");
 var validateUser = require('../lib/validate-user.js');
 
 function search (req, res) {
+
 	var table;
 	var data = req.url.split("/").pop().split(",");
 
 	if (req.url.indexOf('unit') > -1) {
+
 		table = "units";
 	} else {
+		
 		table = "orders"
 	}
 

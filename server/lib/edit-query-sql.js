@@ -33,6 +33,7 @@ function getRightValue(item, property, i) {
 function getCreateQuery (type, obj, id, index) {
 	var props;
 	var query = "";
+	var updateOrdersQuery = "";
 	var jobNo = whichJobNumber(obj, index);
 
 	var data  = {};
@@ -49,11 +50,21 @@ function getCreateQuery (type, obj, id, index) {
 		}
 	}
 
+	if (type === 'invoice') {
+
+		for (var i = obj.type.length - 1; i >= 0; i--) {
+
+			if (obj.type[i] === "sales" && obj.invoice_id[i].length < 1) {
+				updateOrdersQuery += "UPDATE orders SET has_invoices=true WHERE job_number=" + obj.job_number[i] + "; ";
+			} 
+		};
+	}
+
 	query = "INSERT INTO " + type + " (" + data.columns.join() +
 			",job_number) VALUES (" + data.values.join() + "," + 
 			jobNo + "); ";
-
-	return query;
+	
+	return query + updateOrdersQuery;
 }
 
 function getUpdateQuery (type, id, obj, index) {

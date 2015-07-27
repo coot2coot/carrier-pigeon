@@ -273,7 +273,7 @@ var ordersPage = React.createClass({
 													</td>
 													<td key={i + "fourth"}>
 														<a onClick={ledgerHandler.bind(null, order)}>
-															<LedgerIcon active={order.type && order.type === "sales" ? true : false}/>
+															<LedgerIcon active={order.has_invoices}/>
 														</a>
 													</td>
 												</tr>
