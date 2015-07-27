@@ -8,16 +8,18 @@ function edit (req, res, cb) {
 	var invoiceNumbers = req.url.split("/").pop();
 
 	validateUser(req, res, function() {
+
 		parseData(req, function (data) {
 
 			data.delete_invoice = invoiceNumbers;
 
 			db.edit('invoice', data, function (err) {
+
 				if (err) {
-					console.log(err)
 					res.writeHead(500);
 					res.write(err);
 					res.end();
+
 				} else {
 					res.writeHead(303, {
 						"Location": "/#/orders/true"

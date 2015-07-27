@@ -174,7 +174,6 @@ query.searchOrders = function (value) {
 
 	string += keyWord(value);
 
-	console.log(string);
 	return string;
 }
 
