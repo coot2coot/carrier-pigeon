@@ -41,7 +41,7 @@ var units = React.createClass({
 							<input className="display-none" type="text" name="unit_id" defaultValue={unit.unit_id ? unit.unit_id : ""} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
-							<input className="view_input" type="text" name="unit_seal" defaultValue={unit.unit_seal} disabled={this.props.viewing ? true : false} required onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input className="view_input" type="text" name="unit_seal" defaultValue={unit.unit_seal} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
 							<input className="view_input" type="text" name="unit_type" defaultValue={unit.unit_type} disabled={this.props.viewing ? true : false} required onChange={this.props.handleChange.bind(null, this.props.keys)}/>
