@@ -14,6 +14,7 @@ var getJobNumber = require("../../lib/format-job-number.js");
 
 var ordersPage = React.createClass({
 	getInitialState: function() {
+
       return {
         contacts : [],
         searchValue: "",
@@ -24,9 +25,11 @@ var ordersPage = React.createClass({
 
 	componentDidMount: function() {
 
-	    if(this.props.params.job_no){
+	    if (this.props.params.job_no) {
+
 	    	this.getSearchedOrders(getJobNumber(this.props.params.job_no))	    	
 	    } else {
+
 	    	this.getTodays();
 	    }
 	},
@@ -125,7 +128,7 @@ var ordersPage = React.createClass({
 
 		var date;
 		var currentDate = new Date();
-		var pastDate = new Date();
+		var pastDate 	= new Date();
 		pastDate.setDate(currentDate.getDate() - 90);
 
 		currentDate = [
@@ -149,7 +152,7 @@ var ordersPage = React.createClass({
 
 		var date;
 		var currentDate = new Date();
-		var pastDate = new Date();
+		var pastDate 	= new Date();
 
 		currentDate = [
 			currentDate.getUTCFullYear(),
@@ -174,7 +177,7 @@ var ordersPage = React.createClass({
 		var date;
 		var currentDate = new Date();
 
-		currentDate = [
+		currentDate 	= [
 			currentDate.getUTCFullYear(),
 			currentDate.getUTCMonth() + 1,
 			currentDate.getUTCDate()
@@ -216,22 +219,30 @@ var ordersPage = React.createClass({
 		});
 	},
 
+	setUser: function(user) {
+		this.setState({
+			user: user
+		})
+	},
+
 	render: function() {
 		
-		var orderHandler = this.orderHandler;
-		var addInvoiceHandler = this.addInvoice;
-		var ledgerHandler = this.ledgerHandler;
+		var orderHandler 		= this.orderHandler;
+		var addInvoiceHandler 	= this.addInvoice;
+		var ledgerHandler 		= this.ledgerHandler;
 
 		return (
 
 			<div>
-				<Header/>
+				<Header setUser={this.setUser}/>
 				<div className="column-14 push-1 model-generic">
 					<div>
+
 						{(this.state.error && this.state.orders
                             ? <Error message="Sorry, that search returned no results. Try another search." />
                             : <p className="display-none"></p>
                         )}
+
                     </div>
 					<div className="panel-header">
 						<h3>Orders</h3>

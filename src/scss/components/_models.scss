@@ -20,8 +20,10 @@
     width:100%;
     background: $lightest-grey;
     border: 0.1em $light-grey solid;
-    max-height: 23em;
-    max-height: 61vh;
+    @include respond(extra-small-height) {
+      max-height: 23em;
+      max-height: 61vh;
+    };
     @include respond(small-height) {
       max-height: 27em;
       max-height: 65vh;
