@@ -57,10 +57,16 @@ var settings = React.createClass({
     	})
 	},
 
+	setUser: function(user) {
+		this.setState({
+			user: user
+		})
+	},
+
 	render: function() {
 		return (
 			<div>
-				<Header isAdmin={this.isAdmin}/>
+				<Header isAdmin={this.isAdmin} setUser={this.setUser}/>
 				<div className="column-10 push-3 model-generic">
 					<div className="panel-header">
 						<h3>Account</h3>

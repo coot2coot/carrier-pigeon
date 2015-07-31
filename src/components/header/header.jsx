@@ -29,8 +29,10 @@ var header = React.createClass({
                     if (data.user.permission_orders) {
                         this._reactInternalInstance._context.router.transitionTo("orders");
                     
-                    } else {
+                    } else if (data.user.permissions_contact) {
                         this._reactInternalInstance._context.router.transitionTo("contacts");
+                    } else {
+                        document.location.href = '/logout'
                     }
                 }
 
