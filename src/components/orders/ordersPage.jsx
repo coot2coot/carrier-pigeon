@@ -236,8 +236,6 @@ var ordersPage = React.createClass({
 		var ledgerHandler 		= this.ledgerHandler;
 		var viewLedger	 		= this.state.user.permission_ledger;
 
-		console.log(viewLedger);
-
 		return (
 
 			<div>

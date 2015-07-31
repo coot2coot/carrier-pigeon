@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 
 var React       = require('react');
-
 var Navbar      = require("./nav.jsx");
 var HeaderLinks = require("./header-links.jsx");
 
@@ -27,7 +26,12 @@ var header = React.createClass({
 
                 if (defaultRoute === "/" || loginRoute === "login") {
 
-                    this._reactInternalInstance._context.router.transitionTo("orders");
+                    if (data.user.permission_orders) {
+                        this._reactInternalInstance._context.router.transitionTo("orders");
+                    
+                    } else {
+                        this._reactInternalInstance._context.router.transitionTo("contacts");
+                    }
                 }
 
                 if (this.props.isAdmin) {
@@ -76,7 +80,7 @@ var header = React.createClass({
                     <div className="column-12 push-1">
 
                         {( this.state.loggedIn
-                            ? <Navbar />
+                            ? <Navbar user={this.state.user}/>
                             : <p></p>
                         )}
                         
