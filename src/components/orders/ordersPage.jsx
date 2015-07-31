@@ -8,6 +8,7 @@ var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
 var Ledger      = require("../ledger/ledger.jsx");
 var LedgerIcon  = require("./ledger-svg.jsx");
+var Ordersth  	= require("./orderspage-th.jsx");
 
 var sorts      	 = require("../../lib/order-by-job-number.js");
 var getJobNumber = require("../../lib/format-job-number.js");
@@ -19,7 +20,10 @@ var ordersPage = React.createClass({
         contacts : [],
         searchValue: "",
         error: false,
-        salesInvoices: false
+        salesInvoices: false,
+        user: {
+        	permissions_ledger: false
+        }
       };
     },
 
@@ -230,6 +234,9 @@ var ordersPage = React.createClass({
 		var orderHandler 		= this.orderHandler;
 		var addInvoiceHandler 	= this.addInvoice;
 		var ledgerHandler 		= this.ledgerHandler;
+		var viewLedger	 		= this.state.user.permission_ledger;
+
+		console.log(viewLedger);
 
 		return (
 
@@ -255,10 +262,10 @@ var ordersPage = React.createClass({
 					</div>
 					<div className="panel-body table-head">
 						<table className="table table-full">
-							{this.state.orders
-						  		?<tr><th><h5>Job No.</h5></th><th><h5>Client</h5></th><th><h5>Carrier</h5></th><th><h5>Ledger</h5></th></tr>
+							{( this.state.orders
+						  		?<Ordersth viewLedger={ viewLedger }/>
 								:<th><h5>Sorry there are no orders for today</h5></th>
-							}							
+							)}							
 						</table>
 					</div>
 					<div className="panel-body table-responsive scroll">
@@ -282,11 +289,10 @@ var ordersPage = React.createClass({
 															<p>{order.carrier}</p>
 														</a>
 													</td>
-													<td key={i + "fourth"}>
-														<a onClick={ledgerHandler.bind(null, order)}>
-															<LedgerIcon active={order.has_invoices}/>
-														</a>
-													</td>
+													{( viewLedger
+														? <td key={i + "fourth"}><a onClick={ledgerHandler.bind(null, order)}><LedgerIcon active={order.has_invoices}/></a></td>
+														: <p className="display-none"></p>
+													)}
 												</tr>
 								    })
 									:<tr><td><p></p></td></tr>
