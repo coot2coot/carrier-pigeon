@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React       = require('react');
 var Router      = require('react-router');
 
@@ -12,7 +10,7 @@ var Login       = require("./components/login-panel.jsx");
 var Orders      = require("./components/orders/ordersPage.jsx");
 var Contacts    = require("./components/contacts/contactsPage.jsx");
 var Reminders   = require("./components/reminders/remindersPage.jsx");
-var AdminPanel  = require("./components/admin-panel.jsx");
+var AdminPanel  = require("./components/admin/panel.jsx");
 var Settings    = require("./components/settings/settings.jsx");
 var BookingNote = require("./components/booking-note/booking-note.jsx");
 
@@ -25,7 +23,6 @@ var Test = React.createClass({
         );
     }
 })
-
 
 var routes = (
     <Route>  

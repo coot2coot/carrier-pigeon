@@ -175,6 +175,10 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/update-db.js')(req, res);
 	});
 
+	router.addRoute('/permissions/edit', function (req, res, match){
+	  	require('./handlers/permissions.js')(req, res);
+	});
+
 /* -------------------------------*
  *	   Booking Request Routes
  * -------------------------------*/

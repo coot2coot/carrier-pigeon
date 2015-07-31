@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React  			= require('react');
 var Error 			= require("../error-message.jsx");
 var Header 			= require("../header/header.jsx");
@@ -85,7 +83,7 @@ var remindersPage = React.createClass({
 			user: user
 		})
 	},
-	
+
 	render: function() {
 		var reminderHandler = this.reminderHandler;
 		return (
