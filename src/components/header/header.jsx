@@ -36,6 +36,10 @@ var header = React.createClass({
                     }
                 }
 
+                if (defaultRoute === "/orders" && !data.user.permission_orders) {
+                    this._reactInternalInstance._context.router.transitionTo("contacts");
+                }
+
                 if (this.props.isAdmin) {
 
                     this.props.isAdmin(data.user);
