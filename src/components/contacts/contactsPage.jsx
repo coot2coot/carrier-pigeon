@@ -83,9 +83,16 @@ var contactsPage = React.createClass({
 			creatingContact: true
 		})
 	},
+	
 	contactHandler: function (item) {
 		this.setState({
 			selectedContact: item
+		})
+	},
+
+	setUser: function(user) {
+		this.setState({
+			user: user
 		})
 	},
 
@@ -94,7 +101,7 @@ var contactsPage = React.createClass({
 		return (
 
 			<div>
-				<Header/>
+				<Header setUser={this.setUser}/>
 				<div className="column-14 push-1 model-generic">
 					<div>
 						{(this.state.error

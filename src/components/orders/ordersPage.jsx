@@ -8,25 +8,32 @@ var Error 		= require("../error-message.jsx");
 var Datepicker 	= require("./date-picker.jsx");
 var Ledger      = require("../ledger/ledger.jsx");
 var LedgerIcon  = require("./ledger-svg.jsx");
+var Ordersth  	= require("./orderspage-th.jsx");
 
 var sorts      	 = require("../../lib/order-by-job-number.js");
 var getJobNumber = require("../../lib/format-job-number.js");
 
 var ordersPage = React.createClass({
 	getInitialState: function() {
+
       return {
         contacts : [],
         searchValue: "",
         error: false,
-        salesInvoices: false
+        salesInvoices: false,
+        user: {
+        	permissions_ledger: false
+        }
       };
     },
 
 	componentDidMount: function() {
 
-	    if(this.props.params.job_no){
+	    if (this.props.params.job_no) {
+
 	    	this.getSearchedOrders(getJobNumber(this.props.params.job_no))	    	
 	    } else {
+
 	    	this.getTodays();
 	    }
 	},
@@ -125,7 +132,7 @@ var ordersPage = React.createClass({
 
 		var date;
 		var currentDate = new Date();
-		var pastDate = new Date();
+		var pastDate 	= new Date();
 		pastDate.setDate(currentDate.getDate() - 90);
 
 		currentDate = [
@@ -149,7 +156,7 @@ var ordersPage = React.createClass({
 
 		var date;
 		var currentDate = new Date();
-		var pastDate = new Date();
+		var pastDate 	= new Date();
 
 		currentDate = [
 			currentDate.getUTCFullYear(),
@@ -174,7 +181,7 @@ var ordersPage = React.createClass({
 		var date;
 		var currentDate = new Date();
 
-		currentDate = [
+		currentDate 	= [
 			currentDate.getUTCFullYear(),
 			currentDate.getUTCMonth() + 1,
 			currentDate.getUTCDate()
@@ -216,22 +223,31 @@ var ordersPage = React.createClass({
 		});
 	},
 
+	setUser: function(user) {
+		this.setState({
+			user: user
+		})
+	},
+
 	render: function() {
 		
-		var orderHandler = this.orderHandler;
-		var addInvoiceHandler = this.addInvoice;
-		var ledgerHandler = this.ledgerHandler;
+		var orderHandler 		= this.orderHandler;
+		var addInvoiceHandler 	= this.addInvoice;
+		var ledgerHandler 		= this.ledgerHandler;
+		var viewLedger	 		= this.state.user.permission_ledger;
 
 		return (
 
 			<div>
-				<Header/>
+				<Header setUser={this.setUser}/>
 				<div className="column-14 push-1 model-generic">
 					<div>
+
 						{(this.state.error && this.state.orders
                             ? <Error message="Sorry, that search returned no results. Try another search." />
                             : <p className="display-none"></p>
                         )}
+
                     </div>
 					<div className="panel-header">
 						<h3>Orders</h3>
@@ -244,10 +260,10 @@ var ordersPage = React.createClass({
 					</div>
 					<div className="panel-body table-head">
 						<table className="table table-full">
-							{this.state.orders
-						  		?<tr><th><h5>Job No.</h5></th><th><h5>Client</h5></th><th><h5>Carrier</h5></th><th><h5>Ledger</h5></th></tr>
+							{( this.state.orders
+						  		?<Ordersth viewLedger={ viewLedger }/>
 								:<th><h5>Sorry there are no orders for today</h5></th>
-							}							
+							)}							
 						</table>
 					</div>
 					<div className="panel-body table-responsive scroll">
@@ -271,11 +287,10 @@ var ordersPage = React.createClass({
 															<p>{order.carrier}</p>
 														</a>
 													</td>
-													<td key={i + "fourth"}>
-														<a onClick={ledgerHandler.bind(null, order)}>
-															<LedgerIcon active={order.has_invoices}/>
-														</a>
-													</td>
+													{( viewLedger
+														? <td key={i + "fourth"}><a onClick={ledgerHandler.bind(null, order)}><LedgerIcon active={order.has_invoices}/></a></td>
+														: <p className="display-none"></p>
+													)}
 												</tr>
 								    })
 									:<tr><td><p></p></td></tr>
