@@ -91,8 +91,11 @@ datepicker{
 
 .email {
   .panel-body {
-    height: 7.5em;
+    height: 8.5em;
     text-align: center;
+    p {
+      margin-top: 0;
+    }
   }
   .row {
     margin-bottom: 0;
