@@ -175,6 +175,8 @@ var viewOrder = React.createClass({
 		    'border-bottom': viewing
 		});
 
+		console.log(this.state.viewing);
+
 		return (
 			<div className="overlay">
 				<div>
@@ -293,7 +295,7 @@ var viewOrder = React.createClass({
 										<textarea className="view_input" type="text" defaultValue={this.props.order.notify} name="notify" disabled max ='500' onChange={edited}/>
 									</div>
 								</div>
-								<input className="button charcoal" type="submit" value="Update" />
+								<input className={this.state.viewing ? "display-none" : "button charcoal"} type="submit" value="Update" />
 							</div>
 						</form>
 					</div>
