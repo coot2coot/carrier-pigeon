@@ -93,7 +93,7 @@ var addOrder = React.createClass({
 
 		return (
 			<div className="overlay">
-				<div className="column-12 push-2 model-generic model-top create-order">
+				<div className="column-14 push-1 model-generic model-top create-order">
 					<div className="panel-header">
 						<h3>New Entry</h3>
 						<a className="close" onClick={this.closeView}>x</a>

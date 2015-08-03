@@ -1,13 +1,13 @@
 /** @jsx React.DOM */
 
-var React  	= require('react/addons');
-var Router  = require('react-router');
-var Link   	= Router.Link;
+var React  		= require('react/addons');
+var Router  	= require('react-router');
+var Link   		= Router.Link;
 
-var Close 	= require("../close-warning.jsx");
-var Units 	= require("./view_units.jsx");
-var Warning = require("../warning.jsx");
-var ContactList= require("./contact-list.jsx");
+var Close 		= require("../close-warning.jsx");
+var Units 		= require("./view_units.jsx");
+var Warning 	= require("../warning.jsx");
+var ContactList = require("./contact-list.jsx");
 
 var getJobNumber = require("../../lib/format-job-number.js");
 
@@ -28,27 +28,31 @@ var viewOrder = React.createClass({
 
     	this.setState({
     		deleteOrder: false
-    	})
+    	});
 	},
 
     closeView: function() {
 
     	if (this.state.viewing || !this.state.edited) {
-    		this.props.closeView()
+
+    		this.props.closeView();
+
 			this.setState({
 	    		closeView: false
-	    	})
+	    	});
     	}
 
-		if(this.state.closeView){
-			this.props.closeView()
+		if (this.state.closeView) {
+
+			this.props.closeView();
+
 			this.setState({
 	    		closeView: false
-	    	})
-	    }else{
+	    	});
+	    } else {
 		    this.setState({
 	    		closeView: true
-	    	})
+	    	});
 		}
 	},
 
@@ -61,14 +65,14 @@ var viewOrder = React.createClass({
 
 		this.setState({
 	    	closeView: false
-	    })
+	    });
 	},
 
 	deleteHandler: function (item) {
 
 		this.setState({
 			deleteOrder: item
-		})
+		});
 	},
 
 	addUnit: function(key) {
@@ -85,8 +89,8 @@ var viewOrder = React.createClass({
 	removeUnit: function (key) {
 
 		if (this.state.units.length > 1) {
-			var deleteUnit = this.state.units.splice(key, 1);
-  			var newState = this.state.units;
+			var deleteUnit 	= this.state.units.splice(key, 1);
+  			var newState 	= this.state.units;
 
   			this.setState({
 				units: newState,
@@ -94,6 +98,7 @@ var viewOrder = React.createClass({
 
 			if (deleteUnit[0].unit_id	) {
 				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
+				
 				this.setState({
 					deletedUnits: newDeletedStrng
 				});	
@@ -127,17 +132,22 @@ var viewOrder = React.createClass({
 	edit: function () {
 
 		var disabled = document.getElementsByClassName('view_input');
+
 		if (this.state.viewing === true) {
+
 			for (var prop in disabled){
 				disabled[prop].disabled = false;
 			}
+
 			this.setState({
 				viewing: false
 			});
 		} else {
+
 			for (var prop in disabled){
 				disabled[prop].disabled = true;
 			}
+
 			this.setState({
 				viewing: true
 			});
@@ -163,19 +173,16 @@ var viewOrder = React.createClass({
 
 	render: function() {
 		
-		var addUnit = this.addUnit;
-		var removeUnit = this.removeUnit;
-		var viewing = this.state.viewing;
-		var edited = this.ifEdited;
-		var onUnitChange = this.onUnitChange;
-
-		var cx = React.addons.classSet;
-		var rowClasses = cx({
+		var addUnit 		= this.addUnit;
+		var removeUnit 		= this.removeUnit;
+		var viewing 		= this.state.viewing;
+		var edited 			= this.ifEdited;
+		var onUnitChange 	= this.onUnitChange;
+		var cx 				= React.addons.classSet;
+		var rowClasses 		= cx({
 		    'row': true,
 		    'border-bottom': viewing
 		});
-
-		console.log(this.state.viewing);
 
 		return (
 			<div className="overlay">
@@ -185,7 +192,7 @@ var viewOrder = React.createClass({
 	                    : <p></p>
 	                )}
                 </div>
-				<div className="column-12 push-2 model-generic model-top view-order">
+				<div className="column-14 push-1 model-generic model-top view-order">
 					<div className="panel-header">
 						<h3>{getJobNumber(this.props.order.job_number)}</h3>
 						<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.order)}>Delete</a>
