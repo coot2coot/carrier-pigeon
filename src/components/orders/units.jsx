@@ -7,6 +7,7 @@ var units = React.createClass({
 		var unit = this.props.unit;
 		var addUnit = this.props.addUnit;
 		var removeUnit = this.props.removeUnit;
+
 		return (
 			<units className='row no-gutter'>
 				<div className="column-13 push-1 border ">
@@ -45,7 +46,7 @@ var units = React.createClass({
 							<input type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference ? unit.unit_loading_reference : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
-							<input type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.slice(0, 10) : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
 							<input type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time ? unit.unit_loading_time : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
