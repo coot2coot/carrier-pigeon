@@ -42,7 +42,7 @@ var contactList = React.createClass({
 				{( this.props.vieworder
 					? <input list="dropdown" className="view_input" type="text"  defaultValue={this.props.contact} name={this.props.contactType} onChange={this.props.handleChange} required = {this.props.required} disabled/>
 					: this.props.email 
-					?<input list="dropdown" placeholder = {this.props.placeholder} type="text" name={this.props.contactType} onChange={this.props.handleChange} required = {this.props.required} autoFocus/>
+					?<input list="dropdown" placeholder = {this.props.placeholder} type="text" name={this.props.contactType} onChange={this.props.handleChange} required = {this.props.required} autoFocus={this.props.autoFocus}/>
 					:<input list="dropdown" type="text" defaultValue={this.props.contact ? this.props.contact : ""} name={this.props.contactType} onChange={this.props.handleChange} required = {this.props.required}/>
 					
 					

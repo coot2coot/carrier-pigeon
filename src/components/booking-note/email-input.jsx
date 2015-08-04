@@ -14,13 +14,14 @@ var EmailInput = React.createClass({
                         <a className="close" onClick={this.props.closeView}>x</a>
                     </div>
                     <div className="panel-body">
+                        <br/>
                         <form onSubmit={this.props.sendEmail}>
                             <div className="row">
                                 <div className="column-3">
                                     <p>To:</p>
                                 </div>
                                 <div className="column-13">
-                                    <ContactList property="email" placeholder="email@example.com" contactType="toemail" email={true} />
+                                    <ContactList property="email" placeholder="email@example.com" contactType="toemail" email={true} autoFocus={true}/>
                                 </div>
                             </div>
                             <div className="row">

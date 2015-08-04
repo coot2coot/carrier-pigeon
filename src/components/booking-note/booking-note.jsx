@@ -39,10 +39,16 @@ var bookingNote = React.createClass({
         });
     },
 
+    setUser: function(user) {
+        this.setState({
+            user: user
+        })
+    },
+
     render: function() {
         return (
             <div >
-                <Header/>
+                <Header setUser={this.setUser}/>
                 <BookingOptions order={this.state.order} units={this.state.units}/>
                 <BookingPage order={this.state.order} units={this.state.units}/>
             </div>

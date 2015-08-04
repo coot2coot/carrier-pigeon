@@ -1,9 +1,12 @@
 "use strict";
 
 function isEmptyObj(obj) {
+
     for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
+    	
+        if(prop !== "job_number" && obj.hasOwnProperty(prop)) {
             return false;
+        }
     }
 
     return true;

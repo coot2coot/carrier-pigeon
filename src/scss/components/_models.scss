@@ -66,12 +66,12 @@
 	div.panel-body {
 		padding: 0 1em 2em 1em;
     max-height: 43em;
-    @include respond(small-height) {
-      max-height: 33em;
-    };   
     @include respond(large-height) {
       max-height: 38em;
     };
+    @include respond(small-height) {
+      max-height: 33em;
+    };   
     @include respond(extra-small-height) {
       max-height: 30em;
     };
