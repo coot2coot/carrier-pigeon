@@ -173,7 +173,6 @@ query.searchOrders = function (value) {
 
 	string += keyWord(value);
 
-	console.log(string);
 	return string;
 }
 
@@ -184,11 +183,10 @@ query.searchContacts = function (value) {
 
 	string += command()
 				.select("*")
-				.from("contacts")
+				.from("contacts LEFT JOIN reminderer ON contacts.contact_id = reminderer.contact_reminders_id")
 				.where(item + " ILIKE '%" + value +"%'")
 				.end()
 	})
-
 	return string;
 }
 

@@ -18,7 +18,7 @@ var serverRoutes =  function (router) {
 	});
 
 	router.addRoute('/login/verify', function (req, res, match){
-	  	require('./lib/validate-user.js')(req, res, function(userDetails) {
+	  	require('./lib/validate-user.js')(req, res, function (userDetails) {
 			res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
@@ -70,7 +70,7 @@ var serverRoutes =  function (router) {
  * -------------------------------*/
 
 	router.addRoute('/units/:jobNo', function (req, res, match){
-	  	require('./handlers/read-units-db.js')(req,res);
+	  	require('./handlers/read-units-db.js')(req, res);
 	});
 
 	router.addRoute('/unit/create', function (req, res, match){
@@ -89,10 +89,10 @@ var serverRoutes =  function (router) {
  * -------------------------------*/
 
  	router.addRoute('/contact/post', function (req, res, match){
-	  	require('./handlers/create-contact-reminder.js')("contacts",req, res);
+	  	require('./handlers/create-contact-reminder.js')(req, res, "contacts");
 	});
 	router.addRoute('/contacts/edit', function (req, res, match){
-	  	require('./handlers/edit-db.js').contactsReminders(req, res, cache.noCache);
+	  	require('./handlers/edit-db.js').contacts(req, res, cache.noCache);
 	});
 	router.addRoute('/contacts/get', function (req, res, match){
 	  	require('./handlers/read-db.js').cached(req, res);
@@ -106,21 +106,8 @@ var serverRoutes =  function (router) {
 /* -------------------------------*
  *	   Reminders Routes
  * -------------------------------*/
-
- 	router.addRoute('/reminders/post', function (req, res, match){
-	  	require('./handlers/create-contact-reminder.js')("reminders", req, res);
-	});
-	router.addRoute('/reminders/get', function (req, res, match){
-	  	require('./handlers/read-db.js').cached(req, res);
-	});
-	router.addRoute('/reminders/get/nocache', function (req, res, match){
-	  	require('./handlers/read-db.js').noCache(req, res);
-	});
-	router.addRoute('/reminders/delete/:id?', function (req, res, match){
-	  	require('./handlers/delete-db.js')(req, res);
-	});
-	router.addRoute('/reminders/edit', function (req, res, match){
-	  	require('./handlers/edit-db.js').contactsReminders(req, res, cache.noCache);
+	router.addRoute('/reminders/:deletedReminders?', function (req, res, match){
+	  	require('./handlers/edit-invoices-reminders.js')(req, res, 'reminderer');
 	});
 
 /* -------------------------------*
@@ -164,7 +151,7 @@ var serverRoutes =  function (router) {
 	});
 
 	router.addRoute('/invoices/edit/:deletedInvoices?', function (req, res, match){
-	  	require('./handlers/edit-invoices.js')(req, res);
+	  	require('./handlers/edit-invoices-reminders.js')(req, res, 'invoice');
 	});
 
 /* -------------------------------*

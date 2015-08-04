@@ -13,6 +13,6 @@ var arr = [
 
 test('testing that getWeek function calculates the week of the year', function (t) {
 	var newArr = getWeek(arr);
-	t.equals( newArr[0].week, "urgent", "weekday functon works");
+	t.equals( newArr[0].week, 2, "weekday functon works");
 	t.end();
 });

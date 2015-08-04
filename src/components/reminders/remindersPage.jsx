@@ -10,6 +10,7 @@ var week			= require("../../lib/getWeek.js")
 
 var remindersPage = React.createClass({
 	getInitialState: function() {
+
       return {
         error: false,
         creatingReminder: false,
@@ -17,22 +18,26 @@ var remindersPage = React.createClass({
       };
     },
     addReminder: function () {
+
 		this.setState({
 			creatingReminder: true
 		})
 	},
 	reminderHandler: function (item) {
+
 		this.setState({
 			selectedReminder: item
 		})
 	},
 	onCloseComponent: function () {
+
 		this.setState({
 			creatingReminder: false,
 			selectedReminder: null
 		})
 	},
     getContacts : function () {
+    	
     	var getContactUrl = "/contacts/get";
     	if (window.location.href.indexOf('true') > -1 ) {
 			getContactUrl = "/contacts/get/nocache"

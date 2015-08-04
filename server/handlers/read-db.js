@@ -9,7 +9,8 @@ var readOptions  = {};
 
 
 var get = function (table, req, res) {
-	db.get(table,function (result) {		
+	
+	db.get(table, function (result) {		
 		myCache.set(table, result, secondsToSave, function(err, success){
 
 			if(err){

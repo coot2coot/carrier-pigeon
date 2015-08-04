@@ -44,16 +44,14 @@ edit.orders = function (req, res, cb) {
 	});
 };
 
-edit.contactsReminders = function (req, res, cb) {
-	var table;
-	if (req.url.indexOf('contact') > -1) {
-		table = "contacts";
-	} else {
-		table = "reminders";
-	}
+edit.contacts = function (req, res, cb) {
+
+	var table = "contacts";
+	
 	parseData(req, function (data) {
 		data = removes(data)
 		validateUser(req, res, function() {
+			console.log('data',data)
 
 			db.edit(table, data, function (err) {
 				if (err) {
