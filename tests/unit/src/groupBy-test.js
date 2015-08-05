@@ -22,7 +22,7 @@ var arr = [
 
 
 
-test.only('testing that groupBy function correctly groups the values of an array', function (t) {
+test('testing that groupBy function correctly groups the values of an array', function (t) {
 	var newArr = groupBy(arr, 'age')
 	t.equals( newArr[0].length, 2, "group by works");
 	t.end();

@@ -124,6 +124,14 @@ var contactsPage = React.createClass({
 	reminderHandler: function (item) {
 		this.setState({
 			selectedReminder: item
+		})
+	},
+
+	contactHandler: function (item) {
+		this.setState({
+			selectedContact: item
+		})
+	},
 
 	setUser: function(user) {
 		this.setState({
