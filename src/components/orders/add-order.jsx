@@ -8,12 +8,15 @@ var ContactList = require("./contact-list.jsx");
 var currentDate = require("../../lib/current-date.js");
 
 var addOrder = React.createClass({
+
 	getInitialState: function() {
+
+		var unitsArray = this.props.units ? this.props.units : [{}];
 
 	    return {
 	    	dateValue: currentDate(),
 	    	valid: false,
-	    	unitsArr: [{}],
+	    	unitsArr: unitsArray,
 	    	closeView: false,
 	    	units: null,
 	    	edited: false,
@@ -23,16 +26,18 @@ var addOrder = React.createClass({
 
 	closeView: function() {
 
-		if( this.state.closeView || !this.state.edited ){
+		if ( this.state.closeView || !this.state.edited ) {
+
 			this.props.closeView();
 
 			this.setState({
 	    		closeView: false
-	    	})
+	    	});
 	    } else {
+
 		    this.setState({
 	    		closeView: true
-	    	})
+	    	});
 		}
 	},
 
@@ -40,7 +45,7 @@ var addOrder = React.createClass({
 
 		this.setState({
 	    	closeView: false
-	    })
+	    });
 	},
 
   	addUnit: function(key) {
@@ -56,9 +61,11 @@ var addOrder = React.createClass({
 
   	removeUnit: function(key) {  		
 
-  		if(this.state.unitsArr.length > 1){
+  		if (this.state.unitsArr.length > 1) {
+
 			this.state.unitsArr.splice(key, 1);
-			var newState = this.state.unitsArr
+
+			var newState = this.state.unitsArr;
 
 	  		this.setState({
 	    		unitsArr: newState
@@ -121,7 +128,7 @@ var addOrder = React.createClass({
 
 									<div className="row units">
 
-										{ units.map( function (unit, i) {
+										{ this.state.unitsArr.map( function (unit, i) {
 											var key = new Date().getMilliseconds() + i;
 										    return <Units 
 										    			unit={unit} 
