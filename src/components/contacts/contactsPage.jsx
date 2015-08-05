@@ -139,7 +139,7 @@ var contactsPage = React.createClass({
 		return (
 
 			<div>
-				<Header/>
+				<Header />
 				<div className="column-14 push-1 model-generic">
 					<div>
 						{(this.state.error
