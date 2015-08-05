@@ -13,9 +13,8 @@ var addOrder = React.createClass({
 	    return {
 	    	dateValue: currentDate(),
 	    	valid: false,
-	    	unitsArr: [{}],
+	    	units: [{}],
 	    	closeView: false,
-	    	units: null,
 	    	edited: false,
 	    	order: {}
 	    };
@@ -45,23 +44,23 @@ var addOrder = React.createClass({
 
   	addUnit: function(key) {
 
-  		this.state.unitsArr.splice(key + 1, 0, {});
+  		this.state.units.splice(key + 1, 0, {});
 		
-		var newState = this.state.unitsArr
+		var newState = this.state.units
 
   		this.setState({
-    		unitsArr: newState
+    		units: newState
     	});
   	},
 
   	removeUnit: function(key) {  		
 
-  		if(this.state.unitsArr.length > 1){
-			this.state.unitsArr.splice(key, 1);
-			var newState = this.state.unitsArr
+  		if(this.state.units.length > 1){
+			this.state.units.splice(key, 1);
+			var newState = this.state.units
 
 	  		this.setState({
-	    		unitsArr: newState
+	    		units: newState
 	    	});
 	    }
   	},
@@ -79,12 +78,11 @@ var addOrder = React.createClass({
   		this.ifEdited();
   		var name = event.target.name;
 		var value = event.target.value;
-		this.state.unitsArr[key][name] = value;
+		this.state.units[key][name] = value;
   	},
   	
 	render: function() {
 		var order 		= this.props.copiedOrder;
-		var units 		= this.props.units;
 		var addUnit 	= this.addUnit;
 		var removeUnit 	= this.removeUnit;
 		var today 		= currentDate();
@@ -121,7 +119,7 @@ var addOrder = React.createClass({
 
 									<div className="row units">
 
-										{ units.map( function (unit, i) {
+										{ this.state.units.map( function (unit, i) {
 											var key = new Date().getMilliseconds() + i;
 										    return <Units 
 										    			unit={unit} 

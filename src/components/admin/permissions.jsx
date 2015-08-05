@@ -11,11 +11,10 @@ var permissions = React.createClass({
     },
 
     handleChange: function(e) {
-        var data = {}
-        data[e.target.name] = e.target.checked
+        var data = {};
+        data[e.target.name] = e.target.checked;
 
-        this.setState(data)
-        console.log(data);
+        this.setState(data);
     },
 
     render: function() {
