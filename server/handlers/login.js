@@ -16,12 +16,16 @@ function checkUserLogins(req, res, cb) {
 }
 
 function createSession (details, callback) {
+
     var payload = {
         username: details.username,
         admin: details.admin,
         first_name: details.first_name,
         last_name: details.last_name,
-        email: details.email
+        email: details.email,
+        permission_orders: details.permission_orders,
+        permission_contact: details.permission_contact,
+        permission_ledger: details.permission_ledger
     };
 
     var token = JWT.sign(payload, secret);

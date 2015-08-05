@@ -17,10 +17,10 @@ function edit (req, res, table) {
 			db.edit(table, data, function (err) {
 
 				if (err) {
-					console.log(err)
 					res.writeHead(500);
 					res.write(err);
 					res.end();
+
 				} else if (table === 'invoice') {
 					res.writeHead(303, {
 						"Location": "/#/orders/true"

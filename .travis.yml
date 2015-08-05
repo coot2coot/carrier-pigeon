@@ -20,8 +20,6 @@ before_script:
 - git config credential.helper "store --file=.git/credentials"
 - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
 - echo node_modules/ > .gitignore
-addons:
-  sauce_connect: true
 script:
 - gulp deploy
 before_deploy:

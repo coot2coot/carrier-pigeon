@@ -266,10 +266,31 @@ dataBase.post = function (table, doc, cb) {
     });
 };
 
-dataBase.edit = function (table, doc, cb) {
 
-    connect( function (client, done) {
+dataBase.editUserPermissions = function (username, details, cb){
+    connect(function(client, done) {
 
+        var query = getQuery.standard(details);
+
+        client.query(command()
+                    .update("users")
+                    .set(query)
+                    .where("username = $1")
+                    .end(), [username], function(err, result) {
+            
+            done();
+
+            if (err) {
+                return cb(err);
+            }
+            cb(null);
+        });
+    });
+};
+
+
+dataBase.edit = function (table, doc, cb){
+    connect(function(client, done) {
         if (table === "users") {
             editUsers(doc, client, cb, done);
         } else if (table === "invoice") {

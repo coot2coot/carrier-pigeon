@@ -8,12 +8,19 @@ var nav = React.createClass({
     render: function() {
     	var cx = React.addons.classSet;
 		var ordersClass = cx({
-			'active': this._reactInternalInstance._context.router.isActive("orders")
+			'active': this._reactInternalInstance._context.router.isActive("orders"),
+			'display-none': !this.props.user.permission_orders
 		})
 		var contactsClass = cx({
-			'active': this._reactInternalInstance._context.router.isActive("contacts")
+			'active': this._reactInternalInstance._context.router.isActive("contacts"),
+			'display-none': !this.props.user.permission_contact
 		})
-		
+
+		var remindersClass = cx({
+			'active': this._reactInternalInstance._context.router.isActive("reminders"),
+			'display-none': !this.props.user.permission_contact
+		})
+
         return (
         	<nav className="nav">
 			  	<ul>

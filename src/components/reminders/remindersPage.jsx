@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React  			= require('react');
 var Error 			= require("../error-message.jsx");
 var Header 			= require("../header/header.jsx");
@@ -84,11 +82,18 @@ var remindersPage = React.createClass({
 	    	"get request failed"
 	    });
 	},
+
+	setUser: function(user) {
+		this.setState({
+			user: user
+		})
+	},
+
 	render: function() {
 		var reminderHandler = this.reminderHandler;
 		return (
 			<div >
-				<Header/>
+				<Header setUser={this.setUser}/>
 				<div className="column-14 push-1 model-generic">
 
 					<div className="panel-header" >
