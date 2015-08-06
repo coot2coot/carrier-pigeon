@@ -52,7 +52,7 @@ var addReminder = React.createClass({
     	});
 	},
 
-	componentDidMount: function (){
+	componentDidMount: function () {
 
 		var reminder = this.props.reminder;
 
@@ -74,26 +74,26 @@ var addReminder = React.createClass({
 					</div>
 					<div className="panel-body scroll">
 						<form action={"/reminders/" + this.state.deletedReminders.slice(1)} method="POST">
-							<div className="row gutters">
-							<div className="row gutters">
-								<div className="column-8 purchase">
-									<h4>Message</h4>
+							<div className="row column-13 push-2 gutters small-margin-top">
+								<div className="row column-11 gutters">
+									<div className="column-7 purchase">
+										<h4>Message</h4>
+									</div>
+									<div className="column-9 purchase">
+										<h4>Date</h4>
+									</div>
 								</div>
-								<div className="column-8 purchase">
-									<h4>Date</h4>
-								</div>
-							</div>
-							{reminders.map(function (reminder, i) {
-								var key = new Date().getMilliseconds() + i;
-								console.log(reminder);
-								return 	<Reminders
-											reminder = {reminder}
-											key = {key}
-											keys= {i} 
-											addReminder={addReminder} 
-											removeReminder={removeReminder}/>
-							})}
-								<input type="submit" className="button charcoal" value="Update" />
+								{reminders.map(function (reminder, i) {
+									var key = new Date().getMilliseconds() + i;
+
+									return 	<Reminders
+												reminder = {reminder}
+												key = {key}
+												keys= {i} 
+												addReminder={addReminder} 
+												removeReminder={removeReminder}/>
+								})}
+									<input type="submit" className="button charcoal" value="Update" />
 							</div>
 						</form>
 					</div>

@@ -4,6 +4,7 @@ var React = require('react');
 
 var Reminder = React.createClass({
 	render: function () {
+
 		var reminder 		= this.props.reminder;
 		var addReminder 	= this.props.addReminder;
 		var removeReminder 	= this.props.removeReminder;
@@ -12,10 +13,10 @@ var Reminder = React.createClass({
 			<div >
 				<div className="column-11">
 					<div className="column-7">
-						<input type="text" defaultValue={reminder.message} name="message" />
+						<input type="text" defaultValue={reminder.message} name="message" required/>
 					</div>
 					<div className="column-7">
-						<input type="date" defaultValue={reminder.date && reminder.date !== null ? reminder.date.substring(0, 10) : ''} name="date"/>
+						<input type="date" defaultValue={reminder.date && reminder.date !== null ? reminder.date.substring(0, 10) : ''} name="date" required/>
 					</div>
 					<input type="text" name="reminder_id" defaultValue= {reminder.reminder_id}  className="display-none" />
 					<input type="text" name="contact_reminders_id" defaultValue={reminder.contact_id} className="display-none" />
