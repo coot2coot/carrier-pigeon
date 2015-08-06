@@ -13,7 +13,7 @@ var permissions = React.createClass({
     handleChange: function(e) {
         var data = {};
         data[e.target.name] = e.target.checked;
-
+        
         this.setState(data);
     },
 
