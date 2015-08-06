@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React  			= require('react');
 var Error 			= require("../error-message.jsx");
 var CreateContact 	= require('./add-contact.jsx');

@@ -98,7 +98,7 @@ test('Testing that deleting three items returned correct unit delete queries', f
 });
 
 test('Testing that result returned correct inovice delete query', function (t) {
-	var data = invoiceMocks.createRes().delete_invoice;
+	var data = invoiceMocks.createRes().items_to_remove;
   	var query = deleteQuery(data, "invoice", "invoice_id");
   	var result = invoiceMocks.deleteTest();
 	

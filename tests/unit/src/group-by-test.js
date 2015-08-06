@@ -1,29 +1,10 @@
-var test = require('tape');
-var groupBy = require('../../../src/lib/groupBy.js');
-var arr = [
-        {
-            name: 'david',
-            age: 22
-        },
-        {
-            name:'jim',
-            age: 22
-        },
-        {
-            name:'david',
-            age:20
-        },
-        {
-            name:'david',
-            age:20
-        }
-        
-    ];
-
-
+var test    = require('tape');
+var groupBy = require('../../../src/lib/group-by.js');
+var mock    = require('../mocks/group-by.mock.js');
 
 test('testing that groupBy function correctly groups the values of an array', function (t) {
-	var newArr = groupBy(arr, 'age')
+
+	var newArr = groupBy(mock, 'age')
 	t.equals( newArr[0].length, 2, "group by works");
 	t.end();
 });

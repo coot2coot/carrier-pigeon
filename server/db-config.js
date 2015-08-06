@@ -139,9 +139,10 @@ function editOrders (doc,clt,cb, done) {
 }
 
 function editInvoices (doc, clt, cb, done) {
+
     var updateQuery = getQuery.update(doc, "invoice", "invoice_id").update;
     var createQuery = getQuery.update(doc, "invoice", "invoice_id").create;
-    var deleteQuery = getQuery.del(doc.delete_invoice, "invoice", "invoice_id");
+    var deleteQuery = getQuery.del(doc.items_to_remove, "invoice", "invoice_id");
 
     clt.query(command()
                 .query(updateQuery)
@@ -162,7 +163,7 @@ function editReminders (doc, clt, cb, done) {
 
     var updateQuery = getQuery.update(doc, "reminderer", "reminder_id").update;
     var createQuery = getQuery.update(doc, "reminderer", "reminder_id").create;
-    var deleteQuery = getQuery.del(doc.delete_invoice, "reminderer", "reminder_id");
+    var deleteQuery = getQuery.del(doc.items_to_remove, "reminderer", "reminder_id");
 
     clt.query(command()
                 .query(updateQuery)

@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React       = require('react');
 var BookingForm = require("./booking-note-form.jsx");
 

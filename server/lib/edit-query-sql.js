@@ -144,6 +144,7 @@ query.update = function (items, table, idName) {
 };
 
 query.del = function (items, table, idName) {
+	console.log('items....',items)
 
 	if (items !== "") {
 		var arr = items.split(",");
