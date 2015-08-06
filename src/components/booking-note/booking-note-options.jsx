@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React       = require('react');
 var BookingPage = require("./booking-note-page.jsx");
 var EmailInput  = require("./email-input.jsx");

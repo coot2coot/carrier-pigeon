@@ -1,22 +1,20 @@
 'use strict';
 
-var test = require('tape');
 var db = require('../../../server/db-config.js');
-var mocks = require('../mocks/orders-units.js');
 
-var tests = function () {
+var tests = function (st) {
 
-	test("get function gets orders", function(t) {
+	st.test("get function gets orders", function (sst) {
 		var callback =  function (result){
-			t.equals(typeof result,'object', "get request to orders table worked")
+			sst.equals(result[0].hasOwnProperty('job_number'), true , "get request to orders table worked")
 		};
 		try {
 			db.get('orders', callback);
 		} catch(e) {
-			t.notOk(true, "get request to orders table did not work");
+			sst.notOk(true, "get request to orders table did not work");
 		}
 
-	    t.end();
+	    sst.end();
 	});
 }
 

@@ -6,7 +6,7 @@ var mock 		  = require("../mocks/contacts.js")
 var testDb 		  = {};
 
 
-testDb.create= function (test){
+testDb.create= function (cb){
 	pg.connect(client, function(err, clt, done) {
 
     	if (err) {
@@ -21,7 +21,9 @@ testDb.create= function (test){
         			.next()
         			.select("contact_id")
         			.from('contacts ORDER BY contact_id DESC LIMIT 1')
-        			.end(), function(err, result) {
+        			.end(), function (err, result) {
+
+            cb(result)
 
         	mock.edit.contact_id = result.rows[0].contact_id.toString();
 
@@ -33,7 +35,6 @@ testDb.create= function (test){
 		    	return;
 		    }
 		    done();
-            test();
 		});
 	});
 };

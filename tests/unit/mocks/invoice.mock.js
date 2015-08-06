@@ -8,7 +8,7 @@ invoice.createRes = function() {
   		type: [ "purchase", "purchase", "purchase", "sales", "sales", "sales" ],
   		currency: [ "£", "£", "£", "£", "£", "£" ],
   		job_number: [ "317", "317", "317", "317", "317", "317" ],
-  		delete_invoice: "6, 7"
+  		items_to_remove: "6, 7"
   	}
 
   	return mock;
@@ -22,7 +22,7 @@ invoice.createOne = function() {
   		type: "purchase",
   		currency: "£",
   		job_number: "317",
-  		delete_invoice: ""
+  		items_to_remove: ""
   	}
 
   	return mock;

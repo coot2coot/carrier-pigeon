@@ -2,15 +2,19 @@
 
 var query = {};
 
-function getLength(type, obj) {
+function getLength (type, obj) {
+
 	if (type === "units") {
 		return obj.unit_type.length;
+	} else if (type === "reminders") {
+		return obj.date.length;
 	} else {
 		return obj.currency.length;
 	}
 }
 
-function whichJobNumber(items, i) {
+function whichJobNumber (items, i) {
+
 	var no = (typeof items.job_number === "object") 
 			? items.job_number[i] 
 			: items.job_number;
@@ -18,7 +22,8 @@ function whichJobNumber(items, i) {
 	return no;
 }
 
-function getRightValue(item, property, i) {
+function getRightValue (item, property, i) {
+
 	var prop  = i !== undefined ? item[property][i] : item[property];
 
 	var val = (prop === "")
@@ -31,6 +36,7 @@ function getRightValue(item, property, i) {
 }
 
 function getCreateQuery (type, obj, id, index) {
+
 	var props;
 	var query = "";
 	var updateOrdersQuery = "";
@@ -42,11 +48,14 @@ function getCreateQuery (type, obj, id, index) {
 	data.values  = [];
 
 	for (props in obj) {
-		if (props !== id && props !== "job_number" && props !== "delete_invoice") {
-			
+		if (props !== id && props !== "items_to_remove" && props !== 'reminder_id' && props !== 'job_number') {
 			data.columns.push(props);
 			var value = getRightValue(obj, props, index);
 			data.values.push(value);
+		}
+		if (props === "job_number") {
+			data.columns.push(props);
+			data.values.push(jobNo);
 		}
 	}
 
@@ -61,13 +70,16 @@ function getCreateQuery (type, obj, id, index) {
 	}
 
 	query = "INSERT INTO " + type + " (" + data.columns.join() +
+			") VALUES (" + data.values.join() +"); ";
 			",job_number) VALUES (" + data.values.join() + "," + 
 			jobNo + "); ";
 	
 	return query + updateOrdersQuery;
+
 }
 
 function getUpdateQuery (type, id, obj, index) {
+
 	var props;
 	var itemId = index !== undefined ? obj[id][index] : obj[id];
 	var query = "";
@@ -75,7 +87,7 @@ function getUpdateQuery (type, id, obj, index) {
 	var updateStr = "";
 
 	for (props in obj) {
-		if (props !== id && props !== "job_number" && props !== "delete_invoice") {
+		if (props !== id && props !== "job_number" && props !== "items_to_remove") {
 
 			var prop  = index !== undefined ? obj[props][index] : obj[props];
 			var value = "'" + prop + "'";
@@ -96,13 +108,20 @@ function getUpdateQuery (type, id, obj, index) {
 }
 
 
-query.update = function (items, table, idName){
+query.update = function (items, table, idName) {
+	
 	var query = {};
 
 	query.update = "";
 	query.create = "";
 
-	if(typeof items[idName] === "object"){
+	/* If items[idName] is an object and not a string
+	there are multiple values for each property. If
+	there are multiple values a loop is required to
+	correctly format the sql*/
+
+	if (typeof items[idName] === "object"){
+
 		var i;
 		var length = getLength(table, items);
 
@@ -125,6 +144,7 @@ query.update = function (items, table, idName){
 };
 
 query.del = function (items, table, idName) {
+	console.log('items....',items)
 
 	if (items !== "") {
 		var arr = items.split(",");
@@ -133,7 +153,7 @@ query.del = function (items, table, idName) {
 
         for(i = 0; i < arr.length; i++) {
             deleteQuery += "DELETE FROM " + table + " WHERE " + 
-            				idName + " = "+arr[i]+";";
+            				idName + " = "+ arr[i] + ";";
         }
         return deleteQuery;
 
@@ -144,6 +164,7 @@ query.del = function (items, table, idName) {
 };
 
 query.standard = function (result) {
+
 	var query = "";
 
 	for (var k in result) {

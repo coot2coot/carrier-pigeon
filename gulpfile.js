@@ -111,7 +111,7 @@
         });
     });
 
-    gulp.task("test", ["db-tests", "unit-tests"], function () {
+    gulp.task("test", ["unit-tests", "db-tests"], function () {
         console.log("Done testing");
     });
 

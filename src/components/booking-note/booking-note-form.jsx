@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React  = require('react');
 
 var UnitForm = require("./booking-note-unit.jsx");

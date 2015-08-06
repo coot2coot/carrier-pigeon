@@ -1,7 +1,5 @@
-/** @jsx React.DOM */
-
 var React = require('react');
-var contactStore = require("../../lib/storeContacts.js")
+var contactStore = require("../../lib/store-contacts.js")
 
 var contactList = React.createClass({
 

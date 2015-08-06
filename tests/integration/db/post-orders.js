@@ -1,22 +1,21 @@
 'use strict';
 
-var test = require('tape');
 var db = require('../../../server/db-config.js');
 var mocks = require('../mocks/orders-units.js');
 
-var tests = function () {
+var tests = function (st) {
 
-	test("post function posts to orders and units tables", function(t) {
+	st.test("post function posts to orders and units tables", function(sst) {
 		var callback =  function (result){
-			t.equals(result,null, "post request to units and orders table worked")
+			sst.equals(result,null, "post request to units and orders table worked")
 		};
 		try {
 			db.post('orders', mocks.order, callback);
 		} catch(e) {
-			t.notOk(true, "post request to orders table did not work");
+			sst.notOk(true, "post request to orders table did not work");
 		}
 
-	    t.end();
+	    sst.end();
 	});
 }
 

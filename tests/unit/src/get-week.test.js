@@ -1,5 +1,5 @@
 var test = require('tape');
-var getWeek = require('../../../src/lib/getWeek.js');
+var getWeek = require('../../../src/lib/get-week.js');
 var arr = [
 	{
 		date: "Wed, 03 Jan 2015 07:41:58 GMT"
@@ -13,6 +13,6 @@ var arr = [
 
 test('testing that getWeek function calculates the week of the year', function (t) {
 	var newArr = getWeek(arr);
-	t.equals( newArr[0].week, "urgent", "weekday functon works");
+	t.equals( newArr[0].week, 2, "weekday functon works");
 	t.end();
 });

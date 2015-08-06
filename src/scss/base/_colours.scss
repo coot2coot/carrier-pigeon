@@ -12,7 +12,19 @@ $dark-grey: #434343;
 $grey: #6E6E6E;
 $light-grey: #D8D8D8;
 $lightest-grey: #FAFAFA;
+$red: #BE4B4B;
+$light-red: #C67171;
 
+
+@mixin red-background {
+    background-color: $red;
+    background-image: linear-gradient($light-red, $red);
+}
+
+@mixin red-hover {
+    background-color: $light-red;
+    background-image: linear-gradient($light-red, $red);
+}
 
 
 @mixin blue-background {

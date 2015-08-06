@@ -19,6 +19,17 @@
   	}
 }
 
+.button.red {
+	@include red-background;
+	float: right;
+	width: 6.5em;
+	margin-top: 1em;
+  	&:hover {
+  		@include red-hover;
+  		color: white;
+  	}
+}
+
 .button.blue {
 	@include blue-background;
 	border: 0.1em $primary solid;
@@ -26,6 +37,7 @@
   		@include blue-hover;
   	}
 }
+
 .button.grey {
 	@include light-background;
 	color: $dark-grey;
@@ -38,7 +50,7 @@
 	width: 30%;
   	padding: 0 0.4em;
 	font-weight: 900;
-	font-size: 1em;
+	font-size: 12px;
 	border: none;
 }
 
