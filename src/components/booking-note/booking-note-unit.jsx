@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
-var React  = require('react');
+var React       = require('react');
+var formatDate = require("../../lib/format-date.js");
 
 var td = {
     border: "none",
@@ -19,7 +20,7 @@ var unitsInformation = React.createClass({
     render: function() {
         return (
             <tr>
-                <td style={td}>{this.props.unit.unit_loading_date ? this.props.unit.unit_loading_date.substring(0, 10) : ""}</td>
+                <td style={td}>{this.props.unit.unit_loading_date ? formatDate(this.props.unit.unit_loading_date) : ""}</td>
                 <td style={td}>{this.props.unit.unit_loading_time ? this.props.unit.unit_loading_time.substring(0, 5) : ""}</td>
                 <td style={td}>{this.props.unit.unit_type}</td>
                 <td style={td}>{this.props.unit.unit_loading_reference}</td>
