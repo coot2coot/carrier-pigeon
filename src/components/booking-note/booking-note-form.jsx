@@ -41,7 +41,14 @@ var bookingNoteForm = React.createClass({
         };
     },
     render: function() {
-        var order = this.props.order;
+
+        var order               = this.props.order;
+        var instructionsArray   = [];
+
+        if (order.special_instructions !== undefined) {
+            instructionsArray = order.special_instructions.split('\n');
+        }
+
         return (
             <div>
                 <table style={table}>
@@ -53,7 +60,7 @@ var bookingNoteForm = React.createClass({
                         <th style={th}><b> Commodity description: </b></th>
                         <th style={th}><b> Gross weight: </b></th>
                     </tr>
-                    { this.props.units.map(function(unit){
+                    { this.props.units.map(function (unit) {
                         return <UnitForm unit={unit} />
                     })}
                 </table>
@@ -74,7 +81,14 @@ var bookingNoteForm = React.createClass({
                         <th style={th}><b> Special Instructions: </b></th>
                     </tr>
                     <tr>
-                        <td style={tdRight}>{order.special_instructions}</td>
+                        <td style={tdRight}>
+
+                            { instructionsArray.map(function (item) {
+                                
+                                return <p> { item } </p>
+                            })}
+
+                        </td>
                     </tr>
                 </table>
             </div>
