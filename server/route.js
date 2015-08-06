@@ -107,7 +107,7 @@ var serverRoutes =  function (router) {
  *	   Reminders Routes
  * -------------------------------*/
 	router.addRoute('/reminders/:deletedReminders?', function (req, res, match){
-	  	require('./handlers/edit-invoices-reminders.js')(req, res, 'reminderer');
+	  	require('./handlers/edit-invoices-reminders.js')(req, res, 'reminders');
 	});
 	router.addRoute('/reminders/delete/:id?', function (req, res, match){
 	  	require('./handlers/delete-db.js')(req, res);

@@ -6,7 +6,7 @@ function getLength (type, obj) {
 
 	if (type === "units") {
 		return obj.unit_type.length;
-	} else if (type === "reminderer") {
+	} else if (type === "reminders") {
 		return obj.date.length;
 	} else {
 		return obj.currency.length;

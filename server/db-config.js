@@ -161,9 +161,9 @@ function editInvoices (doc, clt, cb, done) {
 
 function editReminders (doc, clt, cb, done) {
 
-    var updateQuery = getQuery.update(doc, "reminderer", "reminder_id").update;
-    var createQuery = getQuery.update(doc, "reminderer", "reminder_id").create;
-    var deleteQuery = getQuery.del(doc.items_to_remove, "reminderer", "reminder_id");
+    var updateQuery = getQuery.update(doc, "reminders", "reminder_id").update;
+    var createQuery = getQuery.update(doc, "reminders", "reminder_id").create;
+    var deleteQuery = getQuery.del(doc.items_to_remove, "reminders", "reminder_id");
 
     clt.query(command()
                 .query(updateQuery)
@@ -189,7 +189,7 @@ dataBase.get = function (table, cb) {
             query = command()
                     .select('*')
                     .from('contacts')
-                    .query(" left join reminderer on contacts.contact_id = reminderer.contact_reminders_id")
+                    .query(" left join reminders on contacts.contact_id = reminders.contact_reminders_id")
                     .end();
 
         } else if (table === "orders") {
@@ -298,7 +298,7 @@ dataBase.edit = function (table, doc, cb){
             editInvoices(doc, client, cb, done);
         } else if (table === 'contacts') {
             editContacts(doc, client, cb, done);
-        } else if (table ==='reminderer') {
+        } else if (table ==='reminders') {
             editReminders(doc,client,cb,done)
         } else {
             editOrders(doc, client, cb, done);
@@ -315,7 +315,7 @@ dataBase.remove = function (table, doc, cb) {
 
         column = table === "users" ? "username" : 
                 table === "units" ? "unit_id" : 
-                table === "reminderer" ? "contact_reminders_id" : 
+                table === "reminders" ? "contact_reminders_id" : 
                 table === "contacts" ? "contact_id" : "job_number";
 
         client.query(command()

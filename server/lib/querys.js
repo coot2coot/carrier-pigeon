@@ -203,7 +203,7 @@ query.searchContacts = function (value) {
 		var searchString = createSearchString(value, item)
 		string += command()
 					.select("*")
-					.from("contacts LEFT JOIN reminderer ON contacts.contact_id = reminderer.contact_reminders_id")
+					.from("contacts LEFT JOIN reminders ON contacts.contact_id = reminders.contact_reminders_id")
 					.where(searchString)
 					.end()
 	})

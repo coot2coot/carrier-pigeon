@@ -213,10 +213,10 @@ var contactsPage = React.createClass({
 								            			<a>
 															<p className='align-center'>
 																{(cont[0].week && cont[0].week === 1)
-											            			? <ReminderIcon onClick= {reminderHandler.bind(null, contact)} classname ="present" />
+											            			? <ReminderIcon onclick= {reminderHandler.bind(null, contact)} classname ="present" />
 											            			: (cont[0].week && cont[0].week === 2)
-											            			?<ReminderIcon onClick= {reminderHandler.bind(null, contact)} classname ="urgent" />
-											            			:<ReminderIcon onClick= {reminderHandler.bind(null, contact)}/>
+											            			?<ReminderIcon onclick= {reminderHandler.bind(null, contact)} classname ="urgent" />
+											            			:<ReminderIcon onclick= {reminderHandler.bind(null, contact)}/>
 											            		}
 															</p>
 								            			</a>
