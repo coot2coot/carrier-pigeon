@@ -49,7 +49,7 @@ var ordersPage = React.createClass({
 	},
 
 	orderHandler: function (item) {
-		console.log(item)
+
 		this.setState({
 			selectedOrder: item
 		})

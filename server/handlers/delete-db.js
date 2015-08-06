@@ -13,7 +13,7 @@ function remove (req, res) {
 		} else if(req.url.indexOf('contact') > -1){
 			table = "contacts";
 		} else if(req.url.indexOf('reminder') > -1) {
-			table ="reminders"
+			table ="reminderer"
 		} else {
 			table = "orders";
 		}

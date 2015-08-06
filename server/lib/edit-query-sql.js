@@ -6,7 +6,7 @@ function getLength (type, obj) {
 
 	if (type === "units") {
 		return obj.unit_type.length;
-	} else if (type === "contacts") {
+	} else if (type === "reminderer") {
 		return obj.date.length;
 	} else {
 		return obj.currency.length;
@@ -109,7 +109,7 @@ function getUpdateQuery (type, id, obj, index) {
 
 
 query.update = function (items, table, idName) {
-
+	
 	var query = {};
 
 	query.update = "";

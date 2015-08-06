@@ -314,7 +314,7 @@ dataBase.remove = function (table, doc, cb) {
 
         column = table === "users" ? "username" : 
                 table === "units" ? "unit_id" : 
-                table === "reminders" ? "reminder_id" : 
+                table === "reminderer" ? "contact_reminders_id" : 
                 table === "contacts" ? "contact_id" : "job_number";
 
         client.query(command()
