@@ -19,20 +19,13 @@ test('ordersTests', function (t) {
 		require('./db/post-orders.js')(st);
 		require('./db/select-units.js')(st);
 		require('./db/searcher-orders.js')(st);
-		require('./db/edit-orders.js')(st);
-
-		// delete test is run after the other tests have completed
-		st.test('delete', function (sst) {
-
-			require('./db/delete-orders.js')(sst);
-			sst.end();
-		});
-
+		require('./db/edit-orders.js')(st);	
 		st.end();
 	});
 
 	t.plan(2);
 })
+
 
 test('contactsTests', function (t) {
 
@@ -48,13 +41,6 @@ test('contactsTests', function (t) {
 		require('./db/searcher-contacts.js')(st);
 		require('./db/edit-contacts.js')(st);
 		require('./db/post-contacts.js')(st);
-
-		// delete test is run after the other tests have completed
-		st.test('delete', function (sst) {
-
-			require('./db/delete-contacts.js')(sst);
-			sst.end();
-		});
 		st.end()
 	});
 	

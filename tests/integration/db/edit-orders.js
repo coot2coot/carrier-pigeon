@@ -17,9 +17,10 @@ var tests = function (st) {
 
 	    sst.end();
 	});
+	
 	st.test("edit function to orders and units where a unit has been added", function(sst) {
 		var callback =  function (result){
-			sst.equals(result, null, "edit request to units and orders table worked")
+			sst.equals(result, null, "multiple edit request to units and orders table worked")
 		};
 		try {
 			db.edit("orders", mocks.multipleEdit, callback);
