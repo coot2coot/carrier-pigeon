@@ -36,7 +36,7 @@ function postUsers (table, doc) {
     return query;
 }
 
-function postContactsReminders (table, doc) {
+function postContacts (table, doc) {
     var contacts = stringifyData(doc);
     var query = command()
                 .insertInto(table)
@@ -195,7 +195,7 @@ dataBase.get = function (table, cb) {
             query = command()
                     .select("*")
                     .from(table)
-                    .query("inner join invoice on order.job_number = invoice.job_number")
+                    .query(" inner join invoice on orders.job_number = invoice.job_number")
                     .end();
         } else {
             query = command()
@@ -252,7 +252,7 @@ dataBase.post = function (table, doc, cb) {
         } else if (table === "orders"){
             query = postOrders(table, doc);
         } else {
-            query = postContactsReminders(table, doc);
+            query = postContacts(table, doc);
         }
         
         client.query(query, function (err, result) {

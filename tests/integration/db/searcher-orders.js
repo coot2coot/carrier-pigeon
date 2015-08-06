@@ -1,12 +1,11 @@
 'use strict';
 
-var test = require('tape');
 var db = require('../../../server/db-config.js');
 var mocks = require('../mocks/orders-units.js');
 
-var tests = function () {
+var tests = function (st) {
 
-	test("searcher method gets all units for a specific job_number", function(t) {
+	st.test("searcher method gets all units for a specific job_number", function(sst) {
 		var getJobNumber = function () {
 		    var today = new Date();
 		  
@@ -17,42 +16,43 @@ var tests = function () {
 		    return yy + mm + id;
 		}
 		var callback =  function (n,result){
-			t.equals(typeof result,'object', "search request to orders worked")
+			sst.equals(typeof result,'object', "search request to orders worked")
 		};
 		try {
 			db.searcher('orders',getJobNumber(), callback);
 		} catch(e) {
-			t.notOk(true, "search request to orders table did not work");
+			sst.notOk(true, "search request to orders table did not work");
 		}
 
-	    t.end();
+	    sst.end();
 	});
 
-	test("searcher method gets all orders which contain a key word", function(t) {
+	st.test("searcher method gets all orders which contain a key word", function(sst) {
 
 		var callback =  function (n,result){
-			t.equals(typeof result,'object', "search request for key word in orders worked")
+			sst.equals(typeof result,'object', "search request for key word in orders worked")
 		};
 		try {
 			db.searcher('orders','jeff', callback);
 		} catch(e) {
-			t.notOk(true, "search request for key word in orders did not work");
+			sst.notOk(true, "search request for key word in orders did not work");
 		}
 
-	    t.end();
-	});
-	test("searcher method gets all units for a keyword and returns the orders", function(t) {
+	    sst.end();
+	}); 
+
+	st.test("searcher method gets all units for a keyword and returns the orders", function(sst) {
 
 		var callback =  function (n,result){
-			t.equals(typeof result,'object', "search request for key word in units worked")
+			sst.equals(typeof result,'object', "search request for key word in units worked")
 		};
 		try {
 			db.searcher('orders','40dd', callback);
 		} catch(e) {
-			t.notOk(true, "search request for key word in units did not work");
+			sst.notOk(true, "search request for key word in units did not work");
 		}
 
-	    t.end();
+	    sst.end();
 	});
 }
 

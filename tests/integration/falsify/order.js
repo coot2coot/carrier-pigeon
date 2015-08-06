@@ -6,8 +6,8 @@ var mock   	  	  =  require("../mocks/orders-units.js");
 var testDb 		  = {};
 
 
-testDb.create = function (test){
-	pg.connect(client, function(err, clt, done) {
+testDb.create = function (cb){
+	pg.connect(client, function (err, clt, done) {
 
     	if (err) {
     		console.log(err)
@@ -30,46 +30,20 @@ testDb.create = function (test){
         			.from('units ORDER BY unit_id DESC LIMIT 1')
         			.end(), function(err, result) {
 
+            cb(result);
         	// The job number anf unit_id created in the query is being saved with in the mock object so that it can be reused in the tests.
-
         	mock.job_number = result.rows[0].job_number.toString();
         	mock.unit_id = result.rows[1].unit_id.toString();
 		    if (err) {
-		    	console.log('err >>>', err)
+		    	console.log('err >>>', err);
 	            if(!err) return false;
 
 	            done(clt);
 		    	return;
 		    }
 		    done();
-            test();
 		});
     });
 };
-
-testDb.clearTable = function (){
-	pg.connect(client, function(err, clt, done) {
-
-    	if (err) {
-    		console.log(err)
-            return
-    	}
-
-        clt.query(command()
-        			.truncate('orders')
-                    .end(), function(err, result) {
-		    if (err) {
-		    	console.log('err >>>', err)
-	            if(!err) return false;
-
-	            done(clt);
-		    	return;
-		    }
-
-            done();
-		});
-    });
-};
-
 
 module.exports = testDb;

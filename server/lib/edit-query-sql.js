@@ -7,9 +7,9 @@ function getLength (type, obj) {
 	if (type === "units") {
 		return obj.unit_type.length;
 	} else if (type === "contacts") {
-		return obj.currency.length;
-	} else {
 		return obj.date.length;
+	} else {
+		return obj.currency.length;
 	}
 }
 
@@ -48,15 +48,14 @@ function getCreateQuery (type, obj, id, index) {
 	data.values  = [];
 
 	for (props in obj) {
-		if (props !== 'id' && props !== "delete_invoice" && props !== 'reminder_id') {
-			if (props === "job_number") {
-				data.columns.push(props);
-				data.values.push(jobNo);
-			} else {
-				data.columns.push(props);
-				var value = getRightValue(obj, props, index);
-				data.values.push(value);
-			}
+		if (props !== id && props !== "delete_invoice" && props !== 'reminder_id' && props !== 'job_number') {
+			data.columns.push(props);
+			var value = getRightValue(obj, props, index);
+			data.values.push(value);
+		}
+		if (props === "job_number") {
+			data.columns.push(props);
+			data.values.push(jobNo);
 		}
 	}
 
@@ -109,7 +108,7 @@ function getUpdateQuery (type, id, obj, index) {
 }
 
 
-query.update = function (items, table, idName){
+query.update = function (items, table, idName) {
 
 	var query = {};
 

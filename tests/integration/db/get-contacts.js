@@ -1,21 +1,20 @@
 'use strict';
 
-var test = require('tape');
 var db = require('../../../server/db-config.js');
 
-var tests = function () {
+var tests = function (st) {
 
-	test("get function gets contacts", function(t) {
+	st.test("get function gets contacts", function (sst) {
 		var callback =  function (result){
-			t.equals(typeof result, 'object', "get request to contacts table worked")
+			sst.equals(typeof result, 'object', "get request to contacts table worked")
 		};
 		try {
 			db.get('contacts', callback);
 		} catch(e) {
-			t.notOk(true, "get request to contacts table did not work");
+			sst.notOk(true, "get request to contacts table did not work");
 		}
 
-	    t.end();
+	    sst.end();
 	});
 }
 
