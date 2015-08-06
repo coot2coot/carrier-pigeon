@@ -1,5 +1,5 @@
 var test = require('tape');
-var getWeek = require('../../../src/lib/getWeek.js');
+var getWeek = require('../../../src/lib/get-week.js');
 var arr = [
 	{
 		date: "Wed, 03 Jan 2015 07:41:58 GMT"

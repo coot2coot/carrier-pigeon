@@ -6,13 +6,13 @@ var db 			 = require("../db-config.js");
 
 function edit (req, res, table) {
 	
-	var invoiceNumbers = req.url.split("/").pop();
+	var itemsToRemove = req.url.split("/").pop();
 
 	validateUser(req, res, function () {
 
 		parseData(req, function (data) {
 
-			data.delete_invoice = invoiceNumbers;
+			data.items_to_remove = itemsToRemove;
 
 			db.edit(table, data, function (err) {
 

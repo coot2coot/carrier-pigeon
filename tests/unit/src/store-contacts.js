@@ -1,5 +1,5 @@
 var test = require('tape');
-var storeContacts = require('../../../src/lib/storeContacts.js');
+var storeContacts = require('../../../src/lib/store-contacts.js');
 
 
 test('testing that storeContacts.refresh rverses the value of storeContacts.updated', function (t) {

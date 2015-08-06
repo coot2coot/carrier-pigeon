@@ -48,7 +48,7 @@ function getCreateQuery (type, obj, id, index) {
 	data.values  = [];
 
 	for (props in obj) {
-		if (props !== id && props !== "delete_invoice" && props !== 'reminder_id' && props !== 'job_number') {
+		if (props !== id && props !== "items_to_remove" && props !== 'reminder_id' && props !== 'job_number') {
 			data.columns.push(props);
 			var value = getRightValue(obj, props, index);
 			data.values.push(value);
@@ -87,7 +87,7 @@ function getUpdateQuery (type, id, obj, index) {
 	var updateStr = "";
 
 	for (props in obj) {
-		if (props !== id && props !== "job_number" && props !== "delete_invoice") {
+		if (props !== id && props !== "job_number" && props !== "items_to_remove") {
 
 			var prop  = index !== undefined ? obj[props][index] : obj[props];
 			var value = "'" + prop + "'";

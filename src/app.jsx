@@ -7,8 +7,8 @@ var RouteHandler= Router.RouteHandler;
 
 var Header      = require("./components/header/header.jsx");
 var Login       = require("./components/login-panel.jsx");
-var Orders      = require("./components/orders/ordersPage.jsx");
-var Contacts    = require("./components/contacts/contactsPage.jsx");
+var Orders      = require("./components/orders/orders-page.jsx");
+var Contacts    = require("./components/contacts/contacts-page.jsx");
 var AdminPanel  = require("./components/admin/panel.jsx");
 var Settings    = require("./components/settings/settings.jsx");
 var BookingNote = require("./components/booking-note/booking-note.jsx");

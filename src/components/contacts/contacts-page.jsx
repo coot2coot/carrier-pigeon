@@ -7,9 +7,10 @@ var ViewContact 	= require("./view-contact.jsx");
 var Header 			= require("../header/header.jsx");
 var SearchBox 		= require("../orders/search-box.jsx");
 var ViewReminders	= require("../reminders/view-reminder.jsx");
+var ReminderIcon	= require("./reminder-svg.jsx")
 
-var getWeek			= require("../../lib/getWeek.js");
-var groupBy			= require("../../lib/groupBy.js");
+var getWeek			= require("../../lib/get-week.js");
+var groupBy			= require("../../lib/group-by.js");
 	
 var contactsPage = React.createClass({
 
@@ -213,14 +214,12 @@ var contactsPage = React.createClass({
 								            		<td>
 								            			<a>
 															<p className='align-center'>
-																<svg onClick= {reminderHandler.bind(null, contact)} className="bell" viewBox="0 0 88 72" >
-																	{(cont[0].week && cont[0].week === 1)
-												            			? <path className="present" d="M71.5,38.184h-3.291l-6.213-21.879c-1.367-4.816-5.951-8.693-10.904-9.514C50.91,3.02,47.812,0,43.996,0c-3.812,0-6.91,3.018-7.092,6.787c-4.957,0.822-9.539,4.697-10.908,9.514l-6.211,21.883h-3.289l-4.498,15.85h19.251H36h15.994h3.963h20.041L71.5,38.184z M40.975,6.611C41.229,5.143,42.455,4,43.996,4c1.543,0,2.77,1.143,3.025,2.615L40.975,6.611z"/>
-												            			: (cont[0].week && cont[0].week === 2)
-												            			?<path className="urgent" d="M71.5,38.184h-3.291l-6.213-21.879c-1.367-4.816-5.951-8.693-10.904-9.514C50.91,3.02,47.812,0,43.996,0c-3.812,0-6.91,3.018-7.092,6.787c-4.957,0.822-9.539,4.697-10.908,9.514l-6.211,21.883h-3.289l-4.498,15.85h19.251H36h15.994h3.963h20.041L71.5,38.184z M40.975,6.611C41.229,5.143,42.455,4,43.996,4c1.543,0,2.77,1.143,3.025,2.615L40.975,6.611z"/>
-												            			:<path d="M71.5,38.184h-3.291l-6.213-21.879c-1.367-4.816-5.951-8.693-10.904-9.514C50.91,3.02,47.812,0,43.996,0c-3.812,0-6.91,3.018-7.092,6.787c-4.957,0.822-9.539,4.697-10.908,9.514l-6.211,21.883h-3.289l-4.498,15.85h19.251H36h15.994h3.963h20.041L71.5,38.184z M40.975,6.611C41.229,5.143,42.455,4,43.996,4c1.543,0,2.77,1.143,3.025,2.615L40.975,6.611z"/>
-												            		}
-																</svg>
+																{(cont[0].week && cont[0].week === 1)
+											            			? <ReminderIcon onClick= {reminderHandler.bind(null, contact)} classname ="present" />
+											            			: (cont[0].week && cont[0].week === 2)
+											            			?<ReminderIcon onClick= {reminderHandler.bind(null, contact)} classname ="urgent" />
+											            			:<ReminderIcon onClick= {reminderHandler.bind(null, contact)}/>
+											            		}
 															</p>
 								            			</a>
 								            		</td>
