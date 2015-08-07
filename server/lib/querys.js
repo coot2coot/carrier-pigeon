@@ -90,6 +90,23 @@ var contactsArray = [
 	'name'
 ]
 
+function createSearchString(searchString, item) {
+
+	var string = "";
+	var searchArray = searchString.split("%20");
+
+	searchArray.map( function (text, i) {
+
+		if (i === 0) {
+			string += item + " ILIKE '%" + text +"%'"
+		} else {
+			string +=  " AND " + item + " ILIKE '%" + text +"%'"
+		}
+	})
+
+	return string;
+}
+
 function isJobNumber(job_number) {
 
 	var regex = /^[0-9]{8}$/
@@ -145,10 +162,11 @@ function keyWord (value) {
 
 	searchItem.map(function (item, i) {
 
+		var searchString = createSearchString(value, item.column)
 		var newString = command()
 						.select("job_number")
 						.from(item.table)
-						.where(item.column+" ILIKE '%" + value +"%'")
+						.where(searchString)
 						.end().slice(0,-1)
 						
 		string += command()
@@ -182,11 +200,12 @@ query.searchContacts = function (value) {
 
 	contactsArray.map(function (item, i) {
 
-	string += command()
-				.select("*")
-				.from("contacts")
-				.where(item + " ILIKE '%" + value +"%'")
-				.end()
+		var searchString = createSearchString(value, item)
+		string += command()
+					.select("*")
+					.from("contacts LEFT JOIN reminders ON contacts.contact_id = reminders.contact_reminders_id")
+					.where(searchString)
+					.end()
 	})
 
 	return string;

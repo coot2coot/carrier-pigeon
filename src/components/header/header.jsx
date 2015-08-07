@@ -44,9 +44,9 @@ var header = React.createClass({
 
                     this.props.isAdmin(data.user);
                 }
-
-                this.props.setUser(data.user);
                 
+                this.props.setUser(data.user);
+
                 this.setState({
                     loggedIn: true,
                     user: data.user

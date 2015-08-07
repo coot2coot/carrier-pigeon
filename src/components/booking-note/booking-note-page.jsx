@@ -1,11 +1,9 @@
-/** @jsx React.DOM */
-
 var React       = require('react');
 var BookingForm = require("./booking-note-form.jsx");
 
 var getJobNumber = require("../../lib/format-job-number.js");
 var currentDate  = require("../../lib/current-date.js");
-var formatDate  = require("../../lib/format-date.js");
+var formatDate   = require("../../lib/format-date.js");
 
 
 // For emailing as a pdf, inine styling is required.

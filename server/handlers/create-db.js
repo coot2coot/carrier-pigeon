@@ -8,10 +8,13 @@ var removes 		= require('../lib/removeQuotes.js');
 function create (req, res) {
 	
 	parseData(req, function (data) {
+
 		data = removes(data)
-		validateUser(req, res, function() {
+		validateUser(req, res, function () {
+
 			if (data.new_unit) {
 				db.post('unit_types', data, function (err) {
+
 						if (err) {
 							console.log(err)
 							res.writeHead(500);
@@ -27,8 +30,10 @@ function create (req, res) {
 					});
 			} else {
 				validateOrder(data, res, function () {
+
 					var splitData = splitObject(data);
 					db.post('orders', splitData, function (err, jobNumber) {
+						
 						if (err) {
 							console.log(err)
 							res.writeHead(500);

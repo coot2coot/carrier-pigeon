@@ -2,7 +2,6 @@ var parseData 	 = require('../lib/get-form-data.js');
 var validateUser = require('../lib/validate-user.js');
 var db 			 = require("../db-config.js");
 
-
 function remove (req, res) {
 
 	validateUser(req, res, function() {

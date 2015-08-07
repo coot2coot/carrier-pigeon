@@ -11,3 +11,24 @@ svg.ledger {
 		fill: $primary;
 	}
 }
+
+.align-center {
+	text-align: center;
+}
+
+svg.bell {
+	width: 3em;
+	path {
+	stroke: $primary;
+	stroke-width: 3;
+	fill: white;
+		&.urgent {
+			fill: red;
+			opacity: 0.7;
+			stroke: red;
+		}
+		&.present {
+			fill: $primary;
+		}
+	}
+}

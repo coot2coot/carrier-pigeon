@@ -36,7 +36,7 @@ function postUsers (table, doc) {
     return query;
 }
 
-function postContactsReminders (table, doc) {
+function postContacts (table, doc) {
     var contacts = stringifyData(doc);
     var query = command()
                 .insertInto(table)
@@ -62,7 +62,7 @@ function postOrders (table, doc) {
                 .next()
                 .select("job_number")
                 .from("orders")
-                .where("job_number =(select max(job_number) from orders)")
+                .where("job_number = (select max(job_number) from orders)")
                 .end();
 
     return query;
@@ -77,7 +77,7 @@ function editContacts (doc,clt,cb, done) {
                 .update("contacts")
                 .set(query)
                 .where("contact_id ="  + doc.contact_id)
-                .end(), function(err) {
+                .end(), function (err) {
 
         done();
 
@@ -88,23 +88,6 @@ function editContacts (doc,clt,cb, done) {
     });
 }
 
-function editReminders (doc,clt,cb, done) {
-    var query = getQuery.standard(doc);
-
-    clt.query(command()
-                .update("reminders")
-                .set(query)
-                .where("reminder_id ="  + doc.reminder_id)
-                .end(), function(err, result) {
-
-        done();
-
-        if (err) {
-            return console.log(err);
-        }
-        cb(null);
-    })
-}
 function editUsers (doc,clt,cb, done) {
     var updateUser = {
         first_name: doc.first_name,
@@ -156,9 +139,10 @@ function editOrders (doc,clt,cb, done) {
 }
 
 function editInvoices (doc, clt, cb, done) {
+
     var updateQuery = getQuery.update(doc, "invoice", "invoice_id").update;
     var createQuery = getQuery.update(doc, "invoice", "invoice_id").create;
-    var deleteQuery = getQuery.del(doc.delete_invoice, "invoice", "invoice_id");
+    var deleteQuery = getQuery.del(doc.items_to_remove, "invoice", "invoice_id");
 
     clt.query(command()
                 .query(updateQuery)
@@ -175,21 +159,44 @@ function editInvoices (doc, clt, cb, done) {
     });
 }
 
-dataBase.get = function (table, cb){
-    connect(function(client, done) {
+function editReminders (doc, clt, cb, done) {
+
+    var updateQuery = getQuery.update(doc, "reminders", "reminder_id").update;
+    var createQuery = getQuery.update(doc, "reminders", "reminder_id").create;
+    var deleteQuery = getQuery.del(doc.items_to_remove, "reminders", "reminder_id");
+
+    clt.query(command()
+                .query(updateQuery)
+                .query(deleteQuery)
+                .query(createQuery)
+                .end(), function (err) {
+        
+        done();
+        
+        if (err) {
+            return cb(err);
+        }
+        cb(null);
+    });
+}
+
+dataBase.get = function (table, cb) {
+
+    connect( function (client, done) {
         var query;
 
         if (table === "contacts") {
             query = command()
                     .select('*')
-                    .from(table)
-                    .order("name")
+                    .from('contacts')
+                    .query(" left join reminders on contacts.contact_id = reminders.contact_reminders_id")
                     .end();
+
         } else if (table === "orders") {
             query = command()
                     .select("*")
                     .from(table)
-                    .query("inner join invoice on order.job_number = invoice.job_number")
+                    .query(" inner join invoice on orders.job_number = invoice.job_number")
                     .end();
         } else {
             query = command()
@@ -197,21 +204,24 @@ dataBase.get = function (table, cb){
                     .from(table)
                     .end();
         }
-        client.query(query, function(err, result) {
+
+        client.query( query, function (err, result) {
 
             done();
 
             if (err) {
                 return console.log(err);
-             }
+            }
 
             cb(result.rows);
         });
     });
 };
 
-dataBase.getOrder = function(table, job_number, cb) {
-    connect(function(client, done) {
+dataBase.getOrder = function (table, job_number, cb) {
+
+    connect( function (client, done) {
+
         client.query(command()
                 .select("*")
                 .from(table)
@@ -232,8 +242,10 @@ dataBase.getOrder = function(table, job_number, cb) {
     });
 };
 
-dataBase.post = function (table, doc, cb){
-    connect(function(client, done) {
+dataBase.post = function (table, doc, cb) {
+
+    connect( function (client, done) {
+
         var query;
 
         if (table === "users") {
@@ -241,10 +253,10 @@ dataBase.post = function (table, doc, cb){
         } else if (table === "orders"){
             query = postOrders(table, doc);
         } else {
-            query = postContactsReminders(table, doc);
+            query = postContacts(table, doc);
         }
         
-        client.query(query, function(err, result) {
+        client.query(query, function (err, result) {
             done();
 
             if (err) {
@@ -254,6 +266,7 @@ dataBase.post = function (table, doc, cb){
         });
     });
 };
+
 
 dataBase.editUserPermissions = function (username, details, cb){
     connect(function(client, done) {
@@ -294,13 +307,15 @@ dataBase.edit = function (table, doc, cb){
 };
 
 
-dataBase.remove = function (table, doc, cb){
-    connect(function(client, done) {
+dataBase.remove = function (table, doc, cb) {
+
+    connect( function (client, done) {
+
         var column;
 
         column = table === "users" ? "username" : 
                 table === "units" ? "unit_id" : 
-                table === "reminders" ? "reminder_id" : 
+                table === "reminders" ? "contact_reminders_id" : 
                 table === "contacts" ? "contact_id" : "job_number";
 
         client.query(command()
@@ -318,13 +333,15 @@ dataBase.remove = function (table, doc, cb){
     })
 };
 
-dataBase.selectUnits = function (table, job_number, cb ){
-    connect(function(client, done) {
+dataBase.selectUnits = function (table, job_number, cb ) { 
+
+    connect( function (client, done) {
+
         client.query(command()
                 .select("*")
                 .from("units")
                 .where("job_number = $1")
-                .end(), [job_number], function(err, units) {
+                .end(), [job_number], function (err, units) {
 
             done();
 
@@ -337,13 +354,15 @@ dataBase.selectUnits = function (table, job_number, cb ){
     })
 };
 
-dataBase.getInvoices = function (table, job_number, cb ){
-    connect(function(client, done) {
+dataBase.getInvoices = function (table, job_number, cb ) {
+
+    connect( function (client, done) {
+
         client.query(command()
                 .select("*")
                 .from("invoice")
                 .where("job_number = $1")
-                .end(), [job_number], function(err, units) {
+                .end(), [job_number], function (err, units) {
 
             done();
 
@@ -357,7 +376,9 @@ dataBase.getInvoices = function (table, job_number, cb ){
 };
 
 dataBase.selectUser = function (username, password, remember, cb) {
-    connect(function(client, done) {
+
+    connect( function (client, done) {
+
         client.query(command()
                 .select("*")
                 .from("users")
@@ -380,7 +401,8 @@ dataBase.selectUser = function (username, password, remember, cb) {
 
 dataBase.searcher = function (table, data, cb) {
 
-    connect(function(client, done) {
+    connect( function (client, done) {
+
         var query;
 
         if (table === "orders") {
@@ -404,14 +426,17 @@ dataBase.searcher = function (table, data, cb) {
 };
 
 dataBase.searchDates = function (table, dates, cb) {
+
     var query = dateRange(dates);
     
-    connect(function(client, done) {
+    connect( function (client, done) {
+
         if(dates === "" ||dates[0] === "" || dates[1] === ""){
             cb([]);
         }
         else{
-            client.query(query, function (err,result){
+            client.query(query, function (err,result) {
+
                     done();
 
                     if(err || result.rows.length ===0) {

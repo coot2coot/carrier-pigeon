@@ -1,34 +1,34 @@
 'use strict';
 
-var test = require('tape');
 var db = require('../../../server/db-config.js');
 var mocks = require('../mocks/orders-units.js');
 
-var tests = function () {
+var tests = function (st) {
 
-	test("edit function to orders and units table for order with a single unit", function(t) {
+	st.test("edit function to orders and units table for order with a single unit", function(sst) {
 		var callback =  function (result){
-			t.equals(result, null, "edit request to units and orders table worked")
+			sst.equals(result, null, "edit request to units and orders table worked")
 		};
 		try {
 			db.edit("orders", mocks.edit, callback);
 		} catch(e) {
-			t.notOk(true, "edit request to orders table did not work");
+			sst.notOk(true, "edit request to orders table did not work");
 		}
 
-	    t.end();
+	    sst.end();
 	});
-	test("edit function to orders and units where a unit has been added", function(t) {
+	
+	st.test("edit function to orders and units where a unit has been added", function(sst) {
 		var callback =  function (result){
-			t.equals(result, null, "edit request to units and orders table worked")
+			sst.equals(result, null, "multiple edit request to units and orders table worked")
 		};
 		try {
 			db.edit("orders", mocks.multipleEdit, callback);
 		} catch(e) {
-			t.notOk(true, "edit request to orders table did not work");
+			sst.notOk(true, "edit request to orders table did not work");
 		}
 
-	    t.end();
+	    sst.end();
 	});
 }
 

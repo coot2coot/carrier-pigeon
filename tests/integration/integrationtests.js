@@ -1,26 +1,49 @@
 'use strict';
 
+var test = require('tape');
+
 var falsifyOrders = require('./falsify/order.js');
 var falsifyContacts = require('./falsify/contact.js');
-var falsifyReminders = require('./falsify/reminder.js');
 
-var ordersTests = function () {
-	require('./db/get-orders.js')();
-	require('./db/post-orders.js')();
-	require('./db/select-units.js')();
-	require('./db/searcher-orders.js')();
-	require('./db/edit-orders.js')();
-	require('./db/delete-orders.js')();
-};
+test('ordersTests', function (t) {
 
-falsifyOrders.create(ordersTests);
+	var cb = function (result) {
+		
+		t.equal(typeof result, 'object', 'before function worked')	
+	}
 
-var contactsTests = function () {
-	require('./db/post-contacts.js')();
-	require('./db/get-contacts.js')();
-	require('./db/searcher-contacts.js')();
-	require('./db/edit-contacts.js')();
-	require('./db/delete-contacts.js')();
-};
+	falsifyOrders.create(cb);
 
-falsifyContacts.create(contactsTests);
+	t.test('tests', function (st) {
+		require('./db/get-orders.js')(st);
+		require('./db/post-orders.js')(st);
+		require('./db/select-units.js')(st);
+		require('./db/searcher-orders.js')(st);
+		require('./db/edit-orders.js')(st);	
+		st.end();
+	});
+
+	t.plan(2);
+})
+
+
+test('contactsTests', function (t) {
+
+	var cb = function (result) {
+		
+		t.equal(typeof result, 'object', 'before function worked')	
+	}
+
+	falsifyContacts.create(cb);
+
+	t.test('tests', function (st) {
+		require('./db/get-contacts.js')(st);
+		require('./db/searcher-contacts.js')(st);
+		require('./db/edit-contacts.js')(st);
+		require('./db/post-contacts.js')(st);
+		st.end()
+	});
+	
+	t.plan(2);
+})
+

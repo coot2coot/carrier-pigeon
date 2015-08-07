@@ -100,6 +100,7 @@ var ordersPage = React.createClass({
 	},
 
 	getSearchedOrders: function (value) {
+		
 		var getUrl = "/search/orders/" + value;
 
 		$.get(getUrl,function (result) {
@@ -117,7 +118,6 @@ var ordersPage = React.createClass({
 					error: false
 				})
 
-				console.log(uniqOrder);
 				this.setState({
 				    orders : uniqOrder
 				});

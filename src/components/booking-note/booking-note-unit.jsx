@@ -1,20 +1,5 @@
-/** @jsx React.DOM */
-
 var React       = require('react');
-var formatDate = require("../../lib/format-date.js");
-
-// var td = {
-//     border: "none",
-//     borderRight: "1px black solid",
-//     fontSize: "11pt",
-//     padding: "2px"
-// }
-
-// var tdRight = {
-//     border: "none",
-//     fontSize: "11pt",
-//     padding: "2px"
-// }
+var formatDate  = require("../../lib/format-date.js");
 
 var fullWidth = {
     width: "100%",

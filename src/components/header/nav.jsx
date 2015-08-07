@@ -15,6 +15,7 @@ var nav = React.createClass({
 			'active': this._reactInternalInstance._context.router.isActive("contacts"),
 			'display-none': !this.props.user.permission_contact
 		})
+
 		var remindersClass = cx({
 			'active': this._reactInternalInstance._context.router.isActive("reminders"),
 			'display-none': !this.props.user.permission_contact
@@ -36,14 +37,6 @@ var nav = React.createClass({
 						
                             <img src="../img/nav/list.png" />
 							<h5>Contacts</h5>
-							
-						</li>
-					</a>
-					<a href="/#/reminders">
-						<li className={remindersClass}>
-						
-                            <img src="../img/nav/bell.png" />
-							<h5>Reminders</h5>
 							
 						</li>
 					</a>

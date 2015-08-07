@@ -1,8 +1,6 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var Warning = require("../close-warning.jsx");	
-var contactStore= require("../../lib/storeContacts");
+var contactStore= require("../../lib/store-contacts");
 
 
 

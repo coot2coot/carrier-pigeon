@@ -2,6 +2,7 @@ var validateUser = require('../lib/validate-user.js');
 var db 			 = require("../db-config.js");
 
 function selectUnits (req, res) {
+	
 	var data = req.url.split("/").pop();
 
 	validateUser(req,res, function (){

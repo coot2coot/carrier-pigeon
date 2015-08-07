@@ -207,7 +207,7 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-8" >
 										<p>Date</p>
-										<input className="view_input" type="date" name="date" defaultValue={ this.props.order.date.substring(0, 10)} onChange={edited} disabled required/>
+										<input className="view_input" type="date" name="date" defaultValue={this.props.order.date !== null ? this.props.order.date.substring(0, 10) : ''} onChange={edited} disabled required/>
 									</div>
 									<div className="column-8" >
 										<p>Job No.</p>

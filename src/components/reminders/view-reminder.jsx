@@ -1,123 +1,174 @@
-/** @jsx React.DOM */
-
-var React = require('react');
-var Close = require("../close-warning.jsx");	
-var Warning = require("../warning.jsx");	
+var React 		= require('react');	
 var ContactList = require("../orders/contact-list.jsx");	
+var Reminders 	= require("./reminder.jsx");	
+var Close 		= require("../close-warning.jsx");
 
 var addReminder = React.createClass({
-	getInitialState: function() {
+	getInitialState: function () {
 	    return {
 	    	closeView: false,
-	    	viewing: true
+	    	viewing: true,
+	    	reminders:[{}],
+	    	deletedReminders: "",
+	    	edited: false,
+	    	clearReminders: false
 	    };
 	},
 
-	closeView: function() {
-    	if (this.state.viewing) {
-    		this.props.closeView()
-			this.setState({
-	    		closeView: false
-	    	})
-    	}
-		if(this.state.closeView){
-			this.props.closeView()
-			this.setState({
-	    		closeView: false
-	    	})
-	    }else{
-		    this.setState({
-	    		closeView: true
-	    	})
-		}
+	clearReminders: function () {
+	
+		var postUrl = "/reminders/delete/" + this.props.reminder[0].contact_id;
+
+		$.post(postUrl)
+		.fail(function () {
+			"get searchfailed"
+		});
+
+		this.props.closeView();
 	},
-	deleteHandler: function (item) {
+
+	setClearReminders: function () {
+
+  		if (!this.state.clearReminders) {
+  			this.setState({
+	  			clearReminders: true
+	  		})
+  		}
+	},
+
+	removeReminder : function (key) {
+		
+		if (this.state.reminders.length > 1) {
+
+  			var deletedReminder = this.state.reminders.splice(key, 1);
+
+	  		var newState = this.state.reminders;
+
+  			this.setState({
+    			reminders: newState,
+    		});
+
+  			if (deletedReminder[0].reminder_id) {
+  				var newDeletedStrng = this.state.deletedReminders + ',' + deletedReminder[0].reminder_id;
+  				
+  				this.setState({
+	    			deletedReminders: newDeletedStrng
+	    		});
+	
+			}
+		} 
+	},
+
+	ifEdited: function (event) {
+
+  		if (!this.state.edited) {
+  			this.setState({
+	  			edited: true
+	  		})
+  		}
+
+  	},
+
+  	onReminderChange: function (key, event) {
+
+		this.ifEdited();
+		var name = event.target.name;
+		var value = event.target.value;
+		this.state.reminders[key][name] = value;
+	},
+
+  	closeView: function () {
+
+  		if (!this.state.edited) {
+  			this.props.closeView();
+  		} else {
+  			this.setState({
+  				closeView: true
+  			})
+  		}
+  	},
+
+  	closeWarning: function () {
+	  	this.setState({
+			closeView: false,
+			clearReminders: false
+		})
+  	},
+
+	addReminder : function (key) {
+		
+		var newReminder = {
+			contact_id : this.props.reminder[0].contact_id
+		}
+
+		this.state.reminders.splice(key + 1, 0, newReminder);
+
+		var newState = this.state.reminders;
+
+  		this.setState({
+    		reminders: newState
+    	});
+	},
+
+	componentDidMount: function () {
+
+		var reminder = this.props.reminder;
+
 		this.setState({
-			deleteReminder: item
+			reminders: reminder
 		})
 	},
 
-	closeWarning: function () {
-		this.setState({
-	    	closeView: false
-	    })
-	},
-	edit: function () {
-		if(this.state.viewing === true){
-			this.setState({
-				viewing: false
-			});
-		} else {
-			this.setState({
-				viewing: true
-			});
-		}
-	},
+	render: function () {
+		var reminders 		= this.state.reminders;
+		var addReminder 	= this.addReminder;
+		var removeReminder 	= this.removeReminder;
+		var closeView  		= this.closeView;
+		var onReminderChange= this.onReminderChange;
+		var clearReminders	= this.clearReminders;
+		var setClearReminders = this.setClearReminders;
 
-
-	render: function() {
-		var reminder 	= this.props.reminder;
-		var viewing = this.state.viewing;
 		return (
 			<div className="overlay">
-				<div>
-					{( this.state.deleteReminder
-	                    ? <Warning message="Delete this reminder?" reminder={reminder} url={"/reminders/delete/" + reminder.reminder_id} closeView={this.onCloseComponent}/>
-	                    : <p></p>
-	                )}
-	            </div>
 				<div className="column-12 push-2 model-generic model-top reminder create-order">
 					<div className="panel-header">
-						<h3>New Entry</h3>
-						<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.reminder)}>Delete</a>
-						<button className="button blue" onClick={this.edit} >Edit</button>
-						<a className="close" onClick={this.closeView}>x</a>
+						<h3>Reminders for {reminders[0].name}</h3>
+						<a className="close" onClick={closeView}>x</a>
 					</div>
 					<div className="panel-body scroll">
-						<form action="/reminders/edit/" method="POST">
-							<div className="row gutters">
-							
-									<input className="display-none" name="reminder_id" defaultValue= {reminder ? reminder.reminder_id : ""}></input>
-									<div className="row">	
-										<div className="column-8">
-											<p>Contact</p>
-											<ContactList contact={reminder ? reminder.contact: ""} vieworder = {viewing ? true : false}  contactType="contact" />
-										</div>
-										<div className="column-8">
-											<p>Reminder Date </p>
-											<input type="date" name="date" defaultValue={reminder ? reminder.date.substring(0, 10) : ""}required  disabled={viewing ? true : false}/>
-										</div>
+						<form action={"/reminders/" + this.state.deletedReminders.slice(1)} method="POST">
+							<div className="row column-13 push-2 gutters small-margin-top">
+								<div className="row column-11 gutters">
+									<div className="column-7 purchase">
+										<h4>Message</h4>
 									</div>
-									<div className="row">
-										<div className="column-8">
-											<p>Quote</p>
-											<input type="text" name="quote" defaultValue={reminder ? reminder.quote : ""}   disabled={viewing ? true : false}/>
-										</div>	
-										<div className="column-8">
-											<p>Call</p>
-											<input type="text" name="call"  defaultValue={reminder ? reminder.call : ""}    disabled={viewing ? true : false}/>
-										</div>				
+									<div className="column-9 purchase">
+										<h4>Date</h4>
 									</div>
-									
-									<div className="row">
-										
-										<div className="column-8">
-											<p>Remind</p>
-											<input type="text" name="remind"  defaultValue={reminder ? reminder.call : ""}   disabled={viewing ? true : false} />
-										</div>
-										<div className="column-8">
-											<p>Follow Up</p>
-											<input type="text" name="follow_up"  defaultValue={reminder ? reminder.follow_up : ""}  disabled={viewing ? true : false} />
-										</div>
-									</div>
+								</div>
+								{reminders.map(function (reminder, i) {
+									var key = new Date().getMilliseconds() + i;
 
-									<input type="submit" className="button charcoal" value="Done" />
+									return 	<Reminders
+												reminder = {reminder}
+												key = {key}
+												keys= {i} 
+												addReminder={addReminder} 
+												removeReminder={removeReminder}
+												edited = {onReminderChange}/>
+								})}
+							</div>
+							<div className="row column-16">
+								<input type="submit" className="button charcoal" value="Update" />
+								<input type="button" onClick= {setClearReminders} className="button red" value="Clear" />
 							</div>
 						</form>
 					</div>
 				</div>
 				{(this.state.closeView
-                    ? <Close message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
+                    ? <Close message="Do you want to close without saving?" closeView={this.props.closeView} closeWarning={this.closeWarning}/>
+                    : this.state.clearReminders
+                    ? <Close message="Do you want to clear all reminders?" closeView={clearReminders} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}
 			

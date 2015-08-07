@@ -12,14 +12,17 @@
 	var inRange = function (array){
 		var today = new Date();
 		array.map(function (reminder) {
-		
-			var date = new Date(reminder.date)
-			date.getWeek() === today.getWeek()
+			if (reminder.date){
+				var date = new Date(reminder.date)
+				date.getWeek() === today.getWeek()
 
-				? reminder.week = "present"
-				: date.getWeek() < today.getWeek()
-				? reminder.week = "urgent"
-				: reminder.week =""
+					? reminder.week = 1
+					: date.getWeek() < today.getWeek()
+					? reminder.week = 2
+					: reminder.week = 0
+			} else {
+				reminder.week =""
+			}
 		})
 		return array
 	};

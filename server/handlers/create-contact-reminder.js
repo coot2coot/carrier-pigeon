@@ -3,11 +3,15 @@ var db 			 = require("../db-config.js");
 var validateUser = require('../lib/validate-user.js');
 var removes 	= require('../lib/removeQuotes.js');
 
-function create (table, req, res) {	
+function create (req, res, table) {	
+
 	parseData(req, function (data) {
+
 		data = removes(data)
-		validateUser(req, res, function() {
+		validateUser(req, res, function () {
+
 			db.post(table, data, function (err) {
+				
 				if (err) {
 					console.log(err)
 					res.writeHead(500);
