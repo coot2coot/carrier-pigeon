@@ -3,33 +3,75 @@
 var React       = require('react');
 var formatDate = require("../../lib/format-date.js");
 
-var td = {
-    border: "none",
-    borderRight: "1px black solid",
-    fontSize: "11pt",
-    padding: "2px"
+// var td = {
+//     border: "none",
+//     borderRight: "1px black solid",
+//     fontSize: "11pt",
+//     padding: "2px"
+// }
+
+// var tdRight = {
+//     border: "none",
+//     fontSize: "11pt",
+//     padding: "2px"
+// }
+
+var fullWidth = {
+    width: "100%",
+    float: "left"
 }
 
-var tdRight = {
+var sixthWidth = {
+    width: "16.6%",
+    float: "left"
+}
+
+var text = {
     border: "none",
+    border: "1pt black solid",
     fontSize: "11pt",
-    padding: "2px"
+    padding: "0 2pt",
+    margin: "0",
+    minHeight: "28px"
 }
 
 var unitsInformation = React.createClass({
     render: function() {
         return (
-            <tr>
-                <td style={td}>{this.props.unit.unit_loading_date ? formatDate(this.props.unit.unit_loading_date) : ""}</td>
-                <td style={td}>{this.props.unit.unit_loading_time ? this.props.unit.unit_loading_time.substring(0, 5) : ""}</td>
-                <td style={td}>{this.props.unit.unit_type}</td>
-                <td style={td}>{this.props.unit.unit_loading_reference}</td>
-                <td style={td}>{this.props.unit.unit_commodity_description}</td>
-                <td style={td}>{this.props.unit.unit_gross_weight} {this.props.unit.unit_gross_weight ? this.props.unit.unit_weight : ""}</td>
-            </tr>
+            <div style={fullWidth}>
+                <div style={sixthWidth}>
+                    <div style={text}>
+                        {this.props.unit.unit_loading_date ? formatDate(this.props.unit.unit_loading_date) : ""}
+                    </div>
+                </div>
+                <div style={sixthWidth}>
+                    <div style={text}>
+                       {this.props.unit.unit_loading_time ? this.props.unit.unit_loading_time.substring(0, 5) : ""}
+                    </div>
+                </div>
+                <div style={sixthWidth}>
+                    <div style={text}>
+                        {this.props.unit.unit_type}
+                    </div>
+                </div>
+                <div style={sixthWidth}>
+                    <div style={text}>
+                        {this.props.unit.unit_loading_reference}
+                    </div>
+                </div>
+                <div style={sixthWidth}>
+                    <div style={text}>
+                        {this.props.unit.unit_commodity_description}
+                    </div>
+                </div>
+                <div style={sixthWidth}>
+                    <div style={text}>
+                        {this.props.unit.unit_gross_weight} {this.props.unit.unit_gross_weight ? this.props.unit.unit_weight : ""}
+                    </div>
+                </div>
+            </div>
         )
     }
 });
-
 
 module.exports = unitsInformation;

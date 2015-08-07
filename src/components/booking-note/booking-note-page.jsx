@@ -16,6 +16,7 @@ var bookingStyle = {
     fontFamily: "Verdana, Geneva, sans-serif",
     position: "relative"
 }
+
 var hr = {
     backgroundColor: "#49A4A5",
     height: "3px",
@@ -30,7 +31,8 @@ var h2 = {
     textAlign: "center",
     fontWeight: "700",
     fontSize: "18pt",
-    padding: "15px 0 20px"
+    padding: "15px 0",
+    margin: "0"
 }
 
 var p = {
@@ -62,6 +64,15 @@ var pSmall = {
     padding: "0"
 }
 
+var smallpRight = {
+    display: "block",
+    fontSize: "10pt",
+    color: "#6E6E6E",
+    margin: "0",
+    padding: "0",
+    textAlign: "right"
+}
+
 var halfRight = {
     float: "right",
     width: "50%",
@@ -88,22 +99,23 @@ var logoImg = {
 
 var logoText = {
     height: "64pt",
-    margin: "20px 0 10px"
+    marginTop: "12pt"
 }
 
 var contactDetails = {
-    marginTop: "20px",
+    marginTop: "12pt",
     float: "right"
 }
 
 var p = {
     display: "inline-block",
     fontSize: "11pt",
-    color: "#484848"
+    color: "#484848",
+    margin: "0"
 }
 
 var container = {
-    height: "90%"
+    height: "95%"
 }
  
 var bookingNotePage = React.createClass({
@@ -123,13 +135,11 @@ var bookingNotePage = React.createClass({
                         <img style={logoText} src="./img/logo-text.png"/>
                         {/* <img style={img} src="http://carrierpigeonfac-se-env.elasticbeanstalk.com/img/logo-text.png"/> */}
                         <div style={contactDetails}>
-                            <p style={pSmall}> Tel +44 020 7510 9625 </p>
-                            <p style={pSmall}> Fax +44 020 7510 9401 </p>
-                            <p style={pSmall}> info@cootfreight.co.uk </p>
-                            <p style={pSmall}> www.cootfreight.co.uk </p>
+                            <p style={smallpRight}> Tel +44 020 7510 9625  |  Fax +44 020 7510 9401</p>
+                            <p style={smallpRight}> info@cootfreight.co.uk  |  www.cootfreight.co.uk </p>
+                            <p style={smallpRight}> Davenport House, 16 Pepper Street </p>
+                            <p style={smallpRight}> London E14 9RP, England </p>
                         </div>
-                        <p style={p}> Davenport House, 16 Pepper Street, London E14 9RP, England </p>
-                        <hr style={hr}/> 
                     </div>
 
                     <h2 style={h2}>Booking Request</h2>
