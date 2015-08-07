@@ -36,7 +36,8 @@ var h2 = {
 var p = {
     display: "block",
     fontSize: "11pt",
-    color: "black"
+    color: "black",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var pRight = {
@@ -44,14 +45,16 @@ var pRight = {
     fontSize: "11pt",
     color: "black",
     textAlign: "right",
-    marginBottom: "10px"
+    marginBottom: "10px",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var pLeft = {
     display: "block",
     fontSize: "11pt",
     color: "black",
-    marginBottom: "10px"
+    marginBottom: "10px",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var pSmall = {
@@ -59,7 +62,8 @@ var pSmall = {
     fontSize: "10pt",
     color: "#6E6E6E",
     margin: "0",
-    padding: "0"
+    padding: "0",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var smallpRight = {
@@ -68,7 +72,8 @@ var smallpRight = {
     color: "#6E6E6E",
     margin: "0",
     padding: "0",
-    textAlign: "right"
+    textAlign: "right",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var halfRight = {
@@ -109,7 +114,8 @@ var p = {
     display: "inline-block",
     fontSize: "11pt",
     color: "#484848",
-    margin: "0"
+    margin: "0",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var container = {

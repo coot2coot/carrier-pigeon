@@ -5,30 +5,34 @@ var UnitForm    = require("./booking-note-unit.jsx");
 var text = {
     border: "none",
     border: "1pt black solid",
-    fontSize: "11pt",
+    fontSize: "10pt",
     padding: "0 2pt",
     margin: "0",
-    minHeight: "28px"
+    minHeight: "28px",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var p = {
     color: "black",
-    fontSize: "11pt"
+    fontSize: "10pt",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var tableHeader = {
     backgroundColor: "#B9F3F4",
     border: "1pt black solid",
     textAlign: "center",
-    fontSize: "9pt"
+    fontSize: "10pt",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var bigTableHeader = {
     backgroundColor: "#B9F3F4",
     border: "1pt black solid",
     textAlign: "center",
-    fontSize: "9pt",
-    height: "30pt"
+    fontSize: "10pt",
+    height: "30pt",
+    fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var fullWidth = {
