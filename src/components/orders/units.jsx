@@ -84,8 +84,8 @@ var units = React.createClass({
 						</div>
 						<div className="column-2">
 							<select name="unit_weight" >
-								<option value= "kg">kg</option>
-								<option value= "T">tons</option>
+								<option value= "kg">Kg</option>
+								<option value= "T">T</option>
 							</select>
 						</div>
 						<div className="column-2">
