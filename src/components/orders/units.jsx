@@ -7,6 +7,7 @@ var units = React.createClass({
 		var unit = this.props.unit;
 		var addUnit = this.props.addUnit;
 		var removeUnit = this.props.removeUnit;
+		var handleChange = this.props.handleChange;
 
 		return (
 			<units className='row no-gutter'>
@@ -34,22 +35,22 @@ var units = React.createClass({
 					</div>
 					<div className="row">
 						<div className="column-3">
-							<input type="text" name="unit_number" defaultValue={unit.unit_number ? unit.unit_number : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="text" name="unit_number" defaultValue={unit.unit_number ? unit.unit_number : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
-							<input type="text" name="unit_seal" defaultValue={unit.unit_seal ? unit.unit_seal : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="text" name="unit_seal" defaultValue={unit.unit_seal ? unit.unit_seal : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
-							<input type="text" name="unit_type" defaultValue={unit.unit_type ? unit.unit_type : ""} onChange={this.props.handleChange.bind(null, this.props.keys)} required/>
+							<input type="text" name="unit_type" defaultValue={unit.unit_type ? unit.unit_type : ""} onChange={handleChange.bind(null, this.props.keys)} required/>
 						</div>
 						<div className="column-3">
-							<input type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference ? unit.unit_loading_reference : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference ? unit.unit_loading_reference : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
-							<input type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.slice(0, 10) : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.slice(0, 10) : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
-							<input type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time ? unit.unit_loading_time : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time ? unit.unit_loading_time : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 					</div>
 
@@ -77,28 +78,28 @@ var units = React.createClass({
 					<div className="row">
 						
 						<div className="column-2">
-							<input type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_net_weight ? unit.unit_net_weight : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_net_weight ? unit.unit_net_weight : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
-							<input type="number" name="unit_gross_weight" step="any" defaultValue={unit.unit_gross_weight ? unit.unit_gross_weight : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="number" name="unit_gross_weight" step="any" defaultValue={unit.unit_gross_weight ? unit.unit_gross_weight : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
-							<select name="unit_weight" >
+							<select name="unit_weight" defaultValue={unit.unit_weight ? unit.unit_weight : ""} onChange={handleChange.bind(null, this.props.keys)} >
 								<option value= "kg">Kg</option>
 								<option value= "T">T</option>
 							</select>
 						</div>
 						<div className="column-2">
-							<input type="number" name="unit_volume" step="any" defaultValue={unit.unit_volume ? unit.unit_volume : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="number" name="unit_volume" step="any" defaultValue={unit.unit_volume ? unit.unit_volume : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-4">
-							<textarea type="text" className="small" name="unit_commodity_description" defaultValue={unit.unit_commodity_description ? unit.unit_commodity_description : ""} onChange={this.props.handleChange.bind(null, this.props.keys)} max="500"/>
+							<textarea type="text" className="small" name="unit_commodity_description" defaultValue={unit.unit_commodity_description ? unit.unit_commodity_description : ""} onChange={handleChange.bind(null, this.props.keys)} max="500"/>
 						</div>
 						<div className="column-2">
-							<input type="number" name="unit_no_of_packages" defaultValue={unit.unit_no_of_packages ? unit.unit_no_of_packages : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="number" name="unit_no_of_packages" defaultValue={unit.unit_no_of_packages ? unit.unit_no_of_packages : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
-							<input type="text" name="unit_kind_of_packages" defaultValue={unit.unit_kind_of_packages ? unit.unit_kind_of_packages : ""} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input type="text" name="unit_kind_of_packages" defaultValue={unit.unit_kind_of_packages ? unit.unit_kind_of_packages : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 					</div>
 				</div>

@@ -9,7 +9,7 @@ var currentDate = require("../../lib/current-date.js");
 
 var addOrder = React.createClass({
 
-	getInitialState: function() {
+	getInitialState: function () {
 
 		var unitsArray = this.props.units ? this.props.units : [{}];
 
@@ -23,7 +23,7 @@ var addOrder = React.createClass({
 	    };
 	},
 
-	closeView: function() {
+	closeView: function () {
 
 		if ( this.state.closeView || !this.state.edited ) {
 
@@ -47,18 +47,18 @@ var addOrder = React.createClass({
 	    });
 	},
 
-  	addUnit: function(key) {
+  	addUnit: function (key) {
 
-  		this.state.units.splice(key + 1, 0, {});
+  		this.state.unitsArr.splice(key + 1, 0, {});
 		
-		var newState = this.state.units
+		var newState = this.state.unitsArr
 
   		this.setState({
-    		units: newState
+    		unitsArr: newState
     	});
   	},
 
-  	removeUnit: function(key) {  		
+  	removeUnit: function (key) {  		
 
   		if (this.state.unitsArr.length > 1) {
 
@@ -67,7 +67,7 @@ var addOrder = React.createClass({
 			var newState = this.state.unitsArr;
 
 	  		this.setState({
-	    		units: newState
+	    		unitsArr: newState
 	    	});
 	    }
   	},
@@ -75,20 +75,20 @@ var addOrder = React.createClass({
   	ifEdited: function () {
 
   		if (!this.state.edited) {
-  			this.setState({
-	  			edited: true
-	  		})
+  			this.state.edited = true;
   		}
   	},
 
   	onUnitChange: function (key, event) {
+
   		this.ifEdited();
   		var name = event.target.name;
 		var value = event.target.value;
-		this.state.units[key][name] = value;
+		this.state.unitsArr[key][name] = value;
   	},
   	
 	render: function() {
+
 		var order 		= this.props.copiedOrder;
 		var addUnit 	= this.addUnit;
 		var removeUnit 	= this.removeUnit;
