@@ -5,7 +5,8 @@ var contactStore= require("../../lib/store-contacts");
 
 
 var addContact = React.createClass({
-	getInitialState: function() {
+	getInitialState: function () {
+
 	    return {
 	    	valid: false,
 	    	closeView: false,
@@ -13,7 +14,8 @@ var addContact = React.createClass({
 	    };
 	},
 
-	closeView: function() {
+	closeView: function () {
+
 		if(this.state.closeView){
 			this.props.closeView()
 			this.setState({
@@ -27,17 +29,20 @@ var addContact = React.createClass({
 	},
 
 	closeWarning: function () {
+
 		this.setState({
 	    	closeView: false
 	    })
 	},
 
 	componentDidMount: function () {
+
 	    var form = document.querySelectorAll("[action= '/contact/post']")[0]
 		form.addEventListener("submit", contactStore.refresh, false);  
 	},	
 
 	render: function() {
+		
 		var contact = this.props.contact;
 		return (
 			<div className="overlay">

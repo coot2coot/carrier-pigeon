@@ -94,7 +94,8 @@ var ordersPage = React.createClass({
 	uniq: function (a) {
 
 	    var seen = {};
-	    return a.filter(function(order) {
+	    return a.filter(function (order) {
+
 	        return seen.hasOwnProperty(order.job_number) ? false : (seen[order.job_number] = true);
 	    });
 	},
@@ -103,7 +104,7 @@ var ordersPage = React.createClass({
 		
 		var getUrl = "/search/orders/" + value;
 
-		$.get(getUrl,function (result) {
+		$.get(getUrl, function (result) {
 
 			if (result === "error") {
 
@@ -271,6 +272,7 @@ var ordersPage = React.createClass({
 							<tbody>
 							  	{this.state.orders
 							  		? this.state.orders.map(function (order, i) {
+							  			
 								        return <tr>
 								            		<td key={i + "first"}>
 								            			<a onClick={orderHandler.bind(null, order)}>

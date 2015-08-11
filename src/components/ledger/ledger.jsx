@@ -187,9 +187,7 @@ var ledger = React.createClass({
 
 	ifEdited: function (e) {
 
-		this.setState({
-  			edited: true
-  		})
+		this.state.edited = true;
   	},
 
 	closeWarning: function () {

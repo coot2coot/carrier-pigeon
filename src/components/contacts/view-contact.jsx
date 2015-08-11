@@ -58,11 +58,10 @@ var viewOrder = React.createClass({
 			});
 		}
 	},
-	ifEdited: function(e) {
+	ifEdited: function () {
+
   		if (!this.state.edited) {
-  			this.setState({
-	  			edited: true
-	  		})
+  			this.state.edited = true
   		}
   	},
 

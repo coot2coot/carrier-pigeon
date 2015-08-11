@@ -62,11 +62,8 @@ var addReminder = React.createClass({
 	ifEdited: function (event) {
 
   		if (!this.state.edited) {
-  			this.setState({
-	  			edited: true
-	  		})
+  			this.state.edited = true;
   		}
-
   	},
 
   	onReminderChange: function (key, event) {
