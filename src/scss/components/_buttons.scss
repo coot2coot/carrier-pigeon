@@ -28,6 +28,10 @@
   		@include red-hover;
   		color: white;
   	}
+  	&.full-width {
+		width: 45%;
+  		margin-right: 30%;
+	}
 }
 
 .button.blue {
@@ -52,6 +56,9 @@
 	font-weight: 900;
 	font-size: 12px;
 	border: none;
+	&.wide {
+		width: 80%
+	}
 }
 
 .button.blue.add-row.units {
