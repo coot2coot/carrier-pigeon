@@ -11,6 +11,7 @@ var viewOrder = React.createClass({
         viewing: true,
         closeView: false,
         edited: false,
+        deletedReminders: ""
       };
     },
 
@@ -37,18 +38,21 @@ var viewOrder = React.createClass({
 	},
 
 	closeWarning: function () {
+
 		this.setState({
 	    	closeView: false
 	    })
 	},
 
 	deleteHandler: function (item) {
+
 		this.setState({
 			deleteContact: item
 		})
 	},
 
 	edit: function () {
+
 		if(this.state.viewing === true){
 			this.setState({
 				viewing: false
@@ -66,12 +70,26 @@ var viewOrder = React.createClass({
   		}
   	},
 
+  	deleteReminder: function (id) {
+
+  		var newDeletedStrng = id;
+
+  		if (this.state.deletedReminders !== "") {
+  			newDeletedStrng = this.state.deletedReminders + ',' + id;
+  		}
+			
+		this.setState({
+			deletedReminders: newDeletedStrng
+		});
+  	},
+
 	render: function() {
 
 		var viewing = this.state.viewing;
 		var edited = this.ifEdited;
 		var contact = this.props.contact[0];
 		var reminders = this.props.contact;
+		var deleteReminder = this.deleteReminder;
 
 		return (
 
@@ -89,7 +107,7 @@ var viewOrder = React.createClass({
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body scroll">
-						<form action={"/contacts/edit"} method="POST">
+						<form action={"/contacts/edit/" + this.state.deletedReminders} method="POST">
 							<input className="display-none" name="contact_id" defaultValue= {contact ? contact.contact_id : ""} onChange={edited}></input>
 							<div className="row gutters">
 								<div>
@@ -163,7 +181,12 @@ var viewOrder = React.createClass({
 											<textarea className="big" max="500" name="sales_report" defaultValue={contact ? contact.sales_report : ""} disabled={viewing ? true : false} onChange={edited}/>
 										</div>
 									</div>
-									<ViewReminders edited={edited} reminder={reminders} viewing={viewing} contactId={contact ? contact.contact_id : ""}/>
+									<ViewReminders 
+										edited={edited} 
+										reminder={reminders} 
+										viewing={viewing} 
+										deleteReminder={deleteReminder}
+										contactId={contact ? contact.contact_id : ""}/>
 									<input type="submit" className="button charcoal" value="Done" disabled={viewing ? true : false}/>
 								</div>
 							</div>	

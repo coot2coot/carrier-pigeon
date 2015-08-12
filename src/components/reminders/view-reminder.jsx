@@ -14,7 +14,6 @@ var addReminder = React.createClass({
 	},
 
 	removeReminder : function (key) {
-		console.log('key', key);
 		
 		if (this.state.reminders.length > 0) {
 
@@ -27,11 +26,8 @@ var addReminder = React.createClass({
     		});
 
   			if (deletedReminder[0].reminder_id) {
-  				var newDeletedStrng = this.state.deletedReminders + ',' + deletedReminder[0].reminder_id;
-  				
-  				this.setState({
-	    			deletedReminders: newDeletedStrng
-	    		});
+
+	    		this.props.deleteReminder(deletedReminder[0].reminder_id)
 	
 			}
 		} 

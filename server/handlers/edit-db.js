@@ -3,13 +3,14 @@
 var parseData 	 = require('../lib/get-form-data.js');
 var validateOrder= require('../lib/validate-order.js').validate;
 var validateUser = require('../lib/validate-user.js');
-var splitObject  = require('../lib/split-orders-object.js');
+var splitObject  = require('../lib/split-object.js');
 var db 			 = require("../db-config.js");
 var removes 	 = require('../lib/removeQuotes.js');
 
 var edit = {};
 
 edit.orders = function (req, res, cb) {
+
 	var data = req.url;
 	/*
 	The id's for the units that have been deleted are sent to the server
@@ -19,13 +20,17 @@ edit.orders = function (req, res, cb) {
 	var strng = data.replace(/\/order\/edit\//g, "");
 
 	parseData(req, function (data) {
+
 		data = removes(data)
 		validateOrder(data, res, function () {
+
 			validateUser(req, res, function() {
-				var splitData = splitObject(data);
+
+				var splitData = splitObject(data, 'job_number');
 				splitData.unit_delete = strng;
 
 				db.edit('orders', splitData, function (err) {
+
 					if (err) {
 						console.log(err);
 						res.writeHead(500);
@@ -46,14 +51,20 @@ edit.orders = function (req, res, cb) {
 
 edit.contacts = function (req, res, cb) {
 
+	var itemsToRemove = req.url.split("/").pop();
+
 	var table = "contacts";
 	
 	parseData(req, function (data) {
-		data = removes(data)
-		validateUser(req, res, function() {
-			console.log('data',data)
 
-			db.edit(table, data, function (err) {
+		data = removes(data)
+
+		validateUser(req, res, function () {
+
+			var splitData = splitObject(data);
+			splitData.items_to_remove = itemsToRemove;
+
+			db.edit(table, splitData, function (err) {
 				if (err) {
 					console.log(err);
 					res.writeHead(500);

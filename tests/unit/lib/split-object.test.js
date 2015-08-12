@@ -1,6 +1,7 @@
 var test = require('tape');
-var splitData = require('../../../server/lib/split-orders-object.js');
+var splitData = require('../../../server/lib/split-object.js');
 var submittedOrder = require('../mocks/add-order.mock.js').fullOrder;
+var submittedContact = require('../mocks/add-contact.mock.js').fullContact;
 
 test('Testing that split orders in lib is', function (t) {
 	t.equals( typeof splitData, 'function', "a function");
@@ -11,13 +12,13 @@ test("Split orders comes back in the right format", function (t) {
 	var result = splitData(submittedOrder());
 	
 	t.equals( typeof result, 'object', "it is an object");
-	t.equals( !!result.unit, true, "with a unit key");
-	t.equals( !!result.order, true, "with a order key");
+	t.equals( !!result.second, true, "with a unit key");
+	t.equals( !!result.first, true, "with a order key");
 	t.end();
 });
 
-test("Split orders comes back within the unit key with the right result", function (t) {
-	var unit = splitData(submittedOrder()).unit;
+test("Split orders comes back within the second key with the right result", function (t) {
+	var unit = splitData(submittedOrder()).second;
 
 	t.equals( unit.job_number, undefined);
 	t.deepEqual( unit.unit_commodity_description, ['', '']);
@@ -34,11 +35,30 @@ test("Split orders comes back within the unit key with the right result", functi
 	t.end();
 });
 
-test("Split orders comes back within the order key with the right result", function (t) {
-	var order = splitData(submittedOrder()).order;
+test("Split orders comes back within the first key with the right result", function (t) {
+	var order = splitData(submittedOrder()).first;
 
 	t.equals( order.carrier, "wer");
 	t.equals( order.client, "ewer");
 	t.equals( order.date, "2015-05-21");
+	t.end();
+});
+
+test("Split contacts comes back within the second key with the right result", function (t) {
+	var reminder = splitData(submittedContact()).second;
+
+	t.deepEqual( reminder.message, [ 'sdfg', 'dsfg' ]);
+	t.deepEqual( reminder.date, [ '2015-07-31', '2015-08-16' ]);
+	t.deepEqual( reminder.reminder_id, [ '3', '4' ]);
+	t.end();
+});
+
+test("Split contacts comes back within the first key with the right result", function (t) {
+	var order = splitData(submittedContact()).first;
+	console.log(order)
+
+	t.equals( order.contact_id, "251");
+	t.equals( order.vat_number, "456ghtd");
+	t.equals( order.city, "london");
 	t.end();
 });

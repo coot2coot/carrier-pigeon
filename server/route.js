@@ -91,7 +91,7 @@ var serverRoutes =  function (router) {
  	router.addRoute('/contact/post', function (req, res, match){
 	  	require('./handlers/create-contact-reminder.js')(req, res, "contacts");
 	});
-	router.addRoute('/contacts/edit', function (req, res, match){
+	router.addRoute('/contacts/edit/:editContacts?', function (req, res, match){
 	  	require('./handlers/edit-db.js').contacts(req, res, cache.noCache);
 	});
 	router.addRoute('/contacts/get', function (req, res, match){
@@ -108,9 +108,6 @@ var serverRoutes =  function (router) {
  * -------------------------------*/
 	router.addRoute('/reminders/:deletedReminders?', function (req, res, match){
 	  	require('./handlers/edit-invoices-reminders.js')(req, res, 'reminders');
-	});
-	router.addRoute('/reminders/delete/:id?', function (req, res, match){
-	  	require('./handlers/delete-db.js')(req, res);
 	});
 
 /* -------------------------------*

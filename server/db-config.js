@@ -70,25 +70,26 @@ function postOrders (table, doc) {
 
 
 
-function editContacts (doc,clt,cb, done) {
-    var query = getQuery.standard(doc);
+function editContacts (doc, clt, cb, done) {
+
+    var query = getQuery.standard(doc.first);
 
     clt.query(command()
                 .update("contacts")
                 .set(query)
-                .where("contact_id ="  + doc.contact_id)
+                .where("contact_id ="  + doc.first.contact_id)
                 .end(), function (err) {
-
-        done();
 
         if (err) {
             return cb(err);
         }
-        cb(null);
+
+        editReminders(doc, clt, cb, done)
+
     });
 }
 
-function editUsers (doc,clt,cb, done) {
+function editUsers (doc, clt, cb, done) {
     var updateUser = {
         first_name: doc.first_name,
         last_name: doc.last_name,
@@ -111,11 +112,11 @@ function editUsers (doc,clt,cb, done) {
     });
 }
 
-function editOrders (doc,clt,cb, done) {
+function editOrders (doc, clt, cb, done) {
 
-    var ordersQuery = getQuery.standard(doc.order);
-    var unitsUpdateQuery = getQuery.update(doc.unit, "units", "unit_id").update;
-    var unitsCreateQuery = getQuery.update(doc.unit, "units", "unit_id").create;
+    var ordersQuery = getQuery.standard(doc.first);
+    var unitsUpdateQuery = getQuery.update(doc.second, "units", "unit_id").update;
+    var unitsCreateQuery = getQuery.update(doc.second, "units", "unit_id").create;
     var unitsDeleteQuery = getQuery.del(doc.unit_delete, "units", "unit_id");
 
     clt.query(command()
@@ -161,8 +162,8 @@ function editInvoices (doc, clt, cb, done) {
 
 function editReminders (doc, clt, cb, done) {
 
-    var updateQuery = getQuery.update(doc, "reminders", "reminder_id").update;
-    var createQuery = getQuery.update(doc, "reminders", "reminder_id").create;
+    var updateQuery = getQuery.update(doc.second, "reminders", "reminder_id").update;
+    var createQuery = getQuery.update(doc.second, "reminders", "reminder_id").create;
     var deleteQuery = getQuery.del(doc.items_to_remove, "reminders", "reminder_id");
 
     clt.query(command()
@@ -170,7 +171,7 @@ function editReminders (doc, clt, cb, done) {
                 .query(deleteQuery)
                 .query(createQuery)
                 .end(), function (err) {
-        
+
         done();
         
         if (err) {
@@ -291,7 +292,7 @@ dataBase.editUserPermissions = function (username, details, cb){
 
 
 dataBase.edit = function (table, doc, cb){
-    connect(function(client, done) {
+    connect(function (client, done) {
         if (table === "users") {
             editUsers(doc, client, cb, done);
         } else if (table === "invoice") {
