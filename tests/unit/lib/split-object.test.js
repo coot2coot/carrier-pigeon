@@ -12,13 +12,13 @@ test("Split orders comes back in the right format", function (t) {
 	var result = splitData(submittedOrder());
 	
 	t.equals( typeof result, 'object', "it is an object");
-	t.equals( !!result.second, true, "with a unit key");
-	t.equals( !!result.first, true, "with a order key");
+	t.equals( !!result.minorObject, true, "with a unit key");
+	t.equals( !!result.majorObject, true, "with a order key");
 	t.end();
 });
 
-test("Split orders comes back within the second key with the right result", function (t) {
-	var unit = splitData(submittedOrder()).second;
+test("Split orders comes back within the minorObject key with the right result", function (t) {
+	var unit = splitData(submittedOrder()).minorObject;
 
 	t.equals( unit.job_number, undefined);
 	t.deepEqual( unit.unit_commodity_description, ['', '']);
@@ -35,8 +35,8 @@ test("Split orders comes back within the second key with the right result", func
 	t.end();
 });
 
-test("Split orders comes back within the first key with the right result", function (t) {
-	var order = splitData(submittedOrder()).first;
+test("Split orders comes back within the majorObject key with the right result", function (t) {
+	var order = splitData(submittedOrder()).majorObject;
 
 	t.equals( order.carrier, "wer");
 	t.equals( order.client, "ewer");
@@ -44,8 +44,8 @@ test("Split orders comes back within the first key with the right result", funct
 	t.end();
 });
 
-test("Split contacts comes back within the second key with the right result", function (t) {
-	var reminder = splitData(submittedContact()).second;
+test("Split contacts comes back within the minorObject key with the right result", function (t) {
+	var reminder = splitData(submittedContact()).minorObject;
 
 	t.deepEqual( reminder.message, [ 'sdfg', 'dsfg' ]);
 	t.deepEqual( reminder.date, [ '2015-07-31', '2015-08-16' ]);
@@ -53,8 +53,8 @@ test("Split contacts comes back within the second key with the right result", fu
 	t.end();
 });
 
-test("Split contacts comes back within the first key with the right result", function (t) {
-	var order = splitData(submittedContact()).first;
+test("Split contacts comes back within the majorObject key with the right result", function (t) {
+	var order = splitData(submittedContact()).majorObject;
 	console.log(order)
 
 	t.equals( order.contact_id, "251");

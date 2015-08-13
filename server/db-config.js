@@ -38,12 +38,12 @@ function postUsers (table, doc) {
 
 function postContacts (table, doc) {
 
-    var contacts = stringifyData(doc.first);
+    var contacts = stringifyData(doc.mainObject);
     var query  = "";
 
-    if (doc.second.hasOwnProperty('message')) {
+    if (doc.minorObject.hasOwnProperty('message')) {
 
-        var reminders = stringifyUnits(doc.second, 'date', 'contact_reminders_id');
+        var reminders = stringifyUnits(doc.minorObject, 'date', 'contact_reminders_id');
 
         query = command()
                     .insertInto(table)
@@ -67,8 +67,8 @@ function postContacts (table, doc) {
 
 function postOrders (table, doc) {
 
-    var orders = stringifyData(doc.first);
-    var units   = stringifyUnits(doc.second, 'unit_type', 'job_number');
+    var orders = stringifyData(doc.mainObject);
+    var units   = stringifyUnits(doc.minorObject, 'unit_type', 'job_number');
 
     var query = command()
                 .insertInto(table)
@@ -91,12 +91,12 @@ function postOrders (table, doc) {
 
 function editContacts (doc, clt, cb, done) {
 
-    var query = getQuery.standard(doc.first);
+    var query = getQuery.standard(doc.mainObject);
 
     clt.query(command()
                 .update("contacts")
                 .set(query)
-                .where("contact_id ="  + doc.first.contact_id)
+                .where("contact_id ="  + doc.mainObject.contact_id)
                 .end(), function (err) {
 
         if (err) {
@@ -134,15 +134,15 @@ function editUsers (doc, clt, cb, done) {
 
 function editOrders (doc, clt, cb, done) {
 
-    var ordersQuery = getQuery.standard(doc.first);
-    var unitsUpdateQuery = getQuery.update(doc.second, "units", "unit_id").update;
-    var unitsCreateQuery = getQuery.update(doc.second, "units", "unit_id").create;
+    var ordersQuery = getQuery.standard(doc.mainObject);
+    var unitsUpdateQuery = getQuery.update(doc.minorObject, "units", "unit_id").update;
+    var unitsCreateQuery = getQuery.update(doc.minorObject, "units", "unit_id").create;
     var unitsDeleteQuery = getQuery.del(doc.unit_delete, "units", "unit_id");
 
     clt.query(command()
                 .update("orders")
                 .set(ordersQuery)
-                .where("job_number = '" + doc.first.job_number+"'" )
+                .where("job_number = '" + doc.mainObject.job_number+"'" )
                 .next()
                 .query(unitsUpdateQuery)
                 .query(unitsDeleteQuery)
@@ -185,10 +185,10 @@ function editReminders (doc, clt, cb, done) {
     var deleteQuery = getQuery.del(doc.items_to_remove, "reminders", "reminder_id");
     var query = '';
 
-    if (doc.second.hasOwnProperty('message')) { 
+    if (doc.minorObject.hasOwnProperty('message')) { 
 
-        var updateQuery = getQuery.update(doc.second, "reminders", "reminder_id").update;
-        var createQuery = getQuery.update(doc.second, "reminders", "reminder_id").create;
+        var updateQuery = getQuery.update(doc.minorObject, "reminders", "reminder_id").update;
+        var createQuery = getQuery.update(doc.minorObject, "reminders", "reminder_id").create;
         query = command()
                     .query(updateQuery)
                     .query(deleteQuery)
