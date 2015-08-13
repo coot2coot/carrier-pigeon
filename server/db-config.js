@@ -4,16 +4,16 @@ var pg             = require("pg");
 var str            = process.env.POSTGRES_URI  || require("../credentials.json").postgres;
 var url            = "postgres://" + str;
 var stringifyData  = require("./lib/stringify-data-sql.js");
-var stringifyUnits = require("./lib/stringify-units-sql.js").stringify;
+var stringifyUnits = require("./lib/stringify-units-reminders-sql.js").stringify;
 var getQuery       = require("./lib/edit-query-sql.js").getQuery;
 var queryStrings   = require("./lib/querys.js");
 var command        = require("./lib/commands.js");
 var dateRange      = require("./lib/searchDates.js");
 var dataBase       = {};
 
-
 function connect (query) {
-    pg.connect(url, function(err, clt, done) {
+
+    pg.connect(url, function (err, clt, done) {
 
         if (err) {
             console.log(err)
@@ -37,19 +37,28 @@ function postUsers (table, doc) {
 }
 
 function postContacts (table, doc) {
-    var contacts = stringifyData(doc);
+
+    var contacts = stringifyData(doc.first);
+    var reminders = stringifyUnits(doc.second, 'date', 'contact_id');
+
     var query = command()
                 .insertInto(table)
                 .columns(contacts.columns)
                 .values(contacts.values)
+                .next()
+                .insertInto('reminders')
+                .columns(reminders.columns)
+                .values(reminders.values)
                 .end();
+    console.log('query 123', query);
 
     return query;
 }
 
 function postOrders (table, doc) {
-    var orders = stringifyData(doc.order);
-    var units   = stringifyUnits(doc.unit);
+
+    var orders = stringifyData(doc.first);
+    var units   = stringifyUnits(doc.second, 'unit_type', 'job_number');
 
     var query = command()
                 .insertInto(table)
@@ -90,6 +99,7 @@ function editContacts (doc, clt, cb, done) {
 }
 
 function editUsers (doc, clt, cb, done) {
+
     var updateUser = {
         first_name: doc.first_name,
         last_name: doc.last_name,
@@ -149,7 +159,7 @@ function editInvoices (doc, clt, cb, done) {
                 .query(updateQuery)
                 .query(deleteQuery)
                 .query(createQuery)
-                .end(), function(err) {
+                .end(), function (err) {
         
         done();
         
@@ -184,6 +194,7 @@ function editReminders (doc, clt, cb, done) {
 dataBase.get = function (table, cb) {
 
     connect( function (client, done) {
+
         var query;
 
         if (table === "contacts") {
@@ -269,8 +280,9 @@ dataBase.post = function (table, doc, cb) {
 };
 
 
-dataBase.editUserPermissions = function (username, details, cb){
-    connect(function(client, done) {
+dataBase.editUserPermissions = function (username, details, cb) {
+
+    connect(function (client, done) {
 
         var query = getQuery.standard(details);
 
@@ -291,8 +303,10 @@ dataBase.editUserPermissions = function (username, details, cb){
 };
 
 
-dataBase.edit = function (table, doc, cb){
+dataBase.edit = function (table, doc, cb) {
+
     connect(function (client, done) {
+
         if (table === "users") {
             editUsers(doc, client, cb, done);
         } else if (table === "invoice") {
@@ -384,7 +398,7 @@ dataBase.selectUser = function (username, password, remember, cb) {
                 .select("*")
                 .from("users")
                 .where("username = $1 AND password = crypt($2, password)")
-                .end(), [username, password], function(err, user) {
+                .end(), [username, password], function (err, user) {
 
             done();
 

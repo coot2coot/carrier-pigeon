@@ -3,46 +3,38 @@ var Reminders 	= require("./reminder.jsx");
 
 var addReminder = React.createClass({
 	getInitialState: function () {
-
+		
 	    return {
-	    	reminders:[],
-	    	deletedReminders: ""
+	    	reminders:[]
 	    };
 	},
 
 	removeReminder : function (key) {
+
+		var reminders;
 		
 		if (this.state.reminders.length > 0) {
+			reminders = this.state.reminders
 
-  			var deletedReminder = this.state.reminders.splice(key, 1);
-
-	  		var newState = this.state.reminders;
+			reminders.splice(key, 1);
 
   			this.setState({
-    			reminders: newState,
+    			reminders: reminders,
     		});
-
-  			if (deletedReminder[0].reminder_id) {
-
-	    		this.props.deleteReminder(deletedReminder[0].reminder_id)
-	
-			}
 		} 
 	},
 
   	onReminderChange: function (key, event) {
 
-		this.props.edited();
 		var name = event.target.name;
+		var name = name.substring(9, name.length)
 		var value = event.target.value;
 		this.state.reminders[key][name] = value;
 	},
 
 	addReminder : function (key) {
 		
-		var newReminder = {
-			contact_id : this.props.contactId
-		}
+		var newReminder = {};
 
 		this.state.reminders.splice(key + 1, 0, newReminder);
 
@@ -53,22 +45,12 @@ var addReminder = React.createClass({
     	});
 	},
 
-	componentDidMount: function () {
-
-		var reminder = this.props.reminder;
-
-		this.setState({
-			reminders: reminder
-		})
-	},
-
 	render: function () {
 
 		var reminders 			= this.state.reminders;
 		var addReminder 		= this.addReminder;
 		var removeReminder 		= this.removeReminder;
 		var onReminderChange	= this.onReminderChange;
-		var viewing 			= this.props.viewing;
 
 		return (
 			<div className="reminder create-order">
@@ -82,17 +64,16 @@ var addReminder = React.createClass({
 						</div>
 					</div>
 					{reminders.length > 0 
-						?reminders.map(function (reminder, i) {
+						? reminders.map(function (reminder, i) {
 							var key = new Date().getMilliseconds() + i;
 
 							return 	<Reminders
-										viewing = {viewing}
 										reminder = {reminder}
+										edited = {onReminderChange}
 										key = {key}
 										keys= {i} 
 										addReminder={addReminder} 
-										removeReminder={removeReminder}
-										edited = {onReminderChange}/>
+										removeReminder={removeReminder}/>
 						})
 						: <button type="button" className="button blue add-row wide" onClick={addReminder.bind(null, 0)}>Add A Reminder</button>
 					}

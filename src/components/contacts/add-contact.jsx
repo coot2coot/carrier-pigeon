@@ -1,8 +1,7 @@
 var React = require('react');
 var Warning = require("../close-warning.jsx");	
+var AddReminders = require("../reminders/add-reminder.jsx");
 var contactStore= require("../../lib/store-contacts");
-
-
 
 var addContact = React.createClass({
 	getInitialState: function () {
@@ -44,6 +43,7 @@ var addContact = React.createClass({
 	render: function() {
 		
 		var contact = this.props.contact;
+
 		return (
 			<div className="overlay">
 				<div className="column-12 push-2 model-generic model-top create-order">
@@ -125,7 +125,8 @@ var addContact = React.createClass({
 										</div>
 									</div>
 
-									<input type="submit" className="button charcoal" value="Done" onClick={this.submit}/>
+									<AddReminders/>
+									<input type="submit" className="button charcoal" value="Done" />
 								</div>
 							</div>
 						</form>

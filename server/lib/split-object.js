@@ -1,5 +1,5 @@
 /* this method is designed to split an object into two objects
-to simplify the updating of two tables*/
+to simplify the updating of two seperate postgress tables*/
 
 function splitObject (data, id) {
 	var obj = {
@@ -8,7 +8,7 @@ function splitObject (data, id) {
 	};
 	for (var prop in data) {
 
-		if (data[prop] !== "") {
+		if (data[prop] !== "" || prop === "reminder_contact_reminders_id") {
 			if (prop.substring(0,4) === "unit") {
 				obj.second[prop] = data[prop]
 
