@@ -3,7 +3,7 @@ var mock = {}
 mock = {
     contact_id: "place",
     contact : {
-        majorObject: {
+        mainObject: {
             name: "dave",
             vat_number: "456ghtd",
             city: "london",
@@ -16,7 +16,7 @@ mock = {
     },
     edit : {
 
-        majorObject: {
+        mainObject: {
             contact_id: "false",
             vat_number: "456ghtd",
             city: "london",

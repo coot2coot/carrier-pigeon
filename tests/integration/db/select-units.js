@@ -10,7 +10,7 @@ var tests = function (st) {
 			sst.equals(typeof result,'object', "get request to units worked")
 		};
 		try {
-			db.selectUnits('units',mocks.edit.majorObject.job_number, callback);
+			db.selectUnits('units',mocks.edit.mainObject.job_number, callback);
 		} catch(e) {
 			sst.notOk(true, "get request to units table did not work");
 		}

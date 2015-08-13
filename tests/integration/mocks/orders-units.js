@@ -8,7 +8,7 @@ mock = {
             unit_number: "345fgd",
             unit_type:"40dc",
         },
-        majorObject: {
+        mainObject: {
             client : 'fake',
             date : '10-10-2010',
         }
@@ -21,7 +21,7 @@ mock = {
             unit_number: "4",
             unit_type:"40dc"
         },
-        majorObject: {
+        mainObject: {
             get job_number () {
                 return mock.job_number;
             },
@@ -41,7 +41,7 @@ mock = {
             unit_number: ["4","40"],
             unit_type:["40dc","40dd"]
         },
-        majorObject: {
+        mainObject: {
             get job_number () {
                 return mock.job_number
             },

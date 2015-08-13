@@ -9,7 +9,7 @@ var tests = function (st) {
 		var getJobNumber = function () {
 		    var today = new Date();
 		  
-			var id = ("0000" + mocks.edit.majorObject.job_number).slice(-4);
+			var id = ("0000" + mocks.edit.mainObject.job_number).slice(-4);
 		    var mm = ("0" + (today.getMonth()+1)).slice(-2);
 		    var yy = today.getFullYear().toString().slice(-2);
 

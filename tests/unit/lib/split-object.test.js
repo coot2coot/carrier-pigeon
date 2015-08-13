@@ -13,11 +13,11 @@ test("Split orders comes back in the right format", function (t) {
 	
 	t.equals( typeof result, 'object', "it is an object");
 	t.equals( !!result.minorObject, true, "with a unit key");
-	t.equals( !!result.majorObject, true, "with a order key");
+	t.equals( !!result.mainObject, true, "with a order key");
 	t.end();
 });
 
-test("Split orders comes back within the minorObject key with the right result", function (t) {
+test("Split orders comes back within the mainObject key with the right result", function (t) {
 	var unit = splitData(submittedOrder()).minorObject;
 
 	t.equals( unit.job_number, undefined);
@@ -35,8 +35,9 @@ test("Split orders comes back within the minorObject key with the right result",
 	t.end();
 });
 
-test("Split orders comes back within the majorObject key with the right result", function (t) {
-	var order = splitData(submittedOrder()).majorObject;
+test("Split orders comes back within the mainObject key with the right result", function (t) {
+	var order = splitData(submittedOrder()).mainObject;
+	console.log(splitData(submittedOrder()))
 
 	t.equals( order.carrier, "wer");
 	t.equals( order.client, "ewer");
@@ -53,9 +54,8 @@ test("Split contacts comes back within the minorObject key with the right result
 	t.end();
 });
 
-test("Split contacts comes back within the majorObject key with the right result", function (t) {
-	var order = splitData(submittedContact()).majorObject;
-	console.log(order)
+test("Split contacts comes back within the mainObject key with the right result", function (t) {
+	var order = splitData(submittedContact()).mainObject;
 
 	t.equals( order.contact_id, "251");
 	t.equals( order.vat_number, "456ghtd");
