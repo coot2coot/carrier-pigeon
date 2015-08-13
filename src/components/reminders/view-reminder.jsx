@@ -57,9 +57,12 @@ var addReminder = React.createClass({
 
 		var reminder = this.props.reminder;
 
-		this.setState({
-			reminders: reminder
-		})
+		if(reminder[0].message !== null) {
+
+			this.setState({
+				reminders: reminder
+			})
+		}
 	},
 
 	render: function () {
@@ -82,6 +85,7 @@ var addReminder = React.createClass({
 						</div>
 					</div>
 					{reminders.length > 0 
+
 						?reminders.map(function (reminder, i) {
 							var key = new Date().getMilliseconds() + i;
 
@@ -94,7 +98,7 @@ var addReminder = React.createClass({
 										removeReminder={removeReminder}
 										edited = {onReminderChange}/>
 						})
-						: <button type="button" className="button blue add-row wide" onClick={addReminder.bind(null, 0)}>Add A Reminder</button>
+						: <button type="button" className="button blue add-row wide" onClick={addReminder.bind(null, 0)} disabled={viewing ? true : false}>Add A Reminder</button>
 					}
 				</div>	
 			</div>

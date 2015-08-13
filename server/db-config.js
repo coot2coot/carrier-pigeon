@@ -39,17 +39,28 @@ function postUsers (table, doc) {
 function postContacts (table, doc) {
 
     var contacts = stringifyData(doc.first);
-    var reminders = stringifyUnits(doc.second, 'date', 'contact_reminders_id');
+    var query  = "";
 
-    var query = command()
-                .insertInto(table)
-                .columns(contacts.columns)
-                .values(contacts.values)
-                .next()
-                .insertInto('reminders')
-                .columns(reminders.columns)
-                .values(reminders.values)
-                .end();
+    if (doc.second.hasOwnProperty('message')) {
+
+        var reminders = stringifyUnits(doc.second, 'date', 'contact_reminders_id');
+
+        query = command()
+                    .insertInto(table)
+                    .columns(contacts.columns)
+                    .values(contacts.values)
+                    .next()
+                    .insertInto('reminders')
+                    .columns(reminders.columns)
+                    .values(reminders.values)
+                    .end();
+    } else {
+        query = command()
+                    .insertInto(table)
+                    .columns(contacts.columns)
+                    .values(contacts.values)
+                    .end();
+    }
 
     return query;
 }
@@ -171,23 +182,34 @@ function editInvoices (doc, clt, cb, done) {
 
 function editReminders (doc, clt, cb, done) {
 
-    var updateQuery = getQuery.update(doc.second, "reminders", "reminder_id").update;
-    var createQuery = getQuery.update(doc.second, "reminders", "reminder_id").create;
     var deleteQuery = getQuery.del(doc.items_to_remove, "reminders", "reminder_id");
+    var query = '';
 
-    clt.query(command()
-                .query(updateQuery)
-                .query(deleteQuery)
-                .query(createQuery)
-                .end(), function (err) {
+    if (doc.second.hasOwnProperty('message')) { 
 
-        done();
-        
-        if (err) {
-            return cb(err);
-        }
-        cb(null);
-    });
+        var updateQuery = getQuery.update(doc.second, "reminders", "reminder_id").update;
+        var createQuery = getQuery.update(doc.second, "reminders", "reminder_id").create;
+        query = command()
+                    .query(updateQuery)
+                    .query(deleteQuery)
+                    .query(createQuery)
+                    .end();
+    } else {   
+        query = command()
+                    .query(deleteQuery)
+                    .end();
+
+    }
+    clt.query( query, function (err) {
+
+            done();
+
+            if (err) {
+                return console.log(err);
+            }
+
+            cb(null);
+        });
 }
 
 dataBase.get = function (table, cb) {

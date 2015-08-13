@@ -63,7 +63,6 @@ edit.contacts = function (req, res, cb) {
 
 			var splitData = splitObject(data);
 			splitData.items_to_remove = itemsToRemove;
-			console.log('splitData', splitData);
 
 			db.edit(table, splitData, function (err) {
 				if (err) {
