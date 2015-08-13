@@ -124,7 +124,11 @@ var addContact = React.createClass({
 											<textarea className="big" max="500" name="sales_report" defaultValue={contact ? contact.sales_report : ""}/>
 										</div>
 									</div>
-
+									<div className="row">
+										<div className="column-16">
+											<p>Reminders</p>
+										</div>
+									</div>
 									<AddReminders/>
 									<input type="submit" className="button charcoal" value="Done" />
 								</div>

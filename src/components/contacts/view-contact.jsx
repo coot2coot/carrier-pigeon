@@ -181,6 +181,11 @@ var viewOrder = React.createClass({
 											<textarea className="big" max="500" name="sales_report" defaultValue={contact ? contact.sales_report : ""} disabled={viewing ? true : false} onChange={edited}/>
 										</div>
 									</div>
+									<div className="row">
+										<div className="column-16">
+											<p>Reminders</p>
+										</div>
+									</div>
 									<ViewReminders 
 										edited={edited} 
 										reminder={reminders} 

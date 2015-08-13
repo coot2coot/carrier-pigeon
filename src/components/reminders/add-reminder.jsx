@@ -54,7 +54,7 @@ var addReminder = React.createClass({
 
 		return (
 			<div className="reminder create-order">
-				<div className="row column-16 push-2 gutters small-margin-top">
+				<div className="row column-16 push-1 gutters small-margin-top">
 					<div className="row column-11 gutters">
 						<div className="column-7 purchase">
 							<h4>Message</h4>
