@@ -30,8 +30,7 @@ addContact.oneReminder = function() {
 
 	var mock = {
 		message: 'Unit no.',
-  		date: '2015-05-14',
-  		contact_reminders_id: '',
+  		date: '2015-05-14'
   	};
 	return mock;
 };
@@ -41,8 +40,7 @@ addContact.multiReminders = function () {
 
 	var mock = { 
 		message: ['Unit no.', 'bugs'],
-  		date: ['2015-05-14','2015-05-14'],
-  		contact_reminders_id: ['','']
+  		date: ['2015-05-14','2015-05-14']
     };
 	return mock;
 };
@@ -51,10 +49,10 @@ addContact.stringifiedMultiReminders = function () {
 
 	var mock = { 
 		columns: "message,date,contact_reminders_id",
-  		values: "('Unit no.','2015-05-14'," +
+  		values: "'Unit no.','2015-05-14'," +
 			"(SELECT contact_id FROM contacts ORDER BY contact_id DESC LIMIT 1))," +
 			"('bugs','2015-05-14'," +
-			"(SELECT contact_id FROM contacts ORDER BY contact_id DESC LIMIT 1))"
+			"(SELECT contact_id FROM contacts ORDER BY contact_id DESC LIMIT 1)"
 	};
 	return mock;
 };

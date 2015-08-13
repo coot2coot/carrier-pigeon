@@ -4,26 +4,24 @@ mock = {
     job_number: "d",
     unit_id: "d",
     order : {
-        unit:   {
+        second:   {
             unit_number: "345fgd",
             unit_type:"40dc",
-            job_number: ""
         },
-        order: {
+        first: {
             client : 'fake',
             date : '10-10-2010',
-        },
-        unit_delete: ""
+        }
     },
     edit : {
-        unit:  {
+        second:  {
             get unit_id () {
                 return mock.unit_id;
             },
             unit_number: "4",
             unit_type:"40dc"
         },
-        order: {
+        first: {
             get job_number () {
                 return mock.job_number;
             },
@@ -33,7 +31,7 @@ mock = {
         unit_delete: ""
     },
     multipleEdit : {
-        unit:   {
+        second:   {
             get unit_id () {
                 return [mock.unit_id,""];
             },
@@ -43,7 +41,7 @@ mock = {
             unit_number: ["4","40"],
             unit_type:["40dc","40dd"]
         },
-        order: {
+        first: {
             get job_number () {
                 return mock.job_number
             },

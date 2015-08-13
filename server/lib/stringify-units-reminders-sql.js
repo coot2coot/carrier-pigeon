@@ -13,16 +13,20 @@ function hasId (id) {
 function stringifyOneUnit (object, id) {
 
     var data;
-    var id = hasId(id);
+
+    var idString = hasId(id);
 
     data = stringify(object);
-    var str = data.values.slice(0, -2) + id;
+
+    data.columns += ',' + id;
+
+    var str = data.values + ',' + idString;
 
     data.values = str;
     return data;
 }
 
-function getColumns (object) {
+function getColumns (object, id) {
 
     var props,
         arr = [],
@@ -32,6 +36,7 @@ function getColumns (object) {
         arr.push(props);
     }
 
+    arr.push(id)
     str = arr.join();
 
     return str;
@@ -49,9 +54,8 @@ function getValues (object, prop, id) {
             str = "";
               
         for(props in object) {
-            if (typeof object[props] === "object" && props !== 'contact_reminders_id') {
+            if (typeof object[props] === "object") {
 
-                console.log(props)
                 var propValue = "'" + object[props][i] + "'";
                 
                 if (propValue === "''") {
@@ -64,12 +68,11 @@ function getValues (object, prop, id) {
 
         var getIdQuery = hasId(id);
 
-        str += "(" + arr.join() + "," + getIdQuery + ")";
+        str += arr.join() + "," + getIdQuery;
         values.push(str);
         arr = [];
-        console.log('values', values.join())
     }
-    return values.join();
+    return values.join('),(');
 }
 
 function stringifyUnitReminder (units, prop, id) {
@@ -82,10 +85,8 @@ function stringifyUnitReminder (units, prop, id) {
 
         var valueStr = getValues(units, prop, id);
 
-        data.columns = getColumns(units);
+        data.columns = getColumns(units, id);
         data.values = valueStr;
-
-        if (id === 'job_number') data.values = valueStr.substring(1, valueStr.length-1);
 
         return data;
         

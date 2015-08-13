@@ -77,8 +77,7 @@ addOrder.oneUnit = function() {
   		unit_volume: '5',
   		unit_commodity_description: 'somethime',
   		unit_no_of_packages: '4',
-  		unit_kind_of_packages: '??',
-  		job_number: undefined
+  		unit_kind_of_packages: '??'
   	}
 	return mock;
 }
@@ -88,7 +87,7 @@ addOrder.stringifiedOneUnit = function() {
 		columns: "unit_number, unit_type, unit_loading_reference, " +
 				"unit_loading_date, unit_loading_time, unit_net_weight, " +
 				"unit_gross_weight, unit_volume, unit_commodity_description, " +
-				"unit_no_of_packages, unit_kind_of_packages, job_number",
+				"unit_no_of_packages, unit_kind_of_packages,job_number",
   		values: "'Unit no.','40sc','dunno','2015-05-14','12:30','4'," +
   				"'4','5','somethime','4','??'," + 
   				"(SELECT job_number FROM orders ORDER BY job_number DESC LIMIT 1)" 
@@ -108,14 +107,17 @@ addOrder.multiUnits = function() {
         unit_volume: [ '4', '3', '5' ],
         unit_commodity_description: [ 'stuff', 'more stuff', 'blah' ],
         unit_no_of_packages: [ '4', '-3', '5' ],
-        unit_kind_of_packages: [ 'dunno', 'still dunno', 'ejfi' ],
-        job_number: undefined 
+        unit_kind_of_packages: [ 'dunno', 'still dunno', 'ejfi' ], 
     }
 	return mock;
 }
 
 addOrder.stringifiedMultiUnits = function() {
 	var mock = { 
+		getColumnsMock: "unit_number,unit_type,unit_loading_reference," +
+			"unit_loading_date,unit_loading_time,unit_net_weight," +
+			"unit_gross_weight,unit_volume,unit_commodity_description," +
+			"unit_no_of_packages,unit_kind_of_packages,",
 		columns: "unit_number,unit_type,unit_loading_reference," +
 			"unit_loading_date,unit_loading_time,unit_net_weight," +
 			"unit_gross_weight,unit_volume,unit_commodity_description," +

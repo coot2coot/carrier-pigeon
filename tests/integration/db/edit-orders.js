@@ -5,8 +5,10 @@ var mocks = require('../mocks/orders-units.js');
 
 var tests = function (st) {
 
-	st.test("edit function to orders and units table for order with a single unit", function(sst) {
-		var callback =  function (result){
+	st.test("edit function to orders and units table for order with a single unit", function (sst) {
+		
+		var callback =  function (result) {
+
 			sst.equals(result, null, "edit request to units and orders table worked")
 		};
 		try {
@@ -18,8 +20,10 @@ var tests = function (st) {
 	    sst.end();
 	});
 	
-	st.test("edit function to orders and units where a unit has been added", function(sst) {
-		var callback =  function (result){
+	st.test("edit function to orders and units where a unit has been added", function (sst) {
+
+		var callback =  function (result) {
+
 			sst.equals(result, null, "multiple edit request to units and orders table worked")
 		};
 		try {

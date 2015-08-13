@@ -1,5 +1,5 @@
 var React 		= require('react');		
-var Reminders 	= require("./reminder.jsx");
+var Reminders 	= require("./reminder-add.jsx");
 
 var addReminder = React.createClass({
 	getInitialState: function () {

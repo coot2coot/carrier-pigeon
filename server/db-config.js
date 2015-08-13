@@ -39,7 +39,7 @@ function postUsers (table, doc) {
 function postContacts (table, doc) {
 
     var contacts = stringifyData(doc.first);
-    var reminders = stringifyUnits(doc.second, 'date', 'contact_id');
+    var reminders = stringifyUnits(doc.second, 'date', 'contact_reminders_id');
 
     var query = command()
                 .insertInto(table)
@@ -50,7 +50,6 @@ function postContacts (table, doc) {
                 .columns(reminders.columns)
                 .values(reminders.values)
                 .end();
-    console.log('query 123', query);
 
     return query;
 }
@@ -132,7 +131,7 @@ function editOrders (doc, clt, cb, done) {
     clt.query(command()
                 .update("orders")
                 .set(ordersQuery)
-                .where("job_number = '" + doc.order.job_number+"'" )
+                .where("job_number = '" + doc.first.job_number+"'" )
                 .next()
                 .query(unitsUpdateQuery)
                 .query(unitsDeleteQuery)

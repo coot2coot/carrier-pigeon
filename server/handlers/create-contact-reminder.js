@@ -13,8 +13,6 @@ function create (req, res, table) {
 		validateUser(req, res, function () {
 
 			var splitData = splitObject(data);
-			delete splitData.second['reminder_id'];
-			console.log(splitData);
 
 			db.post(table, splitData, function (err) {
 				

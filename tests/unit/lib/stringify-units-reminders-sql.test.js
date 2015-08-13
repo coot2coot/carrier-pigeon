@@ -16,7 +16,6 @@ test('Testing that stringify units in lib is', function (t) {
 });
 
 test('when stringify units is given a result, returns data with correct keys', function (t) {
-
 	var data = stringify(addUnitMock(), 'unit_type', 'job_number');
 
 	t.equals( typeof data, 'object', "returns an obj");
@@ -76,7 +75,7 @@ test('when stringify data is given a result with multiple units, returns data wi
 
 test('when stringify data is given a result with multiple reminders, returns data with columns format', function (t) {
 
-	var data = stringify(addMultiReminderMock(), 'date', 'contact_id');
+	var data = stringify(addMultiReminderMock(), 'date', 'contact_reminders_id');
 	var mockColumns = multiReminderMockData().columns;
 
 	t.equals( typeof data.columns, 'string', "is a string");
@@ -124,8 +123,8 @@ test('getValues returns a str', function (t) {
 });
 
 test('getValues returns the correct string', function (t) {
-	var result = getValues(addMultiUnitMock(), 'unit_type', 'job_number');
-	var testResult = "(" + multiUnitMockData().values + ")"
+	var result 		= getValues(addMultiUnitMock(), 'unit_type', 'job_number');
+	var testResult 	= multiUnitMockData().values
 
 	t.equals(result, testResult, "a function");
 	t.end();
@@ -152,7 +151,7 @@ test('getColumns returns a str', function (t) {
 test('getColumns returns the correct string', function (t) {
 	var result = getColumns(addMultiUnitMock());
 
-	t.equals(result, multiUnitMockData().columns, "a function");
+	t.equals(result, multiUnitMockData().getColumnsMock, "a function");
 	t.end();
 });
 
