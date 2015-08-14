@@ -75,7 +75,8 @@ var addReminder = React.createClass({
 
 		return (
 			<div className="reminder create-order">
-				<div className="row column-16 push-1 gutters small-margin-top">
+			{(reminders.length > 0)
+				? <div className="row column-16 push-1 gutters small-margin-top">
 					<div className="row column-11 gutters">
 						<div className="column-7 purchase">
 							<h4>Message</h4>
@@ -84,9 +85,7 @@ var addReminder = React.createClass({
 							<h4>Date</h4>
 						</div>
 					</div>
-					{reminders.length > 0 
-
-						?reminders.map(function (reminder, i) {
+					{reminders.map(function (reminder, i) {
 							var key = new Date().getMilliseconds() + i;
 
 							return 	<Reminders
@@ -97,10 +96,10 @@ var addReminder = React.createClass({
 										addReminder={addReminder} 
 										removeReminder={removeReminder}
 										edited = {onReminderChange}/>
-						})
-						: <button type="button" className="button blue add-row wide" onClick={addReminder.bind(null, 0)} disabled={viewing ? true : false}>Add A Reminder</button>
-					}
+					})}
 				</div>	
+				: <button type="button" onClick={addReminder.bind(null, 0)} className={viewing ? 'hide' : 'button blue add-row'}>Add A Reminder</button>
+			}
 			</div>
 		);
 	}
