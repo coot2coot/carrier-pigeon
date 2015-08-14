@@ -4,16 +4,16 @@ var pg             = require("pg");
 var str            = process.env.POSTGRES_URI  || require("../credentials.json").postgres;
 var url            = "postgres://" + str;
 var stringifyData  = require("./lib/stringify-data-sql.js");
-var stringifyUnits = require("./lib/stringify-units-sql.js").stringify;
+var stringifyUnits = require("./lib/stringify-units-reminders-sql.js").stringify;
 var getQuery       = require("./lib/edit-query-sql.js").getQuery;
 var queryStrings   = require("./lib/querys.js");
 var command        = require("./lib/commands.js");
 var dateRange      = require("./lib/searchDates.js");
 var dataBase       = {};
 
-
 function connect (query) {
-    pg.connect(url, function(err, clt, done) {
+
+    pg.connect(url, function (err, clt, done) {
 
         if (err) {
             console.log(err)
@@ -37,19 +37,38 @@ function postUsers (table, doc) {
 }
 
 function postContacts (table, doc) {
-    var contacts = stringifyData(doc);
-    var query = command()
-                .insertInto(table)
-                .columns(contacts.columns)
-                .values(contacts.values)
-                .end();
+
+    var contacts = stringifyData(doc.mainObject);
+    var query  = "";
+
+    if (doc.minorObject.hasOwnProperty('message')) {
+
+        var reminders = stringifyUnits(doc.minorObject, 'date', 'contact_reminders_id');
+
+        query = command()
+                    .insertInto(table)
+                    .columns(contacts.columns)
+                    .values(contacts.values)
+                    .next()
+                    .insertInto('reminders')
+                    .columns(reminders.columns)
+                    .values(reminders.values)
+                    .end();
+    } else {
+        query = command()
+                    .insertInto(table)
+                    .columns(contacts.columns)
+                    .values(contacts.values)
+                    .end();
+    }
 
     return query;
 }
 
 function postOrders (table, doc) {
-    var orders = stringifyData(doc.order);
-    var units   = stringifyUnits(doc.unit);
+
+    var orders = stringifyData(doc.mainObject);
+    var units   = stringifyUnits(doc.minorObject, 'unit_type', 'job_number');
 
     var query = command()
                 .insertInto(table)
@@ -70,25 +89,27 @@ function postOrders (table, doc) {
 
 
 
-function editContacts (doc,clt,cb, done) {
-    var query = getQuery.standard(doc);
+function editContacts (doc, clt, cb, done) {
+
+    var query = getQuery.standard(doc.mainObject);
 
     clt.query(command()
                 .update("contacts")
                 .set(query)
-                .where("contact_id ="  + doc.contact_id)
+                .where("contact_id ="  + doc.mainObject.contact_id)
                 .end(), function (err) {
-
-        done();
 
         if (err) {
             return cb(err);
         }
-        cb(null);
+
+        editReminders(doc, clt, cb, done)
+
     });
 }
 
-function editUsers (doc,clt,cb, done) {
+function editUsers (doc, clt, cb, done) {
+
     var updateUser = {
         first_name: doc.first_name,
         last_name: doc.last_name,
@@ -111,17 +132,17 @@ function editUsers (doc,clt,cb, done) {
     });
 }
 
-function editOrders (doc,clt,cb, done) {
+function editOrders (doc, clt, cb, done) {
 
-    var ordersQuery = getQuery.standard(doc.order);
-    var unitsUpdateQuery = getQuery.update(doc.unit, "units", "unit_id").update;
-    var unitsCreateQuery = getQuery.update(doc.unit, "units", "unit_id").create;
+    var ordersQuery = getQuery.standard(doc.mainObject);
+    var unitsUpdateQuery = getQuery.update(doc.minorObject, "units", "unit_id").update;
+    var unitsCreateQuery = getQuery.update(doc.minorObject, "units", "unit_id").create;
     var unitsDeleteQuery = getQuery.del(doc.unit_delete, "units", "unit_id");
 
     clt.query(command()
                 .update("orders")
                 .set(ordersQuery)
-                .where("job_number = '" + doc.order.job_number+"'" )
+                .where("job_number = '" + doc.mainObject.job_number+"'" )
                 .next()
                 .query(unitsUpdateQuery)
                 .query(unitsDeleteQuery)
@@ -148,7 +169,7 @@ function editInvoices (doc, clt, cb, done) {
                 .query(updateQuery)
                 .query(deleteQuery)
                 .query(createQuery)
-                .end(), function(err) {
+                .end(), function (err) {
         
         done();
         
@@ -161,28 +182,40 @@ function editInvoices (doc, clt, cb, done) {
 
 function editReminders (doc, clt, cb, done) {
 
-    var updateQuery = getQuery.update(doc, "reminders", "reminder_id").update;
-    var createQuery = getQuery.update(doc, "reminders", "reminder_id").create;
     var deleteQuery = getQuery.del(doc.items_to_remove, "reminders", "reminder_id");
+    var query = '';
 
-    clt.query(command()
-                .query(updateQuery)
-                .query(deleteQuery)
-                .query(createQuery)
-                .end(), function (err) {
-        
-        done();
-        
-        if (err) {
-            return cb(err);
-        }
-        cb(null);
-    });
+    if (doc.minorObject.hasOwnProperty('message')) { 
+
+        var updateQuery = getQuery.update(doc.minorObject, "reminders", "reminder_id").update;
+        var createQuery = getQuery.update(doc.minorObject, "reminders", "reminder_id").create;
+        query = command()
+                    .query(updateQuery)
+                    .query(deleteQuery)
+                    .query(createQuery)
+                    .end();
+    } else {   
+        query = command()
+                    .query(deleteQuery)
+                    .end();
+
+    }
+    clt.query( query, function (err) {
+
+            done();
+
+            if (err) {
+                return console.log(err);
+            }
+
+            cb(null);
+        });
 }
 
 dataBase.get = function (table, cb) {
 
     connect( function (client, done) {
+
         var query;
 
         if (table === "contacts") {
@@ -268,8 +301,9 @@ dataBase.post = function (table, doc, cb) {
 };
 
 
-dataBase.editUserPermissions = function (username, details, cb){
-    connect(function(client, done) {
+dataBase.editUserPermissions = function (username, details, cb) {
+
+    connect(function (client, done) {
 
         var query = getQuery.standard(details);
 
@@ -290,8 +324,10 @@ dataBase.editUserPermissions = function (username, details, cb){
 };
 
 
-dataBase.edit = function (table, doc, cb){
-    connect(function(client, done) {
+dataBase.edit = function (table, doc, cb) {
+
+    connect(function (client, done) {
+
         if (table === "users") {
             editUsers(doc, client, cb, done);
         } else if (table === "invoice") {
@@ -383,7 +419,7 @@ dataBase.selectUser = function (username, password, remember, cb) {
                 .select("*")
                 .from("users")
                 .where("username = $1 AND password = crypt($2, password)")
-                .end(), [username, password], function(err, user) {
+                .end(), [username, password], function (err, user) {
 
             done();
 

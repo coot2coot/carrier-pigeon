@@ -91,7 +91,7 @@ var serverRoutes =  function (router) {
  	router.addRoute('/contact/post', function (req, res, match){
 	  	require('./handlers/create-contact-reminder.js')(req, res, "contacts");
 	});
-	router.addRoute('/contacts/edit', function (req, res, match){
+	router.addRoute('/contacts/edit/:editContacts?', function (req, res, match){
 	  	require('./handlers/edit-db.js').contacts(req, res, cache.noCache);
 	});
 	router.addRoute('/contacts/get', function (req, res, match){
@@ -101,15 +101,6 @@ var serverRoutes =  function (router) {
 	  	require('./handlers/read-db.js').noCache(req, res);
 	});
 	router.addRoute('/contacts/delete/:id?', function (req, res, match){
-	  	require('./handlers/delete-db.js')(req, res);
-	});
-/* -------------------------------*
- *	   Reminders Routes
- * -------------------------------*/
-	router.addRoute('/reminders/:deletedReminders?', function (req, res, match){
-	  	require('./handlers/edit-invoices-reminders.js')(req, res, 'reminders');
-	});
-	router.addRoute('/reminders/delete/:id?', function (req, res, match){
 	  	require('./handlers/delete-db.js')(req, res);
 	});
 
@@ -130,42 +121,42 @@ var serverRoutes =  function (router) {
  *	   Admin Panel Routes
  * -------------------------------*/
 
-	router.addRoute('/users/get', function (req, res, match){
+	router.addRoute('/users/get', function (req, res, match) {
 	  	require('./handlers/read-db.js').cached(req, res);
 	});
 
-	router.addRoute('/users/get/nocache', function (req, res, match){
+	router.addRoute('/users/get/nocache', function (req, res, match) {
 	  	require('./handlers/read-db.js').noCache(req, res);
 	});
-
-	router.addRoute('/user/delete/:id?', function (req, res, match){
+ 
+	router.addRoute('/user/delete/:id?', function (req, res, match) {
 	  	require('./handlers/delete-db.js')(req, res);
 	});
 
-	router.addRoute('/user/invite', function (req, res, match){
+	router.addRoute('/user/invite', function (req, res, match) {
 	  	require('./handlers/email-invite.js')(req, res);
 	});
 /* -------------------------------*
  *	   		Ledger Routes
  * -------------------------------*/
 
-	router.addRoute('/invoices/get/:jobNo', function (req, res, match){
+	router.addRoute('/invoices/get/:jobNo', function (req, res, match) {
 	  	require('./handlers/read-invoices.js')(req, res);
 	});
 
-	router.addRoute('/invoices/edit/:deletedInvoices?', function (req, res, match){
-	  	require('./handlers/edit-invoices-reminders.js')(req, res, 'invoice');
+	router.addRoute('/invoices/edit/:deletedInvoices?', function (req, res, match) {
+	  	require('./handlers/edit-invoices.js')(req, res, 'invoice');
 	});
 
 /* -------------------------------*
  *	   User Settings Routes
  * -------------------------------*/
 
-	router.addRoute('/user/update/:username', function (req, res, match){
+	router.addRoute('/user/update/:username', function (req, res, match) {
 	  	require('./handlers/update-db.js')(req, res);
 	});
 
-	router.addRoute('/permissions/edit', function (req, res, match){
+	router.addRoute('/permissions/edit', function (req, res, match) {
 	  	require('./handlers/permissions.js')(req, res);
 	});
 
@@ -173,7 +164,7 @@ var serverRoutes =  function (router) {
  *	   Booking Request Routes
  * -------------------------------*/
 
-	router.addRoute('/booking-note/email', function (req, res, match){
+	router.addRoute('/booking-note/email', function (req, res, match) {
 	  	require('./handlers/email-booking-note.js')(req, res);
 	});
 };

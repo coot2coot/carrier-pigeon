@@ -3,16 +3,32 @@ var mock = {}
 mock = {
     contact_id: "place",
     contact : {
-        name: "dave",
-        vat_number: "456ghtd",
-        city: "london",
-        telephone: "0203467893"
+        mainObject: {
+            name: "dave",
+            vat_number: "456ghtd",
+            city: "london",
+            telephone: "0203467893"
+        },
+        minorObject: {
+            date: "2015-08-26",
+            message: "what"
+        }
     },
     edit : {
-    	contact_id: "false",
-    	vat_number: "456ghtd",
-        city: "london",
-        telephone: "0203467893"
+
+        mainObject: {
+            contact_id: "false",
+            vat_number: "456ghtd",
+            city: "london",
+            telephone: "0203467893"
+        },
+        minorObject: {
+            date: "2015-08-26",
+            message: "what",
+            reminder_id: "",
+            contact_reminders_id: "false"
+        },
+        items_to_remove: ''
     }
 };
 

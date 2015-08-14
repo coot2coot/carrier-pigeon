@@ -4,12 +4,11 @@ var CreateContact 	= require('./add-contact.jsx');
 var ViewContact 	= require("./view-contact.jsx");
 var Header 			= require("../header/header.jsx");
 var SearchBox 		= require("../orders/search-box.jsx");
-var ViewReminders	= require("../reminders/view-reminder.jsx");
 var ReminderIcon	= require("./reminder-svg.jsx")
 
 var getWeek			= require("../../lib/get-week.js");
 var groupBy			= require("../../lib/group-by.js");
-	
+
 var contactsPage = React.createClass({
 
 	getInitialState: function () {
@@ -49,7 +48,7 @@ var contactsPage = React.createClass({
 
 	orderByReminders: function () {
 
-		var ordered = this.state.contacts.sort(function (a, b) {
+		var ordered = this.state.contacts.sort( function (a, b) {
 
 			a.sort( function (c, d) {
 
@@ -107,40 +106,67 @@ var contactsPage = React.createClass({
 	},
 
     onCloseComponent: function () {
+
 		this.setState({
 			creatingContact: null,
 			selectedContact: null,
 			selectedReminder: null
 		})
 	},
+	alphabeticalOrder: function () {
+
+		var contacts = this.state.contacts.sort(function (a, b) {
+
+		   if (a[0].company_name === null) {
+		       return 1;
+		   } else if (b[0].company_name === null) {
+		       return -1
+		   } else {
+		        return a[0].company_name.toLowerCase() < b[0].company_name.toLowerCase() ? -1 : 1 ;
+		   }
+		});
+
+		this.setState({
+			contacts: contacts
+		});
+	},
 
     addContact: function () {
+
 		this.setState({
 			creatingContact: true
 		})
 	},
 
 	reminderHandler: function (item) {
+
 		this.setState({
 			selectedReminder: item
 		})
 	},
 
 	contactHandler: function (item) {
+
 		this.setState({
 			selectedContact: item
 		})
 	},
 
-	setUser: function(user) {
+	setUser: function (user) {
+
 		this.setState({
 			user: user
 		})
 	},
 
-	render: function() {
-		var contactHandler = this.contactHandler;
-		var reminderHandler = this.reminderHandler;
+	render: function () {
+
+		var contactHandler 		= this.contactHandler;
+		var reminderHandler 	= this.reminderHandler;
+		var alphabeticalOrder 	= this.alphabeticalOrder;
+		var orderByReminders	= this.orderByReminders;
+		var addContact 			= this.addContact;
+
 		return (
 
 			<div>
@@ -154,8 +180,9 @@ var contactsPage = React.createClass({
                     </div>
 					<div className="panel-header" >
 						<h3>Contacts</h3>
-						<button data-tooltip="Add contact" className="button add blue" onClick={this.addContact}>+</button>
-						<button data-tooltip="Order by reminders" className="button add blue" onClick={this.orderByReminders}>R</button>
+						<button data-tooltip="Add contact" className="button add blue" onClick={addContact}>+</button>
+						<button data-tooltip="Order by reminders" className="button add blue" onClick={orderByReminders}>R</button>
+						<button data-tooltip="Order alphabetically" className="button add blue" onClick={alphabeticalOrder}>Abc</button>
 						<SearchBox getorders= {this.getSearchedContacts} />
 					</div>
 					<div className="panel-body table-head">
@@ -185,38 +212,40 @@ var contactsPage = React.createClass({
 							  		? this.state.contacts.map(function (contact, i) {
 
 							  			var cont = contact.sort(function (a, b) {
+
 							  				return b.week - a.week
 										})
+
 										
 								        return <tr key={i}>
 								            		<td>
-								            			<a onClick={contactHandler.bind(null, cont[0])}>
-								            				<p>{cont[0].company_name}</p>
+								            			<a onClick={contactHandler.bind(null, cont)}>
+								            				<p>{cont[0] ? cont[0].company_name : ''}</p>
 								            			</a>
 								            		</td>
 								            		<td>
-								            			<a onClick={contactHandler.bind(null, cont[0])}>
-								            				<p>{cont[0].category}</p>
+								            			<a onClick={contactHandler.bind(null, cont)}>
+								            				<p>{cont[0] ? cont[0].category : ''}</p>
 								            			</a>
 								            		</td>
 								            		<td>
-								            			<a onClick={contactHandler.bind(null, cont[0])}>
-								            				<p>{cont[0].city}</p>
+								            			<a onClick={contactHandler.bind(null, cont)}>
+								            				<p>{cont[0] ? cont[0].city : ''}</p>
 								            			</a>
 								            		</td>
 								            		<td>
-								            			<a onClick={contactHandler.bind(null, cont[0])}>
-								            				<p>{cont[0].postcode}</p>
+								            			<a onClick={contactHandler.bind(null, cont)}>
+								            				<p>{cont[0] ? cont[0].postcode : ''}</p>
 								            			</a>
 								            		</td>
 								            		<td>
 								            			<a>
 															<p className='align-center'>
-																{(cont[0].week && cont[0].week === 1)
-											            			? <ReminderIcon onclick= {reminderHandler.bind(null, contact)} classname ="present" />
-											            			: (cont[0].week && cont[0].week === 2)
-											            			?<ReminderIcon onclick= {reminderHandler.bind(null, contact)} classname ="urgent" />
-											            			:<ReminderIcon onclick= {reminderHandler.bind(null, contact)}/>
+																{(cont[0] && cont[0].week && cont[0].week === 1)
+											            			? <ReminderIcon onclick={contactHandler.bind(null, cont)} classname ="present" />
+											            			: (cont[0] && cont[0].week && cont[0].week === 2)
+											            			?<ReminderIcon onclick={contactHandler.bind(null, cont)} classname ="urgent" />
+											            			:<ReminderIcon onclick={contactHandler.bind(null, cont)} />
 											            		}
 															</p>
 								            			</a>
@@ -235,8 +264,6 @@ var contactsPage = React.createClass({
                     ? <CreateContact contact={this.state.contacts} closeView={this.onCloseComponent} />
                     : this.state.selectedContact
                     ? <ViewContact contact= {this.state.selectedContact} closeView={this.onCloseComponent}/>
-                    : this.state.selectedReminder
-                    ? <ViewReminders reminder= {this.state.selectedReminder} closeView={this.onCloseComponent}/>
                     :<p></p>
                 )}
                 

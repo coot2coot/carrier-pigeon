@@ -28,6 +28,10 @@
   		@include red-hover;
   		color: white;
   	}
+  	&.full-width {
+		width: 45%;
+  		margin-right: 30%;
+	}
 }
 
 .button.blue {
