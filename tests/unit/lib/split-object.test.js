@@ -37,7 +37,6 @@ test("Split orders comes back within the mainObject key with the right result", 
 
 test("Split orders comes back within the mainObject key with the right result", function (t) {
 	var order = splitData(submittedOrder()).mainObject;
-	console.log(splitData(submittedOrder()))
 
 	t.equals( order.carrier, "wer");
 	t.equals( order.client, "ewer");
