@@ -113,6 +113,23 @@ var contactsPage = React.createClass({
 			selectedReminder: null
 		})
 	},
+	alphabeticalOrder: function () {
+
+		var contacts = this.state.contacts.sort(function (a, b) {
+
+		   if (a[0].company_name === null) {
+		       return 1;
+		   } else if (b[0].company_name === null) {
+		       return -1
+		   } else {
+		        return a[0].company_name.toLowerCase() < b[0].company_name.toLowerCase() ? -1 : 1 ;
+		   }
+		});
+
+		this.setState({
+			contacts: contacts
+		});
+	},
 
     addContact: function () {
 
@@ -144,8 +161,11 @@ var contactsPage = React.createClass({
 
 	render: function () {
 
-		var contactHandler = this.contactHandler;
-		var reminderHandler = this.reminderHandler;
+		var contactHandler 		= this.contactHandler;
+		var reminderHandler 	= this.reminderHandler;
+		var alphabeticalOrder 	= this.alphabeticalOrder;
+		var orderByReminders	= this.orderByReminders;
+		var addContact 			= this.addContact;
 
 		return (
 
@@ -160,8 +180,9 @@ var contactsPage = React.createClass({
                     </div>
 					<div className="panel-header" >
 						<h3>Contacts</h3>
-						<button data-tooltip="Add contact" className="button add blue" onClick={this.addContact}>+</button>
-						<button data-tooltip="Order by reminders" className="button add blue" onClick={this.orderByReminders}>R</button>
+						<button data-tooltip="Add contact" className="button add blue" onClick={addContact}>+</button>
+						<button data-tooltip="Order by reminders" className="button add blue" onClick={orderByReminders}>R</button>
+						<button data-tooltip="Order alphabetically" className="button add blue" onClick={alphabeticalOrder}>Abc</button>
 						<SearchBox getorders= {this.getSearchedContacts} />
 					</div>
 					<div className="panel-body table-head">
