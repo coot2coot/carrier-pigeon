@@ -86,6 +86,59 @@ var addOrder = React.createClass({
 		var value = event.target.value;
 		this.state.unitsArr[key][name] = value;
   	},
+
+  	getPolicy: function () {
+
+  		var upLoadFile = this.upLoadFile;
+
+  		var getUrl = "/file-upload/policy";
+
+  		$.get(getUrl, function (result) {
+
+  			upLoadFile(result);
+  		}).fail(function () {
+
+			"get s3 policy did not work"
+		});
+  	},
+
+  	upLoadFile: function (result) {
+
+  		var data 	= JSON.parse(result);
+  		var file    = document.querySelector('input[type=file]').files[0];
+  		var reader  = new FileReader();
+
+  		reader.onload = function (e) {
+
+		  	var dataURL = reader.result;
+
+			var fd = new FormData();
+				fd.append('key', file.name);
+				fd.append('acl', 'public-read');
+				fd.append('Content-Type', file.type);
+				fd.append('Content-Length', file.size);
+				fd.append('AWSAccessKeyId', "AKIAIP2WE7XK6HTLZFBA");
+				fd.append('policy', data.policy);
+				fd.append('signature', data.signature);    
+				fd.append("file", dataURL);
+
+				$.ajax({
+					type: 'POST',
+					url: "http://carrier-pigeon-s3.s3.amazonaws.com",
+					processData: false,
+					contentType: false,
+					data: fd,
+					success: function (data) {
+						console.log(data)
+					},
+					error: function (error) {
+						console.log(error)
+					}
+				}); 
+		}   
+  		
+  		reader.readAsDataURL(file);
+  	},
   	
 	render: function() {
 
@@ -198,6 +251,11 @@ var addOrder = React.createClass({
 											<p>Notify</p>
 											<textarea name="notify" max='500' defaultValue={order && order.notify ? order.notify : ""} onChange={this.ifEdited}/>
 										</div>
+									</div>
+									<div className="row">
+										<p>Upload file </p>
+										<input name='file' type='file' onChange={this.ifEdited}/>
+										<input className="button charcoal" onClick= {this.getPolicy}/>
 									</div>
 									<input type="submit" className="button charcoal" value="Done" />
 								</div>

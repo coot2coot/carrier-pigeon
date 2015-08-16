@@ -167,6 +167,14 @@ var serverRoutes =  function (router) {
 	router.addRoute('/booking-note/email', function (req, res, match) {
 	  	require('./handlers/email-booking-note.js')(req, res);
 	});
+
+/* -------------------------------*
+ *	   File Upload Routes
+ * -------------------------------*/
+
+	router.addRoute('/file-upload/policy', function (req, res, match) {
+	  	require('./handlers/create-s3-policy.js')(req, res);
+	});
 };
 
 module.exports = serverRoutes;
