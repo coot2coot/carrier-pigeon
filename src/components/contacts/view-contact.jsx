@@ -192,7 +192,11 @@ var viewOrder = React.createClass({
 										viewing={viewing} 
 										deleteReminder={deleteReminder}
 										contactId={contact ? contact.contact_id : ""}/>
-									<input type="submit" className="button charcoal" value="Done" disabled={viewing ? true : false}/>
+									{!viewing 
+										?<input type="submit" className="button charcoal" value="Done" />
+										:<p></p>
+									}
+									
 								</div>
 							</div>	
 						</form>
