@@ -3,6 +3,7 @@
 var React = require('react');
 var Units = require("./units.jsx");
 var Warning = require("../close-warning.jsx");
+var Error 	= require("../file-exists-error-message.jsx")
 var ContactList = require("./contact-list.jsx");
 
 var currentDate = require("../../lib/current-date.js");
@@ -19,7 +20,8 @@ var addOrder = React.createClass({
 	    	unitsArr: unitsArray,
 	    	closeView: false,
 	    	edited: false,
-	    	order: {}
+	    	order: {},
+	    	errorMessage: ''
 	    };
 	},
 
@@ -89,18 +91,45 @@ var addOrder = React.createClass({
 
   	getPolicy: function () {
 
-  		var upLoadFile = this.upLoadFile;
+  		var checkFile	= this.checkFile;
 
   		var getUrl = "/file-upload/policy";
 
   		$.get(getUrl, function (result) {
 
-  			upLoadFile(result);
+  			checkFile(result);
   		}).fail(function () {
 
 			"get s3 policy did not work"
 		});
   	},
+
+  	checkFile: function (result) {
+
+  		var upLoadFile 	= this.upLoadFile;
+  		var fileName 	= document.querySelector('input[type=file]').files[0].name;
+  		var that 		= this;
+
+  		$.ajax({
+			url: "http://carrier-pigeon-s3.s3.amazonaws.com/" + fileName,
+			type: "HEAD"
+		}).then(
+		  	function () { 	
+
+		  		that.setState({
+		  			errorMessage: fileName + ' already exists try something new'
+			  	})  
+		  	},
+		  	function () { 
+		  		
+		  		that.setState({
+		  			errorMessage: ''
+			  	}) 
+			  	upLoadFile(result)
+			}
+		);
+
+	},
 
   	upLoadFile: function (result) {
 
@@ -129,9 +158,11 @@ var addOrder = React.createClass({
 					contentType: false,
 					data: fd,
 					success: function (data) {
+
 						console.log(data)
 					},
 					error: function (error) {
+
 						console.log(error)
 					}
 				}); 
@@ -253,7 +284,10 @@ var addOrder = React.createClass({
 										</div>
 									</div>
 									<div className="row">
-										<p>Upload file </p>
+										{this.state.errorMessage !== ''
+                    						? <div><p>Upload file</p><Error message={this.state.errorMessage}/></div>
+                    						: <p>Upload file </p>
+                    					}
 										<input name='file' type='file' onChange={this.ifEdited}/>
 										<input className="button charcoal" onClick= {this.getPolicy}/>
 									</div>
@@ -265,7 +299,7 @@ var addOrder = React.createClass({
 				</div>
 				{(this.state.closeView
                     ? <Warning message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
-                    : <p></p>
+                    :<p></p>
                 )}
 			
 			</div>
