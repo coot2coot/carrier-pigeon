@@ -172,8 +172,11 @@ var serverRoutes =  function (router) {
  *	   File Upload Routes
  * -------------------------------*/
 
-	router.addRoute('/file-upload/policy', function (req, res, match) {
+	router.addRoute('/file/policy', function (req, res, match) {
 	  	require('./handlers/create-s3-policy.js')(req, res);
+	});
+	router.addRoute('/file/delete', function (req, res, match) {
+	  	require('./handlers/delete-file.js')(req, res);
 	});
 };
 
