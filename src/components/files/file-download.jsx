@@ -1,4 +1,5 @@
-var React = require('react');
+var React 	= require('react');
+var Upload 	= require("../files/file-upload.jsx");
 
 var fileDownload = React.createClass({
 
@@ -33,7 +34,7 @@ var fileDownload = React.createClass({
 
 		$.ajax({
 			type: 'POST',
-			url: '/file/delete',
+			url: '/file/delete/download',
 			data: {
 				file_name: fileName,
 				id: id
@@ -56,11 +57,29 @@ var fileDownload = React.createClass({
 		var fileName = this.state.fileName;
 
 		return (
-
-			<div className='row'>
-
-				<button type='button' className={fileName === null ? 'display-none' : 'button blue'} onClick={this.downLoad}>file</button>
-				<button type='button' className={fileName === null ? 'display-none' : 'button red'} onClick={this.remove}>Delete file</button>
+			<div>
+				
+				<div className='row'>
+			
+					{
+						fileName !== null
+							? (<div>
+									<div className='row'><p>File {fileName}</p></div>
+									<button type='button'
+										className='button blue' 
+										onClick={this.downLoad}>
+										Download file
+									</button>
+									<button type='button'
+										className='button red'
+										onClick={this.remove}>
+										Delete file
+									</button>
+								</div>
+							)
+							: <Upload/>
+					}
+				</div>
 			</div>
 		);
 	}
