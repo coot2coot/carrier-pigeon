@@ -2,7 +2,7 @@ var React 		= require('react');
 var LoadingGiff = require("../loadingGiff.jsx");
 var Warning 	= require("../close-warning.jsx");
 
-var accessKey	= process.env.AWS_ACCESS_KEY_ID ||require("../../../credentials.json").awsAccessKey;
+var accessKey	= "AKIAIP2WE7XK6HTLZFBA";
 
 var fileUpload = React.createClass({
 
