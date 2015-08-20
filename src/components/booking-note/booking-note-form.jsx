@@ -64,7 +64,7 @@ var bookingNoteForm = React.createClass({
         var order               = this.props.order;
         var instructionsArray   = [];
 
-        if (order.special_instructions !== undefined) {
+        if (order.special_instructions && (order.special_instructions !== undefined)) {
             instructionsArray = order.special_instructions.split('\n');
         }
 
