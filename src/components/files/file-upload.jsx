@@ -111,6 +111,7 @@ var fileUpload = React.createClass({
 						console.log('sdf')
 						that.isFileSending();
 						fileName.value = file.name;
+						document.querySelector('div.row.file p').innerHTML = file.name;
 						that.setState({
 							disable: true
 						})
@@ -177,7 +178,7 @@ var fileUpload = React.createClass({
 				{
 					state.sendingFile
 						?<LoadingGiff/>	
-						:<div className='row'><p>File Upload</p></div>
+						:<div className='row file'><p>File Upload</p></div>
 				}
 
 				<input type='file' 
@@ -188,7 +189,7 @@ var fileUpload = React.createClass({
 
 				<button type='button' 
 					className= {state.disable && !state.sendingFile
-									? 'button red float-left view_input'
+									? 'button red float-left'
 									: 'display-none'}
 					onClick= {this.remove} disabled={disable}>
 					Remove File
