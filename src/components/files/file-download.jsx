@@ -54,7 +54,8 @@ var fileDownload = React.createClass({
 
 	render : function () {
 
-		var fileName = this.state.fileName;
+		var fileName 	= this.state.fileName;
+		var disable		= this.props.disable;
 
 		return (
 			<div>
@@ -66,18 +67,20 @@ var fileDownload = React.createClass({
 							? (<div>
 									<div className='row'><p>File {fileName}</p></div>
 									<button type='button'
-										className='button blue' 
-										onClick={this.downLoad}>
+										className='button blue ' 
+										onClick={this.downLoad}
+										>
 										Download file
 									</button>
 									<button type='button'
 										className='button red'
-										onClick={this.remove}>
+										onClick={this.remove}
+										>
 										Delete file
 									</button>
 								</div>
 							)
-							: <Upload/>
+							: <Upload disable={true}/>
 					}
 				</div>
 			</div>

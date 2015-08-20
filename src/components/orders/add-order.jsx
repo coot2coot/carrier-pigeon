@@ -198,7 +198,7 @@ var addOrder = React.createClass({
 											<textarea name="notify" max='500' onChange={this.ifEdited}/>
 										</div>
 									</div>
-									<Upload ifEdited={this.ifEdited}/>
+									<Upload ifEdited={this.ifEdited} disable={false}/>
 									<input type="submit" className="button charcoal" value="Done" />
 								</div>
 							</div>

@@ -167,7 +167,8 @@ var fileUpload = React.createClass({
 
   	render: function () {
 
-  		var state = this.state;
+  		var state 		= this.state;
+  		var disable 	= this.props.disable;
 
   		return (
   			
@@ -183,13 +184,13 @@ var fileUpload = React.createClass({
 					onChange={this.checkFile}
 					className= {state.disable || state.sendingFile
 									? 'display-none'
-									: ''}/>
+									: 'view_input'} disabled={disable}/>
 
 				<button type='button' 
 					className= {state.disable && !state.sendingFile
-									? 'button red float-left'
+									? 'button red float-left view_input'
 									: 'display-none'}
-					onClick= {this.remove}>
+					onClick= {this.remove} disabled={disable}>
 					Remove File
 				</button>
 			   
@@ -206,5 +207,7 @@ var fileUpload = React.createClass({
   		)
   	}
 })
+
+className="view_input"
 
 module.exports = fileUpload;

@@ -10,7 +10,9 @@ var getUser     = require('../db-config.js').selectUser;
 
 
 function checkUserLogins(req, res, cb) {
-    getFormData(req, function(logins) {
+
+    getFormData(req, function (logins) {
+
         getUser(logins.username, logins.password, logins.remember, cb);
     })
 }
@@ -34,11 +36,14 @@ function createSession (details, callback) {
 }
 
 function loginUser (req, res) {
+
 	checkUserLogins(req, res, function(err, user, remember) {
+
         if (err) {
             authFailed(req, res);
         } else {
             createSession(user, function(token) {
+
                 var cookies = new Cookies(req, res, ['token']);
 
                 if (remember === "on") {
@@ -51,6 +56,8 @@ function loginUser (req, res) {
                         signed: true
                     });
                 }
+
+                // console.log('token',cookies);
 
                 res.writeHead(303, {
                     'Location': '/#/orders'

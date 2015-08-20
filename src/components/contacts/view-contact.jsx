@@ -90,13 +90,15 @@ var viewOrder = React.createClass({
 		var contact = this.props.contact[0];
 		var reminders = this.props.contact;
 		var deleteReminder = this.deleteReminder;
+		console.log(contact)
+
 
 		return (
 
 			<div className="overlay">
 				<div>
 					{( this.state.deleteContact
-	                    ? <Warning message="Delete this contact?" contact={contact} url={"/contacts/delete/" + this.props.contact.contact_id} closeView={this.onCloseComponent}/>
+	                    ? <Warning message="Delete this contact?" contact={contact} url={"/contacts/delete/" + contact.contact_id} closeView={this.onCloseComponent}/>
 	                    : <p></p>
 	                )}
                 </div>

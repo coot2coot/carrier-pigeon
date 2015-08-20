@@ -7,7 +7,9 @@ var Cookies     = require('cookies');
 function validate (req, res, cb) {
 
 	if (req.headers.cookie) {
+
         var cookies = new Cookies(req, res, ['token']);
+
         var token   = cookies.get('token', {
             signed: true
         })

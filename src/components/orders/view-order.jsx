@@ -301,7 +301,7 @@ var viewOrder = React.createClass({
 										<textarea className="view_input" type="text" defaultValue={this.props.order.notify} name="notify" disabled max ='500' onChange={edited}/>
 									</div>
 								</div>
-								<FileDownload Id={this.props.order.job_number} file={this.props.order.file_name}/>
+								<FileDownload Id={this.props.order.job_number} disable={true} file={this.props.order.file_name}/>
 								<input className={this.state.viewing ? "display-none" : "button charcoal"} type="submit" value="Update" />
 							</div>
 						</form>

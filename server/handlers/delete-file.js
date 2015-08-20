@@ -34,7 +34,7 @@ deleteFile.fromTwoDb = function (req, res) {
 					Key: data.file_name
 				}
 
-				s3.deleteObject(params, function () {
+				s3.deleteObject(params, function (err) {
 
 					if(err){
 						res.writeHead(500);
@@ -67,6 +67,7 @@ deleteFile.fromOneDb = function (req, res) {
 			}
 
 			s3.deleteObject(params, function (err) {
+
 				if(err){
 					res.writeHead(500);
 					res.write(err);
