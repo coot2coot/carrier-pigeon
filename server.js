@@ -28,4 +28,3 @@ var server = http.createServer(function (req, res) {
 server.listen(Config.port, function () {
 	console.log('Server running on port:',server.address().port);
 });
-

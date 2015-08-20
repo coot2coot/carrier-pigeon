@@ -358,10 +358,30 @@ dataBase.remove = function (table, doc, cb) {
                     .deletes()
                     .from(table)
                     .where(column + " = $1")
-                    .end(), [doc], function(err) {
+                    .end(), [doc], function (err) {
 
             done();
             if (err) {
+                return cb(err);
+            }
+            cb(null);
+        });
+    })
+};
+
+dataBase.clearFileName = function (table, doc, cb) {
+
+    connect( function (client, done) {
+
+        client.query(command()
+                .update(table)
+                .set("file_name = null")
+                .where("job_number ="  + doc.id)
+                .end(), function (err) {
+
+            done();
+            if (err) {
+
                 return cb(err);
             }
             cb(null);

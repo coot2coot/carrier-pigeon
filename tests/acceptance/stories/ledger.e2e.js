@@ -1,7 +1,7 @@
 var sauceUsername = process.env.SAUCE_USERNAME || require("../../../credentials.json").username,
     sauceAccessKey = process.env.SAUCE_ACCESS_KEY || require("../../../credentials.json").accesskey,
-    username = process.env.TEST_USERNAME || require("../../../credentials.json").testUsername,
-    password = process.env.TEST_PASSWORD || require("../../../credentials.json").testPassword;
+    username = process.env.TEST_USERNAME || require("../../../credentials.json").testAdminUsername,
+    password = process.env.TEST_PASSWORD || require("../../../credentials.json").testAdminPassword;
 
 
 function landingTests (wd, capability, remote) {
@@ -30,9 +30,13 @@ function landingTests (wd, capability, remote) {
                 .submit()
                 .waitForElementByCssSelector('button[data-tooltip="Get last 90 days of orders"]')
                 .click()
-                .sleep(500)
-                .waitForElementByLinkText("ledger")
-                .click()
+                .setImplicitWaitTimeout(2000)
+                .elementsByTagName("tr")
+                .then(function (elements) {
+                    elements[1]
+                        .elementByTagName("svg")
+                        .click()
+                })
                 .nodeify(done);
         });
         
@@ -40,7 +44,7 @@ function landingTests (wd, capability, remote) {
             browser
                 .waitForElementByLinkText("Logout")
                 .click()
-                .nodeify(done);
+                .nodeify(done);            
         });
 
         after(function(done) {
@@ -49,39 +53,26 @@ function landingTests (wd, capability, remote) {
                 .nodeify(done);
         });
 
-        it('Page title is correct', function(done) {
-            browser
-                .elementByClassName("ledger")
-                .then(function(elem) {
-                    elem.elementByTagName('h3')
-                    .then(function(elem) {
-                        elem
-                            .text()
-                            .then(function(text) {
-                                text.should.include("Ledger");
-                            })
-                            .nodeify(done);
-                    })
-                })
-        });
-
         it("Close view gives you are warning", function(done) {
             browser
-                .elementByClassName('close')
+                .waitForElementByCssSelector('input[type="number"]')
+                .sendKeys("1234")
+                .elementByCssSelector('a.close')
                 .click()
                 .elementByClassName("warning", function (err, element) {
                     element
                         .isDisplayed()
-                        .then(function(display) {
+                        .then(function (display) {
                             display.should.be.true;
                         })
                         .nodeify(done);
-                })
-                
+                })          
         });
 
         it("If clicking no on close warning you are returned to invoice page", function(done) {
             browser
+                .waitForElementByCssSelector('input[type="number"]')
+                .sendKeys("1234")
                 .elementByClassName('close')
                 .click()
                 .elementByLinkText("NO")
@@ -94,19 +85,6 @@ function landingTests (wd, capability, remote) {
                 
         });
 
-        it("If clicking yes on close warning, invoice page is closed", function(done) {
-            browser
-                .elementByClassName('close')
-                .click()
-                .elementByLinkText("YES")
-                .click()
-                .elementByClassNameIfExists("ledger")
-                .then(function(element){
-                    (element === undefined).should.be.true;
-                })
-                .nodeify(done);
-        });
-
         it("Can add an invoice", function(done) {
             var noOfInvoices;
 
@@ -114,14 +92,10 @@ function landingTests (wd, capability, remote) {
                 .waitForElementByCssSelector("input[name='amount']", 2000)
                 .elementByClassName("sales", function(err, element) {
                     element
-                        .elementsByClassName("add-row", function(err, elements) {
-                            elements[0]
-                                .click()
-                        })
                         .elementsByCssSelector("input[name='amount']")
                         .then(function(elements) {
-                            var index = elements.length-1
-                            noOfInvoices = index;
+                            var index = elements.length -1
+                            noOfInvoices = elements.length;
     
                             elements[index]
                                 .sendKeys("1000.68")
@@ -134,10 +108,15 @@ function landingTests (wd, capability, remote) {
                         })
                         .elementByTagName("form")
                         .submit()
-                        .waitForElementByLinkText("ledger")
-                        .click()
+                        .setImplicitWaitTimeout(2000)
+                            .elementsByTagName("tr")
+                            .then(function (elements) {
+                                elements[1]
+                                    .elementByTagName("svg")
+                                    .click()
+                            })
                         .waitForElementsByCssSelector("input[name='amount']", 2000)
-                        .then(function(elements) {
+                        .then(function (elements) {
                             var length = elements.length;
 
                             ( noOfInvoices + 1 ).should.equal(length);
@@ -148,61 +127,45 @@ function landingTests (wd, capability, remote) {
 
         it("Can edit an invoice", function(done) {
             browser
-                .waitForElementsByCssSelector("input[name='amount']", function(err, elements) {
+                .waitForElementsByCssSelector("input[name='amount']", function (err, elements) {
                     var index = elements.length -1;
                     elements[index]
                         .clear()
                         .sendKeys("10.50")
                         .elementByTagName("form")
                         .submit()
-                        .waitForElementByLinkText("ledger")
-                        .click()
-                        .waitForElementsByCssSelector("input[name='amount']", function(err, elements) {
-                            var index = elements.length -1;
-                            elements[index]
-                                .getValue()
-                                .then(function(value) {
-                                    (value).should.equal("10.50");
-                                })
-                                .nodeify(done);
-                        })
+                        .setImplicitWaitTimeout(2000)
+                            .elementsByTagName("tr")
+                            .then(function (elements) {
+                                elements[1]
+                                    .elementByTagName("svg")
+                                    .click()
+                                    .waitForElementsByCssSelector("input[name='amount']", function(err, elements) {
+                                        var index = elements.length -1;
+
+                                        elements[index]
+                                            .getValue()
+                                            .then(function (value) {
+                                                (value).should.equal("10.50");
+                                            })
+                                            .nodeify(done);
+                                    })
+                            })
                 })
         });
 
-        it("Can set Currency", function(done) {
-            var currency;
-            browser
-                .waitForElementsByCssSelector("input[name='amount']", 200)
-                .elementByClassName("ledger", function(err, element) {
-                    element
-                        .elementByTagName("h5")
-                        .text(function (err, text) {
-                            currency = text;
-                        })
-                        .elementsByTagName("option", function(err, elements) {
-                            elements[0]
-                                .click()
-                                .elementByClassName("ledger", function(err, element) {
-                                    element
-                                        .elementByTagName("h5")
-                                        .text(function (err, text) {
-                                            text.should.not.equal(currency);
-                                        })
-                                        .nodeify(done);
-                                })
-                        })
-                })
-        });
 
         it("Can delete an invoice", function(done) {
             var noOfInvoices;
 
             browser
                 .waitForElementsByCssSelector("input[name='amount']", 2000)
-                .then(function(elements) {
+                .then(function (elements) {
+
                     noOfInvoices = elements.length;
                 })
-                .elementByClassName("sales", function(err, element) {
+                .elementByClassName("sales", function (err, element) {
+
                     element
                         .elementsByClassName("add-row", function(err, elements) {
                             elements[1]
@@ -210,17 +173,20 @@ function landingTests (wd, capability, remote) {
                         })
                         .elementByTagName("form")
                         .submit()
-                        .waitForElementByLinkText("ledger", function(err, element) {
-                            element
-                                .click()
-                                .waitForElementsByCssSelector("input[name='amount']", 2000)
-                                .then(function(elements) {
-                                    var length = elements.length;
+                        .elementsByTagName("tr")
+                            .then(function (elements) {
 
-                                    ( noOfInvoices - 1 ).should.equal(length);
-                                })
-                                .nodeify(done);
-                        })
+                                elements[1]
+                                    .elementByTagName("svg")
+                                    .click()
+                                    .waitForElementsByCssSelector("input[name='amount']", 2000)
+                                    .then(function(elements) {
+                                        var length = elements.length;
+
+                                        ( noOfInvoices).should.equal(length);
+                                    })
+                                    .nodeify(done);
+                            })
                 })
         });
     });

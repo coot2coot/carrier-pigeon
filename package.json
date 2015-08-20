@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/foundersandcoders/carrier-pigeon",
   "dependencies": {
+    "aws-sdk": "^2.1.45",
     "cookies": "^0.5.0",
     "html-pdf": "^1.2.0",
     "jsonwebtoken": "^5.0.0",
@@ -27,7 +28,8 @@
     "pg": "^4.3.0",
     "react": "^0.13.1",
     "react-router": "^0.13.2",
-    "routes": "^2.0.0"
+    "routes": "^2.0.0",
+    "s3-policy": "^0.2.0"
   },
   "devDependencies": {
     "browserify": "^9.0.7",

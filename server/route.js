@@ -167,6 +167,20 @@ var serverRoutes =  function (router) {
 	router.addRoute('/booking-note/email', function (req, res, match) {
 	  	require('./handlers/email-booking-note.js')(req, res);
 	});
+
+/* -------------------------------*
+ *	   File Upload Routes
+ * -------------------------------*/
+
+	router.addRoute('/file/policy', function (req, res, match) {
+	  	require('./handlers/create-s3-policy.js')(req, res);
+	});
+	router.addRoute('/file/delete/upload', function (req, res, match) {
+	  	require('./handlers/delete-file.js').fromOneDb(req, res);
+	});
+	router.addRoute('/file/delete/download', function (req, res, match) {
+	  	require('./handlers/delete-file.js').fromTwoDb(req, res);
+	});
 };
 
 module.exports = serverRoutes;

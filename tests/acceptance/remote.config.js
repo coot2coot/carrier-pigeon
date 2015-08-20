@@ -44,9 +44,9 @@ describe('', function() {
 
     for (i = length - 1; i >= 0; i--) {
     	landingTests(webdriver, capabilites[i], true);
-    	adminTests(webdriver, capabilites[i], true);
-    	contactTests(webdriver, capabilites[i], true);
-    	ledgerTests(webdriver, capabilites[i], true);
-    	orderTests(webdriver, capabilites[i],true);
+    	// adminTests(webdriver, capabilites[i], true);
+    	// contactTests(webdriver, capabilites[i], true);
+    	// ledgerTests(webdriver, capabilites[i], true);
+    	// orderTests(webdriver, capabilites[i],true);
     };
 });

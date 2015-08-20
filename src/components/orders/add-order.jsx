@@ -1,11 +1,10 @@
-/** @jsx React.DOM */
-
-var React = require('react');
-var Units = require("./units.jsx");
-var Warning = require("../close-warning.jsx");
+var React 		= require('react');
+var Units 		= require("./units.jsx");
+var Warning 	= require("../close-warning.jsx");
+var Upload 		= require("../files/file-upload.jsx");
 var ContactList = require("./contact-list.jsx");
 
-var currentDate = require("../../lib/current-date.js");
+var currentDate =  require("../../lib/current-date.js");
 
 var addOrder = React.createClass({
 
@@ -143,33 +142,33 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Collection From</p>
-											<textarea type="text" name="collect_from" max='500' defaultValue={order && order.collect_from ? order.collect_from : ""} onChange={this.ifEdited}/>
+											<textarea type="text" name="collect_from" max='500'  onChange={this.ifEdited}/>
 										</div>	
 										<div className="column-8">
 											<p>Deliver To</p>
-											<textarea name="deliver_to"  max='500' defaultValue={order && order.deliver_to ? order.deliver_to : ""} onChange={this.ifEdited}/>
+											<textarea name="deliver_to"  max='500'  onChange={this.ifEdited}/>
 										</div>					
 									</div>
 									
 									<div className="row">
 										<div className="column-8">
 											<p>Special Instructions</p>
-											<textarea name="special_instructions"  max='500' defaultValue={order && order.special_instructions ? order.special_instructions : ""} onChange={this.ifEdited}/>
+											<textarea name="special_instructions"  max='500' onChange={this.ifEdited}/>
 										</div>
 										<div className="column-8">
 											<p>Remarks</p>
-											<textarea name="remarks" max='500' defaultValue={order && order.remarks ? order.remarks : ""} onChange={this.ifEdited}/>
+											<textarea name="remarks" max='500' onChange={this.ifEdited}/>
 										</div>
 									</div>
 
 									<div className="row">
 										<div className="column-3">
 											<p>Port of Loading</p>
-											<input type="text" name="port_of_loading" defaultValue={order && order.port_of_loading ? order.port_of_loading : ""} onChange={this.ifEdited}/>
+											<input type="text" name="port_of_loading" onChange={this.ifEdited}/>
 										</div>
 										<div className="column-3">
 											<p>Port of Discharge</p>
-											<input type="text" name="port_of_discharge" defaultValue={order && order.port_of_discharge ? order.port_of_discharge : ""} onChange={this.ifEdited}/>
+											<input type="text" name="port_of_discharge" onChange={this.ifEdited}/>
 										</div>
 										<div className="column-4">
 											<p>Vessel</p>
@@ -188,17 +187,18 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-5">
 											<p>Shipper</p>
-											<textarea name="shipper" max='500' defaultValue={order && order.shipper ? order.shipper : ""} onChange={this.ifEdited}/>
+											<textarea name="shipper" max='500' onChange={this.ifEdited}/>
 										</div>
 										<div className="column-5">
 											<p>Consignee</p>
-											<textarea name="consignee" max='500' defaultValue={order && order.consignee? order.consignee : ""} onChange={this.ifEdited}/>
+											<textarea name="consignee" max='500' onChange={this.ifEdited}/>
 										</div>
 										<div className="column-6">
 											<p>Notify</p>
-											<textarea name="notify" max='500' defaultValue={order && order.notify ? order.notify : ""} onChange={this.ifEdited}/>
+											<textarea name="notify" max='500' onChange={this.ifEdited}/>
 										</div>
 									</div>
+									<Upload ifEdited={this.ifEdited} disable={false}/>
 									<input type="submit" className="button charcoal" value="Done" />
 								</div>
 							</div>
@@ -207,7 +207,7 @@ var addOrder = React.createClass({
 				</div>
 				{(this.state.closeView
                     ? <Warning message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
-                    : <p></p>
+                    :<p></p>
                 )}
 			
 			</div>

@@ -21,7 +21,6 @@
 
 .button.red {
 	@include red-background;
-	float: right;
 	width: 6.5em;
 	margin-top: 1em;
   	&:hover {

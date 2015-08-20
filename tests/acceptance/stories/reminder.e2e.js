@@ -37,7 +37,7 @@ function landingTests (wd, capability, remote) {
                 .sendKeys(password)
                 .elementByTagName("form")
                 .submit()
-                .waitForElementByLinkText("Reminders")
+                .waitForElementByLinkText("Contacts")
                 .click()
                 .nodeify(done);
         });
@@ -67,38 +67,20 @@ function landingTests (wd, capability, remote) {
             browser
                 .waitForElementByCssSelector(".add.blue")
                 .click()
-                .waitForElementByCssSelector("input[name='contact']")
+                .waitForElementByCssSelector("input[name='company_name']")
                 .sendKeys("fake")
-                .elementByCssSelector("input[name='date']")
-                .sendKeys("05-05-2015")
+                .elementByCssSelector(".button.blue.add-row")
+                .click()
+                .elementByCssSelector("input[name='reminder_message']")
+                .sendKeys("new message")
                 .elementByTagName("form")
                 .submit()
                 .url(function(err, url) {
+
                     expect(url).to.contain("true");
                 })
                 .nodeify(done);
-        });
-
-        it("Should be able to delete a reminder", function(done) {
-            browser
-                .setImplicitWaitTimeout(2000)
-                .elementsByTagName("td")
-                .then(function(elements) {
-                    elements[2]
-                        .elementByTagName("a")
-                        .click()
-                        .elementByLinkText("Delete")
-                        .click()
-                        .elementByClassName("warning", function (err, element) {
-                            element
-                                .elementByLinkText("Delete")
-                                .click()
-                                .url(function(err, url) {
-                                    url.should.contain("true");
-                                })
-                                .nodeify(done);
-                        })
-                })
+                
         });
     });
 };
