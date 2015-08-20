@@ -1,6 +1,6 @@
 var AWS 			= require('aws-sdk');
-var awsAccessKey 	= require('../../credentials.json').awsAccessKey;
-var awsSecret 		= require('../../credentials.json').awsSecret;
+var awsSecret 		= process.env.AWS_SECRET_KEY || require('../../credentials.json').awsSecret;
+var awsAccessKey 	= process.env.AWS_ACCESS_KEY_ID || require('../../credentials.json').awsAccessKey;
 var validateUser 	= require('../lib/validate-user.js');
 var db				= require('../db-config.js');
 var parseData    	= require('../lib/get-form-data.js');

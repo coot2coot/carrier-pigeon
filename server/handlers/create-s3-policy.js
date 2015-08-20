@@ -1,6 +1,6 @@
 var policy 			= require('s3-policy');
-var awsSecret 		= require('../../credentials.json').awsSecret;
-var awsAccessKey 	= require('../../credentials.json').awsAccessKey;
+var awsSecret 		= process.env.AWS_SECRET_KEY || require('../../credentials.json').awsSecret;
+var awsAccessKey 	= process.env.AWS_ACCESS_KEY_ID || require('../../credentials.json').awsAccessKey;
 
 function getPolicy (req, res) {
 

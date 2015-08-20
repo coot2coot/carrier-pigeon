@@ -4,7 +4,7 @@ var Warning 	= require("../close-warning.jsx");
 var Upload 		= require("../files/file-upload.jsx");
 var ContactList = require("./contact-list.jsx");
 
-var currentDate = require("../../lib/current-date.js");
+var currentDate =  require("../../lib/current-date.js");
 
 var addOrder = React.createClass({
 
