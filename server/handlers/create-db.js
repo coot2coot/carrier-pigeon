@@ -31,8 +31,6 @@ function create (req, res) {
 			} else {
 				validateOrder(data, res, function () {
 
-					console.log(data)
-
 					var splitData = splitObject(data);
 					db.post('orders', splitData, function (err, jobNumber) {
 						

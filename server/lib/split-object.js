@@ -9,7 +9,17 @@ function splitObject (data, id) {
 	};
 	for (var prop in data) {
 
-		if (prop !== 'date' && prop !=='ets' && prop !=='eta' && prop !=='unit_loading_date' && prop !== 'unit_loading_time' && prop != 'unit_volume' && prop !== 'unit_net_weight' && prop !== 'unit_gross_weight' && prop !== 'unit_no_of_packages') {
+		if ((prop !== 'date' &&
+				prop !=='ets' &&
+				prop !=='eta' && 
+				prop !=='unit_loading_date' && 
+				prop !== 'unit_loading_time' && 
+				prop != 'unit_volume' && 
+				prop !== 'unit_net_weight' && 
+				prop !== 'unit_gross_weight' && 
+				prop !== 'unit_no_of_packages') ||
+				(data[prop] !== '')) {
+
 			if (prop.substring(0,4) === "unit") {
 				obj.minorObject[prop] = data[prop]
 
@@ -19,17 +29,7 @@ function splitObject (data, id) {
 			} else {
 				obj.mainObject[prop] = data[prop]
 			}
-		} else if (data[prop] !== '') {
-
-			if (prop.substring(0, 9) === 'reminder_') {	    
-			    obj.minorObject[prop.substring(9, prop.length)] = data[prop]
-
-			} else {
-				obj.mainObject[prop] = data[prop]
-			}
-		} else {
-			data[prop] = null
-		}
+		} 
 	}
 
 	if (id === 'job_number') obj.minorObject[id] = obj.mainObject[id];
