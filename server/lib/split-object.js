@@ -9,7 +9,7 @@ function splitObject (data, id) {
 	};
 	for (var prop in data) {
 
-		if (prop !== 'date' && prop !=='ets' && prop !=='eta' ) {
+		if (prop !== 'date' && prop !=='ets' && prop !=='eta' && prop !=='unit_loading_date' && prop !== 'unit_loading_time' && prop != 'unit_volume' && prop !== 'unit_net_weight' && prop !== 'unit_gross_weight' && prop !== 'unit_no_of_packages') {
 			if (prop.substring(0,4) === "unit") {
 				obj.minorObject[prop] = data[prop]
 
@@ -27,6 +27,8 @@ function splitObject (data, id) {
 			} else {
 				obj.mainObject[prop] = data[prop]
 			}
+		} else {
+			data[prop] = null
 		}
 	}
 
