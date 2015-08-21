@@ -84,9 +84,10 @@ var units = React.createClass({
 							<input type="number" name="unit_gross_weight" step="any" defaultValue={unit.unit_gross_weight ? unit.unit_gross_weight : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
+							<p>{unit.unit_weight ? unit.unit_weight : ""}</p>
 							<select name="unit_weight" defaultValue={unit.unit_weight ? unit.unit_weight : ""} onChange={handleChange.bind(null, this.props.keys)} >
 								<option value= "kg">kg</option>
-								<option value= "T">t</option>
+								<option value= "tons">t</option>
 							</select>
 						</div>
 						<div className="column-2">
