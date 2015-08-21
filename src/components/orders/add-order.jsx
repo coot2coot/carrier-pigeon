@@ -142,45 +142,45 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Collection From</p>
-											<textarea type="text" name="collect_from" max='500'  onChange={this.ifEdited}/>
+											<textarea type="text" name="collect_from" max='500' defaultValue={order && order.collect_from ? order.collect_from : ""}   onChange={this.ifEdited}/>
 										</div>	
 										<div className="column-8">
 											<p>Deliver To</p>
-											<textarea name="deliver_to"  max='500'  onChange={this.ifEdited}/>
+											<textarea name="deliver_to"  max='500' defaultValue={order && order.deliver_to ? order.deliver_to : ""}  onChange={this.ifEdited}/>
 										</div>					
 									</div>
 									
 									<div className="row">
 										<div className="column-8">
 											<p>Special Instructions</p>
-											<textarea name="special_instructions"  max='500' onChange={this.ifEdited}/>
+											<textarea name="special_instructions" defaultValue={order && order.special_instructions ? order.special_instructions : ""}  max='500' onChange={this.ifEdited}/>
 										</div>
 										<div className="column-8">
 											<p>Remarks</p>
-											<textarea name="remarks" max='500' onChange={this.ifEdited}/>
+											<textarea name="remarks" max='500' defaultValue={order && order.remarks ? order.remarks : ""} onChange={this.ifEdited}/>
 										</div>
 									</div>
 
 									<div className="row">
 										<div className="column-3">
 											<p>Port of Loading</p>
-											<input type="text" name="port_of_loading" onChange={this.ifEdited}/>
+											<input type="text" name="port_of_loading" defaultValue={order && order.port_of_loading ? order.port_of_loading : ""}  onChange={this.ifEdited}/>
 										</div>
 										<div className="column-3">
 											<p>Port of Discharge</p>
-											<input type="text" name="port_of_discharge" onChange={this.ifEdited}/>
+											<input type="text" name="port_of_discharge" defaultValue={order && order.port_of_discharge ? order.port_of_discharge : ""}  onChange={this.ifEdited}/>
 										</div>
 										<div className="column-4">
 											<p>Vessel</p>
-											<input type="text" name="vessel" onChange={this.ifEdited}/>
+											<input type="text" name="vessel" defaultValue={order && order.vessel ? order.vessel : ""}  onChange={this.ifEdited}/>
 										</div>
 										<div className="column-3">
 											<p>ETS</p>
-											<input type="date" name="ets" onChange={this.ifEdited}/>
+											<input type="date" name="ets" defaultValue={order && order.ets ? order.ets : ""}  onChange={this.ifEdited}/>
 										</div>
 										<div className="column-3">
 											<p>ETA</p>
-											<input type="date" name="eta" onChange={this.ifEdited}/>
+											<input type="date" name="eta" defaultValue={order && order.eta ? order.eta : ""}  onChange={this.ifEdited}/>
 										</div>
 									</div>
 									
