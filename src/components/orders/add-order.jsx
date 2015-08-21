@@ -187,15 +187,15 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-5">
 											<p>Shipper</p>
-											<textarea name="shipper" max='500' onChange={this.ifEdited}/>
+											<textarea name="shipper" defaultValue={order && order.shipper ? order.shipper : ""} max='500' onChange={this.ifEdited}/>
 										</div>
 										<div className="column-5">
 											<p>Consignee</p>
-											<textarea name="consignee" max='500' onChange={this.ifEdited}/>
+											<textarea name="consignee" defaultValue={order && order.consignee ? order.consignee : ""} max='500' onChange={this.ifEdited}/>
 										</div>
 										<div className="column-6">
 											<p>Notify</p>
-											<textarea name="notify" max='500' onChange={this.ifEdited}/>
+											<textarea name="notify" defaultValue={order && order.notify ? order.notify : ""} max='500' onChange={this.ifEdited}/>
 										</div>
 									</div>
 									<Upload ifEdited={this.ifEdited} disable={false}/>
