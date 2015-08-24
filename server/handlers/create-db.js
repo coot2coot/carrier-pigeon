@@ -31,7 +31,7 @@ function create (req, res) {
 			} else {
 				validateOrder(data, res, function () {
 
-					data.file_name = data.file_name.join();
+					data.file_name = typeof data.file_name === 'object' ? data.file_name.join() : data.file_name;
 
 					var splitData = splitObject(data);
 

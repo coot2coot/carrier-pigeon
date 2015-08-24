@@ -44,7 +44,13 @@ var fileUploadList = React.createClass({
 				{
 					this.state.files.map( function (val, i) {
 
-						return <Upload i={i} addFile={addFile.bind(null, i)} removeFile={removeFile.bind(null, i)} ifEdited={props.ifEdited} disable={false}/>
+						return (
+								<Upload i={i} 
+									addFile={addFile.bind(null, i)} 
+									removeFile={removeFile.bind(null, i)} 
+									ifEdited={props.ifEdited} 
+									disable={false}/>
+								);
 					})
 				}
 			</div>

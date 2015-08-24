@@ -44,6 +44,7 @@ var fileDownload = React.createClass({
 				that.setState({
 					fileName: null
 				})
+				that.props.removeFile();
 			},
 			error: function (error) {
 				
@@ -54,7 +55,8 @@ var fileDownload = React.createClass({
 
 	render : function () {
 
-		var fileName 	= this.state.fileName;
+		var state 	= this.state;
+		var props 	= this.props;
 
 		return (
 			<div>
@@ -62,9 +64,9 @@ var fileDownload = React.createClass({
 				<div className='row'>
 			
 					{
-						fileName !== null && fileName !== ''
+						state.fileName !== null && state.fileName !== ''
 							? (<div>
-									<div className='row'><p>File {fileName}</p></div>
+									<div className='row'><p>File {state.fileName}</p></div>
 									<button type='button'
 										className='button blue ' 
 										onClick={this.downLoad}
@@ -77,9 +79,13 @@ var fileDownload = React.createClass({
 										>
 										Delete file
 									</button>
+									<input name='file_name' defaultValue={state.fileName} className='display-none' />
 								</div>
 							)
-							: <Upload disable={true}/>
+							: <Upload disable={true} 
+									i = {props.i}
+									addFile={props.addFile} 
+									removeFile={props.removeFile} />
 					}
 				</div>
 			</div>

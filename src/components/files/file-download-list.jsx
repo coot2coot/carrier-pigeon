@@ -3,21 +3,21 @@ var FileDownload= require("../files/file-download.jsx");
 
 var fileDownloadList = React.createClass({
 
-	getIntialState: function () {
+	getInitialState: function () {
 
 		return {
 			files: [{}]
-		}
+		};
 	},
 
 
 	removeFile: function (i) {
 
+		var files = this.state.files;
 
-  		if (this.state.files.length > 1) {
+  		if (this.state.files && this.state.files.length > 1) {
 
 			this.state.files.splice(i, 1);
-			var files = this.state.files;
 
 	  		this.setState({
 	    		files: files
@@ -27,39 +27,52 @@ var fileDownloadList = React.createClass({
 
 	addFile: function (i) {
 
-		this.state.files.splice(i + 1, 0, {});;
-		var files = this.state.files
-
-		this.setState({
-			files: files
-		})
+		var files = this.state.files;
+		if (files) {
+			this.state.files.splice(i + 1, 0, {});;
+		
+			this.setState({
+				files: files
+			})
+		}
 	},
 
 	componentWillMount: function () {
+		console.log(this);
 
-		var filesArr = this.props.file.split(',');
-
-		this.setState({
-			files: filesArr
-		});
-
+		if (this.props.file) {
+			console.log(this.props.file)
+			var filesArr = this.props.file.split(',');
+			this.setState({
+				files: filesArr
+			});
+		}
 	},
 
 	render: function () {
 
-		var props = this.props;
-		var state = this.state;
+		var props 		= this.props;
+		var state 		= this.state;
+		var addFile 	= this.addFile;
+		var removeFile 	= this.removeFile;
 
 		return (
 			<div>
 				{
-					state.files.map(function (file) {
+					state.files.map( function (file, i) {
 
-						return <FileDownload Id={props.Id} disable={true} file={file}/>
+						return (
+								<FileDownload Id={props.Id}
+									i= {i} 
+									addFile={addFile.bind(null, i)} 
+									removeFile={removeFile.bind(null, i)} 
+									disable={true} 
+									file={file}/>
+								);
 					})
 				}
 			</div>
-		)
+		);
 	}
 })
 

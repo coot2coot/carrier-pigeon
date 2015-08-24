@@ -26,7 +26,7 @@ var fileUpload = React.createClass({
   	checkFile: function (result) {
 
   		var index 	= this.props.i;
-  		var file = document.querySelectorAll('input[type=file]')[index];
+  		var file = document.querySelectorAll('input[type=file]')[0];
 
   		if (file.files && file.files[0]) {
 
@@ -114,8 +114,7 @@ var fileUpload = React.createClass({
 						that.isFileSending();
 						fileName.value = file.name;
 						that.props.addFile();
-						console.log(document.querySelectorAll('div.row.file p')[0])
-						// document.querySelectorAll('div.row.file p')[0].innerHTML = file.name;
+						document.querySelectorAll('div.row.file p')[index].innerHTML = file.name;
 						that.setState({
 							disable: true
 						})
