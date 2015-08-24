@@ -6,18 +6,16 @@ var fileUploadList = React.createClass({
 	getInitialState: function () {
 
 	    return {
-	          files: [{}]
+	        files: [{}]
 	    };
 	},
 
 	removeFile: function (i) {
 
+		var files = this.state.files;
 
   		if (this.state.files.length > 1) {
-
 			this.state.files.splice(i, 1);
-
-			var files = this.state.files;
 
 	  		this.setState({
 	    		files: files
@@ -27,9 +25,9 @@ var fileUploadList = React.createClass({
 
 	addFile: function (i) {
 
-		this.state.files.splice(i + 1, 0, {});;
-		var files = this.state.files
-
+		var files = this.state.files;
+		this.state.files.splice(i + 1, 0, {});
+		
 		this.setState({
 			files: files
 		})
@@ -45,6 +43,7 @@ var fileUploadList = React.createClass({
 			<div>
 				{
 					this.state.files.map( function (val, i) {
+
 						return <Upload i={i} addFile={addFile.bind(null, i)} removeFile={removeFile.bind(null, i)} ifEdited={props.ifEdited} disable={false}/>
 					})
 				}

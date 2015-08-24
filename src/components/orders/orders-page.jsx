@@ -113,7 +113,7 @@ var ordersPage = React.createClass({
 				})
 			} else {		
 				var order = JSON.parse(result);
-				var uniqOrder = sorts(this.uniq(order))
+				var uniqOrder = sorts(this.uniq(order));
 				
 				this.setState({
 					error: false

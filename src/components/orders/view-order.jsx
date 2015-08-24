@@ -8,7 +8,7 @@ var Close 		= require("../close-warning.jsx");
 var Units 		= require("./view_units.jsx");
 var Warning 	= require("../warning.jsx");
 var ContactList = require("./contact-list.jsx");
-var FileDownload= require("../files/file-download.jsx");
+var FileDownloadList= require("../files/file-download-list.jsx");
 
 var getJobNumber = require("../../lib/format-job-number.js");
 
@@ -109,7 +109,7 @@ var viewOrder = React.createClass({
 		}
 	},
 
-	componentWillMount: function() {
+	componentWillMount: function () {
 
 		var getOrderUrl = "/units/" + this.props.order.job_number;
 
@@ -120,7 +120,7 @@ var viewOrder = React.createClass({
 		    	
 		      	if (this.isMounted()) {
 		        	this.setState({
-		          		units : unit,
+		          		units: unit
 		        	});
 		      	}
 		    }
@@ -179,6 +179,8 @@ var viewOrder = React.createClass({
 		var viewing 		= this.state.viewing;
 		var edited 			= this.ifEdited;
 		var onUnitChange 	= this.onUnitChange;
+		var state 			= this.state;
+		var props 			= this.props;
 		var cx 				= React.addons.classSet;
 		var rowClasses 		= cx({
 		    'row': true,
@@ -188,43 +190,43 @@ var viewOrder = React.createClass({
 		return (
 			<div className="overlay">
 				<div>
-					{( this.state.deleteOrder
-	                    ? <Warning message="Delete this order?" order={this.props.order} url={"/order/delete/" + this.props.order.job_number} closeView={this.closeDeleteView}/>
+					{( state.deleteOrder
+	                    ? <Warning message="Delete this order?" order={props.order} url={"/order/delete/" + props.order.job_number} closeView={this.closeDeleteView}/>
 	                    : <p></p>
 	                )}
                 </div>
 				<div className="column-14 push-1 model-generic model-top view-order">
 					<div className="panel-header">
-						<h3>{getJobNumber(this.props.order.job_number)}</h3>
-						<a className="button blue" onClick={this.deleteHandler.bind(null, this.props.order)}>Delete</a>
+						<h3>{getJobNumber(props.order.job_number)}</h3>
+						<a className="button blue" onClick={this.deleteHandler.bind(null, props.order)}>Delete</a>
 						<a className="button blue" onClick={this.edit}  >Edit</a>
 						<a className="button blue" onClick={this.copyOrder}>Copy</a>
-						<Link className="button blue" to="booking-note" params={{job_no: this.props.order.job_number}}>Booking Request</Link>
+						<Link className="button blue" to="booking-note" params={{job_no: props.order.job_number}}>Booking Request</Link>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body scroll">
-						<form action={"/order/edit/" + this.state.deletedUnits.slice(1)} method="POST">
+						<form action={"/order/edit/" + state.deletedUnits.slice(1)} method="POST">
 							<div className="row gutters">
 								<div className={rowClasses}>
 									<div className="column-8" >
 										<p>Date</p>
-										<input className="view_input" type="date" name="date" defaultValue={this.props.order.date !== null ? this.props.order.date.substring(0, 10) : ''} onChange={edited} disabled required/>
+										<input className="view_input" type="date" name="date" defaultValue={props.order.date !== null ? props.order.date.substring(0, 10) : ''} onChange={edited} disabled required/>
 									</div>
 									<div className="column-8" >
 										<p>Job No.</p>
-										<input type="text" className="job_no" value={getJobNumber(this.props.order.job_number)} onChange={edited} readOnly />
-										<input type="text" className="display-none"  name="job_number" value={this.props.order.job_number} onChange={edited}/>
+										<input type="text" className="job_no" value={getJobNumber(props.order.job_number)} onChange={edited} readOnly />
+										<input type="text" className="display-none"  name="job_number" value={props.order.job_number} onChange={edited}/>
 									</div>
 								</div>
 
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Client</p>
-										<ContactList required={true} vieworder={true} property="company_name" contact={this.props.order.client} contactType="client" handleChange={edited}/>
+										<ContactList required={true} vieworder={true} property="company_name" contact={props.order.client} contactType="client" handleChange={edited}/>
 									</div>
 									<div className="column-8">
 										<p>Carrier </p>
-										<ContactList required={false} vieworder={true} property="company_name" contact={this.props.order.carrier} contactType="carrier" handleChange={edited}/>
+										<ContactList required={false} vieworder={true} property="company_name" contact={props.order.carrier} contactType="carrier" handleChange={edited}/>
 									</div>
 								</div>
 
@@ -247,69 +249,69 @@ var viewOrder = React.createClass({
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Collection From</p>
-										<textarea className="view_input" type="text" defaultValue={this.props.order.collect_from} name="collect_from" max="500" onChange={edited} disabled />
+										<textarea className="view_input" type="text" defaultValue={props.order.collect_from} name="collect_from" max="500" onChange={edited} disabled />
 									</div>
 									<div className="column-8">
 										<p>Deliver To</p>
-										<textarea className="view_input" type="text" defaultValue={this.props.order.deliver_to} name="deliver_to" disabled max='500' onChange={edited} />
+										<textarea className="view_input" type="text" defaultValue={props.order.deliver_to} name="deliver_to" disabled max='500' onChange={edited} />
 									</div>
 								</div>
 
 								<div className={rowClasses}>
 									<div className="column-8">
 										<p>Special Instructions</p>
-										<textarea className="view_input" type="text" defaultValue={this.props.order.special_instructions} name="special_instructions" disabled max='500' onChange={edited}/>
+										<textarea className="view_input" type="text" defaultValue={props.order.special_instructions} name="special_instructions" disabled max='500' onChange={edited}/>
 									</div>
 									<div className="column-8">
 										<p>Remarks</p>
-										<textarea className="view_input" type="text" defaultValue={this.props.order.remarks} name="remarks" disabled max ='500' onChange={edited}/>
+										<textarea className="view_input" type="text" defaultValue={props.order.remarks} name="remarks" disabled max ='500' onChange={edited}/>
 									</div>
 								</div>
 
 								<div className={rowClasses}>
 									<div className="column-3">
 										<p>Port of Loading</p>
-										<input className="view_input" type="text" name="port_of_loading" defaultValue={this.props.order.port_of_loading} onChange={edited} disabled/>
+										<input className="view_input" type="text" name="port_of_loading" defaultValue={props.order.port_of_loading} onChange={edited} disabled/>
 									</div>
 									<div className="column-3">
 										<p>Port of Discharge</p>
-										<input className="view_input" type="text" name="port_of_discharge" defaultValue={this.props.order.port_of_discharge} onChange={edited} disabled/>
+										<input className="view_input" type="text" name="port_of_discharge" defaultValue={props.order.port_of_discharge} onChange={edited} disabled/>
 									</div>
 									<div className="column-4">
 										<p>Vessel</p>
-										<input className="view_input" type="text" name="vessel" defaultValue={this.props.order.vessel} onChange={edited} disabled/>
+										<input className="view_input" type="text" name="vessel" defaultValue={props.order.vessel} onChange={edited} disabled/>
 									</div>
 									<div className="column-3">
 										<p>ETS</p>
-										<input className="view_input" type="date" name="ets" defaultValue={this.props.order.ets ? this.props.order.ets.substring(0, 10) : "" } onChange={edited} disabled/>
+										<input className="view_input" type="date" name="ets" defaultValue={props.order.ets ? props.order.ets.substring(0, 10) : "" } onChange={edited} disabled/>
 									</div>
 									<div className="column-3">
 										<p>ETA</p>
-										<input className="view_input" type="date" name="eta" defaultValue={this.props.order.eta ? this.props.order.eta.substring(0, 10) : ""} onChange={edited} disabled/>
+										<input className="view_input" type="date" name="eta" defaultValue={props.order.eta ? props.order.eta.substring(0, 10) : ""} onChange={edited} disabled/>
 									</div>
 								</div>
 
 								<div className="row">
 									<div className="column-5">
 										<p>Shipper</p>
-										<textarea className="view_input" type="text" defaultValue={this.props.order.shipper} name="shipper" disabled max ='500' onChange={edited}/>
+										<textarea className="view_input" type="text" defaultValue={props.order.shipper} name="shipper" disabled max ='500' onChange={edited}/>
 									</div>
 									<div className="column-5">
 										<p>Consignee</p>
-										<textarea className="view_input" type="text" defaultValue={this.props.order.consignee} name="consignee" disabled max ='500' onChange={edited}/>
+										<textarea className="view_input" type="text" defaultValue={props.order.consignee} name="consignee" disabled max ='500' onChange={edited}/>
 									</div>
 									<div className="column-6">
 										<p>Notify</p>
-										<textarea className="view_input" type="text" defaultValue={this.props.order.notify} name="notify" disabled max ='500' onChange={edited}/>
+										<textarea className="view_input" type="text" defaultValue={props.order.notify} name="notify" disabled max ='500' onChange={edited}/>
 									</div>
 								</div>
-								<FileDownload Id={this.props.order.job_number} disable={true} file={this.props.order.file_name}/>
-								<input className={this.state.viewing ? "display-none" : "button charcoal"} type="submit" value="Update" />
+								<FileDownloadList Id={props.order.job_number} file={props.order.file_name}/>
+								<input className={state.viewing ? "display-none" : "button charcoal"} type="submit" value="Update" />
 							</div>
 						</form>
 					</div>
 				</div>	
-				{( this.state.closeView
+				{( state.closeView
                     ? <Close message="Do you want to close without saving?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}			

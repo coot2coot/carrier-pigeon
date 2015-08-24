@@ -55,7 +55,6 @@ var fileDownload = React.createClass({
 	render : function () {
 
 		var fileName 	= this.state.fileName;
-		var disable		= this.props.disable;
 
 		return (
 			<div>
@@ -63,7 +62,7 @@ var fileDownload = React.createClass({
 				<div className='row'>
 			
 					{
-						fileName !== null
+						fileName !== null && fileName !== ''
 							? (<div>
 									<div className='row'><p>File {fileName}</p></div>
 									<button type='button'
