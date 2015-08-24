@@ -63,7 +63,7 @@ var fileDownload = React.createClass({
 				<div className='row'>
 			
 					{
-						fileName !== null
+						fileName !== null && fileName !== ''
 							? (<div>
 									<div className='row'><p>File {fileName}</p></div>
 									<button type='button'
