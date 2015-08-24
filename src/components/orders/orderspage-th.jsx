@@ -2,7 +2,8 @@ var React = require('react');
 
 var ordersth = React.createClass({
 
-	render: function (){
+	render: function () {
+
 		return(
 			<tr>
 				<th>

@@ -35,22 +35,22 @@ var units = React.createClass({
 					</div>
 					<div className="row">
 						<div className="column-3">
-							<input type="text" name="unit_number"  onChange={handleChange.bind(null, this.props.keys)}/>
+							<input type="text" name="unit_number" defaultValue={unit.unit_number ? unit.unit_number : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
-							<input type="text" name="unit_seal"  onChange={handleChange.bind(null, this.props.keys)}/>
+							<input type="text" name="unit_seal" defaultValue={unit.unit_seal ? unit.unit_seal : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-2">
 							<input type="text" name="unit_type" defaultValue={unit.unit_type ? unit.unit_type : ""} onChange={handleChange.bind(null, this.props.keys)} required/>
 						</div>
 						<div className="column-3">
-							<input type="text" name="unit_loading_reference"  onChange={handleChange.bind(null, this.props.keys)}/>
+							<input type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference ? unit.unit_loading_reference : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
-							<input type="date" name="unit_loading_date"  onChange={handleChange.bind(null, this.props.keys)}/>
+							<input type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.substring(0, 10) : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
-							<input type="time" name="unit_loading_time"  onChange={handleChange.bind(null, this.props.keys)}/>
+							<input type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time ? unit.unit_loading_time : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 					</div>
 
