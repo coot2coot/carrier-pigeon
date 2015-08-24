@@ -1,7 +1,7 @@
 var React 		= require('react');
 var Units 		= require("./units.jsx");
 var Warning 	= require("../close-warning.jsx");
-var Upload 		= require("../files/file-upload.jsx");
+var UploadList 	= require("../files/file-upload-list.jsx");
 var ContactList = require("./contact-list.jsx");
 
 var currentDate =  require("../../lib/current-date.js");
@@ -94,6 +94,7 @@ var addOrder = React.createClass({
 		var today 		= currentDate();
 		var edited 		= this.ifEdited;
 		var onUnitChange= this.onUnitChange;
+		var state 		= this.state;
 
 		return (
 			<div className="overlay">
@@ -198,14 +199,17 @@ var addOrder = React.createClass({
 											<textarea name="notify" defaultValue={order && order.notify ? order.notify : ""} max='500' onChange={this.ifEdited}/>
 										</div>
 									</div>
-									<Upload ifEdited={this.ifEdited} disable={false}/>
+
+									<UploadList ifEdited={edited}/>
+										
 									<input type="submit" className="button charcoal" value="Done" />
+							
 								</div>
 							</div>
 						</form>
 					</div>
 				</div>
-				{(this.state.closeView
+				{(state.closeView
                     ? <Warning message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
                     :<p></p>
                 )}

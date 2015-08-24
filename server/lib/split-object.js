@@ -31,7 +31,6 @@ function splitObject (data, id) {
 			}
 		} 
 	}
-
 	if (id === 'job_number') obj.minorObject[id] = obj.mainObject[id];
 
 	return obj;

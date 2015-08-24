@@ -17,7 +17,7 @@ var fileUpload = React.createClass({
 
 	isFileSending: function () {
 
-  		var sendingFile = this.state.sendingFile;
+  	var sendingFile = this.state.sendingFile;
 		this.setState({
   			sendingFile: !sendingFile
   		});
@@ -25,7 +25,8 @@ var fileUpload = React.createClass({
 
   	checkFile: function (result) {
 
-  		var file 			= document.querySelector('input[type=file]');
+  		var index 	= this.props.i;
+  		var file = document.querySelectorAll('input[type=file]')[index];
 
   		if (file.files && file.files[0]) {
 
@@ -38,18 +39,18 @@ var fileUpload = React.createClass({
 				type: "HEAD"
 			}).then(
 
-			  	function () { 
+			  	function () {
 
 			  		that.setState({
 			  			errorMessage: fileName + ' already exists do you want to overwrite it?'
-				  	})  
+				  	})
 			  	},
 			  	function () {
 
 					that.setState({
 						errorMessage: 'Are you sure that you would like to upload ' + fileName + '?'
 				  	});
-				  	
+
 				}
 			);
 		};
@@ -64,7 +65,7 @@ var fileUpload = React.createClass({
   		var getUrl 			= "/file/policy";
 
   		ifEdited ? ifEdited() : '' ;
-  			
+
   		isFileSending();
 
   		$.get(getUrl, function (result) {
@@ -79,10 +80,11 @@ var fileUpload = React.createClass({
 
   	upLoadFile: function (result) {
 
+  		var index 	= this.props.i;
   		var data 	= JSON.parse(result);
-  		var fileElem= document.querySelector('input[type=file]');
+  		var fileElem= document.querySelectorAll('input[type=file]')[index];
   		var that	= this;
-  		var fileName= document.querySelector('input[name=file_name]');
+  		var fileName= document.querySelectorAll('input[name=file_name]')[index];
   		var reader  = new FileReader();
   		this.closeWarning();
 
@@ -98,7 +100,7 @@ var fileUpload = React.createClass({
 				fd.append('Content-Length', file.size);
 				fd.append('AWSAccessKeyId',  accessKey);
 				fd.append('policy', data.policy);
-				fd.append('signature', data.signature);    
+				fd.append('signature', data.signature);
 				fd.append("file", dataURL);
 
 				$.ajax({
@@ -108,10 +110,12 @@ var fileUpload = React.createClass({
 					contentType: false,
 					data: fd,
 					success: function (data) {
-						console.log('sdf')
+
 						that.isFileSending();
 						fileName.value = file.name;
-						document.querySelector('div.row.file p').innerHTML = file.name;
+						that.props.addFile();
+						console.log(document.querySelectorAll('div.row.file p')[0])
+						// document.querySelectorAll('div.row.file p')[0].innerHTML = file.name;
 						that.setState({
 							disable: true
 						})
@@ -121,9 +125,9 @@ var fileUpload = React.createClass({
 						that.isFileSending();
 						console.log(error)
 					}
-				}); 
-		} 
-		if (fileElem && fileElem.files[0]) {  
+				});
+		}
+		if (fileElem && fileElem.files[0]) {
 
   			reader.readAsDataURL(fileElem.files[0]);
   		}
@@ -131,8 +135,9 @@ var fileUpload = React.createClass({
 
   	remove: function () {
 
-  		var file 	= document.querySelector('input[name=file_name]');
-  		var fileElem= document.querySelector('input[type=file]');
+  		var index	= this.props.i;
+  		var file 	= document.querySelectorAll('input[name=file_name]')[index];
+  		var fileElem= document.querySelectorAll('input[type=file]')[index];
   		var that 	= this;
   		this.isFileSending();
 
@@ -150,6 +155,7 @@ var fileUpload = React.createClass({
 				});
 				file.value = null;
 				fileElem.value = '';
+				that.props.removeFile();
 			},
 			error: function (error) {
 
@@ -172,35 +178,35 @@ var fileUpload = React.createClass({
   		var disable 	= this.props.disable;
 
   		return (
-  			
+
   			<div className="row">
 
 				{
 					state.sendingFile
-						?<LoadingGiff/>	
+						?<LoadingGiff/>
 						:<div className='row file'><p>File Upload</p></div>
 				}
 
-				<input type='file' 
+				<input type='file'
 					onChange={this.checkFile}
 					className= {state.disable || state.sendingFile
 									? 'display-none'
 									: 'view_input'} disabled={disable}/>
 
-				<button type='button' 
+				<button type='button'
 					className= {state.disable && !state.sendingFile
 									? 'button red float-left'
 									: 'display-none'}
 					onClick= {this.remove} disabled={disable}>
 					Remove File
 				</button>
-			   
+
 				<input name='file_name' className='display-none' />
-			
+
 				{(state.errorMessage !== ''
-                    ? (<Warning 
+                    ? (<Warning
                     		message={state.errorMessage}
-                     		closeView={this.getPolicy} 
+                     		closeView={this.getPolicy}
                      		closeWarning={this.closeWarning}/>)
                     :<p></p>
                 )}

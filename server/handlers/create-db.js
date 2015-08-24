@@ -31,22 +31,25 @@ function create (req, res) {
 			} else {
 				validateOrder(data, res, function () {
 
+					data.file_name = data.file_name.join();
+
 					var splitData = splitObject(data);
-					db.post('orders', splitData, function (err, jobNumber) {
+					console.log(splitObject(data))
+					// db.post('orders', splitData, function (err, jobNumber) {
 						
-						if (err) {
-							console.log(err)
-							res.writeHead(500);
-							res.write(err);
-							res.end();
-						}
-						else {
-							res.writeHead(303, {
-								"Location": "/#/orders/true/" + jobNumber.rows[0].job_number
-							});
-							res.end();
-						}
-					});
+					// 	if (err) {
+					// 		console.log(err)
+					// 		res.writeHead(500);
+					// 		res.write(err);
+					// 		res.end();
+					// 	}
+					// 	else {
+					// 		res.writeHead(303, {
+					// 			"Location": "/#/orders/true/" + jobNumber.rows[0].job_number
+					// 		});
+					// 		res.end();
+					// 	}
+					// });
 				});
 			}
 		});
