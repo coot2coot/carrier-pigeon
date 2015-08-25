@@ -58,8 +58,6 @@ var viewOrder = React.createClass({
 	},
 
 	copyOrder: function () {
-		
-		console.log(this.props.order)
 
 		this.props.copy(this.props.order, this.state.units);
 	},

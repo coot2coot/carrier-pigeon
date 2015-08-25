@@ -59,8 +59,6 @@ var fileDownloadList = React.createClass({
 				{
 					state.files.map( function (file, i) {
 
-						console.log('i', file)
-
 						return (
 								<FileDownload Id={props.Id}
 									i= {i} 

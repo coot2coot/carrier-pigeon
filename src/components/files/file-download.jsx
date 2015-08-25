@@ -1,5 +1,6 @@
 var React 	= require('react');
 var Upload 	= require("../files/file-upload.jsx");
+var Warning 	= require("../close-warning.jsx");
 
 var fileDownload = React.createClass({
 
@@ -72,6 +73,7 @@ var fileDownload = React.createClass({
 					fileName: null
 				})
 				that.props.removeFile();
+				that.closeWarning();
 			},
 			error: function (error) {
 				
