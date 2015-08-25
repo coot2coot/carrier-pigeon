@@ -58,15 +58,12 @@ var fileUpload = React.createClass({
 
 	getPolicy: function () {
 
-  		var isFileSending 	= this.isFileSending;
   		var upLoadFile		= this.upLoadFile;
   		var checkFile		= this.checkFile;
   		var ifEdited		= this.props.ifEdited;
   		var getUrl 			= "/file/policy";
 
   		ifEdited ? ifEdited() : '' ;
-
-  		isFileSending();
 
   		$.get(getUrl, function (result) {
 
@@ -82,14 +79,14 @@ var fileUpload = React.createClass({
 
   		var index 	= this.props.i;
   		var data 	= JSON.parse(result);
-  		var fileElem= document.querySelectorAll('input[type=file]')[index];
+  		var fileElem= document.querySelectorAll('input[type=file].display')[0];
   		var that	= this;
   		var fileName= document.querySelectorAll('input[name=file_name]')[index];
   		var reader  = new FileReader();
   		this.closeWarning();
+  		that.isFileSending();
 
   		reader.onload = function (e) {
-
   			var file 	= fileElem.files[0];
 		  	var dataURL = reader.result;
 
@@ -136,7 +133,6 @@ var fileUpload = React.createClass({
 
   		var index	= this.props.i;
   		var file 	= document.querySelectorAll('input[name=file_name]')[index];
-  		var fileElem= document.querySelectorAll('input[type=file]')[index];
   		var that 	= this;
   		this.isFileSending();
 
@@ -153,7 +149,6 @@ var fileUpload = React.createClass({
 					disable: false
 				});
 				file.value = null;
-				fileElem.value = '';
 				that.props.removeFile();
 			},
 			error: function (error) {
@@ -174,29 +169,28 @@ var fileUpload = React.createClass({
   	render: function () {
 
   		var state 		= this.state;
-  		var disable 	= this.props.disable;
+  		var props 		= this.props;
 
   		return (
 
-  			<div className="row">
+  			<div className='row'>
 
 				{
 					state.sendingFile
 						?<LoadingGiff/>
 						:<div className='row file'><p>File Upload</p></div>
-				}
+				}	
 
 				<input type='file'
-					onChange={this.checkFile}
-					className= {state.disable || state.sendingFile
-									? 'display-none'
-									: 'view_input'} disabled={disable}/>
+						onChange={this.checkFile}
+						className= {state.disable || state.sendingFile ? 'display-none' : 'display'}/>
+			
 
 				<button type='button'
 					className= {state.disable && !state.sendingFile
 									? 'button red float-left'
 									: 'display-none'}
-					onClick= {this.remove} disabled={disable}>
+					onClick= {this.remove} disabled={props.disable}>
 					Remove File
 				</button>
 

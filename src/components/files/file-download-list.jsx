@@ -38,10 +38,8 @@ var fileDownloadList = React.createClass({
 	},
 
 	componentWillMount: function () {
-		console.log(this);
 
 		if (this.props.file) {
-			console.log(this.props.file)
 			var filesArr = this.props.file.split(',');
 			this.setState({
 				files: filesArr
@@ -60,6 +58,8 @@ var fileDownloadList = React.createClass({
 			<div>
 				{
 					state.files.map( function (file, i) {
+
+						console.log('i', file)
 
 						return (
 								<FileDownload Id={props.Id}

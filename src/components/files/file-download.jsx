@@ -6,7 +6,8 @@ var fileDownload = React.createClass({
 	getInitialState : function () {
 
 		return {
-			fileName : this.props.file
+			fileName : this.props.file,
+			errorMessage: false
 		};
 	},
 
@@ -26,17 +27,43 @@ var fileDownload = React.createClass({
 
 	},
 
+	newFilesString: function () {
+
+		var fileName 	= this.props.file;
+		var allFiles	= document.querySelectorAll('input[name=file_name]');
+		var files 		= Object.keys(allFiles).slice(0,-1);
+		files 			= files.filter(function (val) { return allFiles[val].value !== fileName });
+		files 			= files.map(function (val, i ) { return allFiles[val].value });
+		return files.join();
+	},
+
+	warning: function () {
+
+		this.setState({
+  			errorMessage: true
+	  	});
+	},
+
+	closeWarning: function () {
+
+  		this.setState({
+  			errorMessage: false
+	  	});
+  	},
+
 	remove: function () {
 
 		var fileName 	= this.props.file;
 		var id 			= this.props.Id;
 		var that 		= this;
+		var fileString  = this.newFilesString();
 
 		$.ajax({
 			type: 'POST',
 			url: '/file/delete/download',
 			data: {
 				file_name: fileName,
+				files: fileString,
 				id: id
 			},
 			success: function () {
@@ -64,9 +91,9 @@ var fileDownload = React.createClass({
 				<div className='row'>
 			
 					{
-						state.fileName !== null && state.fileName !== ''
+						typeof state.fileName === 'string' && state.fileName !== ''
 							? (<div>
-									<div className='row'><p>File {state.fileName}</p></div>
+									<div className='row file'><p>File {state.fileName}</p></div>
 									<button type='button'
 										className='button blue ' 
 										onClick={this.downLoad}
@@ -75,18 +102,27 @@ var fileDownload = React.createClass({
 									</button>
 									<button type='button'
 										className='button red'
-										onClick={this.remove}
+										onClick={this.warning}
 										>
 										Delete file
 									</button>
 									<input name='file_name' defaultValue={state.fileName} className='display-none' />
 								</div>
 							)
-							: <Upload disable={true} 
+					
+							: (<Upload disable={false} 
 									i = {props.i}
 									addFile={props.addFile} 
-									removeFile={props.removeFile} />
+									removeFile={props.removeFile} />)
 					}
+
+					{(state.errorMessage
+						? (<Warning
+								message='Are you sure that you would like do delete this file?'
+								closeView={this.remove}
+								closeWarning={this.closeWarning}/>)
+	                    :<p></p>
+	                )}
 				</div>
 			</div>
 		);
