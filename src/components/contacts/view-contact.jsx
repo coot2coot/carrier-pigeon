@@ -90,8 +90,6 @@ var viewOrder = React.createClass({
 		var contact = this.props.contact[0];
 		var reminders = this.props.contact;
 		var deleteReminder = this.deleteReminder;
-		console.log(contact)
-
 
 		return (
 

@@ -375,7 +375,7 @@ dataBase.clearFileName = function (table, doc, cb) {
 
         client.query(command()
                 .update(table)
-                .set("file_name = null")
+                .set("file_name = '" + doc.files + "'")
                 .where("job_number ="  + doc.id)
                 .end(), function (err) {
 
