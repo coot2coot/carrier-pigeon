@@ -147,10 +147,8 @@ query.update = function (items, table, idName) {
 
 query.del = function (items, table, idName) {
 
-	console.log(items)
 	if (items !== "" && items !== undefined) {
 
-		console.log(items)
 		var arr = items.split(",");
         var deleteQuery = "";
         var i;

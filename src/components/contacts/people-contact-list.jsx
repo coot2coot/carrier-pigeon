@@ -63,7 +63,6 @@ var contactList = React.createClass({
 		var addContact 		= this.addContact;
 		var removeContact 	= this.removeContact;
 		var contactId 		= props.contactId ? props.contactId : false;
-		console.log(contactId)
 
 		return (
 			<div>

@@ -238,9 +238,7 @@ function editPeopleContacts (doc, clt, cb, done) {
                 .query(updateQuery)
                 .query(deleteQuery)
                 .query(createQuery)
-                .end();
-
-    console.log(query)  
+                .end(); 
 
     clt.query( query, function (err) {
 

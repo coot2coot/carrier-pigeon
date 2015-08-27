@@ -30,11 +30,12 @@ var contact = React.createClass({
 					<input type="email" name="contact_email" disabled={props.viewing ? true : false} onChange={props.onContactChange.bind(null, props.keys)} defaultValue={state.contact ? state.contact.email : ""}/>
 				</div>
 
-				<input type="text" name="contact_people_contact_id" className='display-none' defaultValue={state.contact ? state.contact.people_contact_id : ""}/>
-
 				{ 
 					props.contactId
-						? <input type="text" name="contact_contact_id" className='display-none' defaultValue={props.contactId}/>
+						? (	<div>
+								<input type="text" name="contact_contact_id" className='display-none' defaultValue={props.contactId}/>
+								<input type="text" name="contact_people_contact_id" className='display-none' defaultValue={state.contact ? state.contact.people_contact_id : ""}/>
+							</div> )
 						: <p></p>
 				}
 				

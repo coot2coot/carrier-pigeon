@@ -106,10 +106,12 @@ var viewOrder = React.createClass({
 
   	deletePContacts: function (id) {
 
-  		newDeletedStrng = this.state.deletedPContacts + ',' + id;
-			
+  		var removeAnoutherIdd =  this.state.deletedPContacts + ',' + id
+
+  		var deleteCont =  this.state.deletedPContacts !== "" ? removeAnoutherIdd : id;
+  		
 		this.setState({
-			deletedPContacts: newDeletedStrng
+			deletedPContacts: deleteCont
 		});
   	},
 

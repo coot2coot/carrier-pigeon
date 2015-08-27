@@ -10,6 +10,8 @@ function create (req, res, table) {
 
 		data = removes(data);
 
+		console.log(data)
+
 		validateUser(req, res, function () {
 
 			var splitData = splitObject(data);
