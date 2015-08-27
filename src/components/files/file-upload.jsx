@@ -2,6 +2,8 @@ var React 		= require('react');
 var LoadingGiff = require("../loadingGiff.jsx");
 var Warning 	= require("../close-warning.jsx");
 
+var removeCommas= require('../../lib/remove-commas.js')
+
 var accessKey	= "AKIAIP2WE7XK6HTLZFBA";
 
 var fileUpload = React.createClass({
@@ -31,7 +33,7 @@ var fileUpload = React.createClass({
   		if (file.files && file.files[0]) {
 
 	  		var upLoadFile 		= this.upLoadFile;
-	  		var fileName 		= file.files[0].name;
+	  		var fileName 		= removeCommas(file.files[0].name);
 	  		var that 			= this;
 
 	  		$.ajax({
@@ -89,9 +91,10 @@ var fileUpload = React.createClass({
   		reader.onload = function (e) {
   			var file 	= fileElem.files[0];
 		  	var dataURL = reader.result;
+		  	var fileName= removeCommas(file.name)
 
 			var fd = new FormData();
-				fd.append('key', file.name);
+				fd.append('key', fileName);
 				fd.append('acl', 'public-read');
 				fd.append('Content-Type', file.type);
 				fd.append('Content-Length', file.size);
@@ -109,9 +112,9 @@ var fileUpload = React.createClass({
 					success: function (data) {
 
 						that.isFileSending();
-						fileName.value = file.name;
+						fileName.value = fileName;
 						that.props.addFile();
-						document.querySelectorAll('div.row.file p')[index].innerHTML = file.name;
+						document.querySelectorAll('div.row.file p')[index].innerHTML = fileName;
 						that.setState({
 							disable: true
 						})

@@ -12,13 +12,13 @@ test("Split orders comes back in the right format", function (t) {
 	var result = splitData(submittedOrder());
 	
 	t.equals( typeof result, 'object', "it is an object");
-	t.equals( !!result.minorObject, true, "with a unit key");
-	t.equals( !!result.mainObject, true, "with a order key");
+	t.equals( !!result.multipleValuesObject, true, "with a unit key");
+	t.equals( !!result.singleValueObject, true, "with a order key");
 	t.end();
 });
 
-test("Split orders comes back within the mainObject key with the right result", function (t) {
-	var unit = splitData(submittedOrder()).minorObject;
+test("Split orders comes back within the singleValueObject key with the right result", function (t) {
+	var unit = splitData(submittedOrder()).multipleValuesObject;
 
 	t.equals( unit.job_number, undefined);
 	t.deepEqual( unit.unit_commodity_description, ['', '']);
@@ -35,8 +35,8 @@ test("Split orders comes back within the mainObject key with the right result", 
 	t.end();
 });
 
-test("Split orders comes back within the mainObject key with the right result", function (t) {
-	var order = splitData(submittedOrder()).mainObject;
+test("Split orders comes back within the singleValueObject key with the right result", function (t) {
+	var order = splitData(submittedOrder()).singleValueObject;
 
 	t.equals( order.carrier, "wer");
 	t.equals( order.client, "ewer");
@@ -44,8 +44,8 @@ test("Split orders comes back within the mainObject key with the right result", 
 	t.end();
 });
 
-test("Split contacts comes back within the minorObject key with the right result", function (t) {
-	var reminder = splitData(submittedContact()).minorObject;
+test("Split contacts comes back within the multipleValuesObject key with the right result", function (t) {
+	var reminder = splitData(submittedContact()).multipleValuesObject;
 
 	t.deepEqual( reminder.message, [ 'sdfg', 'dsfg' ]);
 	t.deepEqual( reminder.date, [ '2015-07-31', '2015-08-16' ]);
@@ -53,8 +53,8 @@ test("Split contacts comes back within the minorObject key with the right result
 	t.end();
 });
 
-test("Split contacts comes back within the mainObject key with the right result", function (t) {
-	var order = splitData(submittedContact()).mainObject;
+test("Split contacts comes back within the singleValueObject key with the right result", function (t) {
+	var order = splitData(submittedContact()).singleValueObject;
 
 	t.equals( order.contact_id, "251");
 	t.equals( order.vat_number, "456ghtd");

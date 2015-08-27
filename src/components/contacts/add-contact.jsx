@@ -1,9 +1,11 @@
-var React = require('react');
-var Warning = require("../close-warning.jsx");	
-var AddReminders = require("../reminders/add-reminder.jsx");
-var contactStore= require("../../lib/store-contacts");
+var React 			= require('react');
+var Warning 		= require("../close-warning.jsx");	
+var AddReminders 	= require("../reminders/add-reminder.jsx");
+var contactStore	= require("../../lib/store-contacts.js");
+var ContactList 	= require("./list-contact.jsx");
 
 var addContact = React.createClass({
+
 	getInitialState: function () {
 
 	    return {
@@ -15,7 +17,7 @@ var addContact = React.createClass({
 
 	closeView: function () {
 
-		if(this.state.closeView){
+		if (this.state.closeView){
 			this.props.closeView()
 			this.setState({
 	    		closeView: false
@@ -96,20 +98,7 @@ var addContact = React.createClass({
 										</div>
 									</div>
 
-									<div className="row">
-										<div className="column-5">
-											<p>Contact Name</p>
-											<input type="text" name="name" defaultValue={contact ? contact.name : ""}  />
-										</div>
-										<div className="column-5">
-											<p>Telephone</p>
-											<input type="text" name="telephone" defaultValue={contact ? contact.telephone : ""}/>
-										</div>
-										<div className="column-6">
-											<p>Email</p>
-											<input type="email" name="email" defaultValue={contact ? contact.email : ""}/>
-										</div>
-									</div>
+									<ContactList contacts={[contact]}/>
 									
 									<div className="row">
 										<div className="column-16">

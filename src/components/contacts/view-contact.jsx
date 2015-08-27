@@ -1,8 +1,9 @@
-var React  	= require('react/addons');
-var Router  = require('react-router');
-var Close 	= require("../close-warning.jsx");
-var Warning = require("../warning.jsx");
-var ViewReminders = require("../reminders/view-reminder.jsx");
+var React  			= require('react/addons');
+var Router  		= require('react-router');
+var Close 			= require("../close-warning.jsx");
+var Warning 		= require("../warning.jsx");
+var ViewReminders 	= require("../reminders/view-reminder.jsx");
+var ContactList 	= require("./list-contact.jsx");
 
 
 var viewOrder = React.createClass({
@@ -11,9 +12,33 @@ var viewOrder = React.createClass({
         viewing: true,
         closeView: false,
         edited: false,
-        deletedReminders: ""
+        deletedReminders: "",
+        peopleContacts: ""
       };
     },
+
+
+	componentWillMount: function () {
+
+		var getContactUrl = "/people_contacts/" + this.props.contact.contact_id;
+
+	    $.get(getContactUrl, function(result) {
+
+	    	if (result !== "") {
+		    	var peopleContacts = JSON.parse(result);
+		    	
+		      	if (this.isMounted()) {
+		        	this.setState({
+		          		peopleContacts: peopleContacts
+		        	});
+		      	}
+		    }
+	    }.bind(this))
+	    .fail(function () {
+
+	    	"get units request failed"
+	    });
+	},
 
     deleteHandler: function (item) {
 		this.setState({
@@ -153,20 +178,10 @@ var viewOrder = React.createClass({
 										</div>
 									</div>
 
-									<div className="row">
-										<div className="column-5">
-											<p>Contact Name</p>
-											<input type="text" name="name" defaultValue={contact ? contact.name : ""} disabled={viewing ? true : false} onChange={edited} />
-										</div>
-										<div className="column-5">
-											<p>Telephone</p>
-											<input type="text" name="telephone" defaultValue={contact ? contact.telephone : ""} disabled={viewing ? true : false} onChange={edited}/>
-										</div>
-										<div className="column-6">
-											<p>Email</p>
-											<input type="email" name="email" defaultValue={contact ? contact.email : ""} disabled={viewing ? true : false} onChange={edited}/>
-										</div>
-									</div>
+									<ContactList 
+										edit={edited} 
+										viewing={viewing} 
+										contacts={[contact]}/>
 									
 									<div className="row">
 										<div className="column-16">

@@ -3,26 +3,26 @@ var mock = {}
 mock = {
     contact_id: "place",
     contact : {
-        mainObject: {
+        singleValueObject: {
             name: "dave",
             vat_number: "456ghtd",
             city: "london",
             telephone: "0203467893"
         },
-        minorObject: {
+        multipleValuesObject: {
             date: "2015-08-26",
             message: "what"
         }
     },
     edit : {
 
-        mainObject: {
+        singleValueObject: {
             contact_id: "false",
             vat_number: "456ghtd",
             city: "london",
             telephone: "0203467893"
         },
-        minorObject: {
+        multipleValuesObject: {
             date: "2015-08-26",
             message: "what",
             reminder_id: "",

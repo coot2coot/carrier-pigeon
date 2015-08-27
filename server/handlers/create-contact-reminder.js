@@ -8,7 +8,7 @@ function create (req, res, table) {
 
 	parseData(req, function (data) {
 
-		data = removes(data)
+		data = removes(data);
 
 		validateUser(req, res, function () {
 
