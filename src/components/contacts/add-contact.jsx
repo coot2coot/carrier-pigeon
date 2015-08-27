@@ -2,7 +2,7 @@ var React 			= require('react');
 var Warning 		= require("../close-warning.jsx");	
 var AddReminders 	= require("../reminders/add-reminder.jsx");
 var contactStore	= require("../../lib/store-contacts.js");
-var ContactList 	= require("./list-contact.jsx");
+var PContactList 	= require("./people-contact-list.jsx");
 
 var addContact = React.createClass({
 
@@ -98,7 +98,7 @@ var addContact = React.createClass({
 										</div>
 									</div>
 
-									<ContactList contacts={[contact]}/>
+									<PContactList contacts={[contact]}/>
 									
 									<div className="row">
 										<div className="column-16">

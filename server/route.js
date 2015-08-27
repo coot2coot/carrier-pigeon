@@ -70,7 +70,7 @@ var serverRoutes =  function (router) {
  * -------------------------------*/
 
 	router.addRoute('/units/:jobNo', function (req, res, match){
-	  	require('./handlers/read-units-db.js')(req, res);
+	  	require('./handlers/read-single-db.js')(req, res);
 	});
 
 /* -------------------------------*

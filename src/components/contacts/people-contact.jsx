@@ -29,9 +29,18 @@ var contact = React.createClass({
 					<p>Email</p>
 					<input type="email" name="contact_email" disabled={props.viewing ? true : false} onChange={props.onContactChange.bind(null, props.keys)} defaultValue={state.contact ? state.contact.email : ""}/>
 				</div>
+
+				<input type="text" name="contact_people_contact_id" className='display-none' defaultValue={state.contact ? state.contact.people_contact_id : ""}/>
+
+				{ 
+					props.contactId
+						? <input type="text" name="contact_contact_id" className='display-none' defaultValue={props.contactId}/>
+						: <p></p>
+				}
+				
 				<div className="column-3 push-1 margin-top">
 					<button type="button" className="button	blue add-row" disabled={props.viewing ? true : false} onClick={props.addContact.bind(null, props.keys)}>+</button>
-					<button type="button" className="button	blue add-row" disabled={props.viewing ? true : false} onClick={props.removeContact.bind(null, props.keys)}>-</button>
+					<button type="button" className="button	blue add-row" disabled={props.viewing ? true : false} onClick={props.removeContact.bind(null, props.keys, state.contact.people_contact_id)}>-</button>
 				</div>
 			</div>
 		);

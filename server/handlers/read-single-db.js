@@ -3,7 +3,7 @@ var db 			 = require("../db-config.js");
 
 function select (req, res) {
 
-	var table = req.url.indexOf('unit') > -1 ? 'units' : 'reminder_contacts'
+	var table = req.url.indexOf('unit') > -1 ? 'units' : 'people_contacts'
 	
 	var id = req.url.split("/").pop();
 

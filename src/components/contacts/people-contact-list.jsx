@@ -1,12 +1,12 @@
 var React 	= require('react');
-var Contact = require("./contact.jsx");
+var PContact = require("./people-contact.jsx");
 
 var contactList = React.createClass({
 
 	getInitialState: function () {
 
 	    return {
-	        contacts: this.props.contacts
+	        contacts: [{}]
 	    };
 	},
 
@@ -31,7 +31,11 @@ var contactList = React.createClass({
     	});
   	},
 
-  	removeContact: function (key) {  		
+  	removeContact: function (key, id) {
+  	 
+  		if (this.props.deletePContacts && id) {
+  			this.props.deletePContacts(id);
+  		}; 		
 
   		if (this.state.contacts.length > 1) {
 
@@ -44,6 +48,12 @@ var contactList = React.createClass({
 	    	});
 	    }
   	},
+  	componentWillReceiveProps: function (nextProps) {
+
+		this.setState({
+			contacts: nextProps.contacts
+		}); 	      
+  	},
 
 	render: function () {
 
@@ -52,6 +62,8 @@ var contactList = React.createClass({
 		var onContactChange = this.onContactChange;
 		var addContact 		= this.addContact;
 		var removeContact 	= this.removeContact;
+		var contactId 		= props.contactId ? props.contactId : false;
+		console.log(contactId)
 
 		return (
 			<div>
@@ -60,10 +72,11 @@ var contactList = React.createClass({
 
 						var key = new Date().getMilliseconds() + i;
 
-						return <Contact 
+						return <PContact 
 									viewing={props.viewing}
 									onContactChange={onContactChange}
 									addContact={addContact}
+									contactId={contactId}
 									removeContact={removeContact}
 									contact={val} 
 									keys={i}

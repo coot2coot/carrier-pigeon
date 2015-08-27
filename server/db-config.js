@@ -24,6 +24,7 @@ function connect (query) {
 }
 
 function postUsers (table, doc) {
+
     var columns = stringifyData(doc).columns +", password";
     var values  = stringifyData(doc).values + ", crypt('changeme', gen_salt('md5'))";
 
@@ -193,7 +194,7 @@ function editInvoices (doc, clt, cb, done) {
 
 function editReminders (doc, clt, cb, done) {
 
-    var deleteQuery = getQuery.del(doc.items_to_remove, "reminders", "reminder_id");
+    var deleteQuery = getQuery.del(doc.remindersRemove, "reminders", "reminder_id");
     var query = '';
 
     if (doc.multipleValuesObject.hasOwnProperty('message')) { 
@@ -211,6 +212,36 @@ function editReminders (doc, clt, cb, done) {
                     .end();
 
     }
+
+
+    clt.query( query, function (err) {
+
+        done();
+
+        if (err) {
+            return console.log(err);
+        }
+
+        editPeopleContacts(doc, clt, cb, done)
+    });
+}
+
+function editPeopleContacts (doc, clt, cb, done) {
+
+    var deleteQuery = getQuery.del(doc.pContactsRemove, "people_contacts", "people_contact_id");
+    var query = '';
+
+    var updateQuery = getQuery.update(doc.multipleValuesObject2, "people_contacts", "people_contact_id").update;
+    var createQuery = getQuery.update(doc.multipleValuesObject2, "people_contacts", "people_contact_id").create;
+
+    query = command()
+                .query(updateQuery)
+                .query(deleteQuery)
+                .query(createQuery)
+                .end();
+
+    console.log(query)  
+
     clt.query( query, function (err) {
 
             done();

@@ -51,7 +51,8 @@ edit.orders = function (req, res, cb) {
 
 edit.contacts = function (req, res, cb) {
 
-	var itemsToRemove = req.url.split("/").pop();
+	var remindersRemove = req.url.split("/").pop().split("_")[0];
+	var pContactsRemove = req.url.split("/").pop().split("_")[1];
 
 	var table = "contacts";
 	
@@ -62,7 +63,10 @@ edit.contacts = function (req, res, cb) {
 		validateUser(req, res, function () {
 
 			var splitData = splitObject(data);
-			splitData.items_to_remove = itemsToRemove;
+			splitData.remindersRemove = remindersRemove;
+			splitData.pContactsRemove = pContactsRemove;
+
+			console.log(pContactsRemove)
 
 			db.edit(table, splitData, function (err) {
 				if (err) {

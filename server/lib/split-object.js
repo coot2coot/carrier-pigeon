@@ -32,7 +32,7 @@ function splitObject (data, id) {
 			} else if (prop.substring(0, 9) === 'reminder_') {	    
 			    obj.multipleValuesObject[prop.substring(9, prop.length)] = data[prop]
 
-			}  else if (prop.substring(0, 8) === 'contact_') {	    
+			}  else if (prop.substring(0, 8) === 'contact_' && prop.substring(8, prop.length) !== 'id') {	    
 			    obj.multipleValuesObject2[prop.substring(8, prop.length)] = data[prop]
 
 			} else {
