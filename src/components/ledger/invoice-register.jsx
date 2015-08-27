@@ -16,7 +16,7 @@ var InvoiceRegister = React.createClass({
 						<h5>{this.props.currency}</h5>
 					</div>
 					<div className="column-9">
-						<input type="number" name="amount" min="0.01" step="0.01" max="10000" defaultValue={ this.props.invoice ? this.props.invoice.amount : "" } onChange={onInvoiceChange.bind(null, keys)}/>
+						<input type="number" name="amount" min="0.01" step="0.01" defaultValue={ this.props.invoice ? this.props.invoice.amount : "" } onChange={onInvoiceChange.bind(null, keys)}/>
 					</div>
 					<div className="column-6">
 						<input type="text" name="invoice_number" defaultValue={ this.props.invoice ? this.props.invoice.invoice_number : "" } onChange={onInvoiceChange.bind(null, keys)}/>
