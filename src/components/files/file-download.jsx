@@ -86,14 +86,15 @@ var fileDownload = React.createClass({
 
 		var state 	= this.state;
 		var props 	= this.props;
-
+		
 		return (
 			<div>
 				
 				<div className='row'>
 			
 					{
-						typeof state.fileName === 'string' && state.fileName !== ''
+						
+						(typeof state.fileName === 'string' && state.fileName !== '')
 							? (<div>
 									<div className='row file'><p>File {state.fileName}</p></div>
 									<button type='button'

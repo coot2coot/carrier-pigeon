@@ -25,8 +25,8 @@ testDb.create= function (cb){
 
             cb(result)
 
-        	mock.edit.mainObject.contact_id = result.rows[0].contact_id.toString();
-            mock.edit.minorObject.contact_reminders_id = result.rows[0].contact_id.toString();
+        	mock.edit.singleValueObject.contact_id = result.rows[0].contact_id.toString();
+            mock.edit.multipleValuesObject.contact_reminders_id = result.rows[0].contact_id.toString();
 		    if (err) {
 		    	console.log('err >>>', err)
 	            if(!err) return false;

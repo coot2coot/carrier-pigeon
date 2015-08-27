@@ -70,20 +70,9 @@ var serverRoutes =  function (router) {
  * -------------------------------*/
 
 	router.addRoute('/units/:jobNo', function (req, res, match){
-	  	require('./handlers/read-units-db.js')(req, res);
+	  	require('./handlers/read-single-db.js')(req, res);
 	});
 
-	router.addRoute('/unit/create', function (req, res, match){
-	  	require('./handlers/create-db.js')(req, res);
-	});
-
-	router.addRoute('/unit_types/get', function (req, res, match){
-	  	require('./handlers/read-unit-types-db.js')(req, res);
-	});
-
-	router.addRoute('/units/delete/:id', function (req, res, match){
-	  	require('./handlers/delete-db.js')(req, res);
-	});
 /* -------------------------------*
  *	   Contacts Routes
  * -------------------------------*/
@@ -102,6 +91,13 @@ var serverRoutes =  function (router) {
 	});
 	router.addRoute('/contacts/delete/:id?', function (req, res, match){
 	  	require('./handlers/delete-db.js')(req, res);
+	});
+/* -------------------------------*
+ *	   People Contacts Routes
+ * -------------------------------*/
+
+	router.addRoute('/people_contacts/:contact_id', function (req, res, match){
+	  	require('./handlers/read-single-db.js')(req, res);
 	});
 
 /* -------------------------------*

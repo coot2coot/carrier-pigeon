@@ -1,5 +1,5 @@
 var test 					= require('tape');
-var stringify 				= require('../../../server/lib/stringify-units-reminders-sql.js').stringify;
+var stringify 				= require('../../../server/lib/stringify-data-multiple-rows-sql.js').stringifyMultiple;
 
 var addUnitMock 			= require('../mocks/add-order.mock.js').oneUnit;
 var addReminderMock 		= require('../mocks/add-contact.mock.js').oneReminder;
@@ -108,7 +108,7 @@ test('when stringify data is given a result with multiple reminders, returns dat
 * 	Get Values tests
 **********************************/
 
-var getValues = require('../../../server/lib/stringify-units-reminders-sql.js').values;
+var getValues = require('../../../server/lib/stringify-data-multiple-rows-sql.js').values;
 
 test('Testing that getValues is ', function (t) {
 	t.equals( typeof getValues, 'function', "a function");
@@ -134,7 +134,7 @@ test('getValues returns the correct string', function (t) {
 * 	Get Columns tests
 **********************************/
 
-var getColumns = require('../../../server/lib/stringify-units-reminders-sql.js').columns;
+var getColumns = require('../../../server/lib/stringify-data-multiple-rows-sql.js').columns;
 
 test('Testing that getColumns is ', function (t) {
 	t.equals( typeof getColumns, 'function', "a function");
@@ -159,7 +159,7 @@ test('getColumns returns the correct string', function (t) {
 * 	Has Job Number tests
 **********************************/
 
-var hasId = require('../../../server/lib/stringify-units-reminders-sql.js').hasId;
+var hasId = require('../../../server/lib/stringify-data-multiple-rows-sql.js').hasId;
 
 test('Testing that hasId function is', function (t) {
 	t.equals( typeof hasId, 'function', "a function");

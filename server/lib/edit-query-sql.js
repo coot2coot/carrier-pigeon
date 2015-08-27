@@ -8,6 +8,8 @@ function getLength (type, obj) {
 		return obj.unit_type.length;
 	} else if (type === "reminders") {
 		return obj.date.length;
+	} else if (type === "people_contacts") {
+		return obj.email.length;
 	} else {
 		return obj.currency.length;
 	}
@@ -48,7 +50,7 @@ function getCreateQuery (type, obj, id, index) {
 	data.values  = [];
 
 	for (props in obj) {
-		if (props !== id && props !== "items_to_remove" && props !== 'reminder_id' && props !== 'job_number') {
+		if (props !== id && props !== "items_to_remove" && props !== 'reminder_id' && props !== 'job_number'  && props !==  'people_contact_id') {
 			data.columns.push(props);
 			var value = getRightValue(obj, props, index);
 			data.values.push(value);
@@ -120,7 +122,7 @@ query.update = function (items, table, idName) {
 	there are multiple values a loop is required to
 	correctly format the sql*/
 
-	if (typeof items[idName] === "object"){
+	if (typeof items[idName] === "object") {
 
 		var i;
 		var length = getLength(table, items);
@@ -144,9 +146,9 @@ query.update = function (items, table, idName) {
 };
 
 query.del = function (items, table, idName) {
-	console.log('items', items)
 
 	if (items !== "" && items !== undefined) {
+
 		var arr = items.split(",");
         var deleteQuery = "";
         var i;
@@ -155,6 +157,7 @@ query.del = function (items, table, idName) {
             deleteQuery += "DELETE FROM " + table + " WHERE " + 
             				idName + " = "+ arr[i] + ";";
         }
+        
         return deleteQuery;
 
     } else {

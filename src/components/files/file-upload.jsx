@@ -2,6 +2,8 @@ var React 		= require('react');
 var LoadingGiff = require("../loadingGiff.jsx");
 var Warning 	= require("../close-warning.jsx");
 
+var removeCommas= require('../../lib/remove-commas.js')
+
 var accessKey	= "AKIAIP2WE7XK6HTLZFBA";
 
 var fileUpload = React.createClass({
@@ -31,7 +33,9 @@ var fileUpload = React.createClass({
   		if (file.files && file.files[0]) {
 
 	  		var upLoadFile 		= this.upLoadFile;
-	  		var fileName 		= file.files[0].name;
+	  		var fileName 		= file.files[0].name
+
+	  		;
 	  		var that 			= this;
 
 	  		$.ajax({
@@ -87,6 +91,7 @@ var fileUpload = React.createClass({
   		that.isFileSending();
 
   		reader.onload = function (e) {
+
   			var file 	= fileElem.files[0];
 		  	var dataURL = reader.result;
 

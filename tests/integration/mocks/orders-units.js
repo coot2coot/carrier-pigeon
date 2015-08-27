@@ -4,24 +4,24 @@ mock = {
     job_number: "d",
     unit_id: "d",
     order : {
-        minorObject:   {
+        multipleValuesObject:   {
             unit_number: "345fgd",
             unit_type:"40dc",
         },
-        mainObject: {
+        singleValueObject: {
             client : 'fake',
             date : '10-10-2010',
         }
     },
     edit : {
-        minorObject:  {
+        multipleValuesObject:  {
             get unit_id () {
                 return mock.unit_id;
             },
             unit_number: "4",
             unit_type:"40dc"
         },
-        mainObject: {
+        singleValueObject: {
             get job_number () {
                 return mock.job_number;
             },
@@ -31,7 +31,7 @@ mock = {
         unit_delete: ""
     },
     multipleEdit : {
-        minorObject:   {
+        multipleValuesObject:   {
             get unit_id () {
                 return [mock.unit_id,""];
             },
@@ -41,7 +41,7 @@ mock = {
             unit_number: ["4","40"],
             unit_type:["40dc","40dd"]
         },
-        mainObject: {
+        singleValueObject: {
             get job_number () {
                 return mock.job_number
             },

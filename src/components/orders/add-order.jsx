@@ -128,7 +128,9 @@ var addOrder = React.createClass({
 
 
 										{ this.state.unitsArr.map( function (unit, i) {
+
 											var key = new Date().getMilliseconds() + i;
+											
 										    return <Units 
 										    			unit={unit} 
 										    			key={key} 

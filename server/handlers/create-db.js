@@ -10,24 +10,24 @@ function create (req, res) {
 	parseData(req, function (data) {
 
 		data = removes(data)
-		validateUser(req, res, function () {
+		validateUser(req, res, function () {		
 
 			if (data.new_unit) {
 				db.post('unit_types', data, function (err) {
 
-						if (err) {
-							console.log(err)
-							res.writeHead(500);
-							res.write(err);
-							res.end();
-						}
-						else {
-							res.writeHead(303, {
-								"Location": "/#/settings/units"
-							});
-							res.end();
-						}
-					});
+					if (err) {
+						console.log(err)
+						res.writeHead(500);
+						res.write(err);
+						res.end();
+					}
+					else {
+						res.writeHead(303, {
+							"Location": "/#/settings/units"
+						});
+						res.end();
+					}
+				});
 			} else {
 				validateOrder(data, res, function () {
 

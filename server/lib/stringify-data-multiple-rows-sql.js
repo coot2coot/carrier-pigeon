@@ -67,6 +67,7 @@ function getValues (object, prop, id) {
         }
 
         var getIdQuery = hasId(id);
+        console.log('new', getIdQuery)
 
         str += arr.join() + "," + getIdQuery;
         values.push(str);
@@ -75,7 +76,7 @@ function getValues (object, prop, id) {
     return values.join('),(');
 }
 
-function stringifyUnitReminder (units, prop, id) {
+function stringifyMultiple (units, prop, id) {
 
     var data = {};
 
@@ -96,7 +97,7 @@ function stringifyUnitReminder (units, prop, id) {
 }
 
 module.exports = {
-    stringify: stringifyUnitReminder,
+    stringifyMultiple: stringifyMultiple,
     values: getValues,
     columns: getColumns,
     hasId: hasId

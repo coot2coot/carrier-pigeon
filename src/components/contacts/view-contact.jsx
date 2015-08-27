@@ -1,8 +1,9 @@
-var React  	= require('react/addons');
-var Router  = require('react-router');
-var Close 	= require("../close-warning.jsx");
-var Warning = require("../warning.jsx");
-var ViewReminders = require("../reminders/view-reminder.jsx");
+var React  			= require('react/addons');
+var Router  		= require('react-router');
+var Close 			= require("../close-warning.jsx");
+var Warning 		= require("../warning.jsx");
+var ViewReminders 	= require("../reminders/view-reminder.jsx");
+var PContactList 	= require("./people-contact-list.jsx");
 
 
 var viewOrder = React.createClass({
@@ -11,11 +12,38 @@ var viewOrder = React.createClass({
         viewing: true,
         closeView: false,
         edited: false,
-        deletedReminders: ""
+        deletedReminders: "",
+        deletedPContacts: "",
+        peopleContacts: [{}]
       };
     },
 
-    deleteHandler: function (item) {
+
+	componentWillMount: function () {
+
+		var getContactUrl = "/people_contacts/" + this.props.contact[0].contact_id;
+
+	    $.get(getContactUrl, function(result) {
+	    	var peopleContacts = JSON.parse(result);
+	    	
+
+	    	if (peopleContacts.length > 0) { 
+	    		console.log(peopleContacts)
+		      	if (this.isMounted()) {
+		        	this.setState({
+		          		peopleContacts: peopleContacts
+		        	});
+		      	}
+		    }
+	    }.bind(this))
+	    .fail(function () {
+
+	    	"get units request failed"
+	    });
+	},
+
+	deleteHandler: function (item) {
+
 		this.setState({
 			deleteContact: item
 		})
@@ -23,7 +51,7 @@ var viewOrder = React.createClass({
 
 	onCloseComponent: function () {
 		this.setState({
-			deleteContact: false
+			deletedContacts: false
 		})
 	}, 
 
@@ -42,13 +70,6 @@ var viewOrder = React.createClass({
 		this.setState({
 	    	closeView: false
 	    })
-	},
-
-	deleteHandler: function (item) {
-
-		this.setState({
-			deleteContact: item
-		})
 	},
 
 	edit: function () {
@@ -72,21 +93,33 @@ var viewOrder = React.createClass({
 
   	deleteReminder: function (id) {
 
-  		var newDeletedStrng = id;
+  		var deleteRem = id;
 
   		if (this.state.deletedReminders !== "") {
-  			newDeletedStrng = this.state.deletedReminders + ',' + id;
+  			deleteRem = this.state.deletedReminders + ',' + id;
   		}
 			
 		this.setState({
-			deletedReminders: newDeletedStrng
+			deletedReminders: deleteRem
+		});
+  	},
+
+  	deletePContacts: function (id) {
+
+  		var removeAnoutherIdd =  this.state.deletedPContacts + ',' + id
+
+  		var deleteCont =  this.state.deletedPContacts !== "" ? removeAnoutherIdd : id;
+  		
+		this.setState({
+			deletedPContacts: deleteCont
 		});
   	},
 
 	render: function() {
 
 		var viewing = this.state.viewing;
-		var edited = this.ifEdited;
+		var state 	= this.state;
+		var edited 	= this.ifEdited;
 		var contact = this.props.contact[0];
 		var reminders = this.props.contact;
 		var deleteReminder = this.deleteReminder;
@@ -107,7 +140,7 @@ var viewOrder = React.createClass({
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body scroll">
-						<form action={"/contacts/edit/" + this.state.deletedReminders} method="POST">
+						<form action={"/contacts/edit/" + this.state.deletedReminders + "_" + this.state.deletedPContacts} method="POST">
 							<input className="display-none" name="contact_id" defaultValue= {contact ? contact.contact_id : ""} onChange={edited}></input>
 							<div className="row gutters">
 								<div>
@@ -153,20 +186,12 @@ var viewOrder = React.createClass({
 										</div>
 									</div>
 
-									<div className="row">
-										<div className="column-5">
-											<p>Contact Name</p>
-											<input type="text" name="name" defaultValue={contact ? contact.name : ""} disabled={viewing ? true : false} onChange={edited} />
-										</div>
-										<div className="column-5">
-											<p>Telephone</p>
-											<input type="text" name="telephone" defaultValue={contact ? contact.telephone : ""} disabled={viewing ? true : false} onChange={edited}/>
-										</div>
-										<div className="column-6">
-											<p>Email</p>
-											<input type="email" name="email" defaultValue={contact ? contact.email : ""} disabled={viewing ? true : false} onChange={edited}/>
-										</div>
-									</div>
+									<PContactList 
+										edit={edited} 
+										viewing={viewing} 
+										deletePContacts= {this.deletePContacts}
+										contactId = {contact ? contact.contact_id : ''}
+										contacts={state.peopleContacts}/>
 									
 									<div className="row">
 										<div className="column-16">
@@ -174,7 +199,7 @@ var viewOrder = React.createClass({
 											<textarea type="text" className="small" name="remarks" defaultValue={contact ? contact.remarks : ""} disabled={viewing ? true : false} max="500" onChange={edited}/>
 										</div>
 										
-									</div>
+										</div>
 									<div className="row">
 										<div className="column-16">
 											<p>Sales Report</p>
