@@ -33,7 +33,9 @@ var fileUpload = React.createClass({
   		if (file.files && file.files[0]) {
 
 	  		var upLoadFile 		= this.upLoadFile;
-	  		var fileName 		= removeCommas(file.files[0].name);
+	  		var fileName 		= file.files[0].name
+
+	  		;
 	  		var that 			= this;
 
 	  		$.ajax({
@@ -89,12 +91,12 @@ var fileUpload = React.createClass({
   		that.isFileSending();
 
   		reader.onload = function (e) {
+
   			var file 	= fileElem.files[0];
 		  	var dataURL = reader.result;
-		  	var fileName= removeCommas(file.name)
 
 			var fd = new FormData();
-				fd.append('key', fileName);
+				fd.append('key', file.name);
 				fd.append('acl', 'public-read');
 				fd.append('Content-Type', file.type);
 				fd.append('Content-Length', file.size);
@@ -112,9 +114,9 @@ var fileUpload = React.createClass({
 					success: function (data) {
 
 						that.isFileSending();
-						fileName.value = fileName;
+						fileName.value = file.name;
 						that.props.addFile();
-						document.querySelectorAll('div.row.file p')[index].innerHTML = fileName;
+						document.querySelectorAll('div.row.file p')[index].innerHTML = file.name;
 						that.setState({
 							disable: true
 						})

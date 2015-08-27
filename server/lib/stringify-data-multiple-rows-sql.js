@@ -77,11 +77,8 @@ function getValues (object, prop, id) {
 }
 
 function stringifyMultiple (units, prop, id) {
-    console.log('asdfasdfas')
 
     var data = {};
-
-    console.log('prop', units[prop])
 
     if (typeof units[prop] === "object") {
         data.columns = "";

@@ -66,8 +66,6 @@ edit.contacts = function (req, res, cb) {
 			splitData.remindersRemove = remindersRemove;
 			splitData.pContactsRemove = pContactsRemove;
 
-			console.log(pContactsRemove)
-
 			db.edit(table, splitData, function (err) {
 				if (err) {
 					console.log(err);
