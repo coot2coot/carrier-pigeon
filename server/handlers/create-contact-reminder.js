@@ -4,20 +4,18 @@ var validateUser 	= require('../lib/validate-user.js');
 var splitObject  	= require('../lib/split-object.js');
 var removes 		= require('../lib/removeQuotes.js');
 
-function create (req, res, table) {	
+function create (req, res, table) {
 
 	parseData(req, function (data) {
 
 		data = removes(data);
-
-		console.log(data)
 
 		validateUser(req, res, function () {
 
 			var splitData = splitObject(data);
 
 			db.post(table, splitData, function (err) {
-				
+
 				if (err) {
 					console.log(err)
 					res.writeHead(500);
@@ -30,7 +28,7 @@ function create (req, res, table) {
 					});
 					res.end();
 				}
-			}); 
+			});
 		});
 	});
 };

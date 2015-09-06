@@ -12,13 +12,13 @@ function search (req, res) {
 
 		table = "units";
 	} else {
-		
+
 		table = "orders"
 	}
 
 	validateUser(req,res, function (){
 
-		db.searchDates(table,data, function (err,orders) {
+		db.searchDates(table, data, function (err,orders) {
 
 			if (err) {
 				res.writeHead(200, {"Content-Type" : "text/plain"});

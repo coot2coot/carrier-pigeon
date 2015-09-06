@@ -31,7 +31,9 @@ var ordersPage = React.createClass({
 
 	    if (this.props.params.job_no) {
 
-	    	this.getSearchedOrders(getJobNumber(this.props.params.job_no))	    	
+			var date = new Date();
+
+	    	this.getSearchedOrders(getJobNumber(this.props.params.job_no, date))
 	    } else {
 
 	    	this.getTodays();
@@ -101,7 +103,7 @@ var ordersPage = React.createClass({
 	},
 
 	getSearchedOrders: function (value) {
-		
+
 		var getUrl = "/search/orders/" + value;
 
 		$.get(getUrl, function (result) {
@@ -111,10 +113,10 @@ var ordersPage = React.createClass({
 				this.setState({
 					error: true
 				})
-			} else {		
+			} else {
 				var order = JSON.parse(result);
 				var uniqOrder = sorts(this.uniq(order));
-				
+
 				this.setState({
 					error: false
 				})
@@ -122,7 +124,7 @@ var ordersPage = React.createClass({
 				this.setState({
 				    orders : uniqOrder
 				});
-			}				
+			}
 		}.bind(this))
 		.fail(function(){
 			"get searchfailed"
@@ -196,7 +198,7 @@ var ordersPage = React.createClass({
 
 	getDateOrders: function (dates, table) {
 
-		var getUrl = "/search/"+table+"/dates/" + dates;
+		var getUrl = "/search/" + table + "/dates/" + dates;
 
 		$.get(getUrl, function (result) {
 
@@ -205,7 +207,7 @@ var ordersPage = React.createClass({
 					error: true,
 					datePicker: null
 				})
-			} else {		
+			} else {
 				var order = sorts(JSON.parse(result));
 
 				this.setState({
@@ -216,9 +218,9 @@ var ordersPage = React.createClass({
 				    orders : order,
 				    datePicker: null
 				});
-			}				
+			}
 		}.bind(this))
-		
+
 		.fail(function(){
 			"get searchfailed"
 		});
@@ -231,7 +233,7 @@ var ordersPage = React.createClass({
 	},
 
 	render: function() {
-		
+
 		var orderHandler 		= this.orderHandler;
 		var addInvoiceHandler 	= this.addInvoice;
 		var ledgerHandler 		= this.ledgerHandler;
@@ -264,7 +266,7 @@ var ordersPage = React.createClass({
 							{( this.state.orders
 						  		?<Ordersth viewLedger={ viewLedger }/>
 								:<th><h5>Sorry there are no orders for today</h5></th>
-							)}							
+							)}
 						</table>
 					</div>
 					<div className="panel-body table-responsive scroll">
@@ -272,11 +274,11 @@ var ordersPage = React.createClass({
 							<tbody>
 							  	{this.state.orders
 							  		? this.state.orders.map(function (order, i) {
-							  			
+
 								        return <tr>
 								            		<td key={i + "first"}>
 								            			<a onClick={orderHandler.bind(null, order)}>
-								            				<p>{getJobNumber(order.job_number)}</p>
+								            				<p>{getJobNumber(order.job_number, order.date)}</p>
 								            			</a>
 								            		</td>
 													<td key={i + "second"}>

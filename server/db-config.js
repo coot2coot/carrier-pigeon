@@ -43,7 +43,7 @@ function postContacts (table, doc) {
     var people_contacts  = stringifyUnits(doc.multipleValuesObject2, 'telephone', 'contact_id');
     var query  = "";
 
-    // Have reminders been added? check to see if the reminders 
+    // Have reminders been added? check to see if the reminders
     // message property exists
     if (doc.multipleValuesObject.hasOwnProperty('message')) {
 
@@ -135,7 +135,7 @@ function editUsers (doc, clt, cb, done) {
                 .set(query+ ",password = crypt($3, gen_salt('md5'))")
                 .where("username = $1 AND password = crypt($2, password)")
                 .end() , [doc.username, doc.current_password, doc.new_password], function(err) {
-        
+
         done();
         if (err) {
             return cb(err);
@@ -181,14 +181,14 @@ function editInvoices (doc, clt, cb, done) {
                 .query(updateQuery)
                 .query(deleteQuery)
                 .query(createQuery)
-                .end(), function (err) {
-        
+                .end(), function (err, result) {
+
         done();
-        
+
         if (err) {
             return cb(err);
         }
-        cb(null);
+        cb(null, result);
     });
 }
 
@@ -197,7 +197,7 @@ function editReminders (doc, clt, cb, done) {
     var deleteQuery = getQuery.del(doc.remindersRemove, "reminders", "reminder_id");
     var query = '';
 
-    if (doc.multipleValuesObject.hasOwnProperty('message')) { 
+    if (doc.multipleValuesObject.hasOwnProperty('message')) {
 
         var updateQuery = getQuery.update(doc.multipleValuesObject, "reminders", "reminder_id").update;
         var createQuery = getQuery.update(doc.multipleValuesObject, "reminders", "reminder_id").create;
@@ -206,7 +206,7 @@ function editReminders (doc, clt, cb, done) {
                     .query(deleteQuery)
                     .query(createQuery)
                     .end();
-    } else {   
+    } else {
         query = command()
                     .query(deleteQuery)
                     .end();
@@ -238,7 +238,7 @@ function editPeopleContacts (doc, clt, cb, done) {
                 .query(updateQuery)
                 .query(deleteQuery)
                 .query(createQuery)
-                .end(); 
+                .end();
 
     clt.query( query, function (err) {
 
@@ -304,7 +304,7 @@ dataBase.getOrder = function (table, job_number, cb) {
                 .from("units")
                 .where("job_number = " + job_number)
                 .end(), function(err, result) {
-            
+
             done();
 
             if (err) {
@@ -328,7 +328,7 @@ dataBase.post = function (table, doc, cb) {
         } else {
             query = postContacts(table, doc);
         }
-        
+
         client.query(query, function (err, result) {
             done();
 
@@ -352,7 +352,7 @@ dataBase.editUserPermissions = function (username, details, cb) {
                     .set(query)
                     .where("username = $1")
                     .end(), [username], function(err, result) {
-            
+
             done();
 
             if (err) {
@@ -389,9 +389,9 @@ dataBase.remove = function (table, doc, cb) {
 
         var column;
 
-        column = table === "users" ? "username" : 
-                table === "units" ? "unit_id" : 
-                table === "reminders" ? "contact_reminders_id" : 
+        column = table === "users" ? "username" :
+                table === "units" ? "unit_id" :
+                table === "reminders" ? "contact_reminders_id" :
                 table === "contacts" ? "contact_id" : "job_number";
 
         client.query(command()
@@ -430,7 +430,7 @@ dataBase.clearFileName = function (table, doc, cb) {
 };
 
 dataBase.select = function (table, id, cb ) {
-    
+
     var idType = table === 'units' ? 'job_number' : 'contact_id';
 
     connect( function (client, done) {
@@ -526,7 +526,7 @@ dataBase.searcher = function (table, data, cb) {
 dataBase.searchDates = function (table, dates, cb) {
 
     var query = dateRange(dates);
-    
+
     connect( function (client, done) {
 
         if(dates === "" ||dates[0] === "" || dates[1] === ""){

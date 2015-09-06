@@ -14,12 +14,14 @@ edit.orders = function (req, res, cb) {
 	var data = req.url;
 	/*
 	The id's for the units that have been deleted are sent to the server
-	in the url of the post request. The ids are then extracted and set 
+	in the url of the post request. The ids are then extracted and set
 	as the value of the var strng
 	*/
 	var strng = data.replace(/\/order\/edit\//g, "");
 
 	parseData(req, function (data) {
+
+		var jobNumber = data.job_number;
 
 		data = removes(data)
 		validateOrder(data, res, function () {
@@ -39,7 +41,7 @@ edit.orders = function (req, res, cb) {
 					} else {
 						cb(req, res);
 						res.writeHead(303, {
-							"Location": "/#/orders/true"
+							"Location": "/#/orders/true/" + jobNumber
 						});
 						res.end();
 					}
@@ -55,7 +57,7 @@ edit.contacts = function (req, res, cb) {
 	var pContactsRemove = req.url.split("/").pop().split("_")[1];
 
 	var table = "contacts";
-	
+
 	parseData(req, function (data) {
 
 		data = removes(data)
