@@ -31,7 +31,7 @@ var contactsPage = React.createClass({
 	    $.get(getContactUrl, function (result) {
 
 	    	if (result !== "") {
-	    		var contact = groupBy(getWeek(JSON.parse(result)),'contact_id');
+	    		var contact = groupBy(getWeek.inRange(JSON.parse(result)),'contact_id');
 
 		      	if (this.isMounted()) {
 		        	this.setState({
@@ -48,21 +48,7 @@ var contactsPage = React.createClass({
 
 	orderByReminders: function () {
 
-		var ordered = this.state.contacts.sort( function (a, b) {
-
-			a.sort( function (c, d) {
-
-				return d.week - c.week
-			})
-
-			b.sort( function (c, d) {
-
-				return d.week - c.week
-			})
-
-			return b[0].week - a[0].week
-
-		});
+		var ordered = getWeek.filter(this.state.contacts);
 
 		this.setState({
 			contacts: ordered
@@ -78,7 +64,7 @@ var contactsPage = React.createClass({
 	        return seen.hasOwnProperty(contact[0].contact_id) ? false : (seen[contact[0].contact_id] = true);
 	    });
 	},
-	
+
 	getSearchedContacts: function (value) {
 
 		var getUrl = "/search/contacts/" + value;
@@ -89,7 +75,7 @@ var contactsPage = React.createClass({
 					error: true
 				})
 			} else {
-				var contact = groupBy(getWeek(JSON.parse(result)),'contact_id');	
+				var contact = groupBy(getWeek.inRange(JSON.parse(result)),'contact_id');
 				var uniqContact = this.uniq(contact);
 				this.setState({
 					error: false
@@ -97,7 +83,7 @@ var contactsPage = React.createClass({
 				this.setState({
 				    contacts : uniqContact
 				});
-			}				
+			}
 		}.bind(this))
 		.fail( function () {
 
@@ -216,7 +202,7 @@ var contactsPage = React.createClass({
 							  				return b.week - a.week
 										})
 
-										
+
 								        return <tr key={i}>
 								            		<td>
 								            			<a onClick={contactHandler.bind(null, cont)}>
@@ -266,7 +252,7 @@ var contactsPage = React.createClass({
                     ? <ViewContact contact= {this.state.selectedContact} closeView={this.onCloseComponent}/>
                     :<p></p>
                 )}
-                
+
 			</div>
 		);
 	}
