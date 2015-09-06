@@ -230,6 +230,31 @@ var ordersPage = React.createClass({
 		})
 	},
 
+	print: function() {
+		var html2Canvas = require("../../lib/html2canvas.js");
+		
+		var originalContents 	= document.body.innerHTML;
+        var printContent 		= document.getElementsByClassName("view-order")[0].innerHTML;
+        document.body.innerHTML = printContent;
+
+        function printCanvas () {
+        	
+			window.print();
+	        window.close();
+	        document.body.innerHTML = originalContents;
+		}
+
+		html2canvas(document.body, {
+		  	onrendered: function(canvas) {
+
+		  	  	document.body.innerHTML = "";
+		  	  	document.body.appendChild(canvas);
+		  	  	printCanvas();
+		  	}
+		});
+
+	},
+
 	render: function() {
 		
 		var orderHandler 		= this.orderHandler;
@@ -304,7 +329,7 @@ var ordersPage = React.createClass({
 				</div>
 
 				{(this.state.selectedOrder
-                    ? <ViewOrder  order={this.state.selectedOrder} copy={this.copyOrder} closeView={this.onCloseComponent}/>
+                    ? <ViewOrder  order={this.state.selectedOrder} copy={this.copyOrder} closeView={this.onCloseComponent} print={this.print}/>
                     : this.state.creatingOrder && this.state.newOrder
                     ? <CreateOrder closeView={this.onCloseComponent}/>
                     : this.state.creatingOrder
