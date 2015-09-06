@@ -13,16 +13,19 @@
 
 		var today = new Date();
 		array.map(function (reminder) {
-
+			// console.log(reminder.date)
 			if (reminder.date){
-				var date = new Date(reminder.date)
-				date.getWeek() === today.getWeek()
-					? reminder.week = 1
-					: date.getWeek() < today.getWeek()
-					? reminder.week = 2
-					: reminder.week = 0
+				var date = new Date(reminder.date);
+				console.log(date.getWeek());
+				// console.log(date.getWeek())
+				// console.log(today.getWeek())
+				return date.getWeek() === today.getWeek()
+						? reminder.week = 1
+						: date.getWeek() < today.getWeek()
+						? reminder.week = 2
+						: reminder.week = 0
 			} else {
-				reminder.week =""
+				return reminder.week =""
 			}
 		});
 		return array;
