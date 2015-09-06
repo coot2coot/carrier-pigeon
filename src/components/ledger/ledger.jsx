@@ -9,7 +9,7 @@ function getAmount (arr) {
   	var i;
   	var length = arr.length;
   	var amount = 0;
-  
+
   	for(i = 0; i < length; i ++) {
   	  amount += Number(arr[i].amount);
   	}
@@ -20,7 +20,7 @@ function calculate (invoices) {
   	var profit;
   	var sales = getAmount(invoices.sales);
   	var purchase = getAmount(invoices.purchase);
-   
+
  	profit = sales - purchase;
   	return (profit).toFixed(2);
 }
@@ -67,7 +67,7 @@ var ledger = React.createClass({
 	    		invoices.purchase = parsed.purchase;
 	    		currency = parsed.purchase[0].currency
 	    	}
-	    	
+
 	    	if (parsed.sales.length > 0 || parsed.purchase.length > 0) {
 	    		profit = calculate(parsed);
 	    	}
@@ -102,7 +102,7 @@ var ledger = React.createClass({
     		invoices: newState
     	});
   	},
-  	
+
   	removePurchaseInvoice: function (key) {
 
   		if(this.state.invoices.purchase.length > 1){
@@ -116,11 +116,11 @@ var ledger = React.createClass({
 
   			if(deletedInvoice[0].invoice_id){
   				var newDeletedStrng = this.state.deletedInvoices + ',' + deletedInvoice[0].invoice_id;
-  				
+
   				this.setState({
 	    			deletedInvoices: newDeletedStrng
 	    		});
-	
+
 			}
 	    }
   	},
@@ -135,7 +135,7 @@ var ledger = React.createClass({
     		invoices: newState
     	});
   	},
-  	
+
   	removeSalesInvoice: function (key) {
 
   		if(this.state.invoices.sales.length > 1){
@@ -149,11 +149,11 @@ var ledger = React.createClass({
 
   			if(deletedInvoice[0].invoice_id){
   				var newDeletedStrng = this.state.deletedInvoices + ',' + deletedInvoice[0].invoice_id;
-  				
+
   				this.setState({
 	    			deletedInvoices: newDeletedStrng
 	    		});
-	
+
 			}
 	    }
   	},
@@ -196,7 +196,7 @@ var ledger = React.createClass({
 	    	closeView: false
 	    })
 	},
-  	
+
 	render: function () {
 
 		var currency		= this.state.currency;
@@ -217,7 +217,7 @@ var ledger = React.createClass({
 						<h3>Ledger - {formatJobNo(this.props.order.job_number)}</h3>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
-					<div className="panel-body container">
+					<div className="panel-body container scroll">
 						<form action={"/invoices/edit/" + this.state.deletedInvoices.slice(1)} method="POST">
 							<div className="row currency">
 								<p>Select your Currency: </p>
@@ -244,14 +244,14 @@ var ledger = React.createClass({
 									{ this.state.invoices.purchase.map(function(invoice, i){
 										var key = new Date().getMilliseconds() + i;
 									    return <Invoices
-										    		key={key} 
-													keys={i} 
-													currency={currency} 
-													addInvoice={addPInvoice} 
-													removeInvoice={removePInvoice} 
-													jobnumber={order.job_number} 
-													type="purchase" 
-													invoice={invoice} 
+										    		key={key}
+													keys={i}
+													currency={currency}
+													addInvoice={addPInvoice}
+													removeInvoice={removePInvoice}
+													jobnumber={order.job_number}
+													type="purchase"
+													invoice={invoice}
 													onInvoiceChange={onPurchaseChange}/>
 									})}
 
@@ -271,15 +271,15 @@ var ledger = React.createClass({
 
 									{ this.state.invoices.sales.map(function(invoice, i){
 										var key = new Date().getMilliseconds() + i;
-									    return <Invoices 
-										    		key={key} 
-													keys={i} 
-													currency={currency} 
-													addInvoice={addSInvoice} 
-													removeInvoice={removeSInvoice} 
-													jobnumber={order.job_number} 
-													type="sales" 
-													invoice={invoice} 
+									    return <Invoices
+										    		key={key}
+													keys={i}
+													currency={currency}
+													addInvoice={addSInvoice}
+													removeInvoice={removeSInvoice}
+													jobnumber={order.job_number}
+													type="sales"
+													invoice={invoice}
 													onInvoiceChange={onSalesChange}/>
 									})}
 
@@ -292,12 +292,12 @@ var ledger = React.createClass({
 						</form>
 					</div>
 				</div>
-				
+
 				{(this.state.closeView
                     ? <Warning message="Do you want to close without saving?" closeView={this.props.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
                 )}
-			
+
 			</div>
 		);
 	}
