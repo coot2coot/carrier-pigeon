@@ -36,7 +36,7 @@ for (i =  length; i >= 0; i--) {
 	var answer 	= fakeAnswers[i];
 
 	test('checking that the result for ' + id + ' is correct', function (t) {
-		var result = formatJobNumber(id);
+		var result = formatJobNumber(id, today);
 
 		t.equals( result, answer );
 		t.end();
