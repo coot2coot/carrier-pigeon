@@ -164,12 +164,13 @@ var viewOrder = React.createClass({
 
   	onUnitChange: function (key, event) {
 
-		this.ifEdited();
-		var name = event.target.name;
+  		var name = event.target.name;
 		var value = event.target.value;
+
+		this.ifEdited();
 		this.state.units[key][name] = value;
 	},
-
+	
 	render: function() {
 		
 		var addUnit 		= this.addUnit;
@@ -197,8 +198,9 @@ var viewOrder = React.createClass({
 					<div className="panel-header">
 						<h3>{getJobNumber(props.order.job_number)}</h3>
 						<a className="button blue" onClick={this.deleteHandler.bind(null, props.order)}>Delete</a>
-						<a className="button blue" onClick={this.edit}  >Edit</a>
-						<a className="button blue" onClick={this.copyOrder}>Copy</a>
+						<a className="button blue" onClick={this.edit}> Edit </a>
+						<a className="button blue" onClick={this.copyOrder}> Copy </a>
+						<a className="button blue" onClick={props.print}> Print </a>
 						<Link className="button blue" to="booking-note" params={{job_no: props.order.job_number}}>Booking Request</Link>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
