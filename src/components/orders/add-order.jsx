@@ -49,7 +49,7 @@ var addOrder = React.createClass({
   	addUnit: function (key) {
 
   		this.state.unitsArr.splice(key + 1, 0, {});
-		
+
 		var newState = this.state.unitsArr
 
   		this.setState({
@@ -57,7 +57,7 @@ var addOrder = React.createClass({
     	});
   	},
 
-  	removeUnit: function (key) {  		
+  	removeUnit: function (key) {
 
   		if (this.state.unitsArr.length > 1) {
 
@@ -85,7 +85,7 @@ var addOrder = React.createClass({
 		var value = event.target.value;
 		this.state.unitsArr[key][name] = value;
   	},
-  	
+
 	render: function() {
 
 		var order 		= this.props.copiedOrder;
@@ -126,17 +126,16 @@ var addOrder = React.createClass({
 
 									<div className="row units">
 
-
 										{ this.state.unitsArr.map( function (unit, i) {
 
 											var key = new Date().getMilliseconds() + i;
-											
-										    return <Units 
-										    			unit={unit} 
-										    			key={key} 
-										    			keys= {i} 
-										    			handleChange={onUnitChange} 
-										    			addUnit={addUnit} 
+
+										    return <Units
+										    			unit={unit}
+										    			key={key}
+										    			keys= {i}
+										    			handleChange={onUnitChange}
+										    			addUnit={addUnit}
 										    			removeUnit={removeUnit} />;
 										})}
 
@@ -146,13 +145,13 @@ var addOrder = React.createClass({
 										<div className="column-8">
 											<p>Collection From</p>
 											<textarea type="text" name="collect_from" max='500' defaultValue={order && order.collect_from ? order.collect_from : ""}   onChange={this.ifEdited}/>
-										</div>	
+										</div>
 										<div className="column-8">
 											<p>Deliver To</p>
 											<textarea name="deliver_to"  max='500' defaultValue={order && order.deliver_to ? order.deliver_to : ""}  onChange={this.ifEdited}/>
-										</div>					
+										</div>
 									</div>
-									
+
 									<div className="row">
 										<div className="column-8">
 											<p>Special Instructions</p>
@@ -186,7 +185,7 @@ var addOrder = React.createClass({
 											<input type="date" name="eta" defaultValue={order && order.eta ? order.eta : ""}  onChange={this.ifEdited}/>
 										</div>
 									</div>
-									
+
 									<div className="row">
 										<div className="column-5">
 											<p>Shipper</p>
@@ -203,9 +202,9 @@ var addOrder = React.createClass({
 									</div>
 
 									<UploadList ifEdited={edited}/>
-										
+
 									<input type="submit" className="button charcoal" value="Done" />
-							
+
 								</div>
 							</div>
 						</form>
@@ -215,7 +214,7 @@ var addOrder = React.createClass({
                     ? <Warning message="Do you want to close without saving?" closeView={this.closeView} closeWarning={this.closeWarning}/>
                     :<p></p>
                 )}
-			
+
 			</div>
 		);
 	}
