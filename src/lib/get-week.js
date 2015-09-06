@@ -55,7 +55,6 @@
 
 				return d.week - c.week
 			})
-
 			return b[0].week - a[0].week
 
 		});
