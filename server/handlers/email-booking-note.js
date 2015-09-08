@@ -17,7 +17,7 @@ function sendBookingNote (attachment, toEmail, ccEmail, order, sender) {
     var data = {
         from: 'Coot Freight Ltd <noreply@cootfreight.co.uk>',
         to: toEmail,
-        subject: formatJobId(order.job_number) + ' - Booking Request from Coot Freight',
+        subject: formatJobId(order.job_number, order.date) + ' - Booking Request from Coot Freight',
         html: require('../email/booking-note.js')(order, sender),
         attachment: attch
     }
