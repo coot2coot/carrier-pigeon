@@ -86,7 +86,7 @@ var viewOrder = React.createClass({
     		units: newState
     	});
   	},
-	
+
 	removeUnit: function (key) {
 
 		if (this.state.units.length > 1) {
@@ -99,10 +99,10 @@ var viewOrder = React.createClass({
 
 			if (deleteUnit[0].unit_id	) {
 				var newDeletedStrng = this.state.deletedUnits + ',' + deleteUnit[0].unit_id ;
-				
+
 				this.setState({
 					deletedUnits: newDeletedStrng
-				});	
+				});
 			}
 		}
 	},
@@ -115,7 +115,7 @@ var viewOrder = React.createClass({
 
 	    	if (result !== "") {
 		    	var unit = JSON.parse(result);
-		    	
+
 		      	if (this.isMounted()) {
 		        	this.setState({
 		          		units: unit
@@ -170,9 +170,9 @@ var viewOrder = React.createClass({
 		this.ifEdited();
 		this.state.units[key][name] = value;
 	},
-	
+
 	render: function() {
-		
+
 		var addUnit 		= this.addUnit;
 		var removeUnit 		= this.removeUnit;
 		var viewing 		= this.state.viewing;
@@ -196,7 +196,7 @@ var viewOrder = React.createClass({
                 </div>
 				<div className="column-14 push-1 model-generic model-top view-order">
 					<div className="panel-header">
-						<h3>{getJobNumber(props.order.job_number)}</h3>
+						<h3>{getJobNumber(props.order.job_number, props.order.date)}</h3>
 						<a className="button blue" onClick={this.deleteHandler.bind(null, props.order)}>Delete</a>
 						<a className="button blue" onClick={this.edit}> Edit </a>
 						<a className="button blue" onClick={this.copyOrder}> Copy </a>
@@ -214,7 +214,7 @@ var viewOrder = React.createClass({
 									</div>
 									<div className="column-8" >
 										<p>Job No.</p>
-										<input type="text" className="job_no" value={getJobNumber(props.order.job_number)} onChange={edited} readOnly />
+										<input type="text" className="job_no" value={getJobNumber(props.order.job_number, props.order.date)} onChange={edited} readOnly />
 										<input type="text" className="display-none"  name="job_number" value={props.order.job_number} onChange={edited}/>
 									</div>
 								</div>
@@ -234,13 +234,13 @@ var viewOrder = React.createClass({
 
 									{ this.state.units.map( function (unit, i) {
 										var key = new Date().getMilliseconds() + i;
-									    return <Units 
-									    			unit={unit} 
-									    			key={key} 
-									    			keys={i}  
-									    			viewing={viewing} 
-									    			handleChange={onUnitChange} 
-									    			addUnit={addUnit} 
+									    return <Units
+									    			unit={unit}
+									    			key={key}
+									    			keys={i}
+									    			viewing={viewing}
+									    			handleChange={onUnitChange}
+									    			addUnit={addUnit}
 									    			removeUnit={removeUnit} />;
 									})}
 
@@ -310,11 +310,11 @@ var viewOrder = React.createClass({
 							</div>
 						</form>
 					</div>
-				</div>	
+				</div>
 				{( state.closeView
                     ? <Close message="Do you want to close without saving?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
-                )}			
+                )}
 			</div>
 		);
 	}

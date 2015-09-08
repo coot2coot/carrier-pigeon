@@ -121,12 +121,12 @@ var p = {
 var container = {
     height: "95%"
 }
- 
+
 var bookingNotePage = React.createClass({
     getDefaultProps: function () {
         return {
             order: {},
-            units: []  
+            units: []
         };
     },
     render: function() {
@@ -147,15 +147,15 @@ var bookingNotePage = React.createClass({
                     </div>
 
                     <h2 style={h2}>Booking Request</h2>
-                    
+
                     <div style={halfLeft}>
                         <p style={pLeft}><b> Date: </b> { this.props.order.date ? formatDate(this.props.order.date) : "" }</p>
                     </div>
 
                     <div style={halfRight}>
-                        <p id="job-number" style={pRight}><b> Job no: </b> {getJobNumber(this.props.order.job_number)}</p>
+                        <p id="job-number" style={pRight}><b> Job no: </b> {getJobNumber(this.props.order.job_number, this.props.order.date)}</p>
                     </div>
-                    
+
                     <div>
                         <BookingForm order={this.props.order} units={this.props.units}/>
                     </div>
