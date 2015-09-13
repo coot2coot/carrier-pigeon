@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React 		= require('react');
 var Invoices 	= require("./invoice-register.jsx");
 var Warning 	= require("../close-warning.jsx");
