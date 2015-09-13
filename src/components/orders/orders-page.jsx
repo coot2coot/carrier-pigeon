@@ -236,6 +236,10 @@ var ordersPage = React.createClass({
 		var html2Canvas = require("../../lib/html2canvas.js");
 		
 		var originalContents 	= document.body.innerHTML;
+        var panelBody 			= document.getElementsByClassName("panel-body scroll")[1];
+
+        panelBody.style.maxHeight 	= "none";
+        
         var printContent 		= document.getElementsByClassName("view-order")[0].innerHTML;
         document.body.innerHTML = printContent;
 
@@ -254,7 +258,6 @@ var ordersPage = React.createClass({
 		  	  	printCanvas();
 		  	}
 		});
-
 	},
 
 	render: function() {
