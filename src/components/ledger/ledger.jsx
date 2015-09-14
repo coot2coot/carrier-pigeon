@@ -212,7 +212,7 @@ var ledger = React.createClass({
 			<div className="overlay">
 				<div className="column-10 push-3 model-generic model-middle ledger">
 					<div className="panel-header">
-						<h3>Ledger - {formatJobNo(this.props.order.job_number)}</h3>
+						<h3>Ledger - {formatJobNo(this.props.order.job_number, this.props.order.date)}</h3>
 						<a className="close" onClick={this.closeView}>x</a>
 					</div>
 					<div className="panel-body container scroll">
