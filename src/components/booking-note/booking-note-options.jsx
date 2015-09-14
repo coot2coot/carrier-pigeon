@@ -2,13 +2,15 @@ var React       = require('react');
 var BookingPage = require("./booking-note-page.jsx");
 var EmailInput  = require("./email-input.jsx");
 
+var convertToCanvas  = require("../../lib/convert-to-canvas.js");
+
 var bookingNoteButtons = React.createClass({
     getInitialState: function() {
         return {
             emailInput: false
         };
     },
-    
+
     emailBooking: function (e) {
         var getOrderUrl = "/booking-note/email";
 
@@ -28,19 +30,14 @@ var bookingNoteButtons = React.createClass({
                 emailInput: false
             })
         }.bind(this))
-        
+
         .fail(function () {
             "get units request failed"
         });
     },
 
     printBooking: function () {
-        var originalContents = document.body.innerHTML;
-        var printcontent = document.getElementsByClassName("booking-note")[0].innerHTML;
-        document.body.innerHTML = printcontent;
-        window.print();
-        window.close();
-        document.body.innerHTML = originalContents;
+        convertToCanvas('booking-note');
     },
 
     onCloseComponent: function () {
@@ -54,7 +51,7 @@ var bookingNoteButtons = React.createClass({
             emailInput: true
 		})
     },
-	
+
     render: function() {
         return (
             <links className="container">
@@ -63,7 +60,7 @@ var bookingNoteButtons = React.createClass({
                         <a className="button blue" onClick={this.printBooking}>
                             Print
                         </a>
-                        
+
 						<a className="button blue" onClick={this.enterEmail}>
                             Email
                         </a>

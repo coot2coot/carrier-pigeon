@@ -10,8 +10,9 @@ var Ledger      = require("../ledger/ledger.jsx");
 var LedgerIcon  = require("./ledger-svg.jsx");
 var Ordersth  	= require("./orderspage-th.jsx");
 
-var sorts      	 = require("../../lib/order-by-job-number.js");
-var getJobNumber = require("../../lib/format-job-number.js");
+var sorts      		 = require("../../lib/order-by-job-number.js");
+var convertToCanvas  = require("../../lib/convert-to-canvas.js");
+var getJobNumber 	= require("../../lib/format-job-number.js");
 
 var ordersPage = React.createClass({
 	getInitialState: function() {
@@ -233,28 +234,8 @@ var ordersPage = React.createClass({
 	},
 
 	print: function() {
-		var html2Canvas = require("../../lib/html2canvas.js");
 		
-		var originalContents 	= document.body.innerHTML;
-        var printContent 		= document.getElementsByClassName("view-order")[0].innerHTML;
-        document.body.innerHTML = printContent;
-
-        function printCanvas () {
-        	
-			window.print();
-	        window.close();
-	        document.body.innerHTML = originalContents;
-		}
-
-		html2canvas(document.body, {
-		  	onrendered: function(canvas) {
-
-		  	  	document.body.innerHTML = "";
-		  	  	document.body.appendChild(canvas);
-		  	  	printCanvas();
-		  	}
-		});
-
+		convertToCanvas('view-order');
 	},
 
 	render: function() {

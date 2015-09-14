@@ -1,6 +1,6 @@
 /***********************************************
 *   PRINT STYLING
-*	
+*
 ************************************************/
 
 .booking-note {
@@ -34,4 +34,9 @@ td {
 .booking-note hr {
 	background-color: #49A4A5;
 	font-family: arial;
+}
+
+
+@page {
+	size: 7in 9.25in;
 }

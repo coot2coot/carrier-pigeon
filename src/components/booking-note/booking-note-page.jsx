@@ -133,7 +133,7 @@ var bookingNotePage = React.createClass({
 
         return (
             <div id="form" className="booking-note container" style={bookingStyle}>
-                <div style={container}>
+                <div  style={container}>
                     <div>
                         {/* <img style={logoImg} src="http://carrierpigeonfac-se-env.elasticbeanstalk.com/img/logo.png"/> */}
                         <img style={logoText} src="./img/logo-text.png"/>
