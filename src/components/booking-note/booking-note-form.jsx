@@ -55,7 +55,7 @@ var bookingNoteForm = React.createClass({
 
     getDefaultProps: function () {
         return {
-            units: [] 
+            units: []
         };
     },
 
@@ -101,11 +101,17 @@ var bookingNoteForm = React.createClass({
                             <b> Gross weight: </b>
                         </div>
                     </div>
-                    { this.props.units.map(function (unit) {
-                        return <UnitForm unit={unit} />
-                    })}
+                    {
+                        this.props.units.sort(function (a,b) {
+
+                            return new Date(a.loading_date) - new Date(b.loading_date)
+                        }).map(function (unit) {
+
+                            return <UnitForm unit={unit} />
+                        })
+                    }
                 </div>
-                
+
 
                 <div style={fullWidth}>
                     <div style={halfWidth}>
@@ -132,7 +138,7 @@ var bookingNoteForm = React.createClass({
                     </div>
                     <div style={text}>
                         { instructionsArray.map(function (item) {
-                                
+
                             return <p style={p}> { item } </p>
                         })}
                     </div>
