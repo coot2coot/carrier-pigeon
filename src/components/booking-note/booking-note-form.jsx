@@ -103,8 +103,8 @@ var bookingNoteForm = React.createClass({
                     </div>
                     {
                         this.props.units.sort(function (a,b) {
-
-                            return new Date(a.loading_date) - new Date(b.loading_date)
+                            console.log(a)
+                            return new Date(a.unit_loading_date) - new Date(b.unit_loading_date)
                         }).map(function (unit) {
 
                             return <UnitForm unit={unit} />
