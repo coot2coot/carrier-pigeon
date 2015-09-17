@@ -15,6 +15,7 @@ var contactsPage = React.createClass({
 
       return {
         contacts:[],
+		filteredContacts: [],
         error: false,
         creatingContact: false
       };
@@ -35,7 +36,8 @@ var contactsPage = React.createClass({
 
 		      	if (this.isMounted()) {
 		        	this.setState({
-		          		contacts : contact
+		          		contacts : contact,
+						filteredContacts: contact
 		        	});
 		      	}
 		    }
@@ -51,7 +53,7 @@ var contactsPage = React.createClass({
 		var ordered = getWeek.filter(this.state.contacts);
 
 		this.setState({
-			contacts: ordered
+			filteredContacts: ordered
 		});
 	},
 
@@ -81,7 +83,7 @@ var contactsPage = React.createClass({
 					error: false
 				})
 				this.setState({
-				    contacts : uniqContact
+				    filteredContacts : uniqContact
 				});
 			}
 		}.bind(this))
@@ -113,7 +115,7 @@ var contactsPage = React.createClass({
 		});
 
 		this.setState({
-			contacts: contacts
+			filteredContacts: contacts
 		});
 	},
 
@@ -195,7 +197,7 @@ var contactsPage = React.createClass({
 							<tbody>
 
 						  		{this.state.contacts !== 0
-							  		? this.state.contacts.map(function (contact, i) {
+							  		? this.state.filteredContacts.map(function (contact, i) {
 
 							  			var cont = contact.sort(function (a, b) {
 
