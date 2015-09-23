@@ -33,7 +33,6 @@ function postUsers (table, doc) {
                 .columns(columns)
                 .values(values)
                 .end();
-
     return query;
 }
 

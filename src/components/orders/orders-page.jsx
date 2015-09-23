@@ -158,7 +158,8 @@ var ordersPage = React.createClass({
 	getCm: function (dates) {
 
 		var date;
-		var currentDate = new Date();
+		var cDate = new Date();
+		var currentDate = new Date(cDate.getFullYear(), cDate.getMonth() + 1, 1);
 		var pastDate 	= new Date();
 
 		currentDate = [
@@ -234,17 +235,17 @@ var ordersPage = React.createClass({
 
 	print: function() {
 		var html2Canvas = require("../../lib/html2canvas.js");
-		
+
 		var originalContents 	= document.body.innerHTML;
         var panelBody 			= document.getElementsByClassName("panel-body scroll")[1];
 
         panelBody.style.maxHeight 	= "none";
-        
+
         var printContent 		= document.getElementsByClassName("view-order")[0].innerHTML;
         document.body.innerHTML = printContent;
 
         function printCanvas () {
-        	
+
 			window.print();
 	        window.close();
 	        document.body.innerHTML = originalContents;
