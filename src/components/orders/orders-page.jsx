@@ -234,12 +234,27 @@ var ordersPage = React.createClass({
 	},
 
 	print: function() {
+
 		var html2Canvas = require("../../lib/html2canvas.js");
 
 		var originalContents 	= document.body.innerHTML;
         var panelBody 			= document.getElementsByClassName("panel-body scroll")[1];
+		var numberType = document.getElementsByTagName("input");
+		var typeArray = [];
 
         panelBody.style.maxHeight 	= "none";
+
+		/*
+			html2Canvas does not recognise html 5 date and number input types
+			so we had to change the types to text before priniting
+		*/
+
+		typeArray = Object.keys(numberType).filter(function (val) {
+
+			 return numberType[val].type === 'number' || numberType[val].type === 'date'
+		});
+
+		typeArray.forEach(function (val){ numberType[val].type = "text"; })
 
         var printContent 		= document.getElementsByClassName("view-order")[0].innerHTML;
         document.body.innerHTML = printContent;
