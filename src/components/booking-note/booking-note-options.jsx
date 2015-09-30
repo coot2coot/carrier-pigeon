@@ -2,7 +2,8 @@ var React       = require('react');
 var BookingPage = require("./booking-note-page.jsx");
 var EmailInput  = require("./email-input.jsx");
 
-var convertToCanvas  = require("../../lib/convert-to-canvas.js");
+var toPdf  = require("../../lib/create-booking-pdf.js");
+var printBooking  = require("../../lib/print-booking-note.js");
 
 var bookingNoteButtons = React.createClass({
     getInitialState: function() {
@@ -14,12 +15,10 @@ var bookingNoteButtons = React.createClass({
     emailBooking: function (event) {
         var getOrderUrl = "/booking-note/email";
         var that = this;
-        // event.preventDefault();
         var emails = event.target.getElementsByTagName('input')
         console.log('hello')
 
-        convertToCanvas('booking-note', function (pdf) {
-            // console.log('rrr', pdf);
+        toPdf('booking-note', function (pdf) {
 
             var data = {
                 order: JSON.stringify(that.props.order),
@@ -42,7 +41,7 @@ var bookingNoteButtons = React.createClass({
     },
 
     printBooking: function () {
-        convertToCanvas('booking-note');
+        printBooking('booking-note');
     },
 
     onCloseComponent: function () {
