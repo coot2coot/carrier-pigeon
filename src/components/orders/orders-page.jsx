@@ -158,7 +158,8 @@ var ordersPage = React.createClass({
 	getCm: function (dates) {
 
 		var date;
-		var currentDate = new Date();
+		var cDate = new Date();
+		var currentDate = new Date(cDate.getFullYear(), cDate.getMonth() + 1, 1);
 		var pastDate 	= new Date();
 
 		currentDate = [
@@ -258,6 +259,35 @@ var ordersPage = React.createClass({
 
 		typeArray.forEach(function (val){ numberType[val].type = "text"; })
 	},
+
+	specificSelect : function () {
+
+		/*
+			html2Canvas does not recognise html 5 date and number input types
+			so we had to change the types to text before priniting similarly it had an issue with the select
+			element
+		*/
+		var numberType = document.getElementsByTagName("input");
+		var selectInput = document.querySelectorAll("select[name = 'unit_weight']");
+		var typeArray = [];
+
+		Object.keys(selectInput).forEach(function (val) {
+
+			var selected = selectInput[val];
+			if (selected.value === 'tons') {
+				selected.options[0].innerHTML = 't'
+			}
+		})
+
+		typeArray = Object.keys(numberType).filter(function (val) {
+
+			 return numberType[val].type === 'number' || numberType[val].type === 'date'
+		});
+
+		typeArray.forEach(function (val){ numberType[val].type = "text"; })
+	},
+
+
 
 	print: function() {
 

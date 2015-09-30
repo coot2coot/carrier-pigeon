@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React       = require('react');
 var Navbar      = require("./nav.jsx");
 var HeaderLinks = require("./header-links.jsx");
