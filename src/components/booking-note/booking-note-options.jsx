@@ -11,29 +11,34 @@ var bookingNoteButtons = React.createClass({
         };
     },
 
-    emailBooking: function (e) {
+    emailBooking: function (event) {
         var getOrderUrl = "/booking-note/email";
+        var that = this;
+        // event.preventDefault();
+        var emails = event.target.getElementsByTagName('input')
+        console.log('hello')
 
-        var component = React.renderToString(
-            <BookingPage order={this.props.order} units={this.props.units}/>
-        );
+        convertToCanvas('booking-note', function (pdf) {
+            // console.log('rrr', pdf);
 
-        var data = {
-            order: JSON.stringify(this.props.order),
-            attachment: component,
-            toemail: e.currentTarget[0].value,
-            ccemail: e.currentTarget[1].value
-        }
+            var data = {
+                order: JSON.stringify(that.props.order),
+                attachment: pdf,
+                toemail: emails.toemail.value,
+                ccemail: emails.ccemail.value
+            };
 
-        $.post(getOrderUrl, data, function() {
-            this.setState({
-                emailInput: false
+            $.post(getOrderUrl, data, function() {
+                that.setState({
+                    emailInput: false
+                })
             })
-        }.bind(this))
 
-        .fail(function () {
-            "get units request failed"
-        });
+            .fail(function () {
+                "get units request failed"
+            });
+        })
+        event.preventDefault();
     },
 
     printBooking: function () {

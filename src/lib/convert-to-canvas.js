@@ -2,33 +2,28 @@
 
     "use strict";
 
-    function convertToCanvas (elementClass) {
+    function convertToCanvas (elementClass, funct) {
 
         var html2Canvas = require("./html2canvas.js");
 
         var originalContents 	= document.body.innerHTML;
         var printContent 		= document.getElementsByClassName(elementClass)[0];
-        printContent.style.width = '5px';
-        printContent.style.height = '5px';
-        document.body.innerHTML = printContent.innerHTML;
-        document.body.style.width = '9in';
-        document.body.style.height = '13in';
+        var outBase64;
+        // printContent.style.width = '5px';
+        // printContent.style.height = '5px';
+        // document.body.innerHTML = printContent.innerHTML;
+        // document.body.style.width = '9in';
+        // document.body.style.height = '13in';
 
-        function printCanvas () {
-
-            window.print();
-            window.close();
-            document.body.innerHTML = originalContents;
-            document.body.style.width = '100%';
-            document.body.style.height = '100%';
-        }
-
-        html2canvas(document.body, {
+        html2canvas(printContent, {
             onrendered: function(canvas) {
+                var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                var pdf = new jsPDF();
 
-                document.body.innerHTML = "";
-                document.body.appendChild(canvas);
-                printCanvas();
+                pdf.addImage(imgData, 'JPEG', 0, 0);
+                var out = pdf.output();
+                var outs = btoa(out);
+                funct(outs);
             }
         });
     }

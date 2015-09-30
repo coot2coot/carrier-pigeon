@@ -24,6 +24,7 @@
     "jsonwebtoken": "^5.0.0",
     "mailgun-js": "^0.6.9",
     "node-cache": "^1.1.0",
+    "node-jspdf": "0.0.3",
     "node-static": "^0.7.6",
     "pg": "^4.3.0",
     "react": "^0.13.1",
