@@ -11,7 +11,6 @@ var LedgerIcon  = require("./ledger-svg.jsx");
 var Ordersth  	= require("./orderspage-th.jsx");
 
 var sorts      		 = require("../../lib/order-by-job-number.js");
-var convertToCanvas  = require("../../lib/convert-to-canvas.js");
 var getJobNumber 	= require("../../lib/format-job-number.js");
 
 var ordersPage = React.createClass({
@@ -234,8 +233,43 @@ var ordersPage = React.createClass({
 	},
 
 	print: function() {
-		
-		convertToCanvas('view-order');
+
+		var html2Canvas = require("../../lib/html2canvas.js");
+
+		var originalContents 	= document.body.innerHTML;
+        var panelBody 			= document.getElementsByClassName("panel-body scroll")[1];
+		var numberType = document.getElementsByTagName("input");
+		var selectInput = document.querySelectorAll("select[name = 'unit_weight']");
+		var typeArray = [];
+
+        panelBody.style.maxHeight 	= "none";
+
+		/*
+			html2Canvas does not recognise html 5 date and number input types
+			so we had to change the types to text before priniting similarly it had an issue with the select
+			element
+		*/
+
+		this.specificSelect();
+
+        var printContent 		= document.getElementsByClassName("view-order")[0].innerHTML;
+        document.body.innerHTML = printContent;
+
+        function printCanvas () {
+
+			window.print();
+	        window.close();
+	        document.body.innerHTML = originalContents;
+		}
+
+		html2canvas(document.body, {
+		  	onrendered: function(canvas) {
+
+		  	  	document.body.innerHTML = "";
+		  	  	document.body.appendChild(canvas);
+		  	  	printCanvas();
+		  	}
+		});
 	},
 
 	render: function() {
