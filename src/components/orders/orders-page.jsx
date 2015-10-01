@@ -232,7 +232,7 @@ var ordersPage = React.createClass({
 			user: user
 		})
 	},
-	
+
 	specificSelect : function () {
 
 		/*
@@ -281,7 +281,7 @@ var ordersPage = React.createClass({
 
 		typeArray = Object.keys(numberType).filter(function (val) {
 
-			 return numberType[val].type === 'number' || numberType[val].type === 'date'
+			 return numberType[val].type === 'number' || numberType[val].type === 'date' || numberType[val].type === 'time' 
 		});
 
 		typeArray.forEach(function (val){ numberType[val].type = "text"; })
