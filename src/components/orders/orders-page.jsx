@@ -281,7 +281,7 @@ var ordersPage = React.createClass({
 
 		typeArray = Object.keys(numberType).filter(function (val) {
 
-			 return numberType[val].type === 'number' || numberType[val].type === 'date' || numberType[val].type === 'time' 
+			 return numberType[val].type === 'number' || numberType[val].type === 'date' || numberType[val].type === 'time'
 		});
 
 		typeArray.forEach(function (val){ numberType[val].type = "text"; })
@@ -300,7 +300,7 @@ var ordersPage = React.createClass({
 		var typeArray = [];
 
         panelBody.style.maxHeight 	= "none";
-
+		panelBody.style.maxWidth    = "9.5in"
 		/*
 			html2Canvas does not recognise html 5 date and number input types
 			so we had to change the types to text before priniting similarly it had an issue with the select
