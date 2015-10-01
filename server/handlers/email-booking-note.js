@@ -1,6 +1,5 @@
 "use strict"
 
-var pdf          = require('html-pdf');
 var fs           = require('fs');
 var parseData    = require('../lib/get-form-data.js');
 var validateUser = require('../lib/validate-user.js');

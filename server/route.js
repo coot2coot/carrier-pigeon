@@ -161,6 +161,7 @@ var serverRoutes =  function (router) {
  * -------------------------------*/
 
 	router.addRoute('/booking-note/email', function (req, res, match) {
+		console.log('ddd');
 	  	require('./handlers/email-booking-note.js')(req, res);
 	});
 
