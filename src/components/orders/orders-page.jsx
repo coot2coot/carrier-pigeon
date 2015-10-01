@@ -10,8 +10,8 @@ var Ledger      = require("../ledger/ledger.jsx");
 var LedgerIcon  = require("./ledger-svg.jsx");
 var Ordersth  	= require("./orderspage-th.jsx");
 
-var sorts      	 = require("../../lib/order-by-job-number.js");
-var getJobNumber = require("../../lib/format-job-number.js");
+var sorts      		 = require("../../lib/order-by-job-number.js");
+var getJobNumber 	= require("../../lib/format-job-number.js");
 
 var ordersPage = React.createClass({
 	getInitialState: function() {
@@ -255,6 +255,33 @@ var ordersPage = React.createClass({
 		typeArray = Object.keys(numberType).filter(function (val) {
 
 			 return numberType[val].type === 'number' || numberType[val].type === 'date'
+		});
+
+		typeArray.forEach(function (val){ numberType[val].type = "text"; })
+	},
+
+	specificSelect : function () {
+
+		/*
+			html2Canvas does not recognise html 5 date and number input types
+			so we had to change the types to text before priniting similarly it had an issue with the select
+			element
+		*/
+		var numberType = document.getElementsByTagName("input");
+		var selectInput = document.querySelectorAll("select[name = 'unit_weight']");
+		var typeArray = [];
+
+		Object.keys(selectInput).forEach(function (val) {
+
+			var selected = selectInput[val];
+			if (selected.value === 'tons') {
+				selected.options[0].innerHTML = 't'
+			}
+		})
+
+		typeArray = Object.keys(numberType).filter(function (val) {
+
+			 return numberType[val].type === 'number' || numberType[val].type === 'date' || numberType[val].type === 'time' 
 		});
 
 		typeArray.forEach(function (val){ numberType[val].type = "text"; })

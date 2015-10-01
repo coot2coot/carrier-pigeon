@@ -6,7 +6,7 @@ var Header         = require("../header/header.jsx");
 // If save/print doesn't work... sorry, there has been an internal error. Try again at a late point.
 var Error          = require("../error-message.jsx");
 var BookingOptions = require("./booking-note-options.jsx");
-var BookingPage    = require("./booking-note-page.jsx");
+var BookingPage = require("./booking-note-page.jsx");
 var getJobNumber = require("../../lib/format-job-number.js");
 
 var bookingNote = React.createClass({

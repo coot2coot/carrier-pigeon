@@ -106,7 +106,6 @@ var bookingNoteForm = React.createClass({
                             console.log(a)
                             return new Date(a.unit_loading_date) - new Date(b.unit_loading_date)
                         }).map(function (unit) {
-
                             return <UnitForm unit={unit} />
                         })
                     }
@@ -138,7 +137,6 @@ var bookingNoteForm = React.createClass({
                     </div>
                     <div style={text}>
                         { instructionsArray.map(function (item) {
-
                             return <p style={p}> { item } </p>
                         })}
                     </div>

@@ -58,5 +58,4 @@ var unitsInformation = React.createClass({
         )
     }
 });
-
 module.exports = unitsInformation;

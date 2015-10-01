@@ -1,6 +1,8 @@
 var React       = require('react');
-var BookingPage = require("./booking-note-page.jsx");
 var EmailInput  = require("./email-input.jsx");
+
+var toPdf  = require("../../lib/create-booking-pdf.js");
+var printBooking  = require("../../lib/print-booking-note.js");
 
 var bookingNoteButtons = React.createClass({
     getInitialState: function() {
@@ -8,39 +10,36 @@ var bookingNoteButtons = React.createClass({
             emailInput: false
         };
     },
-    
-    emailBooking: function (e) {
+
+    emailBooking: function (event) {
         var getOrderUrl = "/booking-note/email";
+        var that = this;
+        var emails = event.target.getElementsByTagName('input')
 
-        var component = React.renderToString(
-            <BookingPage order={this.props.order} units={this.props.units}/>
-        );
+        toPdf('booking-note', function (pdf) {
 
-        var data = {
-            order: JSON.stringify(this.props.order),
-            attachment: component,
-            toemail: e.currentTarget[0].value,
-            ccemail: e.currentTarget[1].value
-        }
+            var data = {
+                order: JSON.stringify(that.props.order),
+                attachment: pdf,
+                toemail: emails.toemail.value,
+                ccemail: emails.ccemail.value
+            };
 
-        $.post(getOrderUrl, data, function() {
-            this.setState({
-                emailInput: false
+            $.post(getOrderUrl, data, function() {
+                that.setState({
+                    emailInput: false
+                })
             })
-        }.bind(this))
-        
-        .fail(function () {
-            "get units request failed"
-        });
+
+            .fail(function () {
+                "get units request failed"
+            });
+        })
+        event.preventDefault();
     },
 
     printBooking: function () {
-        var originalContents = document.body.innerHTML;
-        var printcontent = document.getElementsByClassName("booking-note")[0].innerHTML;
-        document.body.innerHTML = printcontent;
-        window.print();
-        window.close();
-        document.body.innerHTML = originalContents;
+        printBooking('booking-note');
     },
 
     onCloseComponent: function () {
@@ -54,7 +53,7 @@ var bookingNoteButtons = React.createClass({
             emailInput: true
 		})
     },
-	
+
     render: function() {
         return (
             <links className="container">
@@ -63,7 +62,7 @@ var bookingNoteButtons = React.createClass({
                         <a className="button blue" onClick={this.printBooking}>
                             Print
                         </a>
-                        
+
 						<a className="button blue" onClick={this.enterEmail}>
                             Email
                         </a>

@@ -12,7 +12,8 @@ var mailgun     = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 function sendBookingNote (attachment, toEmail, ccEmail, order, sender) {
 
-    var attch = new mailgun.Attachment({data: attachment, filename: "booking-request.pdf"});
+    var buf = new Buffer(attachment, 'base64');
+    var attch = new mailgun.Attachment({data: buf, filename: "booking-request.pdf"});
 
     var data = {
         from: 'Coot Freight Ltd <noreply@cootfreight.co.uk>',
@@ -37,19 +38,13 @@ function emailBookingNote (req, res, cb) {
 
         parseData(req, function(data) {
 
-            pdf.create(data.attachment).toBuffer(function(err, buffer) {
+            var parsedOrder = JSON.parse(data.order);
 
-                if (err) {
-                    return console.log(err);
-                }
+            sendBookingNote(data.attachment, data.toemail, data.ccemail, parsedOrder, user.email);
 
-                var parsedOrder = JSON.parse(data.order);
+            res.writeHead(200);
+            res.end();
 
-                sendBookingNote(buffer, data.toemail, data.ccemail, parsedOrder, user.email);
-
-                res.writeHead(200);
-                res.end();
-            });
         })
     });
 };
