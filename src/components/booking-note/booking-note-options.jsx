@@ -1,5 +1,4 @@
 var React       = require('react');
-var BookingPage = require("./booking-note-page.jsx");
 var EmailInput  = require("./email-input.jsx");
 
 var toPdf  = require("../../lib/create-booking-pdf.js");
@@ -16,7 +15,6 @@ var bookingNoteButtons = React.createClass({
         var getOrderUrl = "/booking-note/email";
         var that = this;
         var emails = event.target.getElementsByTagName('input')
-        console.log('hello')
 
         toPdf('booking-note', function (pdf) {
 

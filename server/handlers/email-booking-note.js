@@ -40,8 +40,6 @@ function emailBookingNote (req, res, cb) {
 
             var parsedOrder = JSON.parse(data.order);
 
-            console.log(data)
-
             sendBookingNote(data.attachment, data.toemail, data.ccemail, parsedOrder, user.email);
 
             res.writeHead(200);
