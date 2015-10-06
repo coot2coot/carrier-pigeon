@@ -19,7 +19,7 @@ var arr = [
 test('testing that getWeek.inRange function calculates the week of the year', function (t) {
 
 	var newArr = getWeek.inRange(arr);
-	t.equals( newArr[0].week, 2, "weekday functon works");
+	t.equals( newArr[0].week, 3, "weekday functon works");
 	t.end();
 });
 
