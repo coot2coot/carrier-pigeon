@@ -51,7 +51,11 @@ var halfWidth = {
 }
 
 var seventhWidth = {
-    width: "14.285%",
+    width: "14%",
+    float: "left"
+}
+var seventhWidthLarge = {
+    width: "15.995%",
     float: "left"
 }
 
@@ -97,7 +101,7 @@ var bookingNoteForm = React.createClass({
                     </div>
                     <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> No Of Packages: </b>
+                            <b> No of Pkg: </b>
                         </div>
                     </div>
                     <div style={seventhWidth}>
@@ -105,9 +109,9 @@ var bookingNoteForm = React.createClass({
                             <b> Gross weight: </b>
                         </div>
                     </div>
-                    <div style={seventhWidth}>
+                    <div style={seventhWidthLarge}>
                         <div style={bigTableHeader}>
-                            <b> Commodity description: </b>
+                            <b> Commodity: </b>
                         </div>
                     </div>
                     {

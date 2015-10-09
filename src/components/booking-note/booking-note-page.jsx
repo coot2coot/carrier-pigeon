@@ -9,7 +9,7 @@ var formatDate   = require("../../lib/format-date.js");
 // For emailing as a pdf, inine styling is required.
 var bookingStyle = {
     width: "21cm",
-    height: "29.7cm",
+    height: "32cm",
     padding: "1cm 1.9cm",
     fontFamily: "Verdana, Geneva, sans-serif",
     position: "relative"
@@ -94,7 +94,7 @@ var center = {
 var footer = {
     position: "relative",
     height: "6em",
-    marginTop: "10pt"
+    marginTop: "30pt"
 }
 
 var logoImg = {
@@ -153,7 +153,7 @@ var bookingNotePage = React.createClass({
                 <div style={container}>
                     <div>
                         <div style={contactDetails}>
-                            <p style={companyName}>Coot Freight</p>
+                            <p style={companyName}>Coot Freight Ltd.</p>
                             <p style={smallpRight}> Davenport House, 16 Pepper Street </p>
                             <p style={smallpRight}> London E14 9RP, England </p>
                             <p style={smallpRight}> Tel +44 020 7510 9625</p>

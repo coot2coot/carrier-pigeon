@@ -7,7 +7,12 @@ var fullWidth = {
 }
 
 var seventhWidth = {
-    width: "14.285%",
+    width: "14%",
+    float: "left"
+}
+
+var seventhWidthLarge = {
+    width: "15.995%",
     float: "left"
 }
 
@@ -53,7 +58,7 @@ var unitsInformation = React.createClass({
                         {this.props.unit.unit_gross_weight} {this.props.unit.unit_gross_weight ? this.props.unit.unit_weight : ""}
                     </div>
                 </div>
-                <div style={seventhWidth}>
+                <div style={seventhWidthLarge}>
                     <div style={text}>
                         {this.props.unit.unit_commodity_description}
                     </div>
