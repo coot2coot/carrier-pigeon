@@ -4,8 +4,9 @@ var UnitForm    = require("./booking-note-unit.jsx");
 // For emailing as a pdf, inine styling is required.
 var text = {
     fontSize: "10pt",
-    paddingRight: "15px",
-    margin: "0",
+    paddingRight: "15pt",
+    float: "right",
+    width: "70%",
     minHeight: "28px",
     fontFamily: "Verdana, Geneva, sans-serif"
 }
@@ -32,12 +33,12 @@ var bigTableHeader = {
 var fullWidth = {
     width: "100%",
     marginBottom: "24px",
-    marginTop: "15px",
+    marginTop: "20px",
     float: "left"
 }
 
 var header = {
-    textDecoration: "underline",
+    fontWeight: "bold",
     textAlign: "center",
     width: "100%",
     marginTop: "15px",
@@ -49,8 +50,8 @@ var halfWidth = {
     float: "left"
 }
 
-var sixthWidth = {
-    width: "16.6%",
+var seventhWidth = {
+    width: "14.285%",
     float: "left"
 }
 
@@ -73,36 +74,40 @@ var bookingNoteForm = React.createClass({
 
         return (
             <div>
-                <div style={header} >Unit Specific Details</div>
                 <div style={fullWidth}>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
                             <b> Collect on: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
                             <b> Collect at: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> Equipment: </b>
+                            <b> Collection Ref: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> Loading reference: </b>
+                            <b> Unit Type: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> Commodity description: </b>
+                            <b> No Of Packages: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
                             <b> Gross weight: </b>
+                        </div>
+                    </div>
+                    <div style={seventhWidth}>
+                        <div style={bigTableHeader}>
+                            <b> Commodity description: </b>
                         </div>
                     </div>
                     {

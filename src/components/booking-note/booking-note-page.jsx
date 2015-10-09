@@ -85,13 +85,16 @@ var halfRight = {
 var halfLeft = {
     float: "left",
     width: "50%",
+    marginTop: "12pt"
+}
+var center = {
+    textAlign: "center"
 }
 
 var footer = {
-    clear: "both",
     position: "relative",
     height: "6em",
-    marginTop: "-3em"
+    marginTop: "10pt"
 }
 
 var logoImg = {
@@ -100,9 +103,23 @@ var logoImg = {
     marginTop: "20px"
 }
 
+var companyName = {
+    color: "#49A4A5",
+    fontFamily: "Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif",
+    fontWeight: "bolder",
+    fontSize: "x-large",
+    textAlign: "right"
+}
+
 var logoText = {
     height: "64pt",
     marginTop: "12pt"
+}
+
+var header = {
+    fontWeight: "bold",
+    fontSize: "16pt",
+    color: "black"
 }
 
 var contactDetails = {
@@ -135,25 +152,20 @@ var bookingNotePage = React.createClass({
             <div id="form" className="booking-note container" style={bookingStyle}>
                 <div style={container}>
                     <div>
-                        {/* <img style={logoImg} src="http://carrierpigeonfac-se-env.elasticbeanstalk.com/img/logo.png"/> */}
-                        <img style={logoText} src="./img/logo-text.png"/>
-                        {/* <img style={img} src="http://carrierpigeonfac-se-env.elasticbeanstalk.com/img/logo-text.png"/> */}
                         <div style={contactDetails}>
-                            <p style={smallpRight}> Tel +44 020 7510 9625  |  Fax +44 020 7510 9401</p>
-                            <p style={smallpRight}> info@cootfreight.co.uk  |  www.cootfreight.co.uk </p>
+                            <p style={companyName}>Coot Freight</p>
                             <p style={smallpRight}> Davenport House, 16 Pepper Street </p>
                             <p style={smallpRight}> London E14 9RP, England </p>
+                            <p style={smallpRight}> Tel +44 020 7510 9625</p>
+                            <p style={smallpRight}> www.cootfreight.co.uk </p>
                         </div>
                     </div>
 
-                    <h2 style={h2}>Booking Request</h2>
-
                     <div style={halfLeft}>
+                        <p style={header}>Booking</p>
+                        <p style={header}>Request</p>
                         <p style={pLeft}><b> Date: </b> { this.props.order.date ? formatDate(this.props.order.date) : "" }</p>
-                    </div>
-
-                    <div style={halfRight}>
-                        <p id="job-number" style={pRight}><b> Job no: </b> {getJobNumber(this.props.order.job_number, this.props.order.date)}</p>
+                        <p id="job-number" style={pLeft}><b> Job no: </b> {getJobNumber(this.props.order.job_number, this.props.order.date)}</p>
                     </div>
 
                     <div>
@@ -163,16 +175,9 @@ var bookingNotePage = React.createClass({
                     <br />
                 </div>
                 <div style={footer}>
-                    <hr style={hr}/>
-                    <div style={halfRight}>
-                        <p style={pSmall}> All business is subject to the current </p>
-                        <p style={pSmall}> standing conditions of the BIFA copies </p>
-                        <p style={pSmall}> of which are available on request </p>
-                    </div>
-                    <div style={halfLeft}>
-                        <p style={pSmall}> Coot Freight Ltd. Registered in England </p>
-                        <p style={pSmall}> No.07880722 </p>
-                        <p style={pSmall}> VAT No. GB 128 2159 22</p>
+                    <div style={center}>
+                        <p style={pSmall}>All business is subject to the current standing conditions of the BIFA copies </p>
+                        <p style={pSmall}>copies of which are available on request </p>
                     </div>
                 </div>
             </div>
