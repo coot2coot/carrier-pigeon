@@ -248,13 +248,13 @@ var ordersPage = React.createClass({
 
 			var selected = selectInput[val];
 			if (selected.value === 'tons') {
-				selected.options[0].innerHTML = 't'
+				selected.options[0].innerHTML = 't';
 			}
 		})
 
 		typeArray = Object.keys(numberType).filter(function (val) {
 
-			 return numberType[val].type === 'number' || numberType[val].type === 'date'
+			 return numberType[val].type === 'number' || numberType[val].type === 'date' || numberType[val].type === 'time'
 		});
 
 		typeArray.forEach(function (val){ numberType[val].type = "text"; })
@@ -268,7 +268,6 @@ var ordersPage = React.createClass({
 
 		var originalContents 	= document.body.innerHTML;
         var panelBody 			= document.getElementsByClassName("panel-body scroll")[1];
-		var numberType = document.getElementsByTagName("input");
 		var selectInput = document.querySelectorAll("select[name = 'unit_weight']");
 		var typeArray = [];
 
