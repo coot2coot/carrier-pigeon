@@ -3,11 +3,10 @@ var UnitForm    = require("./booking-note-unit.jsx");
 
 // For emailing as a pdf, inine styling is required.
 var text = {
-    border: "none",
-    border: "1pt black solid",
     fontSize: "10pt",
-    padding: "0 2pt",
-    margin: "0",
+    paddingRight: "15pt",
+    float: "right",
+    width: "70%",
     minHeight: "28px",
     fontFamily: "Verdana, Geneva, sans-serif"
 }
@@ -19,16 +18,12 @@ var p = {
 }
 
 var tableHeader = {
-    backgroundColor: "#B9F3F4",
-    border: "1pt black solid",
     textAlign: "center",
     fontSize: "10pt",
     fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var bigTableHeader = {
-    backgroundColor: "#B9F3F4",
-    border: "1pt black solid",
     textAlign: "center",
     fontSize: "10pt",
     height: "30pt",
@@ -38,16 +33,29 @@ var bigTableHeader = {
 var fullWidth = {
     width: "100%",
     marginBottom: "24px",
+    marginTop: "20px",
+    float: "left"
+}
+
+var header = {
+    fontWeight: "bold",
+    textAlign: "center",
+    width: "100%",
+    marginTop: "15px",
     float: "left"
 }
 
 var halfWidth = {
-    width: "50%",
+    width: "30%",
     float: "left"
 }
 
-var sixthWidth = {
-    width: "16.6%",
+var seventhWidth = {
+    width: "14%",
+    float: "left"
+}
+var seventhWidthLarge = {
+    width: "15.995%",
     float: "left"
 }
 
@@ -71,39 +79,43 @@ var bookingNoteForm = React.createClass({
         return (
             <div>
                 <div style={fullWidth}>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
                             <b> Collect on: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
                             <b> Collect at: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> Equipment: </b>
+                            <b> Collection Ref: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> Loading reference: </b>
+                            <b> Unit Type: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> Commodity description: </b>
+                            <b> No of Pkg: </b>
                         </div>
                     </div>
-                    <div style={sixthWidth}>
+                    <div style={seventhWidth}>
                         <div style={bigTableHeader}>
                             <b> Gross weight: </b>
                         </div>
                     </div>
+                    <div style={seventhWidthLarge}>
+                        <div style={bigTableHeader}>
+                            <b> Commodity: </b>
+                        </div>
+                    </div>
                     {
                         this.props.units.sort(function (a,b) {
-                            console.log(a)
                             return new Date(a.unit_loading_date) - new Date(b.unit_loading_date)
                         }).map(function (unit) {
 
@@ -112,37 +124,34 @@ var bookingNoteForm = React.createClass({
                     }
                 </div>
 
-
+                <div style={header}>Order Details</div>
                 <div style={fullWidth}>
                     <div style={halfWidth}>
-                        <div style={tableHeader}>
-                            <b> Collect from: </b>
-                        </div>
-                        <div style={text}>
-                            {order.collect_from}
-                        </div>
+                        <b> Collect from: </b>
                     </div>
-                    <div style={halfWidth}>
-                        <div style={tableHeader}>
-                            <b> Deliver to: </b>
-                        </div>
-                        <div style={text}>
-                            {order.deliver_to}
-                        </div>
+                    <div style={text}>
+                        {order.collect_from}
                     </div>
                 </div>
 
                 <div style={fullWidth}>
-                    <div style={tableHeader}>
+                    <div style={halfWidth}>
+                        <b> Deliver to: </b>
+                    </div>
+                    <div style={text}>
+                        {order.deliver_to}
+                    </div>
+                </div>
+
+                <div style={fullWidth}>
+                    <div style={halfWidth}>
                         <b> Special Instructions: </b>
                     </div>
                     <div style={text}>
-                        { instructionsArray.map(function (item) {
-
-                            return <p style={p}> { item } </p>
-                        })}
+                        {order.special_instructions}
                     </div>
                 </div>
+
             </div>
         )
     }
