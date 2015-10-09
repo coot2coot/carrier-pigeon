@@ -12,12 +12,11 @@ var sixthWidth = {
 }
 
 var text = {
-    border: "none",
-    border: "1pt black solid",
     fontSize: "11pt",
     padding: "0 2pt",
     margin: "0",
-    minHeight: "28px"
+    minHeight: "28px",
+    textAlign: 'center'
 }
 
 var unitsInformation = React.createClass({

@@ -3,10 +3,8 @@ var UnitForm    = require("./booking-note-unit.jsx");
 
 // For emailing as a pdf, inine styling is required.
 var text = {
-    border: "none",
-    border: "1pt black solid",
     fontSize: "10pt",
-    padding: "0 2pt",
+    paddingRight: "15px",
     margin: "0",
     minHeight: "28px",
     fontFamily: "Verdana, Geneva, sans-serif"
@@ -19,16 +17,12 @@ var p = {
 }
 
 var tableHeader = {
-    backgroundColor: "#B9F3F4",
-    border: "1pt black solid",
     textAlign: "center",
     fontSize: "10pt",
     fontFamily: "Verdana, Geneva, sans-serif"
 }
 
 var bigTableHeader = {
-    backgroundColor: "#B9F3F4",
-    border: "1pt black solid",
     textAlign: "center",
     fontSize: "10pt",
     height: "30pt",
@@ -38,11 +32,20 @@ var bigTableHeader = {
 var fullWidth = {
     width: "100%",
     marginBottom: "24px",
+    marginTop: "15px",
+    float: "left"
+}
+
+var header = {
+    textDecoration: "underline",
+    textAlign: "center",
+    width: "100%",
+    marginTop: "15px",
     float: "left"
 }
 
 var halfWidth = {
-    width: "50%",
+    width: "30%",
     float: "left"
 }
 
@@ -70,6 +73,7 @@ var bookingNoteForm = React.createClass({
 
         return (
             <div>
+                <div style={header} >Unit Specific Details</div>
                 <div style={fullWidth}>
                     <div style={sixthWidth}>
                         <div style={bigTableHeader}>
@@ -103,7 +107,6 @@ var bookingNoteForm = React.createClass({
                     </div>
                     {
                         this.props.units.sort(function (a,b) {
-                            console.log(a)
                             return new Date(a.unit_loading_date) - new Date(b.unit_loading_date)
                         }).map(function (unit) {
 
@@ -112,37 +115,34 @@ var bookingNoteForm = React.createClass({
                     }
                 </div>
 
-
+                <div style={header}>Order Details</div>
                 <div style={fullWidth}>
                     <div style={halfWidth}>
-                        <div style={tableHeader}>
-                            <b> Collect from: </b>
-                        </div>
-                        <div style={text}>
-                            {order.collect_from}
-                        </div>
+                        <b> Collect from: </b>
                     </div>
-                    <div style={halfWidth}>
-                        <div style={tableHeader}>
-                            <b> Deliver to: </b>
-                        </div>
-                        <div style={text}>
-                            {order.deliver_to}
-                        </div>
+                    <div style={text}>
+                        {order.collect_from}
                     </div>
                 </div>
 
                 <div style={fullWidth}>
-                    <div style={tableHeader}>
+                    <div style={halfWidth}>
+                        <b> Deliver to: </b>
+                    </div>
+                    <div style={text}>
+                        {order.deliver_to}
+                    </div>
+                </div>
+
+                <div style={fullWidth}>
+                    <div style={halfWidth}>
                         <b> Special Instructions: </b>
                     </div>
                     <div style={text}>
-                        { instructionsArray.map(function (item) {
-
-                            return <p style={p}> { item } </p>
-                        })}
+                        {order.special_instructions}
                     </div>
                 </div>
+
             </div>
         )
     }
