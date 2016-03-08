@@ -10,6 +10,8 @@ var FileDownloadList= require("../files/file-download-list.jsx");
 
 var getJobNumber = require("../../lib/format-job-number.js");
 
+var autosize = require('autosize');
+
 var viewOrder = React.createClass({
 
 	getInitialState: function() {
@@ -125,6 +127,10 @@ var viewOrder = React.createClass({
 
 	    	"get units request failed"
 	    });
+	},
+
+	componentDidMount: function () {
+		autosize(document.querySelectorAll('textarea'));
 	},
 
 
