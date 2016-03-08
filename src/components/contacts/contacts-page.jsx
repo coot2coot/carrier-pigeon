@@ -9,6 +9,11 @@ var ReminderIcon	= require("./reminder-svg.jsx");
 var getWeek			= require("../../lib/get-week.js");
 var groupBy			= require("../../lib/group-by.js");
 
+
+var removeBlueBorder = {
+	'outline':'0'
+};
+
 var contactsPage = React.createClass({
 
 	getInitialState: function () {
@@ -178,9 +183,9 @@ var contactsPage = React.createClass({
                     </div>
 					<div className="panel-header" >
 						<h3>Contacts</h3>
-						<button data-tooltip="Add contact" className="button add blue" onClick={addContact}>+</button>
-						<button data-tooltip="Order by reminders" className="button add blue" onClick={orderByReminders}>R</button>
-						<button data-tooltip="Order alphabetically" className="button add blue" onClick={alphabeticalOrder}>Abc</button>
+						<button data-tooltip="Add contact" style={removeBlueBorder} className="button add blue" onClick={addContact}>+</button>
+						<button data-tooltip="Order by reminders" style={removeBlueBorder} className="button add blue" onClick={orderByReminders}>R</button>
+						<button data-tooltip="Order alphabetically" style={removeBlueBorder} className="button add blue" onClick={alphabeticalOrder}>Abc</button>
 						<SearchBox getorders= {this.getSearchedContacts} />
 					</div>
 					<div className="panel-body table-head">

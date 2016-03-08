@@ -13,6 +13,10 @@ var Ordersth  	= require("./orderspage-th.jsx");
 var sorts      	 = require("../../lib/order-by-job-number.js");
 var getJobNumber = require("../../lib/format-job-number.js");
 
+var removeBlueBorder = {
+	'outline':'0'
+};
+
 var ordersPage = React.createClass({
 	getInitialState: function() {
 
@@ -323,11 +327,11 @@ var ordersPage = React.createClass({
                     </div>
 					<div className="panel-header">
 						<h3>Orders</h3>
-						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
-						<button data-tooltip="Get last 90 days of orders" className="button blue add" onClick={this.get90}>90</button>
-						<button data-tooltip="Get todays orders" className="button blue add" onClick={this.getTodays}>T</button>
-						<button data-tooltip="Get this months orders" className="button blue add" onClick={this.getCm}>CM</button>
-						<button data-tooltip="Pick Date Range" className="button blue add" onClick={this.pickDate}>R</button>
+						<button data-tooltip="Add order" style={removeBlueBorder} className="button blue add" onClick={this.addOrder}>+</button>
+						<button data-tooltip="Get last 90 days of orders" style={removeBlueBorder} className="button blue add" onClick={this.get90}>90</button>
+						<button data-tooltip="Get todays orders" style={removeBlueBorder} className="button blue add" onClick={this.getTodays}>T</button>
+						<button data-tooltip="Get this months orders" style={removeBlueBorder} className="button blue add" onClick={this.getCm}>CM</button>
+						<button data-tooltip="Pick Date Range" style={removeBlueBorder} className="button blue add" onClick={this.pickDate}>R</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
 					</div>
 					<div className="panel-body table-head">
