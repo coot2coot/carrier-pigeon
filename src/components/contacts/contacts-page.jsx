@@ -4,7 +4,7 @@ var CreateContact 	= require('./add-contact.jsx');
 var ViewContact 	= require("./view-contact.jsx");
 var Header 			= require("../header/header.jsx");
 var SearchBox 		= require("../orders/search-box.jsx");
-var ReminderIcon	= require("./reminder-svg.jsx")
+var ReminderIcon	= require("./reminder-svg.jsx");
 
 var getWeek			= require("../../lib/get-week.js");
 var groupBy			= require("../../lib/group-by.js");
@@ -31,25 +31,34 @@ var contactsPage = React.createClass({
 		var getContactUrl = "/contacts/get";
 
 		if (window.location.href.indexOf('true') > -1 ) {
-			getContactUrl = "/contacts/get/nocache"
+			getContactUrl = "/contacts/get/nocache";
 		}
 
 	    $.get(getContactUrl, function (result) {
-
 	    	if (result !== "") {
 	    		var contact = groupBy(getWeek.inRange(JSON.parse(result)),'contact_id');
+					var filteredContact = contact.sort(function (a, b) {
+
+						 if (a[0].company_name === null) {
+								 return 1;
+						 } else if (b[0].company_name === null) {
+								 return -1;
+						 } else {
+									return a[0].company_name.toLowerCase() < b[0].company_name.toLowerCase() ? -1 : 1 ;
+						 }
+					});
 
 		      	if (this.isMounted()) {
 		        	this.setState({
 		          		contacts : contact,
-						filteredContacts: contact
+						filteredContacts: filteredContact
 		        	});
 		      	}
 		    }
 	    }.bind(this))
 	    .fail(function () {
 
-	    	"get request failed"
+	    	"get request failed";
 	    });
 	},
 
@@ -72,6 +81,24 @@ var contactsPage = React.createClass({
 	    });
 	},
 
+	alphabeticalOrder: function () {
+
+		var contacts = this.state.contacts.sort(function (a, b) {
+
+			 if (a[0].company_name === null) {
+					 return 1;
+			 } else if (b[0].company_name === null) {
+					 return -1;
+			 } else {
+						return a[0].company_name.toLowerCase() < b[0].company_name.toLowerCase() ? -1 : 1 ;
+			 }
+		});
+
+		this.setState({
+			filteredContacts: contacts
+		});
+	},
+
 	getSearchedContacts: function (value) {
 
 		var getUrl = "/search/contacts/" + value;
@@ -80,13 +107,13 @@ var contactsPage = React.createClass({
 			if (result === "error") {
 				this.setState({
 					error: true
-				})
+				});
 			} else {
 				var contact = groupBy(getWeek.inRange(JSON.parse(result)),'contact_id');
 				var uniqContact = this.uniq(contact);
 				this.setState({
 					error: false
-				})
+				});
 				this.setState({
 				    filteredContacts : uniqContact
 				});
@@ -94,7 +121,7 @@ var contactsPage = React.createClass({
 		}.bind(this))
 		.fail( function () {
 
-			"get searchfailed"
+			"get searchfailed";
 		});
 	},
 
@@ -104,23 +131,6 @@ var contactsPage = React.createClass({
 			creatingContact: null,
 			selectedContact: null,
 			selectedReminder: null
-		})
-	},
-	alphabeticalOrder: function () {
-
-		var contacts = this.state.contacts.sort(function (a, b) {
-
-		   if (a[0].company_name === null) {
-		       return 1;
-		   } else if (b[0].company_name === null) {
-		       return -1
-		   } else {
-		        return a[0].company_name.toLowerCase() < b[0].company_name.toLowerCase() ? -1 : 1 ;
-		   }
-		});
-
-		this.setState({
-			filteredContacts: contacts
 		});
 	},
 
@@ -128,28 +138,28 @@ var contactsPage = React.createClass({
 
 		this.setState({
 			creatingContact: true
-		})
+		});
 	},
 
 	reminderHandler: function (item) {
 
 		this.setState({
 			selectedReminder: item
-		})
+		});
 	},
 
 	contactHandler: function (item) {
 
 		this.setState({
 			selectedContact: item
-		})
+		});
 	},
 
 	setUser: function (user) {
 
 		this.setState({
 			user: user
-		})
+		});
 	},
 
 	render: function () {
