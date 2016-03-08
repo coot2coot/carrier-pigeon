@@ -80,28 +80,28 @@ var halfRight = {
     float: "right",
     width: "50%",
     textAlign: "right"
-}
+};
 
 var halfLeft = {
     float: "left",
     width: "50%",
     marginTop: "12pt"
-}
+};
 var center = {
     textAlign: "center"
-}
+};
 
 var footer = {
     position: "relative",
     height: "6em",
     marginTop: "30pt"
-}
+};
 
 var logoImg = {
     height: "60pt",
     float: "right",
     marginTop: "20px"
-}
+};
 
 var companyName = {
     color: "#49A4A5",
@@ -109,23 +109,23 @@ var companyName = {
     fontWeight: "bolder",
     fontSize: "x-large",
     textAlign: "right"
-}
+};
 
 var logoText = {
     height: "64pt",
     marginTop: "12pt"
-}
+};
 
 var header = {
     fontWeight: "bold",
     fontSize: "16pt",
     color: "black"
-}
+};
 
 var contactDetails = {
     marginTop: "12pt",
     float: "right"
-}
+};
 
 var p = {
     display: "inline-block",
@@ -133,13 +133,14 @@ var p = {
     color: "#484848",
     margin: "0",
     fontFamily: "Verdana, Geneva, sans-serif"
-}
+};
 
 var container = {
     height: "95%"
-}
+};
 
 var bookingNotePage = React.createClass({
+
     getDefaultProps: function () {
         return {
             order: {},
@@ -147,6 +148,12 @@ var bookingNotePage = React.createClass({
         };
     },
     render: function() {
+        var bookingType;
+        if (this.props.bookingType === 'request') {
+          bookingType = 'Request';
+        } else {
+          bookingType = 'Confirmation';
+        }
 
         return (
             <div id="form" className="booking-note container" style={bookingStyle}>
@@ -163,7 +170,7 @@ var bookingNotePage = React.createClass({
 
                     <div style={halfLeft}>
                         <p style={header}>Booking</p>
-                        <p style={header}>Request</p>
+                        <p style={header}>{bookingType}</p>
                         <p style={pLeft}><b> Date: </b> { this.props.order.date ? formatDate(this.props.order.date) : "" }</p>
                         <p id="job-number" style={pLeft}><b> Job no: </b> {getJobNumber(this.props.order.job_number, this.props.order.date)}</p>
                     </div>
