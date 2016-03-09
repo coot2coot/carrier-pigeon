@@ -4,17 +4,19 @@ var formatDate  = require("../../lib/format-date.js");
 var fullWidth = {
     width: "100%",
     float: "left"
-}
+};
 
 var seventhWidth = {
     width: "14%",
-    float: "left"
-}
+    float: "left",
+    border: "1px solid black"
+};
 
 var seventhWidthLarge = {
     width: "15.995%",
-    float: "left"
-}
+    float: "left",
+    border: "1px solid black"
+};
 
 var text = {
     fontSize: "11pt",
@@ -22,7 +24,7 @@ var text = {
     margin: "0",
     minHeight: "28px",
     textAlign: 'center'
-}
+};
 
 var unitsInformation = React.createClass({
     render: function() {

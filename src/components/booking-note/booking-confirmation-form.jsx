@@ -8,34 +8,39 @@ var text = {
     float: "right",
     width: "70%",
     minHeight: "28px",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif"
+};
+
+var greeting = {
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif",
+    paddingTop: '1em'
+};
 
 var p = {
     color: "black",
     fontSize: "10pt",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif"
+};
 
 var tableHeader = {
     textAlign: "center",
     fontSize: "10pt",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif"
+};
 
 var bigTableHeader = {
     textAlign: "center",
     fontSize: "10pt",
     height: "30pt",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif"
+};
 
 var fullWidth = {
     width: "100%",
     marginBottom: "24px",
     marginTop: "20px",
     float: "left"
-}
+};
 
 var header = {
     fontWeight: "bold",
@@ -43,29 +48,31 @@ var header = {
     width: "100%",
     marginTop: "15px",
     float: "left"
-}
+};
 
 var halfWidth = {
     width: "30%",
     float: "left"
-}
+};
 
 var seventhWidth = {
     width: "14%",
     float: "left",
     border: "1px solid black",
     background: "#A3D7DF"
-}
+};
 var seventhWidthLarge = {
     width: "15.995%",
-    float: "left"
+    float: "left",
+    border: "1px solid black",
+    background: "#A3D7DF"
 };
 
 var center = {
     textAlign: "center"
 };
 
-var bookingNoteForm = React.createClass({
+var bookingConfirmationForm = React.createClass({
 
     getDefaultProps: function () {
         return {
@@ -86,8 +93,8 @@ var bookingNoteForm = React.createClass({
             <div>
 
                 <div style={fullWidth}>
-                  Dear Sir/Madam,
-                  Coot Freight hereby confirm your order as follows:
+                  <h4 style={greeting}>Dear Sir/Madam,</h4>
+                  <h4 style={greeting}>Coot Freight hereby confirm your order as follows:</h4>
                 </div>
                 <div style={fullWidth}>
                     <div style={seventhWidth}>
@@ -144,4 +151,4 @@ var bookingNoteForm = React.createClass({
 });
 
 
-module.exports = bookingNoteForm;
+module.exports = bookingConfirmationForm;

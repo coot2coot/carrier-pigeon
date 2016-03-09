@@ -13,9 +13,9 @@ var bookingStyle = {
     width: "21cm",
     height: "32cm",
     padding: "1cm 1.9cm",
-    fontFamily: "Verdana, Geneva, sans-serif",
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif",
     position: "relative"
-}
+};
 
 var hr = {
     backgroundColor: "#49A4A5",
@@ -23,8 +23,8 @@ var hr = {
     width: "100%",
     marginBottom: "5px",
     fontWeight: "600",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+};
 
 var h2 = {
     color: "black",
@@ -33,14 +33,14 @@ var h2 = {
     fontSize: "18pt",
     padding: "15px 0",
     margin: "0"
-}
+};
 
 var p = {
     display: "block",
     fontSize: "11pt",
     color: "black",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+};
 
 var pRight = {
     display: "block",
@@ -48,16 +48,16 @@ var pRight = {
     color: "black",
     textAlign: "right",
     marginBottom: "10px",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+};
 
 var pLeft = {
     display: "block",
     fontSize: "11pt",
     color: "black",
     marginBottom: "10px",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+};
 
 var pSmall = {
     display: "block",
@@ -65,8 +65,8 @@ var pSmall = {
     color: "#6E6E6E",
     margin: "0",
     padding: "0",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+};
 
 var smallpRight = {
     display: "block",
@@ -75,14 +75,14 @@ var smallpRight = {
     margin: "0",
     padding: "0",
     textAlign: "right",
-    fontFamily: "Verdana, Geneva, sans-serif"
-}
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+};
 
 var halfRight = {
     float: "right",
     width: "50%",
     textAlign: "right"
-}
+};
 
 var halfLeft = {
     float: "left",
@@ -134,7 +134,7 @@ var p = {
     fontSize: "11pt",
     color: "#484848",
     margin: "0",
-    fontFamily: "Verdana, Geneva, sans-serif"
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
 };
 
 var container = {
