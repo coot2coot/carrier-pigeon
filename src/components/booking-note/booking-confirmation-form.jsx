@@ -52,7 +52,9 @@ var halfWidth = {
 
 var seventhWidth = {
     width: "14%",
-    float: "left"
+    float: "left",
+    border: "1px solid black",
+    background: "#A3D7DF"
 }
 var seventhWidthLarge = {
     width: "15.995%",
@@ -82,15 +84,20 @@ var bookingNoteForm = React.createClass({
 
         return (
             <div>
+
+                <div style={fullWidth}>
+                  Dear Sir/Madam,
+                  Coot Freight hereby confirm your order as follows:
+                </div>
                 <div style={fullWidth}>
                     <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> Collect on: </b>
+                            <b> Collection Date: </b>
                         </div>
                     </div>
                     <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> Collect at: </b>
+                            <b> Collect Time: </b>
                         </div>
                     </div>
                     <div style={seventhWidth}>
@@ -105,12 +112,12 @@ var bookingNoteForm = React.createClass({
                     </div>
                     <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> No of Pkg: </b>
+                            <b> No of Packages: </b>
                         </div>
                     </div>
                     <div style={seventhWidth}>
                         <div style={bigTableHeader}>
-                            <b> Gross weight: </b>
+                            <b> Gross Weight: </b>
                         </div>
                     </div>
                     <div style={seventhWidthLarge}>
@@ -128,33 +135,8 @@ var bookingNoteForm = React.createClass({
                     }
                 </div>
 
-                <div style={header}>Order Details</div>
-                <div style={fullWidth}>
-                    <div style={halfWidth}>
-                        <b> Collect from: </b>
-                    </div>
-                    <div style={text}>
-                        {order.collect_from}
-                    </div>
-                </div>
 
-                <div style={fullWidth}>
-                    <div style={halfWidth}>
-                        <b> Deliver to: </b>
-                    </div>
-                    <div style={text}>
-                        {order.deliver_to}
-                    </div>
-                </div>
-
-                <div style={fullWidth}>
-                    <div style={halfWidth}>
-                        <b> Special Instructions: </b>
-                    </div>
-                    <div style={text}>
-                        {order.special_instructions}
-                    </div>
-                </div>
+                <div style={header}>Thank you for booking with Coot Freight</div>
 
             </div>
         )

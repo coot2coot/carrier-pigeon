@@ -1,5 +1,7 @@
 var React       = require('react');
-var BookingForm = require("./booking-note-form.jsx");
+var BookingRequestForm = require("./booking-note-form.jsx");
+var BookingConfirmationForm = require("./booking-confirmation-form.jsx");
+
 
 var getJobNumber = require("../../lib/format-job-number.js");
 var currentDate  = require("../../lib/current-date.js");
@@ -80,7 +82,7 @@ var halfRight = {
     float: "right",
     width: "50%",
     textAlign: "right"
-};
+}
 
 var halfLeft = {
     float: "left",
@@ -147,13 +149,16 @@ var bookingNotePage = React.createClass({
             units: []
         };
     },
+
+    renderForm: function () {
+      if (this.props.bookingType === 'Request') {
+        return <BookingRequestForm order={this.props.order} units={this.props.units}/>
+      } else {
+        return <BookingConfirmationForm order={this.props.order} units={this.props.units}/>
+      }
+    },
+
     render: function() {
-        var bookingType;
-        if (this.props.bookingType === 'request') {
-          bookingType = 'Request';
-        } else {
-          bookingType = 'Confirmation';
-        }
 
         return (
             <div id="form" className="booking-note container" style={bookingStyle}>
@@ -170,16 +175,17 @@ var bookingNotePage = React.createClass({
 
                     <div style={halfLeft}>
                         <p style={header}>Booking</p>
-                        <p style={header}>{bookingType}</p>
+                        <p style={header}>{this.props.bookingType}</p>
                         <p style={pLeft}><b> Date: </b> { this.props.order.date ? formatDate(this.props.order.date) : "" }</p>
                         <p id="job-number" style={pLeft}><b> Job no: </b> {getJobNumber(this.props.order.job_number, this.props.order.date)}</p>
                     </div>
 
                     <div>
-                        <BookingForm order={this.props.order} units={this.props.units}/>
+                        {this.renderForm()}
                     </div>
 
                     <br />
+
                 </div>
                 <div style={footer}>
                     <div style={center}>
