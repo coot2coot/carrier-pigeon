@@ -17,45 +17,10 @@ var bookingStyle = {
     position: "relative"
 };
 
-var hr = {
-    backgroundColor: "#49A4A5",
-    height: "3px",
-    width: "100%",
-    marginBottom: "5px",
-    fontWeight: "600",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
-};
-
-var h2 = {
-    color: "black",
-    textAlign: "center",
-    fontWeight: "700",
-    fontSize: "18pt",
-    padding: "15px 0",
-    margin: "0"
-};
-
-var p = {
-    display: "block",
-    fontSize: "11pt",
-    color: "black",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
-};
-
-var pRight = {
-    display: "block",
-    fontSize: "11pt",
-    color: "black",
-    textAlign: "right",
-    marginBottom: "10px",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
-};
-
 var pLeft = {
     display: "block",
-    fontSize: "11pt",
+    fontSize: "9pt",
     color: "black",
-    marginBottom: "10px",
     fontFamily: "Aviner, Verdana, Geneva, sans-serif"
 };
 
@@ -64,7 +29,7 @@ var pSmall = {
     fontSize: "10pt",
     color: "#6E6E6E",
     margin: "0",
-    padding: "0",
+    paddingTop: "0.5em",
     fontFamily: "Aviner, Verdana, Geneva, sans-serif"
 };
 
@@ -73,22 +38,21 @@ var smallpRight = {
     fontSize: "10pt",
     color: "#6E6E6E",
     margin: "0",
-    padding: "0",
-    textAlign: "right",
+    paddingTop: "0.5em",
+    textAlign: "left",
     fontFamily: "Aviner, Verdana, Geneva, sans-serif"
 };
 
-var halfRight = {
-    float: "right",
-    width: "50%",
-    textAlign: "right"
+var smallpCenter = {
+  display: "block",
+  fontSize: "10pt",
+  color: "#6E6E6E",
+  margin: "0",
+  padding: "0",
+  textAlign: "center",
+  fontFamily: "Aviner, Verdana, Geneva, sans-serif"
 };
 
-var halfLeft = {
-    float: "left",
-    width: "50%",
-    marginTop: "12pt"
-};
 var center = {
     textAlign: "center"
 };
@@ -99,46 +63,50 @@ var footer = {
     marginTop: "30pt"
 };
 
-var logoImg = {
-    height: "60pt",
-    float: "right",
-    marginTop: "20px"
-};
-
 var companyName = {
     color: "#49A4A5",
     fontFamily: "Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif",
     fontWeight: "bolder",
     fontSize: "x-large",
-    textAlign: "right"
-};
-
-var logoText = {
-    height: "64pt",
-    marginTop: "12pt"
+    textAlign: "left",
+    padding: "0",
+    margin: "0"
 };
 
 var header = {
     fontWeight: "bold",
     fontSize: "16pt",
-    color: "black"
+    color: "black",
+    padding: "0",
+    margin: "0"
 };
 
 var contactDetails = {
-    marginTop: "12pt",
-    float: "right"
-};
-
-var p = {
-    display: "inline-block",
-    fontSize: "11pt",
-    color: "#484848",
-    margin: "0",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+    float: "right",
+    padding: "0",
+    margin: "0"
 };
 
 var container = {
     height: "95%"
+};
+
+var logo = {
+  width: "85%",
+  paddingLeft: "1em",
+  paddingTop: "1.5em",
+  margin: "0"
+};
+
+var third = {
+  marginTop: "3em",
+  marginBottom: "6em",
+  width: "33%",
+  float: "right"
+};
+
+var pWrapper = {
+  marginTop: "1em"
 };
 
 var bookingNotePage = React.createClass({
@@ -163,21 +131,29 @@ var bookingNotePage = React.createClass({
         return (
             <div id="form" className="booking-note container" style={bookingStyle}>
                 <div style={container}>
-                    <div>
+
+                  <div style={third}>
+                      <img style={logo} src="https://cloud.githubusercontent.com/assets/12121805/13642183/5e685e90-e613-11e5-9a59-fc6d72e34dd8.jpeg"/>
+                      <p style={smallpCenter}>cootfreight.co.uk </p>
+                  </div>
+
+                    <div style={third}>
                         <div style={contactDetails}>
                             <p style={companyName}>Coot Freight Ltd.</p>
                             <p style={smallpRight}> Davenport House, 16 Pepper Street </p>
                             <p style={smallpRight}> London E14 9RP, England </p>
-                            <p style={smallpRight}> Tel +44 020 7510 9625</p>
-                            <p style={smallpRight}> www.cootfreight.co.uk </p>
+                            <p style={smallpRight}> T: +44 020 7510 9625</p>
+                            <p style={smallpRight}> E: info@cootfreight.co.uk</p>
                         </div>
                     </div>
 
-                    <div style={halfLeft}>
+                    <div style={third}>
                         <p style={header}>Booking</p>
                         <p style={header}>{this.props.bookingType}</p>
-                        <p style={pLeft}><b> Date: </b> { this.props.order.date ? formatDate(this.props.order.date) : "" }</p>
-                        <p id="job-number" style={pLeft}><b> Job no: </b> {getJobNumber(this.props.order.job_number, this.props.order.date)}</p>
+                        <div style={pWrapper}>
+                          <p style={pLeft}><b> Date: </b> { this.props.order.date ? formatDate(this.props.order.date) : "" }</p>
+                          <p id="job-number" style={pLeft}><b> Job no: </b> {getJobNumber(this.props.order.job_number, this.props.order.date)}</p>
+                        </div>
                     </div>
 
                     <div>

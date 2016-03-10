@@ -2,74 +2,41 @@ var React       = require('react');
 var UnitForm    = require("./booking-note-unit.jsx");
 
 // For emailing as a pdf, inine styling is required.
-var text = {
-    fontSize: "10pt",
-    paddingRight: "15pt",
-    float: "right",
-    width: "70%",
-    minHeight: "28px",
-    fontFamily: "Avenir, Verdana, Geneva, sans-serif"
-};
-
 var greeting = {
     fontFamily: "Avenir, Verdana, Geneva, sans-serif",
-    paddingTop: '1em'
-};
-
-var p = {
-    color: "black",
-    fontSize: "10pt",
-    fontFamily: "Avenir, Verdana, Geneva, sans-serif"
-};
-
-var tableHeader = {
-    textAlign: "center",
-    fontSize: "10pt",
-    fontFamily: "Avenir, Verdana, Geneva, sans-serif"
-};
-
-var bigTableHeader = {
-    textAlign: "center",
-    fontSize: "10pt",
-    height: "30pt",
-    fontFamily: "Avenir, Verdana, Geneva, sans-serif"
+    paddingTop: '0.5em',
+    fontSize: '14px',
+    margin: "0"
 };
 
 var fullWidth = {
     width: "100%",
     marginBottom: "24px",
-    marginTop: "20px",
     float: "left"
 };
 
-var header = {
+var thankYou = {
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif",
     fontWeight: "bold",
     textAlign: "center",
     width: "100%",
-    marginTop: "15px",
+    marginTop: "5em",
     float: "left"
 };
 
-var halfWidth = {
-    width: "30%",
-    float: "left"
+var table = {
+  width: "100%"
 };
 
-var seventhWidth = {
-    width: "14%",
-    float: "left",
-    border: "1px solid black",
-    background: "#A3D7DF"
-};
-var seventhWidthLarge = {
-    width: "15.995%",
-    float: "left",
-    border: "1px solid black",
-    background: "#A3D7DF"
-};
-
-var center = {
-    textAlign: "center"
+var topRow = {
+  border: "1px solid black",
+  borderCollapse: "collapse",
+  background: "#A3D7DF",
+  "-webkit-print-color-adjust": "exact",
+  fontFamily: "Avenir, Verdana, Geneva, sans-serif",
+  textAlign: "center",
+  paddingTop: "1em",
+  paddingBottom: "1em"
 };
 
 var bookingConfirmationForm = React.createClass({
@@ -92,58 +59,32 @@ var bookingConfirmationForm = React.createClass({
         return (
             <div>
 
-                <div style={fullWidth}>
-                  <h4 style={greeting}>Dear Sir/Madam,</h4>
-                  <h4 style={greeting}>Coot Freight hereby confirm your order as follows:</h4>
-                </div>
-                <div style={fullWidth}>
-                    <div style={seventhWidth}>
-                        <div style={bigTableHeader}>
-                            <b> Collection Date: </b>
-                        </div>
-                    </div>
-                    <div style={seventhWidth}>
-                        <div style={bigTableHeader}>
-                            <b> Collect Time: </b>
-                        </div>
-                    </div>
-                    <div style={seventhWidth}>
-                        <div style={bigTableHeader}>
-                            <b> Collection Ref: </b>
-                        </div>
-                    </div>
-                    <div style={seventhWidth}>
-                        <div style={bigTableHeader}>
-                            <b> Unit Type: </b>
-                        </div>
-                    </div>
-                    <div style={seventhWidth}>
-                        <div style={bigTableHeader}>
-                            <b> No of Packages: </b>
-                        </div>
-                    </div>
-                    <div style={seventhWidth}>
-                        <div style={bigTableHeader}>
-                            <b> Gross Weight: </b>
-                        </div>
-                    </div>
-                    <div style={seventhWidthLarge}>
-                        <div style={bigTableHeader}>
-                            <b> Commodity: </b>
-                        </div>
-                    </div>
-                    {
-                        this.props.units.sort(function (a,b) {
-                            return new Date(a.unit_loading_date) - new Date(b.unit_loading_date)
-                        }).map(function (unit) {
+              <div style={fullWidth}>
+                <h4 style={greeting}>Dear Sir/Madam,</h4>
+                <h4 style={greeting}>Coot Freight hereby confirm your order as follows:</h4>
+              </div>
 
-                            return <UnitForm unit={unit} />
-                        })
-                    }
-                </div>
+              <table style={table}>
+                <tr>
+                  <td style={topRow}>Collection Date:</td>
+                  <td style={topRow}>Collection Time:</td>
+                  <td style={topRow}>Collection Ref:</td>
+                  <td style={topRow}>Unit Type:</td>
+                  <td style={topRow}>No of Packages:</td>
+                  <td style={topRow}>Gross Weight:</td>
+                  <td style={topRow}>Commodity:</td>
+                </tr>
+                  {
+                      this.props.units.sort(function (a,b) {
+                          return new Date(a.unit_loading_date) - new Date(b.unit_loading_date)
+                      }).map(function (unit) {
 
+                          return <UnitForm unit={unit} />
+                      })
+                  }
+              </table>
 
-                <div style={header}>Thank you for booking with Coot Freight</div>
+              <div style={thankYou}>Thank you for booking with Coot Freight</div>
 
             </div>
         )

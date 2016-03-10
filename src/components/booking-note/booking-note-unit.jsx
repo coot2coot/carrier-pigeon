@@ -6,18 +6,6 @@ var fullWidth = {
     float: "left"
 };
 
-var seventhWidth = {
-    width: "14%",
-    float: "left",
-    border: "1px solid black"
-};
-
-var seventhWidthLarge = {
-    width: "15.995%",
-    float: "left",
-    border: "1px solid black"
-};
-
 var text = {
     fontSize: "11pt",
     padding: "0 2pt",
@@ -26,46 +14,27 @@ var text = {
     textAlign: 'center'
 };
 
+var rows = {
+    border: "1px solid black",
+    borderCollapse: "collapse",
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif",
+    paddingLeft: "5px",
+    paddingTop: "1em",
+    paddingBottom: "1em"
+};
+
 var unitsInformation = React.createClass({
     render: function() {
         return (
-            <div style={fullWidth}>
-                <div style={seventhWidth}>
-                    <div style={text}>
-                        {this.props.unit.unit_loading_date ? formatDate(this.props.unit.unit_loading_date) : ""}
-                    </div>
-                </div>
-                <div style={seventhWidth}>
-                    <div style={text}>
-                       {this.props.unit.unit_loading_time ? this.props.unit.unit_loading_time.substring(0, 5) : ""}
-                    </div>
-                </div>
-                <div style={seventhWidth}>
-                    <div style={text}>
-                        {this.props.unit.unit_loading_reference}
-                    </div>
-                </div>
-                <div style={seventhWidth}>
-                    <div style={text}>
-                        {this.props.unit.unit_type}
-                    </div>
-                </div>
-                <div style={seventhWidth}>
-                    <div style={text}>
-                        {this.props.unit.unit_no_of_packages}
-                    </div>
-                </div>
-                <div style={seventhWidth}>
-                    <div style={text}>
-                        {this.props.unit.unit_gross_weight} {this.props.unit.unit_gross_weight ? this.props.unit.unit_weight : ""}
-                    </div>
-                </div>
-                <div style={seventhWidthLarge}>
-                    <div style={text}>
-                        {this.props.unit.unit_commodity_description}
-                    </div>
-                </div>
-            </div>
+          <tr>
+            <td style={rows}>{this.props.unit.unit_loading_date ? formatDate(this.props.unit.unit_loading_date) : ""}</td>
+            <td style={rows}>{this.props.unit.unit_loading_time ? this.props.unit.unit_loading_time.substring(0, 5) : ""}</td>
+            <td style={rows}>{this.props.unit.unit_loading_reference}</td>
+            <td style={rows}>{this.props.unit.unit_type}</td>
+            <td style={rows}>{this.props.unit.unit_no_of_packages}</td>
+            <td style={rows}>{this.props.unit.unit_gross_weight} {this.props.unit.unit_gross_weight ? this.props.unit.unit_weight : ""}</td>
+            <td style={rows}>{this.props.unit.unit_commodity_description}</td>
+          </tr>
         )
     }
 });

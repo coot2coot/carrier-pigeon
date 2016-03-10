@@ -67,6 +67,31 @@ var center = {
     textAlign: "center"
 };
 
+var table = {
+  marginTop: "3em",
+  width: "100%"
+};
+
+var topRow = {
+  border: "1px solid black",
+  borderCollapse: "collapse",
+  background: "#A3D7DF",
+  fontFamily: "Avenir, Verdana, Geneva, sans-serif",
+  "-webkit-print-color-adjust": "exact",
+  textAlign: "center",
+  paddingTop: "1em",
+  paddingBottom: "1em"
+};
+
+var rows = {
+    border: "1px solid black",
+    borderCollapse: "collapse",
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif",
+    paddingLeft: "5px",
+    paddingTop: "1em",
+    paddingBottom: "1em"
+};
+
 var bookingNoteForm = React.createClass({
 
     getDefaultProps: function () {
@@ -86,42 +111,17 @@ var bookingNoteForm = React.createClass({
 
         return (
             <div>
-              <div style={fullWidth}>
-                  <div style={seventhWidth}>
-                      <div style={bigTableHeader}>
-                          <b> Collection Date: </b>
-                      </div>
-                  </div>
-                  <div style={seventhWidth}>
-                      <div style={bigTableHeader}>
-                          <b> Collect Time: </b>
-                      </div>
-                  </div>
-                  <div style={seventhWidth}>
-                      <div style={bigTableHeader}>
-                          <b> Collection Ref: </b>
-                      </div>
-                  </div>
-                  <div style={seventhWidth}>
-                      <div style={bigTableHeader}>
-                          <b> Unit Type: </b>
-                      </div>
-                  </div>
-                  <div style={seventhWidth}>
-                      <div style={bigTableHeader}>
-                          <b> No of Packages: </b>
-                      </div>
-                  </div>
-                  <div style={seventhWidth}>
-                      <div style={bigTableHeader}>
-                          <b> Gross Weight: </b>
-                      </div>
-                  </div>
-                  <div style={seventhWidthLarge}>
-                      <div style={bigTableHeader}>
-                          <b> Commodity: </b>
-                      </div>
-                  </div>
+
+              <table style={table}>
+                <tr>
+                  <td style={topRow}>Collection Date:</td>
+                  <td style={topRow}>Collection Time:</td>
+                  <td style={topRow}>Collection Ref:</td>
+                  <td style={topRow}>Unit Type:</td>
+                  <td style={topRow}>No of Packages:</td>
+                  <td style={topRow}>Gross Weight:</td>
+                  <td style={topRow}>Commodity:</td>
+                </tr>
                   {
                       this.props.units.sort(function (a,b) {
                           return new Date(a.unit_loading_date) - new Date(b.unit_loading_date)
@@ -130,36 +130,28 @@ var bookingNoteForm = React.createClass({
                           return <UnitForm unit={unit} />
                       })
                   }
-              </div>
+              </table>
 
-                <div style={header}>Order Details</div>
-                <div style={fullWidth}>
-                    <div style={halfWidth}>
-                        <b> Collect from: </b>
-                    </div>
-                    <div style={text}>
-                        {order.collect_from}
-                    </div>
-                </div>
 
-                <div style={fullWidth}>
-                    <div style={halfWidth}>
-                        <b> Deliver to: </b>
-                    </div>
-                    <div style={text}>
-                        {order.deliver_to}
-                    </div>
-                </div>
+              <table style={table}>
+                <tr>
+                  <td style={topRow}>Collect From:</td>
+                  <td style={topRow}>Deliver To:</td>
+                </tr>
+                <tr>
+                  <td style={rows}>{order.collect_from}</td>
+                  <td style={rows}>{order.deliver_to}</td>
+                </tr>
+              </table>
 
-                <div style={fullWidth}>
-                    <div style={halfWidth}>
-                        <b> Special Instructions: </b>
-                    </div>
-                    <div style={text}>
-                        {order.special_instructions}
-                    </div>
-                </div>
-
+              <table style={table}>
+                <tr>
+                  <td style={topRow}>Special Instructions:</td>
+                </tr>
+                <tr>
+                  <td style={rows}>{order.special_instructions}</td>
+                </tr>
+              </table>
 
             </div>
         )
