@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/foundersandcoders/carrier-pigeon",
   "dependencies": {
+    "autosize": "^3.0.15",
     "aws-sdk": "^2.1.45",
     "cookies": "^0.5.0",
     "html-pdf": "^1.2.0",
