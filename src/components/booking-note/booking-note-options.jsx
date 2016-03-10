@@ -8,12 +8,12 @@ var bookingNoteButtons = React.createClass({
             emailInput: false
         };
     },
-    
+
     emailBooking: function (e) {
         var getOrderUrl = "/booking-note/email";
 
         var component = React.renderToString(
-            <BookingPage order={this.props.order} units={this.props.units}/>
+            <BookingPage bookingType={this.props.bookingType} order={this.props.order} units={this.props.units}/>
         );
 
         var data = {
@@ -28,7 +28,7 @@ var bookingNoteButtons = React.createClass({
                 emailInput: false
             })
         }.bind(this))
-        
+
         .fail(function () {
             "get units request failed"
         });
@@ -54,7 +54,7 @@ var bookingNoteButtons = React.createClass({
             emailInput: true
 		})
     },
-	
+
     render: function() {
         return (
             <links className="container">
@@ -63,7 +63,7 @@ var bookingNoteButtons = React.createClass({
                         <a className="button blue" onClick={this.printBooking}>
                             Print
                         </a>
-                        
+
 						<a className="button blue" onClick={this.enterEmail}>
                             Email
                         </a>
