@@ -115,17 +115,21 @@ var viewOrder = React.createClass({
 
 	    	if (result !== "") {
 		    	var unit = JSON.parse(result);
-
+					var sortedUnits = unit.sort(function(a,b) {
+						var aTime = (a.unit_loading_date).split("T")[0] + " " + a.unit_loading_time;
+						var bTime = (b.unit_loading_date).split("T")[0] + " " + b.unit_loading_time;
+						return new Date(aTime).getTime() - new Date(bTime).getTime();
+					});
 		      	if (this.isMounted()) {
 		        	this.setState({
-		          		units: unit
+		          		units: sortedUnits
 		        	});
 		      	}
 		    }
 	    }.bind(this))
 	    .fail(function () {
 
-	    	"get units request failed"
+	    	"get units request failed";
 	    });
 	},
 
@@ -235,8 +239,8 @@ var viewOrder = React.createClass({
 								</div>
 
 								<div className="row units">
-
 									{ this.state.units.map( function (unit, i) {
+
 										var key = new Date().getMilliseconds() + i;
 									    return <Units
 									    			unit={unit}
