@@ -1,6 +1,6 @@
 "use strict"
 
-var pdf          = require('html-pdf');
+var pdf          = require('html-to-pdf');
 var fs           = require('fs');
 var parseData    = require('../lib/get-form-data.js');
 var validateUser = require('../lib/validate-user.js');
@@ -37,21 +37,36 @@ function emailBookingNote (req, res, cb) {
 
         parseData(req, function(data) {
 
-            pdf.create(data.attachment).toBuffer(function(err, buffer) {
+          pdf.convertHTMLString(data.attachment, 'pdf/test.pdf',
+              function (error, success) {
+                console.log('email??????');
+                  if (error) {
+                      console.log('Oh noes! Errorz!');
+                      console.log(error);
+                  } else {
+                      console.log('Woot! Success!');
+                      console.log(success);
+                      var parsedOrder = JSON.parse(data.order);
+                      sendBookingNote(success, data.toemail, data.ccemail, parsedOrder, user.email);
+                  }
+              });
 
-                if (err) {
-                    return console.log(err);
-                }
 
-                var parsedOrder = JSON.parse(data.order);
-
-                sendBookingNote(buffer, data.toemail, data.ccemail, parsedOrder, user.email);
-
-                res.writeHead(200);
-                res.end();
-            });
-        })
+            // pdf.create(data.attachment).toBuffer(function(err, buffer) {
+            //
+            //     if (err) {
+            //         return console.log(err);
+            //     }
+            //
+            //     var parsedOrder = JSON.parse(data.order);
+            //
+            //     sendBookingNote(buffer, data.toemail, data.ccemail, parsedOrder, user.email);
+            //
+            //     res.writeHead(200);
+            //     res.end();
+            // });
+        });
     });
-};
+}
 
 module.exports = emailBookingNote;
