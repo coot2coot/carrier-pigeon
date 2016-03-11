@@ -33,22 +33,22 @@ var bookingNote = React.createClass({
             }
         }.bind(this))
         .fail(function () {
-            "get units request failed";
+            "get units request failed"
         });
     },
 
     setUser: function(user) {
         this.setState({
             user: user
-        });
+        })
     },
 
     render: function() {
         return (
             <div >
                 <Header setUser={this.setUser}/>
-                <BookingOptions bookingType={this.props.params.booking_type} order={this.state.order} units={this.state.units}/>
-                <BookingPage bookingType={this.props.params.booking_type} order={this.state.order} units={this.state.units}/>
+                <BookingOptions order={this.state.order} units={this.state.units}/>
+                <BookingPage order={this.state.order} units={this.state.units}/>
             </div>
         )
     }

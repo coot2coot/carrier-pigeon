@@ -25,7 +25,7 @@
 /*******************************
 *       PREREQUISITE TASKS
 ********************************/
-
+    
     gulp.task("open", shell.task([
         "open http://localhost:8000"
     ]));
@@ -161,16 +161,16 @@
     gulp.task("watchify", function () {
 
         var b = browserify({
-            entries: [reactSrc],
+            entries: [reactSrc], 
             transform: [reactify],
             debug: true,
-            cache: {}, packageCache: {}, fullPaths: true
+            cache: {}, packageCache: {}, fullPaths: true 
         });
 
         var watcher  = watchify(b);
 
         return watcher
-            .on("update", function () {
+            .on("update", function () { 
                 var updateStart = Date.now();
                 watcher.bundle()
                     .pipe(source("bundle.js"))
@@ -188,13 +188,13 @@
 ********************************/
 
 	// For development
-    gulp.task("watch", ["sass-watch", "watchify"]);
+    gulp.task("watch", ["sass-watch", "watchify"])
 
     // For Production
 	gulp.task("build", ["sass-production", "bundle"] , function() {
         return console.log("done building");
     });
-
+    
     //TODO: Need to add tests task back in here once tests are updated
     gulp.task("deploy", ["build","test"], function() {
         console.log("Done building");
@@ -210,5 +210,5 @@
             console.log("restarted");
         });
     });
-
+	
 })();
