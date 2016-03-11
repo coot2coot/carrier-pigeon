@@ -24,7 +24,7 @@ var Test = React.createClass({
 })
 
 var routes = (
-    <Route>
+    <Route>  
         <Route name="orders" path="/orders" handler={Orders}>
             <Route name="orderUpdate" path=":update" handler={Orders}>
                 <Route name="orderJobNumber" path=":job_no" handler={Orders}/>
@@ -39,7 +39,7 @@ var routes = (
 
         <Route name="reports" path="/reports" handler={Test} />
 
-        <Route name="booking-note" path="/booking-note/:job_no/:booking_type" handler={BookingNote} />
+        <Route name="booking-note" path="/booking-note/:job_no" handler={BookingNote} />
 
         <Route name="admin" path="/users" handler={AdminPanel}>
             <Route name="userUpdate" path=":update" handler={AdminPanel} />
@@ -51,7 +51,7 @@ var routes = (
             <Route name="AddUnitType" path="units" props="units" handler={Settings} />
         </Route>
 
-        <DefaultRoute handler={Header}/>
+        <DefaultRoute handler={Header}/>  
     </Route>
 );
 

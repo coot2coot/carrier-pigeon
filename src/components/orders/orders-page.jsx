@@ -13,10 +13,6 @@ var Ordersth  	= require("./orderspage-th.jsx");
 var sorts      	 = require("../../lib/order-by-job-number.js");
 var getJobNumber = require("../../lib/format-job-number.js");
 
-var removeBlueBorder = {
-	'outline':'0'
-};
-
 var ordersPage = React.createClass({
 	getInitialState: function() {
 
@@ -37,7 +33,7 @@ var ordersPage = React.createClass({
 
 			var date = new Date();
 
-	    	this.getSearchedOrders(getJobNumber(this.props.params.job_no, date));
+	    	this.getSearchedOrders(getJobNumber(this.props.params.job_no, date))
 	    } else {
 
 	    	this.getTodays();
@@ -51,21 +47,21 @@ var ordersPage = React.createClass({
 			creatingOrder: null,
 			datePicker: null,
 			ledger: null
-		});
+		})
 	},
 
 	orderHandler: function (item) {
 
 		this.setState({
 			selectedOrder: item
-		});
+		})
 	},
 
 	ledgerHandler: function (item) {
 
 		this.setState({
 			ledger: item
-		});
+		})
 	},
 
 	addOrder: function () {
@@ -73,7 +69,7 @@ var ordersPage = React.createClass({
 		this.setState({
 			creatingOrder: true,
 			newOrder: true
-		});
+		})
 	},
 
 	copyOrder: function (order, units) {
@@ -83,7 +79,7 @@ var ordersPage = React.createClass({
 			creatingOrder: true,
 			copiedOrder: order,
 			copiedUnits: units
-		});
+		})
 	},
 
 	pickDate: function () {
@@ -116,14 +112,14 @@ var ordersPage = React.createClass({
 
 				this.setState({
 					error: true
-				});
+				})
 			} else {
 				var order = JSON.parse(result);
 				var uniqOrder = sorts(this.uniq(order));
 
 				this.setState({
 					error: false
-				});
+				})
 
 				this.setState({
 				    orders : uniqOrder
@@ -131,7 +127,7 @@ var ordersPage = React.createClass({
 			}
 		}.bind(this))
 		.fail(function(){
-			"get searchfailed";
+			"get searchfailed"
 		});
 	},
 
@@ -154,7 +150,7 @@ var ordersPage = React.createClass({
 			pastDate.getUTCDate()
 		];
 
-		date = pastDate.join("-")+ "," + currentDate.join("-");
+		date = pastDate.join("-")+ "," + currentDate.join("-")
 
 		this.getDateOrders(date, "orders");
 
@@ -178,7 +174,7 @@ var ordersPage = React.createClass({
 			1
 		];
 
-		date = pastDate.join("-")+ "," + currentDate.join("-");
+		date = pastDate.join("-")+ "," + currentDate.join("-")
 
 		this.getDateOrders(date, "orders");
 
@@ -195,7 +191,7 @@ var ordersPage = React.createClass({
 			currentDate.getUTCDate()
 		];
 
-		date = currentDate.join("-");
+		date = currentDate.join("-")
 
 		this.getDateOrders(date, "orders");
 
@@ -211,7 +207,7 @@ var ordersPage = React.createClass({
 				this.setState({
 					error: true,
 					datePicker: null
-				});
+				})
 			} else {
 				var order = sorts(JSON.parse(result));
 
@@ -227,14 +223,14 @@ var ordersPage = React.createClass({
 		}.bind(this))
 
 		.fail(function(){
-			"get searchfailed";
+			"get searchfailed"
 		});
 	},
 
 	setUser: function(user) {
 		this.setState({
 			user: user
-		});
+		})
 	},
 
 	specificSelect : function () {
@@ -254,14 +250,14 @@ var ordersPage = React.createClass({
 			if (selected.value === 'tons') {
 				selected.options[0].innerHTML = 't';
 			}
-		});
+		})
 
 		typeArray = Object.keys(numberType).filter(function (val) {
 
-			 return numberType[val].type === 'number' || numberType[val].type === 'date' || numberType[val].type === 'time';
+			 return numberType[val].type === 'number' || numberType[val].type === 'date' || numberType[val].type === 'time'
 		});
 
-		typeArray.forEach(function (val){ numberType[val].type = "text"; });
+		typeArray.forEach(function (val){ numberType[val].type = "text"; })
 	},
 
 
@@ -327,11 +323,11 @@ var ordersPage = React.createClass({
                     </div>
 					<div className="panel-header">
 						<h3>Orders</h3>
-						<button data-tooltip="Add order" style={removeBlueBorder} className="button blue add" onClick={this.addOrder}>+</button>
-						<button data-tooltip="Get last 90 days of orders" style={removeBlueBorder} className="button blue add" onClick={this.get90}>90</button>
-						<button data-tooltip="Get todays orders" style={removeBlueBorder} className="button blue add" onClick={this.getTodays}>T</button>
-						<button data-tooltip="Get this months orders" style={removeBlueBorder} className="button blue add" onClick={this.getCm}>CM</button>
-						<button data-tooltip="Pick Date Range" style={removeBlueBorder} className="button blue add" onClick={this.pickDate}>R</button>
+						<button data-tooltip="Add order" className="button blue add" onClick={this.addOrder}>+</button>
+						<button data-tooltip="Get last 90 days of orders" className="button blue add" onClick={this.get90}>90</button>
+						<button data-tooltip="Get todays orders" className="button blue add" onClick={this.getTodays}>T</button>
+						<button data-tooltip="Get this months orders" className="button blue add" onClick={this.getCm}>CM</button>
+						<button data-tooltip="Pick Date Range" className="button blue add" onClick={this.pickDate}>R</button>
 						<SearchBox getorders= {this.getSearchedOrders} />
 					</div>
 					<div className="panel-body table-head">
