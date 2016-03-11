@@ -11,4 +11,3 @@ tests/acceptance/reports
 bundle.js
 bundle.min.js
 npm-debug.log
-.DS_Store
