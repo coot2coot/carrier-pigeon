@@ -20,7 +20,7 @@ var contactsPage = React.createClass({
 
       return {
         contacts:[],
-		filteredContacts: [],
+				filteredContacts: [],
         error: false,
         creatingContact: false
       };
@@ -37,21 +37,23 @@ var contactsPage = React.createClass({
 	    $.get(getContactUrl, function (result) {
 	    	if (result !== "") {
 	    		var contact = groupBy(getWeek.inRange(JSON.parse(result)),'contact_id');
-					var filteredContact = contact.sort(function (a, b) {
+
+					var filterReminders = getWeek.filter(contact);
+					var orderAlphabetical = filterReminders.sort(function (a, b) {
 
 						 if (a[0].company_name === null) {
 								 return 1;
 						 } else if (b[0].company_name === null) {
 								 return -1;
 						 } else {
-									return a[0].company_name.toLowerCase() < b[0].company_name.toLowerCase() ? -1 : 1 ;
+								return a[0].company_name.toLowerCase() < b[0].company_name.toLowerCase() ? -1 : 1 ;
 						 }
 					});
 
 		      	if (this.isMounted()) {
 		        	this.setState({
 		          		contacts : contact,
-						filteredContacts: filteredContact
+						filteredContacts: orderAlphabetical
 		        	});
 		      	}
 		    }
@@ -65,9 +67,19 @@ var contactsPage = React.createClass({
 	orderByReminders: function () {
 
 		var ordered = getWeek.filter(this.state.contacts);
+		var filteredContact = ordered.sort(function (a, b) {
+
+			 if (a[0].company_name === null) {
+					 return 1;
+			 } else if (b[0].company_name === null) {
+					 return -1;
+			 } else {
+					return a[0].company_name.toLowerCase() < b[0].company_name.toLowerCase() ? -1 : 1 ;
+			 }
+		});
 
 		this.setState({
-			filteredContacts: ordered
+			filteredContacts: filteredContact
 		});
 	},
 
