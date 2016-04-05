@@ -1,6 +1,13 @@
 var React = require('react');
 
+var autosize = require('autosize');
+
 var units = React.createClass({
+	
+	componentDidMount: function () {
+		autosize(document.querySelectorAll('textarea'));
+	},
+
 	render: function () {
 		var unit = this.props.unit;
 		var addUnit = this.props.addUnit;
@@ -74,7 +81,7 @@ var units = React.createClass({
 					</div>
 
 					<div className="row">
-						
+
 						<div className="column-2">
 							<input type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_net_weight ? unit.unit_net_weight : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>

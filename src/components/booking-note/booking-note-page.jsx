@@ -19,9 +19,11 @@ var bookingStyle = {
 
 var pLeft = {
     display: "block",
-    fontSize: "9pt",
+    fontSize: "8pt",
     color: "black",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif",
+    lineHeight: "1",
+    paddingTop: "0.5em",
 };
 
 var pSmall = {
@@ -35,17 +37,19 @@ var pSmall = {
 
 var smallpRight = {
     display: "block",
-    fontSize: "10pt",
+    fontSize: "8pt",
     color: "#6E6E6E",
     margin: "0",
+    lineHeight: "1",
     paddingTop: "0.5em",
     textAlign: "left",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+    fontFamily: "Aviner, Verdana, Geneva, sans-serif",
+    paddingLeft: "75px"
 };
 
 var smallpCenter = {
   display: "block",
-  fontSize: "10pt",
+  fontSize: "8pt",
   color: "#6E6E6E",
   margin: "0",
   padding: "0",
@@ -67,10 +71,10 @@ var companyName = {
     color: "#49A4A5",
     fontFamily: "Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif",
     fontWeight: "bolder",
-    fontSize: "x-large",
     textAlign: "left",
     padding: "0",
-    margin: "0"
+    margin: "0",
+    paddingLeft: "75px"
 };
 
 var header = {
@@ -78,7 +82,8 @@ var header = {
     fontSize: "16pt",
     color: "black",
     padding: "0",
-    margin: "0"
+    margin: "0",
+    fontFamily: "Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif"
 };
 
 var contactDetails = {
@@ -92,9 +97,8 @@ var container = {
 };
 
 var logo = {
-  width: "85%",
+  width: "95%",
   paddingLeft: "1em",
-  paddingTop: "1.5em",
   margin: "0"
 };
 
@@ -140,16 +144,15 @@ var bookingNotePage = React.createClass({
                     <div style={third}>
                         <div style={contactDetails}>
                             <p style={companyName}>Coot Freight Ltd.</p>
-                            <p style={smallpRight}> Davenport House, 16 Pepper Street </p>
-                            <p style={smallpRight}> London E14 9RP, England </p>
-                            <p style={smallpRight}> T: +44 020 7510 9625</p>
+                            <p style={smallpRight}> 50 Cambridge Road,</p>
+                            <p style={smallpRight}> Barking, IG11 8FG </p>
+                            <p style={smallpRight}> T: +44 020 8594 75 33</p>
                             <p style={smallpRight}> E: info@cootfreight.co.uk</p>
                         </div>
                     </div>
 
                     <div style={third}>
-                        <p style={header}>Booking</p>
-                        <p style={header}>{this.props.bookingType}</p>
+                        <p style={header}>Booking {this.props.bookingType}</p>
                         <div style={pWrapper}>
                           <p style={pLeft}><b> Date: </b> { this.props.order.date ? formatDate(this.props.order.date) : "" }</p>
                           <p id="job-number" style={pLeft}><b> Job no: </b> {getJobNumber(this.props.order.job_number, this.props.order.date)}</p>
