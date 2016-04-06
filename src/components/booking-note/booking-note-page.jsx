@@ -13,7 +13,7 @@ var bookingStyle = {
     width: "21cm",
     height: "32cm",
     padding: "1cm 1.9cm",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif",
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif",
     position: "relative"
 };
 
@@ -21,7 +21,7 @@ var pLeft = {
     display: "block",
     fontSize: "8pt",
     color: "black",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif",
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif",
     lineHeight: "1"
 };
 
@@ -31,7 +31,8 @@ var pSmall = {
     color: "#6E6E6E",
     margin: "0",
     paddingTop: "0.5em",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif"
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif",
+    textAlign: "center"
 };
 
 var smallpRight = {
@@ -42,7 +43,7 @@ var smallpRight = {
     lineHeight: "1",
     paddingTop: "0.5em",
     textAlign: "left",
-    fontFamily: "Aviner, Verdana, Geneva, sans-serif",
+    fontFamily: "Avenir, Verdana, Geneva, sans-serif",
     paddingLeft: "75px"
 };
 
@@ -53,17 +54,12 @@ var smallpCenter = {
   margin: "0",
   padding: "0",
   textAlign: "center",
-  fontFamily: "Aviner, Verdana, Geneva, sans-serif"
-};
-
-var center = {
-    textAlign: "center"
+  fontFamily: "Avenir, Verdana, Geneva, sans-serif"
 };
 
 var footer = {
-    position: "relative",
-    height: "6em",
-    marginTop: "30pt"
+    position: "absolute",
+    bottom: "15px"
 };
 
 var companyName = {
@@ -166,10 +162,7 @@ var bookingNotePage = React.createClass({
 
                 </div>
                 <div style={footer}>
-                    <div style={center}>
-                        <p style={pSmall}>All business is subject to the current standing conditions of the BIFA copies </p>
-                        <p style={pSmall}>copies of which are available on request </p>
-                    </div>
+                  <p style={pSmall}>All business is subject to the current standing conditions of the BIFA copies of which are available on request </p>
                 </div>
             </div>
         )
