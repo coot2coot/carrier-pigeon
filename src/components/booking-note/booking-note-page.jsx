@@ -59,7 +59,9 @@ var smallpCenter = {
 
 var footer = {
     position: "absolute",
-    bottom: "15px"
+    bottom: "15px",
+    right: "0",
+    left: "0"
 };
 
 var companyName = {
