@@ -22,8 +22,7 @@ var pLeft = {
     fontSize: "8pt",
     color: "black",
     fontFamily: "Aviner, Verdana, Geneva, sans-serif",
-    lineHeight: "1",
-    paddingTop: "0.5em",
+    lineHeight: "1"
 };
 
 var pSmall = {
@@ -79,7 +78,7 @@ var companyName = {
 
 var header = {
     fontWeight: "bold",
-    fontSize: "16pt",
+    fontSize: "20pt",
     color: "black",
     padding: "0",
     margin: "0",

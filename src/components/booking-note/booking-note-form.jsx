@@ -69,7 +69,8 @@ var center = {
 
 var table = {
   marginTop: "3em",
-  width: "100%"
+  width: "100%",
+  tableLayout: "fixed"
 };
 
 var topRow = {
@@ -90,6 +91,10 @@ var rows = {
     paddingLeft: "5px",
     paddingTop: "1em",
     paddingBottom: "1em"
+};
+
+var lineBreak = {
+  whiteSpace: "pre-line"
 };
 
 var bookingNoteForm = React.createClass({
@@ -139,8 +144,8 @@ var bookingNoteForm = React.createClass({
                   <td style={topRow}>Deliver To:</td>
                 </tr>
                 <tr>
-                  <td style={rows}>{order.collect_from}</td>
-                  <td style={rows}>{order.deliver_to}</td>
+                  <td style={rows}><p style={lineBreak}>{order.collect_from}</p></td>
+                  <td style={rows}><p style={lineBreak}>{order.deliver_to}</p></td>
                 </tr>
               </table>
 
@@ -149,7 +154,7 @@ var bookingNoteForm = React.createClass({
                   <td style={topRow}>Special Instructions:</td>
                 </tr>
                 <tr>
-                  <td style={rows}>{order.special_instructions}</td>
+                  <td style={rows}><p style={lineBreak}>{order.special_instructions}</p></td>
                 </tr>
               </table>
 

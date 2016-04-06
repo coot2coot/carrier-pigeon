@@ -1,5 +1,9 @@
 var React = require('react');
 
+var loadingDate = {
+	fontSize: "0.8em"
+};
+
 var units = React.createClass({
 
 	render: function () {
@@ -33,7 +37,7 @@ var units = React.createClass({
 						</div>
 					</div>
 
-					<div className="row">			
+					<div className="row">
 						<div className="column-3">
 							<input className="view_input" type="text" name="unit_number" defaultValue={unit.unit_number} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 							<input className="display-none" type="text" name="unit_id" defaultValue={unit.unit_id ? unit.unit_id : ""} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
@@ -48,7 +52,7 @@ var units = React.createClass({
 							<input className="view_input" type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
-							<input className="view_input" type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.substring(0, 10): ""} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
+							<input style={loadingDate} className="view_input" type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.substring(0, 10): ""} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
 							<input className="view_input" type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time} disabled={this.props.viewing ? true : false} onChange={this.props.handleChange.bind(null, this.props.keys)}/>

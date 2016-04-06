@@ -2,8 +2,12 @@ var React = require('react');
 
 var autosize = require('autosize');
 
+var loadingDate = {
+	fontSize: "0.8em"
+};
+
 var units = React.createClass({
-	
+
 	componentDidMount: function () {
 		autosize(document.querySelectorAll('textarea'));
 	},
@@ -52,7 +56,7 @@ var units = React.createClass({
 							<input type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference ? unit.unit_loading_reference : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
-							<input type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.substring(0, 10) : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
+							<input style={loadingDate} type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.substring(0, 10) : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
 							<input type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time ? unit.unit_loading_time : ""}  onChange={handleChange.bind(null, this.props.keys)}/>

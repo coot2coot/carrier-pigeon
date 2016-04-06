@@ -22,6 +22,24 @@ var addOrder = React.createClass({
 	    };
 	},
 
+	componentDidMount: function () {
+		$(".bulletPoints").focus(function() {
+    if(document.getElementById('bulletPoints').value === ''){
+        document.getElementById('bulletPoints').value +='• ';
+			}
+		});
+		$(".bulletPoints").keyup(function(event){
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+		    if(keycode == '13'){
+		        document.getElementById('bulletPoints').value +='• ';
+			}
+			var txtval = document.getElementById('bulletPoints').value;
+			if(txtval.substr(txtval.length - 1) == '\n'){
+				document.getElementById('bulletPoints').value = txtval.substring(0,txtval.length - 1);
+			}
+		});
+	},
+
 	closeView: function () {
 
 		if ( this.state.closeView || !this.state.edited ) {
@@ -155,7 +173,7 @@ var addOrder = React.createClass({
 									<div className="row">
 										<div className="column-8">
 											<p>Special Instructions</p>
-											<textarea name="special_instructions" defaultValue={order && order.special_instructions ? order.special_instructions : ""}  max='500' onChange={this.ifEdited}/>
+											<textarea id="bulletPoints" className="bulletPoints" name="special_instructions" defaultValue={order && order.special_instructions ? order.special_instructions : ""}  max='500' onChange={this.ifEdited}/>
 										</div>
 										<div className="column-8">
 											<p>Remarks</p>
