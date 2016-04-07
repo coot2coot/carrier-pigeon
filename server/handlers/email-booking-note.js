@@ -10,17 +10,28 @@ var api_key    = process.env.MAIL_GUN_API_KEY || require("../../credentials.json
 var domain     = process.env.MAIL_GUN_DOMAIN || require("../../credentials.json").mailGunDomain;
 var mailgun    = require('mailgun-js')({apiKey: api_key, domain: domain});
 
-function sendBookingNote (attachment, toEmail, ccEmail, order, sender) {
+function sendBookingNote (attachment, toEmail, ccEmail, order, sender, bookingType) {
+    var html, subject, filename;
+    
+    if (bookingType === "Request") {
+      html = require('../email/booking-note.js')(order, sender);
+      subject = "Booking Request";
+      filename = "booking-request.pdf";
+    } else {
+      html = require('../email/confirmation-note.js')(order, sender);
+      subject = "Booking Confirmation";
+      filename = "booking-confirmation.pdf";
+    }
 
-    var attch = new mailgun.Attachment({data: attachment, filename: "booking-request.pdf"});
+    var attch = new mailgun.Attachment({data: attachment, filename: filename});
 
     var data = {
         from: 'Coot Freight Ltd <noreply@cootfreight.co.uk>',
         to: toEmail,
-        subject: formatJobId(order.job_number, order.date) + ' - Booking Request from Coot Freight',
-        html: require('../email/booking-note.js')(order, sender),
+        subject: formatJobId(order.job_number, order.date) + ' - ' + subject + ' from Coot Freight',
+        html: html,
         attachment: attch
-    }
+    };
 
     if (ccEmail) {
         data.cc = ccEmail;
@@ -45,13 +56,15 @@ function emailBookingNote (req, res, cb) {
 
                 var parsedOrder = JSON.parse(data.order);
 
-                sendBookingNote(buffer, data.toemail, data.ccemail, parsedOrder, user.email);
+                var bookingType = req.url.split('/')[3];
+
+                sendBookingNote(buffer, data.toemail, data.ccemail, parsedOrder, user.email, bookingType);
 
                 res.writeHead(200);
                 res.end();
             });
-        })
+        });
     });
-};
+}
 
 module.exports = emailBookingNote;

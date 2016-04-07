@@ -1,16 +1,23 @@
 var React = require('react');
 
+var autosize = require('autosize');
+
 var loadingDate = {
 	fontSize: "0.8em"
 };
 
 var units = React.createClass({
 
+	componentDidMount: function () {
+		autosize(document.querySelectorAll('textarea'));
+	},
+
 	render: function () {
 
 		var unit = this.props.unit;
 		var addUnit = this.props.addUnit;
 		var removeUnit = this.props.removeUnit;
+		console.log('ADD UNIT IN VIEW_UNITS', addUnit);
 
 		return (
 			<units className='row no-gutter'>

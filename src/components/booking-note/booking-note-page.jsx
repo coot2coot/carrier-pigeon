@@ -76,7 +76,7 @@ var companyName = {
 
 var header = {
     fontWeight: "bold",
-    fontSize: "20pt",
+    fontSize: "16pt",
     color: "black",
     padding: "0",
     margin: "0",

@@ -10,8 +10,7 @@ var bookingNoteButtons = React.createClass({
     },
 
     emailBooking: function (e) {
-        var getOrderUrl = "/booking-note/email";
-
+        var getOrderUrl = "/booking-note/email/" + this.props.bookingType;
         var component = React.renderToString(
             <BookingPage bookingType={this.props.bookingType} order={this.props.order} units={this.props.units}/>
         );
