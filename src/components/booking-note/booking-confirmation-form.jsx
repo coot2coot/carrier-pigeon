@@ -20,12 +20,21 @@ var thankYou = {
     fontWeight: "bold",
     textAlign: "center",
     width: "100%",
-    marginTop: "5em",
+    marginTop: "2em",
     float: "left"
 };
 
 var table = {
-  width: "100%"
+  width: "100%",
+  tableLayout: "fixed",
+  marginBottom: "3em"
+};
+
+var smallTable = {
+  width: "85%",
+  marginRight: "auto",
+  marginLeft: "auto",
+  tableLayout: "fixed"
 };
 
 var topRow = {
@@ -37,6 +46,24 @@ var topRow = {
   textAlign: "center",
   paddingTop: "1em",
   paddingBottom: "1em"
+};
+
+var rows = {
+  border: "1px solid black",
+  borderCollapse: "collapse",
+  fontFamily: "Avenir, Verdana, Geneva, sans-serif",
+  paddingLeft: "5px",
+  paddingTop: "1em",
+  paddingBottom: "1em"
+};
+
+var sideByside = {
+  display: "inline-block",
+  width: "50%"
+};
+
+var lineBreak = {
+  whiteSpace: "pre-line"
 };
 
 var bookingConfirmationForm = React.createClass({
@@ -54,6 +81,20 @@ var bookingConfirmationForm = React.createClass({
 
         if (order.special_instructions && (order.special_instructions !== undefined)) {
             instructionsArray = order.special_instructions.split('\n');
+        }
+
+        var eta, ets;
+
+        if (order.eta === null || order.eta === undefined) {
+          eta = "";
+        } else {
+          eta = order.eta.split("T")[0].split("-").reverse().join("-");
+        }
+
+        if (order.ets === null || order.ets === undefined) {
+          ets = "";
+        } else {
+          ets = order.ets.split("T")[0].split("-").reverse().join("-");
         }
 
         return (
@@ -83,6 +124,56 @@ var bookingConfirmationForm = React.createClass({
                       })
                   }
               </table>
+
+              <table style={table}>
+                <tr>
+                  <td style={topRow}>Collect From:</td>
+                  <td style={topRow}>Deliver To:</td>
+                </tr>
+                <tr>
+                  <td style={rows}><p style={lineBreak}>{order.collect_from}</p></td>
+                  <td style={rows}><p style={lineBreak}>{order.deliver_to}</p></td>
+                </tr>
+              </table>
+
+              <div style={sideByside}>
+                <table style={smallTable}>
+                  <tr>
+                    <td style={topRow}>Port of Loading:</td>
+                    <td style={rows}>{order.port_of_loading}</td>
+                  </tr>
+                </table>
+
+                <table style={smallTable}>
+                  <tr>
+                    <td style={topRow}>Port of Discharge:</td>
+                    <td style={rows}>{order.port_of_discharge}</td>
+                  </tr>
+                </table>
+
+                <table style={smallTable}>
+                  <tr>
+                    <td style={topRow}>Vessel/Trailer:</td>
+                    <td style={rows}>{order.vessel}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <div style={sideByside}>
+                <table style={smallTable}>
+                  <tr>
+                    <td style={topRow}>ETS:</td>
+                    <td style={rows}>{ets}</td>
+                  </tr>
+                </table>
+
+                <table style={smallTable}>
+                  <tr>
+                    <td style={topRow}>ETA:</td>
+                    <td style={rows}>{eta}</td>
+                  </tr>
+                </table>
+              </div>
 
               <div style={thankYou}>Thank you for booking with Coot Freight</div>
 
