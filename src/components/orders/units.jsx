@@ -1,6 +1,11 @@
 var React = require('react');
 
+var loadingDate = {
+	fontSize: "0.8em"
+};
+
 var units = React.createClass({
+
 	render: function () {
 		var unit = this.props.unit;
 		var addUnit = this.props.addUnit;
@@ -45,7 +50,7 @@ var units = React.createClass({
 							<input type="text" name="unit_loading_reference" defaultValue={unit.unit_loading_reference ? unit.unit_loading_reference : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
-							<input type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.substring(0, 10) : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
+							<input style={loadingDate} type="date" name="unit_loading_date" defaultValue={unit.unit_loading_date ? unit.unit_loading_date.substring(0, 10) : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>
 						<div className="column-3">
 							<input type="time" name="unit_loading_time" defaultValue={unit.unit_loading_time ? unit.unit_loading_time : ""}  onChange={handleChange.bind(null, this.props.keys)}/>
@@ -74,7 +79,7 @@ var units = React.createClass({
 					</div>
 
 					<div className="row">
-						
+
 						<div className="column-2">
 							<input type="number" name="unit_net_weight" step="any" defaultValue={unit.unit_net_weight ? unit.unit_net_weight : ""} onChange={handleChange.bind(null, this.props.keys)}/>
 						</div>

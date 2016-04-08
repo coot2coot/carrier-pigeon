@@ -5,14 +5,14 @@ var datePicker = React.createClass({
 		return {
 			startDate: "",
 			endDate: ""
-		}
+		};
 	},
 	setDate: function (event) {
 
 		if(event.target.name === "start"){
 			this.setState({
 				startDate: event.target.value
-			})
+			});
 		} else{
 			this.setState({
 				endDate: event.target.value
@@ -21,13 +21,13 @@ var datePicker = React.createClass({
 
 	},
 	getOrders: function() {
-		return this.props.getorders(this.state.startDate+","+this.state.endDate , "orders")
+		return this.props.getorders(this.state.startDate+","+this.state.endDate , "orders");
 	},
 	render: function () {
 		return (
 			<datepicker className="pop-up container">
 				<div className="column-5 float-left">
-					
+
 					<div className="row">
 						<p className="column-4">From: </p>
 						<input className="column-10" type="date" name = "start" onChange={this.setDate} />
@@ -40,8 +40,8 @@ var datePicker = React.createClass({
 					<div className="submit">
 						<input className= "button blue"  type="submit" value="Find" onClick={this.getOrders}/>
 					</div>
-				</div>	
-			</datepicker>	
+				</div>
+			</datepicker>
 
 		)
 	}

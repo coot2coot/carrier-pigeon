@@ -25,10 +25,10 @@ var viewOrder = React.createClass({
 
 	    $.get(getContactUrl, function(result) {
 	    	var peopleContacts = JSON.parse(result);
-	    	
 
-	    	if (peopleContacts.length > 0) { 
-	    		console.log(peopleContacts)
+
+	    	if (peopleContacts.length > 0) {
+	    		console.log(peopleContacts);
 		      	if (this.isMounted()) {
 		        	this.setState({
 		          		peopleContacts: peopleContacts
@@ -38,7 +38,7 @@ var viewOrder = React.createClass({
 	    }.bind(this))
 	    .fail(function () {
 
-	    	"get units request failed"
+	    	"get units request failed";
 	    });
 	},
 
@@ -46,14 +46,14 @@ var viewOrder = React.createClass({
 
 		this.setState({
 			deleteContact: item
-		})
+		});
 	},
 
 	onCloseComponent: function () {
 		this.setState({
 			deletedContacts: false
-		})
-	}, 
+		});
+	},
 
     closeView: function() {
 		if(this.state.closeView || this.state.viewing || !this.state.edited){
@@ -61,7 +61,7 @@ var viewOrder = React.createClass({
 	    } else {
 		    this.setState({
 	    		closeView: true
-	    	})
+	    	});
 		}
 	},
 
@@ -69,7 +69,7 @@ var viewOrder = React.createClass({
 
 		this.setState({
 	    	closeView: false
-	    })
+	    });
 	},
 
 	edit: function () {
@@ -87,7 +87,7 @@ var viewOrder = React.createClass({
 	ifEdited: function () {
 
   		if (!this.state.edited) {
-  			this.state.edited = true
+  			this.state.edited = true;
   		}
   	},
 
@@ -98,7 +98,7 @@ var viewOrder = React.createClass({
   		if (this.state.deletedReminders !== "") {
   			deleteRem = this.state.deletedReminders + ',' + id;
   		}
-			
+
 		this.setState({
 			deletedReminders: deleteRem
 		});
@@ -106,10 +106,10 @@ var viewOrder = React.createClass({
 
   	deletePContacts: function (id) {
 
-  		var removeAnoutherIdd =  this.state.deletedPContacts + ',' + id
+  		var removeAnoutherIdd =  this.state.deletedPContacts + ',' + id;
 
   		var deleteCont =  this.state.deletedPContacts !== "" ? removeAnoutherIdd : id;
-  		
+
 		this.setState({
 			deletedPContacts: deleteCont
 		});
@@ -164,13 +164,13 @@ var viewOrder = React.createClass({
 										<div className="column-10">
 											<p>Address Line</p>
 											<input type="text" name="address_line" defaultValue={contact ? contact.address_line : ""}disabled={viewing ? true : false} onChange={edited}/>
-										</div>	
+										</div>
 										<div className="column-6">
 											<p>City</p>
 											<input type="text" name="city"  defaultValue={contact ? contact.city : ""} disabled={viewing ? true : false} onChange={edited}/>
-										</div>				
+										</div>
 									</div>
-									
+
 									<div className="row">
 										<div className="column-5">
 											<p>County</p>
@@ -186,19 +186,19 @@ var viewOrder = React.createClass({
 										</div>
 									</div>
 
-									<PContactList 
-										edit={edited} 
-										viewing={viewing} 
+									<PContactList
+										edit={edited}
+										viewing={viewing}
 										deletePContacts= {this.deletePContacts}
 										contactId = {contact ? contact.contact_id : ''}
 										contacts={state.peopleContacts}/>
-									
+
 									<div className="row">
 										<div className="column-16">
 											<p>Remarks</p>
 											<textarea type="text" className="small" name="remarks" defaultValue={contact ? contact.remarks : ""} disabled={viewing ? true : false} max="500" onChange={edited}/>
 										</div>
-										
+
 										</div>
 									<div className="row">
 										<div className="column-16">
@@ -211,26 +211,26 @@ var viewOrder = React.createClass({
 											<p>Reminders</p>
 										</div>
 									</div>
-									<ViewReminders 
-										edited={edited} 
-										reminder={reminders} 
-										viewing={viewing} 
+									<ViewReminders
+										edited={edited}
+										reminder={reminders}
+										viewing={viewing}
 										deleteReminder={deleteReminder}
 										contactId={contact ? contact.contact_id : ""}/>
-									{!viewing 
+									{!viewing
 										?<input type="submit" className="button charcoal" value="Done" />
 										:<p></p>
 									}
-									
+
 								</div>
-							</div>	
+							</div>
 						</form>
 					</div>
-				</div>	
-				{( this.state.closeView 
+				</div>
+				{( this.state.closeView
                     ?<Close message="Do you want to close without saving?"  closeView={this.closeView} closeWarning={this.closeWarning}/>
                     : <p></p>
-                )}			
+                )}
 			</div>
 		);
 	}

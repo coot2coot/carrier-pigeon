@@ -4,16 +4,16 @@ var searchBox = React.createClass({
 	getInitialState:function () {
 		return {
 			searchValue: ""
-		}
+		};
 	},
-	setSearchValue: function (event){		
+	setSearchValue: function (event){
 		this.setState({
 			searchValue: event.target.value
-		})
+		});
 	},
 	handleSubmit: function(e) {
 		e.preventDefault();
-		return this.props.getorders(this.state.searchValue)
+		return this.props.getorders(this.state.searchValue);
 	},
 	render: function (){
 		return(

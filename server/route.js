@@ -124,7 +124,7 @@ var serverRoutes =  function (router) {
 	router.addRoute('/users/get/nocache', function (req, res, match) {
 	  	require('./handlers/read-db.js').noCache(req, res);
 	});
- 
+
 	router.addRoute('/user/delete/:id?', function (req, res, match) {
 	  	require('./handlers/delete-db.js')(req, res);
 	});
@@ -160,7 +160,7 @@ var serverRoutes =  function (router) {
  *	   Booking Request Routes
  * -------------------------------*/
 
-	router.addRoute('/booking-note/email', function (req, res, match) {
+	router.addRoute('/booking-note/email/:bookingType', function (req, res, match) {
 	  	require('./handlers/email-booking-note.js')(req, res);
 	});
 
@@ -180,4 +180,3 @@ var serverRoutes =  function (router) {
 };
 
 module.exports = serverRoutes;
-

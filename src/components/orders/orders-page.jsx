@@ -108,7 +108,11 @@ var ordersPage = React.createClass({
 
 	getSearchedOrders: function (value) {
 
-		var getUrl = "/search/orders/" + value;
+		var cleanedValue;
+
+		value.includes("/") ? cleanedValue = value.replace("/", "SLASH") : cleanedValue = value;
+
+		var getUrl = "/search/orders/" + cleanedValue;
 
 		$.get(getUrl, function (result) {
 
