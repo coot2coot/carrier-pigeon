@@ -519,12 +519,18 @@ dataBase.searcher = function (table, data, cb) {
 
             cb(null, result.rows);
         });
-    })
+    });
 };
 
 dataBase.searchDates = function (table, dates, cb) {
 
-    var query = dateRange(dates);
+    var query;
+
+    if (table === "orders") {
+      query = "SELECT * FROM orders WHERE date >='" + dates[0] + "' AND date <='" + dates[1] + "';";
+    } else {
+      query = dateRange(dates);
+    }
 
     connect( function (client, done) {
 
@@ -543,7 +549,7 @@ dataBase.searchDates = function (table, dates, cb) {
                     cb(null,result.rows);
             });
         }
-    })
+    });
 };
 
 module.exports = dataBase;

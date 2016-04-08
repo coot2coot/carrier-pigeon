@@ -13,7 +13,7 @@ function search (req, res) {
 		table = "units";
 	} else {
 
-		table = "orders"
+		table = "orders";
 	}
 
 	validateUser(req,res, function (){
@@ -29,9 +29,9 @@ function search (req, res) {
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end(order);
 			}
-		})
-	})
-};
+		});
+	});
+}
 
 
 module.exports = search;
