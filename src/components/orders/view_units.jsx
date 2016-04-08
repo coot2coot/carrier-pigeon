@@ -17,7 +17,6 @@ var units = React.createClass({
 		var unit = this.props.unit;
 		var addUnit = this.props.addUnit;
 		var removeUnit = this.props.removeUnit;
-		console.log('ADD UNIT IN VIEW_UNITS', addUnit);
 
 		return (
 			<units className='row no-gutter'>
