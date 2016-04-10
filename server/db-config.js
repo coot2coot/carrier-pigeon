@@ -524,13 +524,13 @@ dataBase.searcher = function (table, data, cb) {
 
 dataBase.searchDates = function (table, dates, cb) {
 
-    var query = dateRange(dates);
+    var query;
 
-    // if (table === "orders") {
-    //   query = "SELECT * FROM orders WHERE date >='" + dates[0] + "' AND date <='" + dates[1] + "';";
-    // } else {
-    //   query = dateRange(dates);
-    // }
+    if (table === "orders") {
+      query = "SELECT * FROM orders WHERE date >='" + dates[0] + "' AND date <='" + dates[1] + "';";
+    } else {
+      query = dateRange(dates);
+    }
 
     connect( function (client, done) {
 
