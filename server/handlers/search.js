@@ -4,12 +4,16 @@ var validateUser = require('../lib/validate-user.js');
 
 function search (req, res, table) {
 	var data = req.url.split("/").pop();
-	// var cleanedData;
+	var cleanedData;
 
-	//data.includes("SLASH") ? cleanedData = data.replace("SLASH", "/") : cleanedData = data;
+	if (data.indexOf('SLASH') > -1) {
+		cleanedData = data.replace("SLASH", "/");
+	} else {
+		cleanedData = data;
+	}
 
 	validateUser(req,res, function (){
-		db.searcher(table,data, function (err,orders) {
+		db.searcher(table,cleanedData, function (err,orders) {
 			if(err){
 				res.writeHead(200, {"Content-Type" : "text/plain"});
 				res.end('error');

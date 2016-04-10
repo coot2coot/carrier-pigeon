@@ -221,7 +221,7 @@ function editReminders (doc, clt, cb, done) {
             return console.log(err);
         }
 
-        editPeopleContacts(doc, clt, cb, done)
+        editPeopleContacts(doc, clt, cb, done);
     });
 }
 
@@ -374,7 +374,7 @@ dataBase.edit = function (table, doc, cb) {
         } else if (table === 'contacts') {
             editContacts(doc, client, cb, done);
         } else if (table ==='reminders') {
-            editReminders(doc,client,cb,done)
+            editReminders(doc,client,cb,done);
         } else {
             editOrders(doc, client, cb, done);
         }
@@ -405,7 +405,7 @@ dataBase.remove = function (table, doc, cb) {
             }
             cb(null);
         });
-    })
+    });
 };
 
 dataBase.clearFileName = function (table, doc, cb) {
@@ -425,7 +425,7 @@ dataBase.clearFileName = function (table, doc, cb) {
             }
             cb(null);
         });
-    })
+    });
 };
 
 dataBase.select = function (table, id, cb ) {
@@ -448,7 +448,7 @@ dataBase.select = function (table, id, cb ) {
             }
             cb(result.rows);
         });
-    })
+    });
 };
 
 dataBase.getInvoices = function (table, job_number, cb ) {
@@ -469,7 +469,7 @@ dataBase.getInvoices = function (table, job_number, cb ) {
 
             cb(null, units.rows);
         });
-    })
+    });
 };
 
 dataBase.selectUser = function (username, password, remember, cb) {
@@ -491,7 +491,7 @@ dataBase.selectUser = function (username, password, remember, cb) {
                 cb(null, user.rows[0], remember);
             }
         });
-    })
+    });
 };
 
 
