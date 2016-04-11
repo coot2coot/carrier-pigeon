@@ -18,7 +18,9 @@ function search (req, res) {
 
 	validateUser(req,res, function (){
 
-		db.searchDates(table, data, function (err,orders) {
+		var url = req.url;
+
+		db.searchDates(url, table, data, function (err,orders) {
 
 			if (err) {
 				res.writeHead(200, {"Content-Type" : "text/plain"});
