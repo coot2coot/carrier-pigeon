@@ -116,8 +116,11 @@ var viewOrder = React.createClass({
 	    	if (result !== "") {
 		    	var unit = JSON.parse(result);
 					var sortedUnits = unit.sort(function(a,b) {
-						var aTime = (a.unit_loading_date).split("T")[0] + " " + a.unit_loading_time;
-						var bTime = (b.unit_loading_date).split("T")[0] + " " + b.unit_loading_time;
+						var firstUnitLoadingDate, nextUnitLoadingDate;
+						a.unit_loading_date === null ? firstUnitLoadingDate = "0T" : firstUnitLoadingDate = a.unit_loading_date;
+						b.unit_loading_date === null ? nextUnitLoadingDate = "0T" : nextUnitLoadingDate = b.unit_loading_date;
+						var aTime = firstUnitLoadingDate.split("T")[0] + " " + a.unit_loading_time;
+						var bTime = nextUnitLoadingDate.split("T")[0] + " " + b.unit_loading_time;
 						return new Date(aTime).getTime() - new Date(bTime).getTime();
 					});
 		      	if (this.isMounted()) {
