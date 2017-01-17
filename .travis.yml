@@ -21,6 +21,8 @@ before_script:
 - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
 - echo node_modules/ > .gitignore
 script:
+- psql -c 'create database testdb;' -h localhost -p 5432 -U postgres
+- node testDb.js
 - gulp deploy
 before_deploy:
 - git status
