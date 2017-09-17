@@ -84,7 +84,7 @@ You need to build before deploying. After building you can either:
 
 2. Use the Elastic Beanstalk CLI tool (I recommend this option)
 
-##### Setting up the EB CLI
+##### Setting up the EB CLI (for the uninitiated)
 
 1. Create a new user in AWS IAM, add the user to the Carrier Pigeon group - this gives them admin permissions. Download the user's credentials as a CSV. Use this account for logging in from now on.
 
@@ -92,8 +92,12 @@ You need to build before deploying. After building you can either:
 
 3. If you're already using AWS / EB CLI tools, add the new user to your root AWS config / credential files (See [this stackoverflow question](https://stackoverflow.com/questions/29190202/how-to-change-the-aws-account-using-the-elastic-beanstalk-cli) for help).
 
-4. From within the root directory of your project, run `eb init --profile [NAME_OF_PROFILE_IN_YOUR_AWS_CONFIG]`
+4. From within the root directory of your project, run `eb init --profile [NAME_OF_PROFILE_IN_YOUR_AWS_CONFIG]`, follow the steps in your terminal.
 
 5. Set the production instance as your default Elastic Beanstalk environment - `carrierPigeonFac-Se-env`
 
 6. Now you can deploy via git by running `eb deploy` (making sure you've added all your build files)
+
+##### Deployment script
+
+You can run `npm run deploy` to build, add files, commit and deploy in one go!
