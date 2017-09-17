@@ -92,9 +92,9 @@ You need to build before deploying. After building you can either:
 
 3. If you're already using AWS / EB CLI tools, add the new user to your root AWS config / credential files (See [this stackoverflow question](https://stackoverflow.com/questions/29190202/how-to-change-the-aws-account-using-the-elastic-beanstalk-cli) for help).
 
-4. From within the root directory of your project, run `eb init --profile [NAME_OF_PROFILE_IN_YOUR_AWS_CONFIG]`, follow the steps in your terminal.
+4. From within the root directory of your project, run `eb init --profile [NAME_OF_PROFILE_IN_YOUR_AWS_CONFIG]`, follow the steps in your terminal (hint: region = 4; application = carrier-pigeon-fac; default environment = carrierPigeonFac-Se-env; and you probably don't want to use AWS code commit!)
 
-5. Set the production instance as your default Elastic Beanstalk environment - `carrierPigeonFac-Se-env`
+5. Set the production instance as your default Elastic Beanstalk environment - `eb use carrierPigeonFac-Se-env`
 
 6. Now you can deploy via git by running `eb deploy` (making sure you've added all your build files)
 
