@@ -64,6 +64,9 @@ The app is currently hosted on AWS Elastic Beanstalk. Dan can provide credential
 
 Make sure you're using AWS in the correct region, or you won't be able to see the app! (Ireland)
 
+The URL for the production app is [http://carrierpigeonfac-se-env.elasticbeanstalk.com/#/orders](http://carrierpigeonfac-se-env.elasticbeanstalk.com/#/orders)
+
+
 ##### Building
 
 To build for production run `gulp build`
