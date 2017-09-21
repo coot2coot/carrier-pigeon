@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "gulp test",
-    "start": "gulp"
+    "start": "gulp",
+    "pre-deploy": "git checkout -B deploy && gulp build && git add -f public/* && git commit -m \"deploy\"",
+    "deploy-prod": "npm run pre-deploy && eb deploy carrierPigeonFac-Se-env"
   },
   "repository": {
     "type": "git",
